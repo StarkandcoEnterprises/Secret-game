@@ -1,0 +1,22 @@
+[gd_scene load_steps=4 format=3 uid="uid://btqhgaed1j0it"]
+
+[ext_resource type="Script" path="res://Hannah.gd" id="1_8jlr8"]
+[ext_resource type="Texture2D" uid="uid://cn0j6m8x6njyo" path="res://icon.svg" id="2_4cbmb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ykaa3"]
+size = Vector2(64, 64)
+
+[node name="Main" type="Node2D"]
+
+[node name="Hannah" type="CharacterBody2D" parent="."]
+script = ExtResource("1_8jlr8")
+
+[node name="Sprite2D" type="Sprite2D" parent="Hannah"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("2_4cbmb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hannah"]
+shape = SubResource("RectangleShape2D_ykaa3")
+
+[node name="RayCast2D" type="RayCast2D" parent="Hannah"]
+rotation = 4.71239
