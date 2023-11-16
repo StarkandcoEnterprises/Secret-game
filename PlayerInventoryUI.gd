@@ -32,8 +32,10 @@ func move_cursor(direction):
 		cursor_pos += 20
 
 func get_context_menu_for_selected():
+	#some checking to see that it's a valid instance so no null pointers
 	if is_instance_valid(get_child(grid_pos).get_child(cursor_pos).get_child(0)):
 		if is_instance_valid(get_child(grid_pos).get_child(cursor_pos).get_child(0).get_child(1)):
+			#Don't want our cursor getting in the way of the mouse (Bad scene layout I presume)
 			$ReferenceRect.hide()
 			var selected = get_child(grid_pos).get_child(cursor_pos).get_child(0).get_child(1)
 			if selected.visible:
