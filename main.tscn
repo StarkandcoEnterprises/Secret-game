@@ -9,7 +9,7 @@
 size = Vector2(64, 64)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ioq5r"]
-size = Vector2(26, 26)
+size = Vector2(26, 78)
 
 [node name="Main" type="Node2D"]
 
@@ -1011,5 +1011,16 @@ scale = Vector2(0.2, 0.2)
 texture = ExtResource("3_tecxe")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Item"]
+visible = false
+shape = SubResource("RectangleShape2D_ioq5r")
+
+[node name="Hoe" type="StaticBody2D" parent="." groups=["Equipment", "Item"]]
+position = Vector2(200, 50)
+
+[node name="Sprite2D" type="Sprite2D" parent="Hoe"]
+scale = Vector2(0.2, 0.6)
+texture = ExtResource("3_tecxe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hoe"]
 visible = false
 shape = SubResource("RectangleShape2D_ioq5r")
