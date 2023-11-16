@@ -32,7 +32,7 @@ func _physics_process(delta):
 	
 	#use any equipment
 	if is_instance_valid(equipped) and Input.is_action_pressed("interact"):
-		use_equipment(delta)
+		equipped.use(direction, delta)
 	
 	#Check for movement
 	velocity = Vector2.ZERO
@@ -85,15 +85,3 @@ func _on_equip_pressed():
 	else:
 		equipped.get_child(0).position = Vector2(-45,36)
 	equipped.rotation_degrees = 0
-
-#TODO add classes/use() on the equipment class to handle this instead of a function here
-func use_equipment(delta):
-	if equipped.is_in_group("Hoe"):
-		if direction == "left":
-			equipped.rotation_degrees = lerp(60, equipped.rotation_degrees, 5 * delta)
-			if equipped.rotation_degrees >= 150:
-				equipped.rotation_degrees = 0
-		else:
-			equipped.rotation_degrees = lerp(equipped.rotation_degrees + 90, equipped.rotation_degrees, 5 * delta)
-			if equipped.rotation_degrees <= 150:
-				equipped.rotation_degrees = 0

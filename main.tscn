@@ -1,9 +1,10 @@
-[gd_scene load_steps=7 format=3 uid="uid://btqhgaed1j0it"]
+[gd_scene load_steps=8 format=3 uid="uid://btqhgaed1j0it"]
 
 [ext_resource type="Script" path="res://Hannah.gd" id="1_8jlr8"]
 [ext_resource type="Texture2D" uid="uid://c8yk6rpq7kpny" path="res://icon.png" id="2_a475o"]
 [ext_resource type="Script" path="res://PlayerInventoryUI.gd" id="3_hwl7w"]
 [ext_resource type="Texture2D" uid="uid://cn0j6m8x6njyo" path="res://icon.svg" id="3_tecxe"]
+[ext_resource type="Script" path="res://Equipment.gd" id="4_wj8jx"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ykaa3"]
 size = Vector2(64, 64)
@@ -41,6 +42,7 @@ shape = SubResource("RectangleShape2D_ioq5r")
 
 [node name="Hoe" type="StaticBody2D" parent="." groups=["Equipment", "Hoe", "Item"]]
 position = Vector2(200, 50)
+script = ExtResource("4_wj8jx")
 
 [node name="Sprite2D" type="Sprite2D" parent="Hoe"]
 scale = Vector2(0.2, 0.6)
