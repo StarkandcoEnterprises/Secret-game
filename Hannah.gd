@@ -31,7 +31,7 @@ func _input(event):
 func _physics_process(delta):
 	
 	#use any equipment
-	if is_instance_valid(equipped) and Input.is_action_pressed("interact"):
+	if !inventory.visible and is_instance_valid(equipped) and Input.is_action_pressed("interact"):
 		equipped.use(direction, delta)
 	
 	#Check for movement
@@ -76,12 +76,14 @@ func face_direction():
 
 #Equip equipment - same notes as above refactor on inventory / equipment
 func _on_equip_pressed():
+	if equipped: 
+		inventory.add_item(equipped)
 	equipped = inventory.get_child(inventory.grid_pos).get_child(inventory.cursor_pos).get_child(0)
 	inventory.get_context_menu_for_selected()
 	inventory.remove_item(equipped, self)
 	inventory.get_child(1).show()
 	if direction == "left":
-		equipped.get_child(0).position = Vector2(90,18)
+		equipped.position = Vector2(90,18)
 	else:
-		equipped.get_child(0).position = Vector2(-45,36)
+		equipped.position = Vector2(-45,36)
 	equipped.rotation_degrees = 0

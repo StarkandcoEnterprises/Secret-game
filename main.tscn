@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://btqhgaed1j0it"]
+[gd_scene load_steps=14 format=3 uid="uid://btqhgaed1j0it"]
 
 [ext_resource type="Script" path="res://Hannah.gd" id="1_8jlr8"]
 [ext_resource type="Texture2D" uid="uid://c8yk6rpq7kpny" path="res://icon.png" id="2_a475o"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://PlayerInventoryUI.gd" id="3_hwl7w"]
 [ext_resource type="Texture2D" uid="uid://cn0j6m8x6njyo" path="res://icon.svg" id="3_tecxe"]
 [ext_resource type="Script" path="res://Equipment.gd" id="4_wj8jx"]
+[ext_resource type="Script" path="res://Item.gd" id="5_4wxi4"]
 [ext_resource type="Texture2D" uid="uid://pwwxq2qmj72i" path="res://using_tilesets_kenney_abstract_platformer_tile_sheet.webp" id="6_k5uyl"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_stakg"]
@@ -901,6 +902,7 @@ rotation = 4.71239
 
 [node name="Item" type="StaticBody2D" parent="." groups=["Item"]]
 position = Vector2(100, 50)
+script = ExtResource("5_4wxi4")
 
 [node name="Sprite2D" type="Sprite2D" parent="Item"]
 scale = Vector2(0.2, 0.2)
@@ -928,6 +930,28 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Equip" type="Button" parent="Hoe/ContextMenu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Equip"
+
+[node name="Seed" type="StaticBody2D" parent="." groups=["Equipment", "Hoe", "Item"]]
+position = Vector2(400, 150)
+script = ExtResource("4_wj8jx")
+
+[node name="Sprite2D" type="Sprite2D" parent="Seed"]
+scale = Vector2(0.2, 0.6)
+texture = ExtResource("3_tecxe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Seed"]
+visible = false
+shape = SubResource("RectangleShape2D_ioq5r")
+
+[node name="ContextMenu" type="VBoxContainer" parent="Seed"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Equip" type="Button" parent="Seed/ContextMenu"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Equip"
@@ -1918,3 +1942,4 @@ offset_bottom = 78.0
 editor_only = false
 
 [connection signal="pressed" from="Hoe/ContextMenu/Equip" to="Hannah" method="_on_equip_pressed"]
+[connection signal="pressed" from="Seed/ContextMenu/Equip" to="Hannah" method="_on_equip_pressed"]

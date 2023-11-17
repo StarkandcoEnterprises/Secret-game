@@ -8,6 +8,9 @@ func add_item(item):
 	item.reparent(get_child(grid_pos).get_child(item_count))
 	item.position = Vector2(26,39) 
 	item_count += 1
+	item.get_child(0).flip_v = false
+	item.rotation_degrees = 0
+	sort()
 
 func delete_item(pos):
 	get_child(grid_pos).get_child(pos).get_child(0).queue_free()
@@ -31,6 +34,7 @@ func sort():
 		elif earliest_empty_spot != null:
 			get_child(grid_pos).get_child(i).get_child(0).reparent(get_child(grid_pos).get_child(earliest_empty_spot))
 			get_child(grid_pos).get_child(earliest_empty_spot).get_child(0).position = Vector2(26,39) 
+			get_child(grid_pos).get_child(earliest_empty_spot).get_child(0).get_child(0).position = Vector2.ZERO 
 			earliest_empty_spot += 1
 
 func move_cursor(direction):
