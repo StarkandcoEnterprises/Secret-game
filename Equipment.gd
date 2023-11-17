@@ -29,7 +29,7 @@ func use_hoe(direction, delta):
 		if map.get_layer_name(layer) == "Ground":
 			#Grass to tilled ground
 			if map.get_cell_atlas_coords(layer,tile_pos) == Vector2i(16, 5):
-				map.set_cell(layer, tile_pos, 0, Vector2(-1, -1))
+				map.set_cell(layer, tile_pos, 0, Vector2(0, 0))
 	rotate_tool(direction, delta)
 
 func use_watering_can():
@@ -37,7 +37,7 @@ func use_watering_can():
 	for layer in map.get_layers_count():
 		if map.get_layer_name(layer) == "Ground":
 			#Ground to wet ground
-			if map.get_cell_atlas_coords(layer,tile_pos) == Vector2i(-1,-1):
+			if map.get_cell_atlas_coords(layer,tile_pos) == Vector2i(0,0):
 				map.set_cell(layer, tile_pos, 0, Vector2(0, 0), 1)
 			#Dry seed to wet seed
 			elif map.get_cell_atlas_coords(layer,tile_pos) == Vector2i(16, 8):
@@ -48,7 +48,7 @@ func plant_seed():
 	for layer in map.get_layers_count():
 		if map.get_layer_name(layer) == "Ground":
 			#Ground to dry seed
-			if map.get_cell_atlas_coords(layer,tile_pos) == Vector2i(-1,-1):
+			if map.get_cell_atlas_coords(layer,tile_pos) == Vector2i(0,0) and map.get_cell_alternative_tile(layer,tile_pos) == 0:
 				map.set_cell(layer, tile_pos, 0, Vector2(16, 8))
 			#Wet ground to wet seed
 			elif map.get_cell_atlas_coords(layer,tile_pos) == Vector2i(0,0) and map.get_cell_alternative_tile(layer,tile_pos) == 1:
