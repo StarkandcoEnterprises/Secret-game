@@ -15,6 +15,9 @@ func use(direction, delta):
 		use_hoe(direction, delta)
 	if name == "Seed":
 		plant_seed()
+		queue_free()
+		return false
+	return true
 
 func use_hoe(direction, delta):
 	var tile_pos = Vector2.ZERO

@@ -32,8 +32,9 @@ func _physics_process(delta):
 	
 	#use any equipment
 	if !inventory.visible and is_instance_valid(equipped) and Input.is_action_pressed("interact"):
-		equipped.use(direction, delta)
-	
+		var kept = equipped.use(direction, delta)
+		if !kept:
+			equipped = null
 	#Check for movement
 	velocity = Vector2.ZERO
 	if Input.is_action_pressed("right") and !inventory.visible:
