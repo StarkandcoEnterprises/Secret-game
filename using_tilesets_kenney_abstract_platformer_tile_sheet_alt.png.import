@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://pwwxq2qmj72i"
-path="res://.godot/imported/using_tilesets_kenney_abstract_platformer_tile_sheet.webp-4979439bde2832f2c8d0001abef6121d.ctex"
+uid="uid://c40jl31rwwkwi"
+path="res://.godot/imported/using_tilesets_kenney_abstract_platformer_tile_sheet_alt.png-487f996e3c60ef36cc50aec413669dcc.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://using_tilesets_kenney_abstract_platformer_tile_sheet.webp"
-dest_files=["res://.godot/imported/using_tilesets_kenney_abstract_platformer_tile_sheet.webp-4979439bde2832f2c8d0001abef6121d.ctex"]
+source_file="res://using_tilesets_kenney_abstract_platformer_tile_sheet_alt.png"
+dest_files=["res://.godot/imported/using_tilesets_kenney_abstract_platformer_tile_sheet_alt.png-487f996e3c60ef36cc50aec413669dcc.ctex"]
 
 [params]
 
