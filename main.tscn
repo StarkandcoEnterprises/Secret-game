@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://btqhgaed1j0it"]
+[gd_scene load_steps=14 format=3 uid="uid://btqhgaed1j0it"]
 
 [ext_resource type="Script" path="res://Hannah.gd" id="1_8jlr8"]
 [ext_resource type="TileSet" uid="uid://dfphrrdav6xyo" path="res://main_tileset.tres" id="1_mwilu"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Equipment.gd" id="4_wj8jx"]
 [ext_resource type="Script" path="res://Item.gd" id="5_4wxi4"]
 [ext_resource type="Texture2D" uid="uid://c8yk6rpq7kpny" path="res://NEVER REMOVE.png" id="5_j10ho"]
+[ext_resource type="Texture2D" uid="uid://cm6xs5htqrshd" path="res://hoe.png" id="9_iktkg"]
 [ext_resource type="Theme" uid="uid://d2t4qqcop8je" path="res://dayover.tres" id="10_4t3d4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ykaa3"]
@@ -77,8 +78,7 @@ position = Vector2(200, 50)
 script = ExtResource("4_wj8jx")
 
 [node name="Sprite2D" type="Sprite2D" parent="Hoe"]
-scale = Vector2(0.2, 0.6)
-texture = ExtResource("3_tecxe")
+texture = ExtResource("9_iktkg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hoe"]
 visible = false
@@ -93,16 +93,6 @@ offset_bottom = 40.0
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Equip"
-
-[node name="Label" type="Label" parent="Hoe"]
-offset_left = 10.0
-offset_top = -20.0
-offset_right = 50.0
-offset_bottom = 6.0
-rotation = 1.5708
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 18
-text = "Hoe"
 
 [node name="WateringCan" type="StaticBody2D" parent="." groups=["Equipment", "Hoe", "Item"]]
 position = Vector2(400, 50)
