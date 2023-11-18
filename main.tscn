@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://btqhgaed1j0it"]
+[gd_scene load_steps=13 format=3 uid="uid://btqhgaed1j0it"]
 
 [ext_resource type="Script" path="res://Hannah.gd" id="1_8jlr8"]
 [ext_resource type="TileSet" uid="uid://dfphrrdav6xyo" path="res://main_tileset.tres" id="1_mwilu"]
@@ -9,6 +9,7 @@
 [ext_resource type="Script" path="res://Equipment.gd" id="4_wj8jx"]
 [ext_resource type="Script" path="res://Item.gd" id="5_4wxi4"]
 [ext_resource type="Texture2D" uid="uid://c8yk6rpq7kpny" path="res://NEVER REMOVE.png" id="5_j10ho"]
+[ext_resource type="Theme" uid="uid://d2t4qqcop8je" path="res://dayover.tres" id="10_4t3d4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ykaa3"]
 size = Vector2(64, 64)
@@ -1180,6 +1181,21 @@ grow_horizontal = 2
 grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
+[node name="NextDay" type="Button" parent="DayOver"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -39.5
+offset_top = -31.0
+offset_right = 39.5
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("10_4t3d4")
+text = "Next Day"
+
 [node name="Daytime" type="Timer" parent="."]
 wait_time = 20.0
 one_shot = true
@@ -1188,4 +1204,5 @@ autostart = true
 [connection signal="pressed" from="Hoe/ContextMenu/Equip" to="Hannah" method="_on_equip_pressed"]
 [connection signal="pressed" from="WateringCan/ContextMenu/Equip" to="Hannah" method="_on_equip_pressed"]
 [connection signal="pressed" from="Seed/ContextMenu/Equip" to="Hannah" method="_on_equip_pressed"]
+[connection signal="pressed" from="DayOver/NextDay" to="." method="_on_next_day_pressed"]
 [connection signal="timeout" from="Daytime" to="." method="_on_daytime_timeout"]

@@ -19,13 +19,13 @@ func _input(event):
 			inventory.hide() 
 		else:
 			inventory.show()
-	elif inventory.visible and event.is_action_pressed("right"):
+	elif inventory.visible and event.is_action_pressed("right") and !inventory.check_menu_visibility_for_selected():
 		inventory.move_cursor("right")
-	elif inventory.visible and event.is_action_pressed("left"):
+	elif inventory.visible and event.is_action_pressed("left") and !inventory.check_menu_visibility_for_selected():
 		inventory.move_cursor("left")
-	elif inventory.visible and event.is_action_pressed("up"):
+	elif inventory.visible and event.is_action_pressed("up") and !inventory.check_menu_visibility_for_selected():
 		inventory.move_cursor("up")
-	elif inventory.visible and event.is_action_pressed("down"):
+	elif inventory.visible and event.is_action_pressed("down") and !inventory.check_menu_visibility_for_selected():
 		inventory.move_cursor("down")
 
 func _physics_process(delta):

@@ -5,6 +5,7 @@ var grid_pos = 0
 var cursor_pos = 0
 
 func add_item(item):
+	
 	item.reparent(get_child(grid_pos).get_child(item_count))
 	item.position = Vector2(26,39) 
 	item_count += 1
@@ -38,16 +39,16 @@ func sort():
 			earliest_empty_spot += 1
 
 func move_cursor(direction):
-	if direction == "right":
+	if direction == "right" and cursor_pos % 20 <= 18:
 		$ReferenceRect.position.x += 57.9
 		cursor_pos += 1
-	if direction == "left":
+	if direction == "left" and cursor_pos % 20 >= 1:
 		$ReferenceRect.position.x -= 57.9
 		cursor_pos -= 1
-	if direction == "up":
+	if direction == "up" and cursor_pos >=20:
 		$ReferenceRect.position.y -= 81.5
 		cursor_pos -= 20
-	if direction == "down":
+	if direction == "down" and cursor_pos <= 139:
 		$ReferenceRect.position.y += 81.5
 		cursor_pos += 20
 
@@ -63,4 +64,15 @@ func get_context_menu_for_selected():
 				selected.hide()
 			else:
 				selected.show()
+
+func check_menu_visibility_for_selected():
+	#some checking to see that it's a valid instance so no null pointers
+	if get_child(grid_pos).get_child(cursor_pos).get_child_count() > 0:
+		#Not only does it need to have a sprite but also a context menu...
+		if get_child(grid_pos).get_child(cursor_pos).get_child(0).get_child_count() > 1:
+			var selected = get_child(grid_pos).get_child(cursor_pos).get_child(0).get_child(1)
+			if selected.visible:
+				return true
+			else:
+				return false
 
