@@ -2,7 +2,7 @@ extends Node2D
 
 var seed_dict = {}
 
-@onready var hannah = $Map/Objects/Hannah
+@onready var hannah = $World/Objects/Hannah
 
 func _on_daytime_timeout():
 	$Daytime.paused = true
@@ -30,11 +30,11 @@ func _on_daytime_timeout():
 	remove_child(timer)
 
 func reset_watering_and_grow():
-	for c in $Map/TileMap.get_used_cells(0):
+	for c in $World/TileMap.get_used_cells(0):
 		if check_is_wet_tile(Vector2i(c.x, c.y)):
 			if get_seed_on_tile(Vector2i(c.x, c.y)):
 				get_seed_on_tile(Vector2i(c.x, c.y)).grow()
-			$Map/TileMap.set_cell(0, c, 0, Vector2(0, 0), 0)
+			$World/TileMap.set_cell(0, c, 0, Vector2(0, 0), 0)
 
 func _on_next_day_pressed():
 	next_day()
@@ -65,11 +65,11 @@ func next_day():
 ###hide it awayyyyyy
 
 func get_seed_on_tile(cell) -> Object:
-	if $Map/Seeds.get_child_count() > 0:
-		for s in $Map/Seeds.get_children():
+	if $World/Objects/Seeds.get_child_count() > 0:
+		for s in $World/Objects/Seeds.get_children():
 			if s.position == Vector2(cell * 64) + Vector2(32,32):
 				return s
 	return null
 
 func check_is_wet_tile(cell) -> bool:
-	return $Map/TileMap.get_cell_atlas_coords(0,Vector2i(cell.x, cell.y)) == Vector2i(0,0) and $Map/TileMap.get_cell_alternative_tile(0, Vector2i(cell.x, cell.y)) == 1
+	return $World/TileMap.get_cell_atlas_coords(0,Vector2i(cell.x, cell.y)) == Vector2i(0,0) and $World/TileMap.get_cell_alternative_tile(0, Vector2i(cell.x, cell.y)) == 1

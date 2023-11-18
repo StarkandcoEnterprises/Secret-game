@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://cpgxs3oiwfbtu"
-path="res://.godot/imported/CornSeed.png-bfa919fb96c7a8f5f192c7f9622ce3f4.ctex"
+uid="uid://nvesdbwq6kh8"
+path="res://.godot/imported/CornGrown.png-d6abb47460b18b07d23ba610ed213613.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/CornSeed.png"
-dest_files=["res://.godot/imported/CornSeed.png-bfa919fb96c7a8f5f192c7f9622ce3f4.ctex"]
+source_file="res://Art/Corn/CornGrown.png"
+dest_files=["res://.godot/imported/CornGrown.png-d6abb47460b18b07d23ba610ed213613.ctex"]
 
 [params]
 

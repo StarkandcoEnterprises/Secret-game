@@ -10,7 +10,7 @@ var equipped
 
 func _input(event):
 	#Here is inventory handling and not yet implemented raycast check 
-	if !inventory.visible and event.is_action_pressed("interact") and $RayCast2D.is_colliding():
+	if !inventory.visible and event.is_action_pressed("interact") and $RayCast2D.is_colliding() and $RayCast2D.get_collider().has_method("interact"):
 		$RayCast2D.get_collider().interact()
 	elif inventory.visible and event.is_action_pressed("interact"):
 		inventory.toggle_context_menu_for_selected()
@@ -65,17 +65,17 @@ func _physics_process(delta):
 
 func face_direction():
 	if direction == "left":
-		$Sprite2D.flip_v = true
+		$AnimatedSprite2D.flip_v = true
 		if get_child_count() == 4:
 			get_child(3).get_child(0).flip_v = true
 			get_child(3).position = Vector2(90, 18)
 	else:
-		$Sprite2D.flip_v = false
+		$AnimatedSprite2D.flip_v = false
 		if get_child_count() == 4:
 			get_child(3).get_child(0).flip_v = false
 			get_child(3).position = Vector2(90, -90)
-	var debug = 90*["right","down","left","up"].find(direction)
-	rotation_degrees = 90*["right","down","left","up"].find(direction)
+	if direction == "left" or direction == "right":
+		rotation_degrees = 90*["right","down","left","up"].find(direction)
 
 #Equip equipment - same notes as above refactor on inventory / equipment
 func _on_equip_pressed():

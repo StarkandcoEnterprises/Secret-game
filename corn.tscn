@@ -1,0 +1,16 @@
+[gd_scene load_steps=3 format=3 uid="uid://b3g3knxe0y3ls"]
+
+[ext_resource type="Texture2D" uid="uid://dhvg4migg4h36" path="res://Art/Corn/Corn.png" id="1_sqawj"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3uldy"]
+radius = 5.0
+height = 24.0531
+
+[node name="Corn" type="StaticBody2D"]
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_sqawj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+rotation = 0.794125
+shape = SubResource("CapsuleShape2D_3uldy")

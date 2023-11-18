@@ -1,8 +1,9 @@
-[gd_scene load_steps=28 format=3 uid="uid://btqhgaed1j0it"]
+[gd_scene load_steps=29 format=3 uid="uid://btqhgaed1j0it"]
 
 [ext_resource type="Script" path="res://Hannah.gd" id="1_8jlr8"]
 [ext_resource type="TileSet" uid="uid://dfphrrdav6xyo" path="res://main_tileset.tres" id="1_mwilu"]
 [ext_resource type="Script" path="res://main.gd" id="1_u1m27"]
+[ext_resource type="PackedScene" uid="uid://8bymefvq6l4k" path="res://cpu_particles_2d.tscn" id="2_evkgn"]
 [ext_resource type="Script" path="res://PlayerInventoryUI.gd" id="3_hwl7w"]
 [ext_resource type="Script" path="res://Equipment.gd" id="4_wj8jx"]
 [ext_resource type="Script" path="res://WorldObject.gd" id="5_4wxi4"]
@@ -13,41 +14,41 @@
 [ext_resource type="Theme" uid="uid://d2t4qqcop8je" path="res://dayover.tres" id="10_4t3d4"]
 [ext_resource type="Texture2D" uid="uid://bjxvmatrivj87" path="res://Art/WateringCan.png" id="11_mkq7h"]
 [ext_resource type="PackedScene" uid="uid://c6x74ewrfcmkw" path="res://planted_seed.tscn" id="12_0ae5x"]
-[ext_resource type="Texture2D" uid="uid://cpgxs3oiwfbtu" path="res://Art/Corn/CornSeed.png" id="13_hgisj"]
+[ext_resource type="Texture2D" uid="uid://cpgxs3oiwfbtu" path="res://Art/CornSeed.png" id="13_5weoo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ykaa3"]
 size = Vector2(24, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_cb7lw"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_jvjmh"]
 atlas = ExtResource("5_w4fn8")
-region = Rect2(50, 96, 90, 96)
+region = Rect2(0, 24, 48, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_qmkkm"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_orjdg"]
 atlas = ExtResource("5_w4fn8")
-region = Rect2(244, 96, 90, 96)
+region = Rect2(48, 24, 48, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_jfqlh"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_ax6r7"]
 atlas = ExtResource("5_w4fn8")
-region = Rect2(438, 96, 90, 96)
+region = Rect2(96, 24, 48, 24)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_2nhh1"]
+[sub_resource type="AtlasTexture" id="AtlasTexture_rtd3j"]
 atlas = ExtResource("5_w4fn8")
-region = Rect2(632, 96, 90, 96)
+region = Rect2(144, 24, 48, 24)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_nwrfh"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_cb7lw")
+"texture": SubResource("AtlasTexture_jvjmh")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qmkkm")
+"texture": SubResource("AtlasTexture_orjdg")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_jfqlh")
+"texture": SubResource("AtlasTexture_ax6r7")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_2nhh1")
+"texture": SubResource("AtlasTexture_rtd3j")
 }],
 "loop": true,
 "name": &"default",
@@ -84,9 +85,9 @@ Panel/styles/panel = SubResource("StyleBoxFlat_8ra61")
 [node name="Main" type="Node2D"]
 script = ExtResource("1_u1m27")
 
-[node name="World" type="Node2D" parent="."]
+[node name="Map" type="Node2D" parent="."]
 
-[node name="TileMap" type="TileMap" parent="World" groups=["Map"]]
+[node name="TileMap" type="TileMap" parent="Map" groups=["Map"]]
 tile_set = ExtResource("1_mwilu")
 format = 2
 layer_0/name = "Ground"
@@ -107,105 +108,107 @@ layer_2/y_sort_origin = 0
 layer_2/z_index = 0
 layer_2/tile_data = PackedInt32Array(393218, 655360, 3, 524295, 655360, 3, 131087, 655360, 3, 131081, 589824, 3, 458756, 589824, 3, 524303, 589824, 3, 262155, 720896, 3, 393223, 720896, 3, 393231, 589824, 1, 131089, 589824, 1)
 
-[node name="Objects" type="Node2D" parent="World"]
+[node name="CPUParticles2D" parent="Map" instance=ExtResource("2_evkgn")]
 
-[node name="Hannah" type="CharacterBody2D" parent="World/Objects" groups=["Hannah"]]
+[node name="Seeds" type="Node2D" parent="Map" groups=["SeedsParent"]]
+
+[node name="Objects" type="Node2D" parent="Map"]
+
+[node name="Hannah" type="CharacterBody2D" parent="Map/Objects" groups=["Hannah"]]
 position = Vector2(20, 20)
 script = ExtResource("1_8jlr8")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Objects/Hannah"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Objects/Hannah"]
 shape = SubResource("RectangleShape2D_ykaa3")
 
-[node name="RayCast2D" type="RayCast2D" parent="World/Objects/Hannah"]
+[node name="RayCast2D" type="RayCast2D" parent="Map/Objects/Hannah"]
 rotation = 4.71239
-collision_mask = 3
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="World/Objects/Hannah"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Map/Objects/Hannah"]
+scale = Vector2(1.5, 1.5)
 sprite_frames = SubResource("SpriteFrames_nwrfh")
 autoplay = "default"
 
-[node name="Item" type="StaticBody2D" parent="World/Objects" groups=["Item"]]
+[node name="Item" type="StaticBody2D" parent="Map/Objects" groups=["Item"]]
 position = Vector2(100, 50)
 
-[node name="Sprite2D" type="Sprite2D" parent="World/Objects/Item"]
+[node name="Sprite2D" type="Sprite2D" parent="Map/Objects/Item"]
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("7_x5kp1")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Objects/Item"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Objects/Item"]
 shape = SubResource("RectangleShape2D_ioq5r")
 
-[node name="Bed" type="StaticBody2D" parent="World/Objects"]
+[node name="Bed" type="StaticBody2D" parent="Map/Objects"]
 position = Vector2(900, 100)
 script = ExtResource("5_4wxi4")
 
-[node name="Sprite2D" type="Sprite2D" parent="World/Objects/Bed"]
+[node name="Sprite2D" type="Sprite2D" parent="Map/Objects/Bed"]
 texture = ExtResource("8_qbdht")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Objects/Bed"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Objects/Bed"]
 shape = SubResource("RectangleShape2D_nk1bm")
 
-[node name="Hoe" type="StaticBody2D" parent="World/Objects" groups=["Equipment", "Hoe", "Item"]]
+[node name="Hoe" type="StaticBody2D" parent="Map/Objects" groups=["Equipment", "Hoe", "Item"]]
 position = Vector2(200, 50)
 script = ExtResource("4_wj8jx")
 
-[node name="Sprite2D" type="Sprite2D" parent="World/Objects/Hoe"]
+[node name="Sprite2D" type="Sprite2D" parent="Map/Objects/Hoe"]
 texture = ExtResource("9_g8r5y")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Objects/Hoe"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Objects/Hoe"]
 shape = SubResource("RectangleShape2D_qppf5")
 
-[node name="ContextMenu" type="VBoxContainer" parent="World/Objects/Hoe"]
+[node name="ContextMenu" type="VBoxContainer" parent="Map/Objects/Hoe"]
 visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Equip" type="Button" parent="World/Objects/Hoe/ContextMenu"]
+[node name="Equip" type="Button" parent="Map/Objects/Hoe/ContextMenu"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Equip"
 
-[node name="WateringCan" type="StaticBody2D" parent="World/Objects" groups=["Equipment", "Hoe", "Item"]]
+[node name="WateringCan" type="StaticBody2D" parent="Map/Objects" groups=["Equipment", "Hoe", "Item"]]
 position = Vector2(400, 50)
 script = ExtResource("4_wj8jx")
 
-[node name="Sprite2D" type="Sprite2D" parent="World/Objects/WateringCan"]
+[node name="Sprite2D" type="Sprite2D" parent="Map/Objects/WateringCan"]
 texture = ExtResource("11_mkq7h")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Objects/WateringCan"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Objects/WateringCan"]
 shape = SubResource("RectangleShape2D_s24o5")
 
-[node name="ContextMenu" type="VBoxContainer" parent="World/Objects/WateringCan"]
+[node name="ContextMenu" type="VBoxContainer" parent="Map/Objects/WateringCan"]
 visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Equip" type="Button" parent="World/Objects/WateringCan/ContextMenu"]
+[node name="Equip" type="Button" parent="Map/Objects/WateringCan/ContextMenu"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Equip"
 
-[node name="CornSeed" type="StaticBody2D" parent="World/Objects" groups=["Equipment", "Hoe", "Item"]]
+[node name="CornSeed" type="StaticBody2D" parent="Map/Objects" groups=["Equipment", "Hoe", "Item"]]
 position = Vector2(400, 150)
 script = ExtResource("4_wj8jx")
 seed_scene = ExtResource("12_0ae5x")
 
-[node name="Sprite2D" type="Sprite2D" parent="World/Objects/CornSeed"]
-texture = ExtResource("13_hgisj")
+[node name="Sprite2D" type="Sprite2D" parent="Map/Objects/CornSeed"]
+texture = ExtResource("13_5weoo")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Objects/CornSeed"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Objects/CornSeed"]
 shape = SubResource("RectangleShape2D_j6h07")
 
-[node name="ContextMenu" type="VBoxContainer" parent="World/Objects/CornSeed"]
+[node name="ContextMenu" type="VBoxContainer" parent="Map/Objects/CornSeed"]
 visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Equip" type="Button" parent="World/Objects/CornSeed/ContextMenu"]
+[node name="Equip" type="Button" parent="Map/Objects/CornSeed/ContextMenu"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Equip"
-
-[node name="Seeds" type="Node2D" parent="World/Objects" groups=["SeedsParent"]]
 
 [node name="Daytime" type="Timer" parent="."]
 wait_time = 40.0
@@ -1303,10 +1306,10 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "No"
 
-[connection signal="pressed" from="World/Objects/Hoe/ContextMenu/Equip" to="World/Objects/Hannah" method="_on_equip_pressed"]
-[connection signal="pressed" from="World/Objects/WateringCan/ContextMenu/Equip" to="World/Objects/Hannah" method="_on_equip_pressed"]
-[connection signal="pressed" from="World/Objects/CornSeed/ContextMenu/Equip" to="World/Objects/Hannah" method="_on_equip_pressed"]
+[connection signal="pressed" from="Map/Objects/Hoe/ContextMenu/Equip" to="Map/Objects/Hannah" method="_on_equip_pressed"]
+[connection signal="pressed" from="Map/Objects/WateringCan/ContextMenu/Equip" to="Map/Objects/Hannah" method="_on_equip_pressed"]
+[connection signal="pressed" from="Map/Objects/CornSeed/ContextMenu/Equip" to="Map/Objects/Hannah" method="_on_equip_pressed"]
 [connection signal="timeout" from="Daytime" to="." method="_on_daytime_timeout"]
 [connection signal="pressed" from="UI/DayOverUI/NextDay" to="." method="_on_next_day_pressed"]
-[connection signal="pressed" from="UI/DialogueUI/DialoguePanel/Yes" to="World/Objects/Bed" method="_on_yes_pressed"]
-[connection signal="pressed" from="UI/DialogueUI/DialoguePanel/No" to="World/Objects/Bed" method="_on_no_pressed"]
+[connection signal="pressed" from="UI/DialogueUI/DialoguePanel/Yes" to="Map/Objects/Bed" method="_on_yes_pressed"]
+[connection signal="pressed" from="UI/DialogueUI/DialoguePanel/No" to="Map/Objects/Bed" method="_on_no_pressed"]
