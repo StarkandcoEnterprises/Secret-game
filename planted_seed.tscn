@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://c6x74ewrfcmkw"]
+
+[ext_resource type="Script" path="res://planted_seed.gd" id="1_itfta"]
+[ext_resource type="Texture2D" uid="uid://n1wyyh5v8uce" path="res://Art/PlantedSeed.png" id="1_vqiah"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lur78"]
+size = Vector2(24, 24)
+
+[node name="PlantedSeed" type="StaticBody2D" groups=["WorldObject"]]
+position = Vector2(200, 400)
+collision_layer = 2
+script = ExtResource("1_itfta")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_vqiah")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_lur78")

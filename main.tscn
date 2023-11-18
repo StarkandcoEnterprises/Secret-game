@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://btqhgaed1j0it"]
+[gd_scene load_steps=24 format=3 uid="uid://btqhgaed1j0it"]
 
 [ext_resource type="Script" path="res://Hannah.gd" id="1_8jlr8"]
 [ext_resource type="TileSet" uid="uid://dfphrrdav6xyo" path="res://main_tileset.tres" id="1_mwilu"]
@@ -13,6 +13,8 @@
 [ext_resource type="Texture2D" uid="uid://cm6xs5htqrshd" path="res://Art/hoe.png" id="9_g8r5y"]
 [ext_resource type="Theme" uid="uid://d2t4qqcop8je" path="res://dayover.tres" id="10_4t3d4"]
 [ext_resource type="Texture2D" uid="uid://bjxvmatrivj87" path="res://Art/WateringCan.png" id="11_mkq7h"]
+[ext_resource type="PackedScene" uid="uid://c6x74ewrfcmkw" path="res://planted_seed.tscn" id="12_0ae5x"]
+[ext_resource type="Texture2D" uid="uid://cpgxs3oiwfbtu" path="res://Art/CornSeed.png" id="13_5weoo"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ykaa3"]
 size = Vector2(64, 64)
@@ -30,7 +32,7 @@ size = Vector2(38, 51)
 size = Vector2(51, 38)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j6h07"]
-size = Vector2(26, 77)
+size = Vector2(32, 32)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ra61"]
 bg_color = Color(0.101961, 0.0392157, 0.00784314, 1)
@@ -71,6 +73,8 @@ layer_2/z_index = 0
 layer_2/tile_data = PackedInt32Array(393218, 655360, 3, 524295, 655360, 3, 131087, 655360, 3, 131081, 589824, 3, 458756, 589824, 3, 524303, 589824, 3, 262155, 720896, 3, 393223, 720896, 3, 393231, 589824, 1, 131089, 589824, 1)
 
 [node name="CPUParticles2D" parent="Map" instance=ExtResource("2_evkgn")]
+
+[node name="Seeds" type="Node2D" parent="Map" groups=["SeedsParent"]]
 
 [node name="Objects" type="Node2D" parent="Map"]
 
@@ -147,36 +151,26 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Equip"
 
-[node name="Seed" type="StaticBody2D" parent="Map/Objects" groups=["Equipment", "Hoe", "Item"]]
+[node name="CornSeed" type="StaticBody2D" parent="Map/Objects" groups=["Equipment", "Hoe", "Item"]]
 position = Vector2(400, 150)
 script = ExtResource("4_wj8jx")
+seed_scene = ExtResource("12_0ae5x")
 
-[node name="Sprite2D" type="Sprite2D" parent="Map/Objects/Seed"]
-scale = Vector2(0.2, 0.6)
-texture = ExtResource("7_x5kp1")
+[node name="Sprite2D" type="Sprite2D" parent="Map/Objects/CornSeed"]
+texture = ExtResource("13_5weoo")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Objects/Seed"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Objects/CornSeed"]
 shape = SubResource("RectangleShape2D_j6h07")
 
-[node name="ContextMenu" type="VBoxContainer" parent="Map/Objects/Seed"]
+[node name="ContextMenu" type="VBoxContainer" parent="Map/Objects/CornSeed"]
 visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Equip" type="Button" parent="Map/Objects/Seed/ContextMenu"]
+[node name="Equip" type="Button" parent="Map/Objects/CornSeed/ContextMenu"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Equip"
-
-[node name="Seed" type="Label" parent="Map/Objects/Seed"]
-offset_left = 14.0
-offset_top = -18.0
-offset_right = 100.0
-offset_bottom = 11.0
-rotation = 1.5708
-theme_override_colors/font_color = Color(0, 0, 0, 1)
-theme_override_font_sizes/font_size = 18
-text = "Seed"
 
 [node name="Daytime" type="Timer" parent="."]
 wait_time = 40.0
@@ -1276,7 +1270,7 @@ text = "No"
 
 [connection signal="pressed" from="Map/Objects/Hoe/ContextMenu/Equip" to="Map/Objects/Hannah" method="_on_equip_pressed"]
 [connection signal="pressed" from="Map/Objects/WateringCan/ContextMenu/Equip" to="Map/Objects/Hannah" method="_on_equip_pressed"]
-[connection signal="pressed" from="Map/Objects/Seed/ContextMenu/Equip" to="Map/Objects/Hannah" method="_on_equip_pressed"]
+[connection signal="pressed" from="Map/Objects/CornSeed/ContextMenu/Equip" to="Map/Objects/Hannah" method="_on_equip_pressed"]
 [connection signal="timeout" from="Daytime" to="." method="_on_daytime_timeout"]
 [connection signal="pressed" from="UI/DayOverUI/NextDay" to="." method="_on_next_day_pressed"]
 [connection signal="pressed" from="UI/DialogueUI/DialoguePanel/Yes" to="Map/Objects/Bed" method="_on_yes_pressed"]
