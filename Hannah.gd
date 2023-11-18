@@ -11,7 +11,7 @@ var equipped
 func _input(event):
 	#Here is inventory handling and not yet implemented raycast check 
 	if !inventory.visible and event.is_action_pressed("interact") and $RayCast2D.is_colliding():
-		pass #TODO some interact call on world objects here
+		$RayCast2D.get_collider().interact()
 	elif inventory.visible and event.is_action_pressed("interact"):
 		inventory.toggle_context_menu_for_selected()
 	elif event.is_action_pressed("inventory"):

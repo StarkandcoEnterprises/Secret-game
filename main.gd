@@ -2,17 +2,31 @@ extends Node2D
 
 var seed_dict = {}
 
+@onready var hannah = $Map/Objects/Hannah
 
 func _on_daytime_timeout():
-	$Hannah.inventory.visible = false
-	if $Hannah.inventory.check_menu_visibility_for_selected():
-		$Hannah.inventory.toggle_context_menu_for_selected()
-	$Hannah.process_mode = 4
-	$DayOver.visible = true
-	$DayOver/NextDay.visible = true
+	$Daytime.paused = true
+	
+	$UI/DayOverUI.visible = true
+	
+	hannah.inventory.visible = false
+	
+	if hannah.inventory.check_menu_visibility_for_selected():
+		hannah.inventory.toggle_context_menu_for_selected()
+	
+	hannah.process_mode = 4
+	
 	var tween = get_tree().create_tween()
-	tween.tween_property($DayOver/ColorRect, "modulate", Color(0,0,0,1), 1)
+	tween.tween_property($UI/DayOverUI/ColorRect, "modulate", Color(0,0,0,1), 1)
 	tween.play()
+	
+	var timer = Timer.new()
+	timer.one_shot = true
+	add_child(timer)
+	timer.start()
+	
+	await timer.timeout
+	$UI/DayOverUI/NextDay.visible = true
 
 func reset_watering():
 	for c in $Map/TileMap.get_used_cells(0):
@@ -23,12 +37,13 @@ func reset_watering():
 
 func _on_next_day_pressed():
 	next_day()
-	$DayOver/NextDay.visible = false
+	$UI/DayOverUI/NextDay.visible = false
 
 func next_day():
 	reset_watering()
+	
 	var tween = get_tree().create_tween()
-	tween.tween_property($DayOver/ColorRect, "modulate", Color(0,0,0,0), 1)
+	tween.tween_property($UI/DayOverUI/ColorRect, "modulate", Color(0,0,0,0), 1)
 	tween.play()
 	
 	var timer = Timer.new()
@@ -37,8 +52,11 @@ func next_day():
 	timer.start()
 	
 	await timer.timeout
-	$Hannah.process_mode = 0
-	$DayOver.visible = false
+	
+	hannah.process_mode = 0
+	$UI/DayOverUI.visible = false
+	$Daytime.wait_time = 20
+	$Daytime.paused = false
 	$Daytime.start()
 	
 	remove_child(timer)

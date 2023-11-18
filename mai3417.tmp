@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://btqhgaed1j0it"]
+[gd_scene load_steps=17 format=3 uid="uid://btqhgaed1j0it"]
 
 [ext_resource type="Script" path="res://Hannah.gd" id="1_8jlr8"]
 [ext_resource type="TileSet" uid="uid://dfphrrdav6xyo" path="res://main_tileset.tres" id="1_mwilu"]
@@ -12,25 +12,12 @@
 [ext_resource type="Texture2D" uid="uid://b8sxywscmeyf4" path="res://Art/Bed.png" id="8_qbdht"]
 [ext_resource type="Texture2D" uid="uid://cm6xs5htqrshd" path="res://Art/hoe.png" id="9_g8r5y"]
 [ext_resource type="Theme" uid="uid://d2t4qqcop8je" path="res://dayover.tres" id="10_4t3d4"]
-[ext_resource type="Texture2D" uid="uid://bjxvmatrivj87" path="res://Art/WateringCan.png" id="11_mkq7h"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ykaa3"]
 size = Vector2(64, 64)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ioq5r"]
-size = Vector2(26, 26)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_nk1bm"]
-size = Vector2(64, 128)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qppf5"]
-size = Vector2(38, 51)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_s24o5"]
 size = Vector2(51, 38)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_j6h07"]
-size = Vector2(26, 77)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ra61"]
 bg_color = Color(0.101961, 0.0392157, 0.00784314, 1)
@@ -82,9 +69,11 @@ scale = Vector2(0.5, 0.5)
 texture = ExtResource("5_q66hr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Objects/Hannah"]
+visible = false
 shape = SubResource("RectangleShape2D_ykaa3")
 
 [node name="RayCast2D" type="RayCast2D" parent="Map/Objects/Hannah"]
+visible = false
 rotation = 4.71239
 
 [node name="Item" type="StaticBody2D" parent="Map/Objects" groups=["Item"]]
@@ -95,6 +84,7 @@ scale = Vector2(0.2, 0.2)
 texture = ExtResource("7_x5kp1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Objects/Item"]
+visible = false
 shape = SubResource("RectangleShape2D_ioq5r")
 
 [node name="Bed" type="StaticBody2D" parent="Map/Objects"]
@@ -105,7 +95,8 @@ script = ExtResource("5_4wxi4")
 texture = ExtResource("8_qbdht")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Objects/Bed"]
-shape = SubResource("RectangleShape2D_nk1bm")
+visible = false
+shape = SubResource("RectangleShape2D_ioq5r")
 
 [node name="Hoe" type="StaticBody2D" parent="Map/Objects" groups=["Equipment", "Hoe", "Item"]]
 position = Vector2(200, 50)
@@ -115,7 +106,8 @@ script = ExtResource("4_wj8jx")
 texture = ExtResource("9_g8r5y")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Objects/Hoe"]
-shape = SubResource("RectangleShape2D_qppf5")
+visible = false
+shape = SubResource("RectangleShape2D_ioq5r")
 
 [node name="ContextMenu" type="VBoxContainer" parent="Map/Objects/Hoe"]
 visible = false
@@ -132,10 +124,12 @@ position = Vector2(400, 50)
 script = ExtResource("4_wj8jx")
 
 [node name="Sprite2D" type="Sprite2D" parent="Map/Objects/WateringCan"]
-texture = ExtResource("11_mkq7h")
+scale = Vector2(0.4, 0.3)
+texture = ExtResource("7_x5kp1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Objects/WateringCan"]
-shape = SubResource("RectangleShape2D_s24o5")
+visible = false
+shape = SubResource("RectangleShape2D_ioq5r")
 
 [node name="ContextMenu" type="VBoxContainer" parent="Map/Objects/WateringCan"]
 visible = false
@@ -147,6 +141,16 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Equip"
 
+[node name="WaterCan" type="Label" parent="Map/Objects/WateringCan"]
+offset_left = 14.0
+offset_top = -38.0
+offset_right = 100.0
+offset_bottom = -9.0
+rotation = 1.5708
+theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_font_sizes/font_size = 18
+text = "WaterCan"
+
 [node name="Seed" type="StaticBody2D" parent="Map/Objects" groups=["Equipment", "Hoe", "Item"]]
 position = Vector2(400, 150)
 script = ExtResource("4_wj8jx")
@@ -156,7 +160,8 @@ scale = Vector2(0.2, 0.6)
 texture = ExtResource("7_x5kp1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Objects/Seed"]
-shape = SubResource("RectangleShape2D_j6h07")
+visible = false
+shape = SubResource("RectangleShape2D_ioq5r")
 
 [node name="ContextMenu" type="VBoxContainer" parent="Map/Objects/Seed"]
 visible = false
@@ -179,7 +184,7 @@ theme_override_font_sizes/font_size = 18
 text = "Seed"
 
 [node name="Daytime" type="Timer" parent="."]
-wait_time = 40.0
+wait_time = 20.0
 one_shot = true
 autostart = true
 
@@ -1180,6 +1185,8 @@ layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_right = 1152.0
+offset_bottom = 648.0
 grow_horizontal = 2
 grow_vertical = 2
 
@@ -1194,7 +1201,6 @@ grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
 [node name="NextDay" type="Button" parent="UI/DayOverUI"]
-visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5

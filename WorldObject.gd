@@ -2,11 +2,26 @@ extends StaticBody2D
 
 class_name WorldObject
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
+func interact():
+	if name == "Bed":
+		sleep_prompt()
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func sleep_prompt():
+	$"../../../UI/DialogueUI".visible = true
+	$"../../../UI/DialogueUI/DialoguePanel/Text".text = "Would you like to go to sleep?"
+	$"../../../UI/DialogueUI/DialoguePanel/Yes".visible = true
+	$"../../../UI/DialogueUI/DialoguePanel/No".visible = true
+
+func _on_no_pressed():
+	if name == "Bed":
+		$"../../../UI/DialogueUI".visible = false
+		$"../../../UI/DialogueUI/DialoguePanel/Yes".visible = false
+		$"../../../UI/DialogueUI/DialoguePanel/No".visible = false
+
+func _on_yes_pressed():
+	if name == "Bed":
+		$"../../.."._on_daytime_timeout()
+		$"../../../UI/DialogueUI".visible = false
+		$"../../../UI/DialogueUI/DialoguePanel/Yes".visible = false
+		$"../../../UI/DialogueUI/DialoguePanel/No".visible = false
