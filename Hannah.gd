@@ -65,17 +65,17 @@ func _physics_process(delta):
 
 func face_direction():
 	if direction == "left":
-		$AnimatedSprite2D.flip_v = true
+		$AnimatedSprite2D.flip_h = true
 		if get_child_count() == 4:
-			get_child(3).get_child(0).flip_v = true
+			get_child(3).get_child(0).flip_h = true
 			get_child(3).position = Vector2(90, 18)
 	else:
-		$AnimatedSprite2D.flip_v = false
+		$AnimatedSprite2D.flip_h = false
 		if get_child_count() == 4:
-			get_child(3).get_child(0).flip_v = false
+			get_child(3).get_child(0).flip_h = false
 			get_child(3).position = Vector2(90, -90)
-	if direction == "left" or direction == "right":
-		rotation_degrees = 90*["right","down","left","up"].find(direction)
+	
+	$RayCast2D.rotation_degrees = 90*["down","left","up","right"].find(direction)
 
 #Equip equipment - same notes as above refactor on inventory / equipment
 func _on_equip_pressed():

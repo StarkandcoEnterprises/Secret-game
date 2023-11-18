@@ -5,7 +5,11 @@ class_name WorldObject
 func interact():
 	if name == "Bed":
 		sleep_prompt()
+	if name == "Crate":
+		crate_interaction()
 
+func crate_interaction():
+	pass
 
 func sleep_prompt():
 	$"../../../UI/DialogueUI".visible = true

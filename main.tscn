@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://btqhgaed1j0it"]
+[gd_scene load_steps=30 format=3 uid="uid://btqhgaed1j0it"]
 
 [ext_resource type="Script" path="res://Hannah.gd" id="1_8jlr8"]
 [ext_resource type="TileSet" uid="uid://dfphrrdav6xyo" path="res://main_tileset.tres" id="1_mwilu"]
@@ -13,10 +13,8 @@
 [ext_resource type="Theme" uid="uid://d2t4qqcop8je" path="res://dayover.tres" id="10_4t3d4"]
 [ext_resource type="Texture2D" uid="uid://bjxvmatrivj87" path="res://Art/WateringCan.png" id="11_mkq7h"]
 [ext_resource type="PackedScene" uid="uid://c6x74ewrfcmkw" path="res://planted_seed.tscn" id="12_0ae5x"]
+[ext_resource type="Texture2D" uid="uid://bopbscsbdwhch" path="res://Art/Crate.png" id="13_haq3d"]
 [ext_resource type="Texture2D" uid="uid://cpgxs3oiwfbtu" path="res://Art/Corn/CornSeed.png" id="13_hgisj"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ykaa3"]
-size = Vector2(24, 24)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cb7lw"]
 atlas = ExtResource("5_w4fn8")
@@ -54,6 +52,9 @@ animations = [{
 "speed": 5.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ykaa3"]
+size = Vector2(64, 80)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ioq5r"]
 size = Vector2(26, 26)
 
@@ -68,6 +69,9 @@ size = Vector2(51, 38)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j6h07"]
 size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lwi1o"]
+size = Vector2(128, 64)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ra61"]
 bg_color = Color(0.101961, 0.0392157, 0.00784314, 1)
@@ -109,20 +113,24 @@ layer_2/tile_data = PackedInt32Array(393218, 655360, 3, 524295, 655360, 3, 13108
 
 [node name="Objects" type="Node2D" parent="World"]
 
+[node name="Seeds" type="Node2D" parent="World/Objects" groups=["SeedsParent"]]
+
 [node name="Hannah" type="CharacterBody2D" parent="World/Objects" groups=["Hannah"]]
 position = Vector2(20, 20)
 script = ExtResource("1_8jlr8")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="World/Objects/Hannah"]
+sprite_frames = SubResource("SpriteFrames_nwrfh")
+autoplay = "default"
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="World/Objects/Hannah"]
+position = Vector2(1, 4)
 shape = SubResource("RectangleShape2D_ykaa3")
 
 [node name="RayCast2D" type="RayCast2D" parent="World/Objects/Hannah"]
 rotation = 4.71239
+scale = Vector2(1, 2)
 collision_mask = 3
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="World/Objects/Hannah"]
-sprite_frames = SubResource("SpriteFrames_nwrfh")
-autoplay = "default"
 
 [node name="Item" type="StaticBody2D" parent="World/Objects" groups=["Item"]]
 position = Vector2(100, 50)
@@ -205,7 +213,15 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Equip"
 
-[node name="Seeds" type="Node2D" parent="World/Objects" groups=["SeedsParent"]]
+[node name="Crate" type="StaticBody2D" parent="World/Objects"]
+position = Vector2(700, 500)
+script = ExtResource("5_4wxi4")
+
+[node name="Sprite2D" type="Sprite2D" parent="World/Objects/Crate"]
+texture = ExtResource("13_haq3d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Objects/Crate"]
+shape = SubResource("RectangleShape2D_lwi1o")
 
 [node name="Daytime" type="Timer" parent="."]
 wait_time = 40.0
