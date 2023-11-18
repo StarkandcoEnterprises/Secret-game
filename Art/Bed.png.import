@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8yk6rpq7kpny"
-path="res://.godot/imported/NEVER REMOVE.png-6aafa67f26c0c68ef0f5638270f0eda1.ctex"
+uid="uid://b8sxywscmeyf4"
+path="res://.godot/imported/Bed.png-06a65beaf60b336db70ec28bd264fa61.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://NEVER REMOVE.png"
-dest_files=["res://.godot/imported/NEVER REMOVE.png-6aafa67f26c0c68ef0f5638270f0eda1.ctex"]
+source_file="res://Art/Bed.png"
+dest_files=["res://.godot/imported/Bed.png-06a65beaf60b336db70ec28bd264fa61.ctex"]
 
 [params]
 

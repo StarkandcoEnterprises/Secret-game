@@ -1,15 +1,16 @@
-[gd_scene load_steps=14 format=3 uid="uid://btqhgaed1j0it"]
+[gd_scene load_steps=15 format=3 uid="uid://btqhgaed1j0it"]
 
 [ext_resource type="Script" path="res://Hannah.gd" id="1_8jlr8"]
 [ext_resource type="TileSet" uid="uid://dfphrrdav6xyo" path="res://main_tileset.tres" id="1_mwilu"]
 [ext_resource type="Script" path="res://main.gd" id="1_u1m27"]
 [ext_resource type="PackedScene" uid="uid://8bymefvq6l4k" path="res://cpu_particles_2d.tscn" id="2_evkgn"]
 [ext_resource type="Script" path="res://PlayerInventoryUI.gd" id="3_hwl7w"]
-[ext_resource type="Texture2D" uid="uid://cn0j6m8x6njyo" path="res://icon.svg" id="3_tecxe"]
 [ext_resource type="Script" path="res://Equipment.gd" id="4_wj8jx"]
-[ext_resource type="Script" path="res://Item.gd" id="5_4wxi4"]
-[ext_resource type="Texture2D" uid="uid://c8yk6rpq7kpny" path="res://NEVER REMOVE.png" id="5_j10ho"]
-[ext_resource type="Texture2D" uid="uid://cm6xs5htqrshd" path="res://hoe.png" id="9_iktkg"]
+[ext_resource type="Script" path="res://WorldObject.gd" id="5_4wxi4"]
+[ext_resource type="Texture2D" uid="uid://c8yk6rpq7kpny" path="res://Art/NEVER REMOVE.png" id="5_q66hr"]
+[ext_resource type="Texture2D" uid="uid://cn0j6m8x6njyo" path="res://Art/icon.svg" id="7_x5kp1"]
+[ext_resource type="Texture2D" uid="uid://b8sxywscmeyf4" path="res://Art/Bed.png" id="8_qbdht"]
+[ext_resource type="Texture2D" uid="uid://cm6xs5htqrshd" path="res://Art/hoe.png" id="9_g8r5y"]
 [ext_resource type="Theme" uid="uid://d2t4qqcop8je" path="res://dayover.tres" id="10_4t3d4"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ykaa3"]
@@ -51,7 +52,7 @@ script = ExtResource("1_8jlr8")
 
 [node name="Sprite2D" type="Sprite2D" parent="Hannah"]
 scale = Vector2(0.5, 0.5)
-texture = ExtResource("5_j10ho")
+texture = ExtResource("5_q66hr")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hannah"]
 visible = false
@@ -63,13 +64,23 @@ rotation = 4.71239
 
 [node name="Item" type="StaticBody2D" parent="." groups=["Item"]]
 position = Vector2(100, 50)
-script = ExtResource("5_4wxi4")
 
 [node name="Sprite2D" type="Sprite2D" parent="Item"]
 scale = Vector2(0.2, 0.2)
-texture = ExtResource("3_tecxe")
+texture = ExtResource("7_x5kp1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Item"]
+visible = false
+shape = SubResource("RectangleShape2D_ioq5r")
+
+[node name="Bed" type="StaticBody2D" parent="."]
+position = Vector2(900, 100)
+script = ExtResource("5_4wxi4")
+
+[node name="Sprite2D" type="Sprite2D" parent="Bed"]
+texture = ExtResource("8_qbdht")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Bed"]
 visible = false
 shape = SubResource("RectangleShape2D_ioq5r")
 
@@ -78,7 +89,7 @@ position = Vector2(200, 50)
 script = ExtResource("4_wj8jx")
 
 [node name="Sprite2D" type="Sprite2D" parent="Hoe"]
-texture = ExtResource("9_iktkg")
+texture = ExtResource("9_g8r5y")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hoe"]
 visible = false
@@ -100,7 +111,7 @@ script = ExtResource("4_wj8jx")
 
 [node name="Sprite2D" type="Sprite2D" parent="WateringCan"]
 scale = Vector2(0.4, 0.3)
-texture = ExtResource("3_tecxe")
+texture = ExtResource("7_x5kp1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WateringCan"]
 visible = false
@@ -132,7 +143,7 @@ script = ExtResource("4_wj8jx")
 
 [node name="Sprite2D" type="Sprite2D" parent="Seed"]
 scale = Vector2(0.2, 0.6)
-texture = ExtResource("3_tecxe")
+texture = ExtResource("7_x5kp1")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Seed"]
 visible = false

@@ -1,10 +1,10 @@
 [gd_resource type="TileSet" load_steps=5 format=3 uid="uid://dfphrrdav6xyo"]
 
-[ext_resource type="Texture2D" uid="uid://c40jl31rwwkwi" path="res://using_tilesets_kenney_abstract_platformer_tile_sheet_alt.png" id="1_5dexr"]
+[ext_resource type="Texture2D" uid="uid://c40jl31rwwkwi" path="res://Art/using_tilesets_kenney_abstract_platformer_tile_sheet_alt.png" id="1_8dqrj"]
 [ext_resource type="PackedScene" uid="uid://8bymefvq6l4k" path="res://cpu_particles_2d.tscn" id="2_efwnd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t42w8"]
-texture = ExtResource("1_5dexr")
+texture = ExtResource("1_8dqrj")
 texture_region_size = Vector2i(64, 64)
 0:0/next_alternative_id = 3
 0:0/0 = 0
