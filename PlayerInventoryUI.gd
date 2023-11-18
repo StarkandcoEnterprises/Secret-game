@@ -52,18 +52,19 @@ func move_cursor(direction):
 		$ReferenceRect.position.y += 81.5
 		cursor_pos += 20
 
-func get_context_menu_for_selected():
-	#some checking to see that it's a valid instance so no null pointers
+func toggle_context_menu_for_selected():
+	#some checking to see that cursor position is not empty so no null pointers
 	if get_child(grid_pos).get_child(cursor_pos).get_child_count() > 0:
-		#Not only does it need to have a sprite but also a context menu...
+		#It has a sprite. But not only does it need to have a sprite, it also needs a context menu...
 		if get_child(grid_pos).get_child(cursor_pos).get_child(0).get_child_count() > 1:
 			#Don't want our cursor getting in the way of the mouse (Bad scene layout I presume)
-			$ReferenceRect.hide()
 			var selected = get_child(grid_pos).get_child(cursor_pos).get_child(0).get_child(1)
 			if selected.visible:
+				$ReferenceRect.show()
 				selected.hide()
 			else:
 				selected.show()
+				$ReferenceRect.hide()
 
 func check_menu_visibility_for_selected():
 	#some checking to see that it's a valid instance so no null pointers

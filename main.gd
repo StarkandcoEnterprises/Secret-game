@@ -6,7 +6,7 @@ var seed_dict = {}
 func _on_daytime_timeout():
 	$Hannah.inventory.visible = false
 	if $Hannah.inventory.check_menu_visibility_for_selected():
-		$Hannah.inventory.get_context_menu_for_selected()
+		$Hannah.inventory.toggle_context_menu_for_selected()
 	$Hannah.process_mode = 4
 	$DayOver.visible = true
 	$DayOver/NextDay.visible = true

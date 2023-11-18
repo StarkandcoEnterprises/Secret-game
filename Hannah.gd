@@ -13,10 +13,12 @@ func _input(event):
 	if !inventory.visible and event.is_action_pressed("interact") and $RayCast2D.is_colliding():
 		pass #TODO some interact call on world objects here
 	elif inventory.visible and event.is_action_pressed("interact"):
-		inventory.get_context_menu_for_selected()
+		inventory.toggle_context_menu_for_selected()
 	elif event.is_action_pressed("inventory"):
 		if inventory.visible:
-			inventory.hide() 
+			inventory.hide()
+			if inventory.check_menu_visibility_for_selected():
+				inventory.toggle_context_menu_for_selected()
 		else:
 			inventory.show()
 	elif inventory.visible and event.is_action_pressed("right") and !inventory.check_menu_visibility_for_selected():
@@ -80,7 +82,7 @@ func _on_equip_pressed():
 	if equipped: 
 		inventory.add_item(equipped)
 	equipped = inventory.get_child(inventory.grid_pos).get_child(inventory.cursor_pos).get_child(0)
-	inventory.get_context_menu_for_selected()
+	inventory.toggle_context_menu_for_selected()
 	inventory.remove_item(equipped, self)
 	inventory.get_child(1).show()
 	if direction == "left":
