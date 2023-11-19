@@ -77,3 +77,5 @@ func check_menu_visibility_for_selected():
 			else:
 				return false
 
+func _on_throw_away_pressed():
+	delete_item(cursor_pos)

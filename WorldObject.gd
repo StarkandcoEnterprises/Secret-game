@@ -16,6 +16,9 @@ func interact():
 func crate_interaction():
 	pass
 
+func end_interaction():
+	$"../Hannah".interacting = false
+
 func sleep_prompt():
 	toggle_UI_visibility()
 	toggle_option_visibility()
@@ -25,12 +28,14 @@ func _on_no_pressed():
 	if name == "Bed":
 		toggle_UI_visibility()
 		toggle_option_visibility()
+	end_interaction()
 
 func _on_yes_pressed():
 	if name == "Bed":
 		main._on_daytime_timeout()
 		toggle_UI_visibility()
 		toggle_option_visibility()
+	end_interaction()
 
 func update_text(newText: String):
 	label.text = newText

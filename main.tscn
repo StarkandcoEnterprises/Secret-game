@@ -154,6 +154,17 @@ texture = ExtResource("7_x5kp1")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Item"]
 shape = SubResource("RectangleShape2D_ioq5r")
 
+[node name="ContextMenu" type="VBoxContainer" parent="SubViewportContainer/SubViewport/World/Objects/Item"]
+visible = false
+offset_left = 100.0
+offset_right = 140.0
+offset_bottom = 40.0
+
+[node name="Throw Away" type="Button" parent="SubViewportContainer/SubViewport/World/Objects/Item/ContextMenu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Equip"
+
 [node name="Bed" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects"]
 position = Vector2(900, 100)
 script = ExtResource("5_4wxi4")
@@ -221,6 +232,11 @@ offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Equip" type="Button" parent="SubViewportContainer/SubViewport/World/Objects/CornSeed/ContextMenu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Equip"
+
+[node name="Throw Away2" type="Button" parent="SubViewportContainer/SubViewport/World/Objects/CornSeed/ContextMenu"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Equip"
@@ -1327,9 +1343,11 @@ grow_vertical = 0
 text = "No"
 
 [connection signal="timeout" from="Daytime" to="." method="_on_daytime_timeout"]
+[connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects/Item/ContextMenu/Throw Away" to="UI/PlayerInventoryUI" method="_on_throw_away_pressed"]
 [connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects/Hoe/ContextMenu/Equip" to="SubViewportContainer/SubViewport/World/Objects/Hannah" method="_on_equip_pressed"]
 [connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects/WateringCan/ContextMenu/Equip" to="SubViewportContainer/SubViewport/World/Objects/Hannah" method="_on_equip_pressed"]
 [connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects/CornSeed/ContextMenu/Equip" to="SubViewportContainer/SubViewport/World/Objects/Hannah" method="_on_equip_pressed"]
+[connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects/CornSeed/ContextMenu/Throw Away2" to="UI/PlayerInventoryUI" method="_on_throw_away_pressed"]
 [connection signal="pressed" from="UI/DayOverUI/NextDay" to="." method="_on_next_day_pressed"]
 [connection signal="pressed" from="UI/DialogueUI/DialoguePanel/Options/Yes" to="SubViewportContainer/SubViewport/World/Objects/Bed" method="_on_yes_pressed"]
 [connection signal="pressed" from="UI/DialogueUI/DialoguePanel/Options/No" to="SubViewportContainer/SubViewport/World/Objects/Bed" method="_on_no_pressed"]

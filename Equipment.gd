@@ -24,14 +24,14 @@ func use(direction, delta):
 		if !item_kept: queue_free()
 	return item_kept
 
-func use_hoe(direction, delta):
+func use_hoe(facingLeft, delta):
 	var tile_pos = get_tile_pos()
 	for layer in map.get_layers_count():
 		if map.get_layer_name(layer) == "Ground":
 			#Grass to tilled ground
 			if map.get_cell_atlas_coords(layer,tile_pos) == Vector2i(16, 5):
 				map.set_cell(layer, tile_pos, 0, Vector2(0, 0))
-	rotate_tool(direction, delta)
+	rotate_tool(facingLeft, delta)
 
 func use_watering_can():
 	var tile_pos = get_tile_pos()
@@ -52,8 +52,8 @@ func plant_seed() -> bool:
 			seed_kept = false
 	return seed_kept
 
-func rotate_tool(direction, delta):
-	if direction == "left":
+func rotate_tool(facingLeft, delta):
+	if facingLeft:
 		rotation_degrees = lerp(rotation_degrees + 60, rotation_degrees, 5 * delta)
 		if rotation_degrees >= 150:
 			rotation_degrees = 0
