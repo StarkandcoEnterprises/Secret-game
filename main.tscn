@@ -88,9 +88,21 @@ Panel/styles/panel = SubResource("StyleBoxFlat_8ra61")
 [node name="Main" type="Node2D"]
 script = ExtResource("1_u1m27")
 
-[node name="World" type="Node2D" parent="."]
+[node name="Daytime" type="Timer" parent="."]
+wait_time = 40.0
+one_shot = true
+autostart = true
 
-[node name="TileMap" type="TileMap" parent="World" groups=["Map"]]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+size = Vector2i(1152, 648)
+
+[node name="World" type="Node2D" parent="SubViewportContainer/SubViewport"]
+
+[node name="TileMap" type="TileMap" parent="SubViewportContainer/SubViewport/World" groups=["Map"]]
 tile_set = ExtResource("1_mwilu")
 format = 2
 layer_0/name = "Ground"
@@ -111,128 +123,119 @@ layer_2/y_sort_origin = 0
 layer_2/z_index = 0
 layer_2/tile_data = PackedInt32Array(393218, 655360, 3, 524295, 655360, 3, 131087, 655360, 3, 131081, 589824, 3, 458756, 589824, 3, 524303, 589824, 3, 262155, 720896, 3, 393223, 720896, 3, 393231, 589824, 1, 131089, 589824, 1)
 
-[node name="Objects" type="Node2D" parent="World"]
+[node name="Objects" type="Node2D" parent="SubViewportContainer/SubViewport/World"]
 
-[node name="Seeds" type="Node2D" parent="World/Objects" groups=["SeedsParent"]]
+[node name="Seeds" type="Node2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["SeedsParent"]]
 
-[node name="Hannah" type="CharacterBody2D" parent="World/Objects" groups=["Hannah"]]
+[node name="Hannah" type="CharacterBody2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["Hannah"]]
 position = Vector2(20, 20)
 script = ExtResource("1_8jlr8")
 
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="World/Objects/Hannah"]
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SubViewportContainer/SubViewport/World/Objects/Hannah"]
 sprite_frames = SubResource("SpriteFrames_nwrfh")
 autoplay = "default"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Objects/Hannah"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Hannah"]
 position = Vector2(1, 4)
 shape = SubResource("RectangleShape2D_ykaa3")
 
-[node name="RayCast2D" type="RayCast2D" parent="World/Objects/Hannah"]
+[node name="RayCast2D" type="RayCast2D" parent="SubViewportContainer/SubViewport/World/Objects/Hannah"]
 rotation = 4.71239
 scale = Vector2(1, 2)
 collision_mask = 3
 
-[node name="Item" type="StaticBody2D" parent="World/Objects" groups=["Item"]]
+[node name="Item" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["Item"]]
 position = Vector2(100, 50)
 
-[node name="Sprite2D" type="Sprite2D" parent="World/Objects/Item"]
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/Item"]
 scale = Vector2(0.2, 0.2)
 texture = ExtResource("7_x5kp1")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Objects/Item"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Item"]
 shape = SubResource("RectangleShape2D_ioq5r")
 
-[node name="Bed" type="StaticBody2D" parent="World/Objects"]
+[node name="Bed" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects"]
 position = Vector2(900, 100)
 script = ExtResource("5_4wxi4")
 
-[node name="Sprite2D" type="Sprite2D" parent="World/Objects/Bed"]
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/Bed"]
 texture = ExtResource("8_qbdht")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Objects/Bed"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Bed"]
 shape = SubResource("RectangleShape2D_nk1bm")
 
-[node name="Hoe" type="StaticBody2D" parent="World/Objects" groups=["Equipment", "Hoe", "Item"]]
+[node name="Hoe" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["Equipment", "Hoe", "Item"]]
 position = Vector2(200, 50)
 script = ExtResource("4_wj8jx")
 
-[node name="Sprite2D" type="Sprite2D" parent="World/Objects/Hoe"]
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/Hoe"]
 texture = ExtResource("9_g8r5y")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Objects/Hoe"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Hoe"]
 shape = SubResource("RectangleShape2D_qppf5")
 
-[node name="ContextMenu" type="VBoxContainer" parent="World/Objects/Hoe"]
+[node name="ContextMenu" type="VBoxContainer" parent="SubViewportContainer/SubViewport/World/Objects/Hoe"]
 visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Equip" type="Button" parent="World/Objects/Hoe/ContextMenu"]
+[node name="Equip" type="Button" parent="SubViewportContainer/SubViewport/World/Objects/Hoe/ContextMenu"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Equip"
 
-[node name="WateringCan" type="StaticBody2D" parent="World/Objects" groups=["Equipment", "Hoe", "Item"]]
+[node name="WateringCan" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["Equipment", "Hoe", "Item"]]
 position = Vector2(400, 50)
 script = ExtResource("4_wj8jx")
 
-[node name="Sprite2D" type="Sprite2D" parent="World/Objects/WateringCan"]
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/WateringCan"]
 texture = ExtResource("11_mkq7h")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Objects/WateringCan"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/WateringCan"]
 shape = SubResource("RectangleShape2D_s24o5")
 
-[node name="ContextMenu" type="VBoxContainer" parent="World/Objects/WateringCan"]
+[node name="ContextMenu" type="VBoxContainer" parent="SubViewportContainer/SubViewport/World/Objects/WateringCan"]
 visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Equip" type="Button" parent="World/Objects/WateringCan/ContextMenu"]
+[node name="Equip" type="Button" parent="SubViewportContainer/SubViewport/World/Objects/WateringCan/ContextMenu"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Equip"
 
-[node name="CornSeed" type="StaticBody2D" parent="World/Objects" groups=["Equipment", "Hoe", "Item"]]
+[node name="CornSeed" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["Equipment", "Hoe", "Item"]]
 position = Vector2(400, 150)
 script = ExtResource("4_wj8jx")
 seed_scene = ExtResource("12_0ae5x")
 
-[node name="Sprite2D" type="Sprite2D" parent="World/Objects/CornSeed"]
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/CornSeed"]
 texture = ExtResource("13_hgisj")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Objects/CornSeed"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/CornSeed"]
 shape = SubResource("RectangleShape2D_j6h07")
 
-[node name="ContextMenu" type="VBoxContainer" parent="World/Objects/CornSeed"]
+[node name="ContextMenu" type="VBoxContainer" parent="SubViewportContainer/SubViewport/World/Objects/CornSeed"]
 visible = false
 offset_right = 40.0
 offset_bottom = 40.0
 
-[node name="Equip" type="Button" parent="World/Objects/CornSeed/ContextMenu"]
+[node name="Equip" type="Button" parent="SubViewportContainer/SubViewport/World/Objects/CornSeed/ContextMenu"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Equip"
 
-[node name="Crate" type="StaticBody2D" parent="World/Objects"]
+[node name="Crate" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects"]
 position = Vector2(700, 500)
 script = ExtResource("5_4wxi4")
 
-[node name="Sprite2D" type="Sprite2D" parent="World/Objects/Crate"]
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/Crate"]
 texture = ExtResource("13_haq3d")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="World/Objects/Crate"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Crate"]
 shape = SubResource("RectangleShape2D_lwi1o")
 
-[node name="Daytime" type="Timer" parent="."]
-wait_time = 40.0
-one_shot = true
-autostart = true
-
-[node name="UI" type="Control" parent="."]
-layout_mode = 3
-anchors_preset = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+[node name="UI" type="CanvasLayer" parent="."]
 
 [node name="PlayerInventoryUI" type="Control" parent="UI" groups=["Inventory"]]
 visible = false
@@ -1221,7 +1224,7 @@ editor_only = false
 
 [node name="DayOverUI" type="Control" parent="UI"]
 visible = false
-layout_mode = 1
+layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
@@ -1256,7 +1259,7 @@ text = "Next Day"
 
 [node name="DialogueUI" type="Control" parent="UI"]
 visible = false
-layout_mode = 1
+layout_mode = 3
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
@@ -1287,42 +1290,46 @@ theme_override_colors/font_color = Color(1, 0.776471, 0.270588, 1)
 theme_override_font_sizes/font_size = 20
 text = "Some text goes here!"
 
-[node name="Yes" type="Button" parent="UI/DialogueUI/DialoguePanel"]
+[node name="Options" type="Control" parent="UI/DialogueUI/DialoguePanel"]
 visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Yes" type="Button" parent="UI/DialogueUI/DialoguePanel/Options"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = -76.0
-offset_top = -51.0
-offset_right = -41.0
-offset_bottom = -20.0
+offset_left = 480.0
+offset_top = 59.0
+offset_right = 515.0
+offset_bottom = 90.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "Yes"
 
-[node name="No" type="Button" parent="UI/DialogueUI/DialoguePanel"]
-visible = false
+[node name="No" type="Button" parent="UI/DialogueUI/DialoguePanel/Options"]
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
 anchor_top = 1.0
 anchor_right = 0.5
 anchor_bottom = 1.0
-offset_left = 44.0
-offset_top = -51.0
-offset_right = 79.0
-offset_bottom = -20.0
+offset_left = 600.0
+offset_top = 59.0
+offset_right = 635.0
+offset_bottom = 90.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "No"
 
-[connection signal="pressed" from="World/Objects/Hoe/ContextMenu/Equip" to="World/Objects/Hannah" method="_on_equip_pressed"]
-[connection signal="pressed" from="World/Objects/WateringCan/ContextMenu/Equip" to="World/Objects/Hannah" method="_on_equip_pressed"]
-[connection signal="pressed" from="World/Objects/CornSeed/ContextMenu/Equip" to="World/Objects/Hannah" method="_on_equip_pressed"]
 [connection signal="timeout" from="Daytime" to="." method="_on_daytime_timeout"]
+[connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects/Hoe/ContextMenu/Equip" to="SubViewportContainer/SubViewport/World/Objects/Hannah" method="_on_equip_pressed"]
+[connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects/WateringCan/ContextMenu/Equip" to="SubViewportContainer/SubViewport/World/Objects/Hannah" method="_on_equip_pressed"]
+[connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects/CornSeed/ContextMenu/Equip" to="SubViewportContainer/SubViewport/World/Objects/Hannah" method="_on_equip_pressed"]
 [connection signal="pressed" from="UI/DayOverUI/NextDay" to="." method="_on_next_day_pressed"]
-[connection signal="pressed" from="UI/DialogueUI/DialoguePanel/Yes" to="World/Objects/Bed" method="_on_yes_pressed"]
-[connection signal="pressed" from="UI/DialogueUI/DialoguePanel/No" to="World/Objects/Bed" method="_on_no_pressed"]
+[connection signal="pressed" from="UI/DialogueUI/DialoguePanel/Options/Yes" to="SubViewportContainer/SubViewport/World/Objects/Bed" method="_on_yes_pressed"]
+[connection signal="pressed" from="UI/DialogueUI/DialoguePanel/Options/No" to="SubViewportContainer/SubViewport/World/Objects/Bed" method="_on_no_pressed"]

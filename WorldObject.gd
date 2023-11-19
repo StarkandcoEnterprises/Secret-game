@@ -2,6 +2,11 @@ extends StaticBody2D
 
 class_name WorldObject
 
+@onready var UI = $"../../../../../UI/DialogueUI"
+@onready var label = $"../../../../../UI/DialogueUI/DialoguePanel/Text"
+@onready var options = $"../../../../../UI/DialogueUI/DialoguePanel/Options"
+@onready var main = $"../../../../.."
+
 func interact():
 	if name == "Bed":
 		sleep_prompt()
@@ -12,20 +17,26 @@ func crate_interaction():
 	pass
 
 func sleep_prompt():
-	$"../../../UI/DialogueUI".visible = true
-	$"../../../UI/DialogueUI/DialoguePanel/Text".text = "Would you like to go to sleep?"
-	$"../../../UI/DialogueUI/DialoguePanel/Yes".visible = true
-	$"../../../UI/DialogueUI/DialoguePanel/No".visible = true
+	toggle_UI_visibility()
+	toggle_option_visibility()
+	update_text("Would you like to go to sleep?")
 
 func _on_no_pressed():
 	if name == "Bed":
-		$"../../../UI/DialogueUI".visible = false
-		$"../../../UI/DialogueUI/DialoguePanel/Yes".visible = false
-		$"../../../UI/DialogueUI/DialoguePanel/No".visible = false
+		toggle_UI_visibility()
+		toggle_option_visibility()
 
 func _on_yes_pressed():
 	if name == "Bed":
-		$"../../.."._on_daytime_timeout()
-		$"../../../UI/DialogueUI".visible = false
-		$"../../../UI/DialogueUI/DialoguePanel/Yes".visible = false
-		$"../../../UI/DialogueUI/DialoguePanel/No".visible = false
+		main._on_daytime_timeout()
+		toggle_UI_visibility()
+		toggle_option_visibility()
+
+func update_text(newText: String):
+	label.text = newText
+
+func toggle_UI_visibility():
+	UI.visible = !UI.visible
+
+func toggle_option_visibility():
+	options.visible = !options.visible
