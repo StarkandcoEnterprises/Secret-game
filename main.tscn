@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://btqhgaed1j0it"]
+[gd_scene load_steps=36 format=3 uid="uid://ho5ewtbo6mdn"]
 
 [ext_resource type="Script" path="res://Hannah.gd" id="1_8jlr8"]
 [ext_resource type="TileSet" uid="uid://dfphrrdav6xyo" path="res://main_tileset.tres" id="1_mwilu"]
@@ -12,11 +12,10 @@
 [ext_resource type="Texture2D" uid="uid://cm6xs5htqrshd" path="res://Art/hoe.png" id="9_g8r5y"]
 [ext_resource type="Theme" uid="uid://d2t4qqcop8je" path="res://dayover.tres" id="10_4t3d4"]
 [ext_resource type="Texture2D" uid="uid://bjxvmatrivj87" path="res://Art/WateringCan.png" id="11_mkq7h"]
-[ext_resource type="PackedScene" uid="uid://c6x74ewrfcmkw" path="res://planted_seed.tscn" id="12_0ae5x"]
+[ext_resource type="PackedScene" uid="uid://trjqiocd54ea" path="res://corn_seed.tscn" id="11_uafqe"]
 [ext_resource type="Texture2D" uid="uid://bopbscsbdwhch" path="res://Art/Crate.png" id="13_haq3d"]
-[ext_resource type="Texture2D" uid="uid://cpgxs3oiwfbtu" path="res://Art/Corn/CornSeed.png" id="13_hgisj"]
 [ext_resource type="PackedScene" uid="uid://dpe0gjlh5ydxw" path="res://faux_item_for_gravity.tscn" id="15_g3u56"]
-[ext_resource type="Texture2D" path="res://Art/InventoryGrid.png" id="15_w3dle"]
+[ext_resource type="Texture2D" uid="uid://54r6ntyde5ku" path="res://Art/InventoryGrid.png" id="15_w3dle"]
 [ext_resource type="Script" path="res://GridBlock.gd" id="17_2pg2b"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cb7lw"]
@@ -70,9 +69,6 @@ size = Vector2(38, 51)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s24o5"]
 size = Vector2(51, 38)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_j6h07"]
-size = Vector2(32, 32)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lwi1o"]
 size = Vector2(128, 64)
 
@@ -105,6 +101,7 @@ Panel/styles/panel = SubResource("StyleBoxFlat_8ra61")
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_u1m27")
+corn_seed = ExtResource("11_uafqe")
 
 [node name="Daytime" type="Timer" parent="."]
 wait_time = 40.0
@@ -243,31 +240,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Equip"
 
-[node name="CornSeed" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["Equipment", "Hoe", "Item"]]
-position = Vector2(400, 150)
-script = ExtResource("4_wj8jx")
-seed_scene = ExtResource("12_0ae5x")
-
-[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/CornSeed"]
-texture = ExtResource("13_hgisj")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/CornSeed"]
-shape = SubResource("RectangleShape2D_j6h07")
-
-[node name="ContextMenu" type="VBoxContainer" parent="SubViewportContainer/SubViewport/World/Objects/CornSeed"]
-visible = false
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Equip" type="Button" parent="SubViewportContainer/SubViewport/World/Objects/CornSeed/ContextMenu"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "Equip"
-
-[node name="Throw Away2" type="Button" parent="SubViewportContainer/SubViewport/World/Objects/CornSeed/ContextMenu"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "Throw Away"
+[node name="CornSeed" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("11_uafqe")]
 
 [node name="Crate" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects"]
 position = Vector2(700, 500)
@@ -2948,12 +2921,17 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "No"
 
+[node name="Window" type="Window" parent="."]
+position = Vector2i(100, 100)
+
+[node name="Spawn Seed" type="Button" parent="Window"]
+offset_right = 8.0
+offset_bottom = 8.0
+text = "Spawn seed"
+
 [connection signal="timeout" from="Daytime" to="." method="_on_daytime_timeout"]
 [connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects/Item/ContextMenu/Throw Away" to="UI/PlayerInventoryUI" method="_on_throw_away_pressed"]
-[connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects/Hoe/ContextMenu/Equip" to="SubViewportContainer/SubViewport/Hannah" method="_on_equip_pressed"]
-[connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects/WateringCan/ContextMenu/Equip" to="SubViewportContainer/SubViewport/Hannah" method="_on_equip_pressed"]
-[connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects/CornSeed/ContextMenu/Equip" to="SubViewportContainer/SubViewport/Hannah" method="_on_equip_pressed"]
-[connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects/CornSeed/ContextMenu/Throw Away2" to="UI/PlayerInventoryUI" method="_on_throw_away_pressed"]
 [connection signal="pressed" from="UI/DayOverUI/NextDay" to="." method="_on_next_day_pressed"]
 [connection signal="pressed" from="UI/DialogueUI/DialoguePanel/Options/Yes" to="SubViewportContainer/SubViewport/World/Objects/Bed" method="_on_yes_pressed"]
 [connection signal="pressed" from="UI/DialogueUI/DialoguePanel/Options/No" to="SubViewportContainer/SubViewport/World/Objects/Bed" method="_on_no_pressed"]
+[connection signal="pressed" from="Window/Spawn Seed" to="." method="_on_spawn_seed_pressed"]

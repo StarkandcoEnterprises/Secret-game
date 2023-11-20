@@ -19,6 +19,10 @@ config/icon="res://Art/icon.svg"
 
 global="*res://global.gd"
 
+[display]
+
+window/subwindows/embed_subwindows=false
+
 [input]
 
 left={

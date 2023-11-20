@@ -1,4 +1,4 @@
-[gd_scene load_steps=5 format=3 uid="uid://bq7nm307idwwb"]
+[gd_scene load_steps=5 format=3 uid="uid://trjqiocd54ea"]
 
 [ext_resource type="Script" path="res://Equipment.gd" id="1_nifj0"]
 [ext_resource type="PackedScene" uid="uid://c6x74ewrfcmkw" path="res://planted_seed.tscn" id="2_grxvw"]
