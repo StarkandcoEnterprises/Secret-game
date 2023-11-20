@@ -388,6 +388,7 @@ shape = SubResource("RectangleShape2D_lwi1o")
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="PlayerInventoryUI" type="Control" parent="UI" groups=["Inventory"]]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1152.0
@@ -409,6 +410,7 @@ offset_bottom = 178.0
 [node name="SubViewport" type="SubViewport" parent="UI/PlayerInventoryUI/GridSprite/SubViewportContainer"]
 handle_input_locally = false
 size = Vector2i(128, 128)
+render_target_update_mode = 0
 
 [node name="DayOverUI" type="Control" parent="UI"]
 visible = false
