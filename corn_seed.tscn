@@ -1,0 +1,34 @@
+[gd_scene load_steps=5 format=3 uid="uid://trjqiocd54ea"]
+
+[ext_resource type="Script" path="res://Equipment.gd" id="1_nifj0"]
+[ext_resource type="PackedScene" uid="uid://c6x74ewrfcmkw" path="res://planted_seed.tscn" id="2_grxvw"]
+[ext_resource type="Texture2D" uid="uid://cpgxs3oiwfbtu" path="res://Art/Corn/CornSeed.png" id="3_ifbmc"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j6h07"]
+size = Vector2(32, 32)
+
+[node name="CornSeed" type="StaticBody2D" groups=["Equipment", "Hoe", "Item"]]
+position = Vector2(400, 150)
+script = ExtResource("1_nifj0")
+seed_scene = ExtResource("2_grxvw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("3_ifbmc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_j6h07")
+
+[node name="ContextMenu" type="VBoxContainer" parent="."]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Equip" type="Button" parent="ContextMenu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Equip"
+
+[node name="Throw Away2" type="Button" parent="ContextMenu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Equip"

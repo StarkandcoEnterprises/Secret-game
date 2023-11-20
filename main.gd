@@ -1,11 +1,14 @@
 extends Node2D
 
+@export var debug = true
+var debugWindow = $Window if debug else null
+
 var seed_dict = {}
 
 @onready var hannah = $SubViewportContainer/SubViewport/World/Objects/Hannah
 @onready var tileMap = $SubViewportContainer/SubViewport/World/TileMap
 @onready var seeds = $SubViewportContainer/SubViewport/World/Objects/Seeds
-
+@export var corn_seed: PackedScene
 
 func _on_daytime_timeout():
 	$Daytime.paused = true
@@ -77,3 +80,9 @@ func get_seed_on_tile(cell) -> Object:
 func check_is_wet_tile(cell) -> bool:
 	return tileMap.get_cell_atlas_coords(0,Vector2i(cell.x, cell.y)) == Vector2i(0,0) and tileMap.get_cell_alternative_tile(0, Vector2i(cell.x, cell.y)) == 1
 
+
+
+func _on_spawn_seed_pressed():
+	var new_seed = corn_seed.instantiate()
+	new_seed.position = Vector2(400, 150)
+	seeds.add_child(new_seed)
