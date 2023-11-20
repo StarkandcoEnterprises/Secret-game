@@ -7,6 +7,10 @@ var speed = 300.0
 @onready var inventory = get_tree().get_nodes_in_group("Inventory")[0]
 var equipped
 var interacting = false
+var child_count_with_equipped 
+
+func _ready():
+	child_count_with_equipped = get_child_count() + 1
 
 func _input(event):
 	if !interacting:
@@ -23,18 +27,19 @@ func _input(event):
 					inventory.toggle_context_menu_for_selected()
 			else:
 				inventory.show()
-		elif inventory.visible and event.is_action_pressed("right") and !inventory.check_menu_visibility_for_selected():
-			inventory.move_cursor("right")
-		elif inventory.visible and event.is_action_pressed("left") and !inventory.check_menu_visibility_for_selected():
-			inventory.move_cursor("left")
-		elif inventory.visible and event.is_action_pressed("up") and !inventory.check_menu_visibility_for_selected():
-			inventory.move_cursor("up")
-		elif inventory.visible and event.is_action_pressed("down") and !inventory.check_menu_visibility_for_selected():
-			inventory.move_cursor("down")
+#		elif inventory.visible and event.is_action_pressed("right") and !inventory.check_menu_visibility_for_selected():
+#			inventory.move_cursor("right")
+#		elif inventory.visible and event.is_action_pressed("left") and !inventory.check_menu_visibility_for_selected():
+#			inventory.move_cursor("left")
+#		elif inventory.visible and event.is_action_pressed("up") and !inventory.check_menu_visibility_for_selected():
+#			inventory.move_cursor("up")
+#		elif inventory.visible and event.is_action_pressed("down") and !inventory.check_menu_visibility_for_selected():
+#			inventory.move_cursor("down")
 
 
 
 func _physics_process(delta):
+	
 	if !interacting and !inventory.visible:
 		
 		#use any equipment
@@ -49,6 +54,7 @@ func _physics_process(delta):
 		velocity = Vector2.ZERO
 		velocity = Input.get_vector("left","right","up","down") * speed
 		face_direction(Input.get_vector("left","right","up","down"))
+		var debug = velocity
 		#Move and check for collision 
 		var collision = move_and_collide(velocity * delta)
 		if collision:
@@ -61,16 +67,17 @@ func _physics_process(delta):
 func face_direction(direction):
 	if direction == Vector2.LEFT:
 		$AnimatedSprite2D.flip_h = true
-		if get_child_count() == 4:
-			get_child(3).get_child(0).flip_h = true
-			get_child(3).position = Vector2(90, 18)
+		### If the player is ALSO holding equipment.......
+		if get_child_count() == child_count_with_equipped:
+			get_child(child_count_with_equipped - 1).get_child(0).flip_h = true
+			get_child(child_count_with_equipped - 1).position = Vector2(90, 18)
 	else:
 		$AnimatedSprite2D.flip_h = false
-		if get_child_count() == 4:
-			get_child(3).get_child(0).flip_h = false
-			get_child(3).position = Vector2(90, -90)
+		if get_child_count() == child_count_with_equipped:
+			get_child(child_count_with_equipped - 1).get_child(0).flip_h = false
+			get_child(child_count_with_equipped - 1).position = Vector2(90, -90)
 	
-	$RayCast2D.rotation_degrees = 90*["down","left","up","right"].find(direction)
+	$RayCast2D.rotation_degrees = 90*[Vector2.DOWN,Vector2.LEFT,Vector2.UP,Vector2.RIGHT].find(direction)
 
 #Equip equipment - same notes as above refactor on inventory / equipment
 func _on_equip_pressed():
