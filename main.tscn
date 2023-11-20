@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://ho5ewtbo6mdn"]
+[gd_scene load_steps=37 format=3 uid="uid://ho5ewtbo6mdn"]
 
 [ext_resource type="Script" path="res://Hannah.gd" id="1_8jlr8"]
 [ext_resource type="TileSet" uid="uid://dfphrrdav6xyo" path="res://main_tileset.tres" id="1_mwilu"]
@@ -86,6 +86,9 @@ size = Vector2(56, 655)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l04lm"]
 size = Vector2(539, 47.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ifhhy"]
+size = Vector2(1187, 428.75)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ra61"]
 bg_color = Color(0.101961, 0.0392157, 0.00784314, 1)
@@ -2816,6 +2819,10 @@ shape = SubResource("RectangleShape2D_bx6tn")
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="UI/PlayerInventoryUI/Container"]
 position = Vector2(898.5, 621.75)
 shape = SubResource("RectangleShape2D_l04lm")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="UI/PlayerInventoryUI/Container"]
+position = Vector2(572.5, -216.625)
+shape = SubResource("RectangleShape2D_ifhhy")
 
 [node name="DayOverUI" type="Control" parent="UI"]
 visible = false
