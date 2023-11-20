@@ -15,8 +15,8 @@
 [ext_resource type="PackedScene" uid="uid://c6x74ewrfcmkw" path="res://planted_seed.tscn" id="12_0ae5x"]
 [ext_resource type="Texture2D" uid="uid://bopbscsbdwhch" path="res://Art/Crate.png" id="13_haq3d"]
 [ext_resource type="Texture2D" uid="uid://cpgxs3oiwfbtu" path="res://Art/Corn/CornSeed.png" id="13_hgisj"]
-[ext_resource type="PackedScene" uid="uid://d2wdioaipkjax" path="res://faux_item_for_gravity.tscn" id="15_g3u56"]
-[ext_resource type="Texture2D" uid="uid://54r6ntyde5ku" path="res://Art/InventoryGrid.png" id="15_w3dle"]
+[ext_resource type="PackedScene" uid="uid://dpe0gjlh5ydxw" path="res://faux_item_for_gravity.tscn" id="15_g3u56"]
+[ext_resource type="Texture2D" path="res://Art/InventoryGrid.png" id="15_w3dle"]
 [ext_resource type="Script" path="res://GridBlock.gd" id="17_2pg2b"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cb7lw"]
