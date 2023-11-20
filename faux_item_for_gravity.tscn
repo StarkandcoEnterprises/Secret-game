@@ -1,0 +1,21 @@
+[gd_scene load_steps=3 format=3 uid="uid://d2wdioaipkjax"]
+
+[ext_resource type="Script" path="res://faux_item_for_gravity.gd" id="1_4755b"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5thya"]
+size = Vector2(45, 45)
+
+[node name="FauxItemForInvDrag" type="RigidBody2D"]
+input_pickable = true
+mass = 0.5
+max_contacts_reported = 2
+contact_monitor = true
+script = ExtResource("1_4755b")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_5thya")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="body_exited" from="." to="." method="_on_body_exited"]
+[connection signal="mouse_entered" from="." to="." method="_on_mouse_entered"]
+[connection signal="mouse_exited" from="." to="." method="_on_mouse_exited"]

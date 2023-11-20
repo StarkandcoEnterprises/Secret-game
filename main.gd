@@ -2,7 +2,7 @@ extends Node2D
 
 var seed_dict = {}
 
-@onready var hannah = $SubViewportContainer/SubViewport/World/Objects/Hannah
+@onready var hannah = $SubViewportContainer/SubViewport/Hannah
 @onready var tileMap = $SubViewportContainer/SubViewport/World/TileMap
 @onready var seeds = $SubViewportContainer/SubViewport/World/Objects/Seeds
 
@@ -13,9 +13,6 @@ func _on_daytime_timeout():
 	$UI/DayOverUI.visible = true
 	
 	hannah.inventory.visible = false
-	
-	if hannah.inventory.check_menu_visibility_for_selected():
-		hannah.inventory.toggle_context_menu_for_selected()
 	
 	hannah.process_mode = 4
 	

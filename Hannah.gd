@@ -18,23 +18,11 @@ func _input(event):
 		if !inventory.visible and event.is_action_pressed("interact") and $RayCast2D.is_colliding() and $RayCast2D.get_collider().has_method("interact"):
 			interacting = true
 			$RayCast2D.get_collider().interact()
-		elif inventory.visible and event.is_action_pressed("interact"):
-			inventory.toggle_context_menu_for_selected()
 		elif event.is_action_pressed("inventory"):
 			if inventory.visible:
 				inventory.hide()
-				if inventory.check_menu_visibility_for_selected():
-					inventory.toggle_context_menu_for_selected()
 			else:
 				inventory.show()
-#		elif inventory.visible and event.is_action_pressed("right") and !inventory.check_menu_visibility_for_selected():
-#			inventory.move_cursor("right")
-#		elif inventory.visible and event.is_action_pressed("left") and !inventory.check_menu_visibility_for_selected():
-#			inventory.move_cursor("left")
-#		elif inventory.visible and event.is_action_pressed("up") and !inventory.check_menu_visibility_for_selected():
-#			inventory.move_cursor("up")
-#		elif inventory.visible and event.is_action_pressed("down") and !inventory.check_menu_visibility_for_selected():
-#			inventory.move_cursor("down")
 
 
 

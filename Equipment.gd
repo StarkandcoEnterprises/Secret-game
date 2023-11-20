@@ -12,6 +12,7 @@ class_name equipment
 	#	var debug = c
 	#	pass
 
+
 func use(direction, delta):
 	var item_kept = true
 	#TODO put in group "affects ground"? - Hoe, watering can, seeds.. Then pass an atlas pos for new tile
