@@ -5,10 +5,18 @@ var debugWindow = $Window if debug else null
 
 var seed_dict = {}
 
-@onready var hannah = $SubViewportContainer/SubViewport/Hannah
 @onready var tileMap = $SubViewportContainer/SubViewport/World/TileMap
 @onready var seeds = $SubViewportContainer/SubViewport/World/Objects/Seeds
+@onready var subviewport = $UI/PlayerInventoryUI/InvSprite/SubViewportContainer/SubViewport
+
 @export var corn_seed: PackedScene
+
+@onready var hannah = $SubViewportContainer/SubViewport/Hannah
+@onready var invCamera = $UI/PlayerInventoryUI/InvSprite/SubViewportContainer/SubViewport/Camera2D
+
+func _ready(): 
+	subviewport.world_2d = get_viewport().world_2d
+	invCamera.custom_viewport = subviewport
 
 func _on_daytime_timeout():
 	$Daytime.paused = true
@@ -73,11 +81,10 @@ func get_seed_on_tile(cell) -> Object:
 			if s.position == Vector2(cell * 64) + Vector2(32,32):
 				return s
 	return null
+	
 
 func check_is_wet_tile(cell) -> bool:
 	return tileMap.get_cell_atlas_coords(0,Vector2i(cell.x, cell.y)) == Vector2i(0,0) and tileMap.get_cell_alternative_tile(0, Vector2i(cell.x, cell.y)) == 1
-
-
 
 func _on_spawn_seed_pressed():
 	var new_seed = corn_seed.instantiate()

@@ -16,7 +16,6 @@ func _input(event):
 				scale = Vector2(1.0, 1.0)
 
 func _process(delta):
-	var debug = position
 	if selected:
 		global_position = get_global_mouse_position()
 	if position.y >= 648:
