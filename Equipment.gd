@@ -7,6 +7,8 @@ class_name equipment
 
 @export var seed_scene: PackedScene
 
+var uses_multi_slots = false
+
 ###Debugging cells###
 	#for c in map.get_used_cells(layer):
 	#	var debug = c

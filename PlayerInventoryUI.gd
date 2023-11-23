@@ -1,7 +1,5 @@
 extends Control
 
-
-@onready var camera = $"../../SubViewportContainer/SubViewport/Hannah/Camera2D"
 @onready var itemCollection = $InvSprite/ItemCollection
 @onready var fauxItemCollection = $InvSprite/FauxItemColl
 @export var grav_affected_item_scene: PackedScene
@@ -11,13 +9,14 @@ var maxInCollection = 10
 
 func add_item(item):
 	item.reparent(fauxItemCollection)
-	
-	var test = grav_affected_item_scene.instantiate()
-	itemCollection.add_child(test)
-	
-	var testTransRem = RemoteTransform2D.new()
-	testTransRem.set_remote_node(item.get_path())
-	test.add_child(testTransRem)
+	if !item.uses_multi_slots:
+		var new_slot_filler = grav_affected_item_scene.instantiate()
+		itemCollection.add_child(new_slot_filler)
+		var match_item = RemoteTransform2D.new()
+		match_item.set_remote_node(item.get_path())
+		new_slot_filler.add_child(match_item)
+	else:
+		item.generate_slot_fillers()
 
 #func delete_item(pos):
 #	get_child(grid_pos).get_child(pos).get_child(0).queue_free()

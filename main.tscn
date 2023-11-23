@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=3 uid="uid://ho5ewtbo6mdn"]
+[gd_scene load_steps=36 format=3 uid="uid://ho5ewtbo6mdn"]
 
 [ext_resource type="Script" path="res://Hannah.gd" id="1_8jlr8"]
 [ext_resource type="TileSet" uid="uid://dfphrrdav6xyo" path="res://main_tileset.tres" id="1_mwilu"]
@@ -9,8 +9,8 @@
 [ext_resource type="Texture2D" uid="uid://cgiknppirw3av" path="res://Art/godot_guy.png" id="5_w4fn8"]
 [ext_resource type="Texture2D" uid="uid://cn0j6m8x6njyo" path="res://Art/icon.svg" id="7_x5kp1"]
 [ext_resource type="Texture2D" uid="uid://b8sxywscmeyf4" path="res://Art/Bed.png" id="8_qbdht"]
-[ext_resource type="Texture2D" uid="uid://cm6xs5htqrshd" path="res://Art/hoe.png" id="9_g8r5y"]
 [ext_resource type="Theme" uid="uid://d2t4qqcop8je" path="res://dayover.tres" id="10_4t3d4"]
+[ext_resource type="PackedScene" uid="uid://cfh82pdd0am2e" path="res://hoe.tscn" id="10_06xem"]
 [ext_resource type="Texture2D" uid="uid://bjxvmatrivj87" path="res://Art/WateringCan.png" id="11_mkq7h"]
 [ext_resource type="PackedScene" uid="uid://trjqiocd54ea" path="res://corn_seed.tscn" id="11_uafqe"]
 [ext_resource type="Texture2D" uid="uid://bopbscsbdwhch" path="res://Art/Crate.png" id="13_haq3d"]
@@ -62,9 +62,6 @@ size = Vector2(26, 26)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nk1bm"]
 size = Vector2(64, 128)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_qppf5"]
-size = Vector2(38, 51)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s24o5"]
 size = Vector2(51, 38)
@@ -138,6 +135,7 @@ scale = Vector2(1, 2)
 collision_mask = 3
 
 [node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport/Hannah"]
+visible = false
 position_smoothing_speed = 2.0
 drag_horizontal_enabled = true
 drag_vertical_enabled = true
@@ -145,6 +143,9 @@ drag_left_margin = 0.4
 drag_top_margin = 0.4
 drag_right_margin = 0.4
 drag_bottom_margin = 0.4
+
+[node name="Marker2D" type="Marker2D" parent="SubViewportContainer/SubViewport/Hannah"]
+position = Vector2(512, 256)
 
 [node name="World" type="Node2D" parent="SubViewportContainer/SubViewport"]
 
@@ -175,6 +176,7 @@ layer_2/tile_data = PackedInt32Array(393218, 655360, 3, 524295, 655360, 3, 13108
 
 [node name="Item" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["Item"]]
 position = Vector2(100, 50)
+script = ExtResource("4_wj8jx")
 
 [node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/Item"]
 scale = Vector2(0.2, 0.2)
@@ -203,25 +205,7 @@ texture = ExtResource("8_qbdht")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Bed"]
 shape = SubResource("RectangleShape2D_nk1bm")
 
-[node name="Hoe" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["Equipment", "Hoe", "Item"]]
-position = Vector2(200, 50)
-script = ExtResource("4_wj8jx")
-
-[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/Hoe"]
-texture = ExtResource("9_g8r5y")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Hoe"]
-shape = SubResource("RectangleShape2D_qppf5")
-
-[node name="ContextMenu" type="VBoxContainer" parent="SubViewportContainer/SubViewport/World/Objects/Hoe"]
-visible = false
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Equip" type="Button" parent="SubViewportContainer/SubViewport/World/Objects/Hoe/ContextMenu"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "Equip"
+[node name="Hoe" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("10_06xem")]
 
 [node name="WateringCan" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["Equipment", "Hoe", "Item"]]
 position = Vector2(400, 50)
@@ -2805,8 +2789,6 @@ offset_bottom = 178.0
 handle_input_locally = false
 size = Vector2i(128, 128)
 render_target_update_mode = 0
-
-[node name="Camera2D" type="Camera2D" parent="UI/PlayerInventoryUI/InvSprite/SubViewportContainer/SubViewport"]
 
 [node name="Container" type="StaticBody2D" parent="UI/PlayerInventoryUI"]
 

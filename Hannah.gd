@@ -3,14 +3,19 @@ extends CharacterBody2D
 
 var speed = 300.0
 
+
+@onready var subviewport = $"../../../UI/PlayerInventoryUI/InvSprite/SubViewportContainer/SubViewport"
+
 #Get the inventory object - probably this should just be a child of the player? TODO refactor
 @onready var inventory = get_tree().get_nodes_in_group("Inventory")[0]
 var equipped
 var interacting = false
 var child_count_with_equipped 
 
+
 func _ready():
 	child_count_with_equipped = get_child_count() + 1
+	subviewport.world_2d = get_viewport().world_2d
 
 func _input(event):
 	if !interacting:
@@ -21,13 +26,20 @@ func _input(event):
 		elif event.is_action_pressed("inventory"):
 			if inventory.visible:
 				inventory.hide()
+				var inv_cam = get_tree().get_nodes_in_group("InvCam")[0]
+				remove_child(inv_cam)
 			else:
 				inventory.show()
+				var inv_cam = Camera2D.new()
+				inv_cam.custom_viewport = subviewport
+				inv_cam.position = $Marker2D.position
+				inv_cam.add_to_group("InvCam")
+				add_child(inv_cam)
+				
 
 
 
 func _physics_process(delta):
-	
 	if !interacting and !inventory.visible:
 		
 		#use any equipment

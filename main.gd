@@ -7,16 +7,10 @@ var seed_dict = {}
 
 @onready var tileMap = $SubViewportContainer/SubViewport/World/TileMap
 @onready var seeds = $SubViewportContainer/SubViewport/World/Objects/Seeds
-@onready var subviewport = $UI/PlayerInventoryUI/InvSprite/SubViewportContainer/SubViewport
 
 @export var corn_seed: PackedScene
 
 @onready var hannah = $SubViewportContainer/SubViewport/Hannah
-@onready var invCamera = $UI/PlayerInventoryUI/InvSprite/SubViewportContainer/SubViewport/Camera2D
-
-func _ready(): 
-	subviewport.world_2d = get_viewport().world_2d
-	invCamera.custom_viewport = subviewport
 
 func _on_daytime_timeout():
 	$Daytime.paused = true
