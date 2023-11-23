@@ -1,7 +1,7 @@
 extends Node2D
 
 @export var debug = true
-var debugWindow = $Window if debug else null
+@onready var debugWindow = $Window if debug else null
 
 var seed_dict = {}
 

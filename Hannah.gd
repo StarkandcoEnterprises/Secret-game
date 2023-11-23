@@ -11,7 +11,7 @@ var speed = 300.0
 var equipped
 var interacting = false
 var child_count_with_equipped 
-
+var startInvVisible = true
 
 func _ready():
 	child_count_with_equipped = get_child_count() + 1
@@ -24,10 +24,12 @@ func _input(event):
 			interacting = true
 			$RayCast2D.get_collider().interact()
 		elif event.is_action_pressed("inventory"):
-			if inventory.visible:
+			if inventory.visible and !startInvVisible:
 				inventory.hide()
-				var inv_cam = get_tree().get_nodes_in_group("InvCam")[0]
+				var inv_cam = get_tree().get_nodes_in_group("InvCam")[0]	
 				remove_child(inv_cam)
+			elif inventory.visible:
+				inventory.hide()
 			else:
 				inventory.show()
 				var inv_cam = Camera2D.new()
@@ -67,15 +69,15 @@ func _physics_process(delta):
 func face_direction(direction):
 	if direction == Vector2.LEFT:
 		$AnimatedSprite2D.flip_h = true
-		### If the player is ALSO holding equipment.......
-		if get_child_count() == child_count_with_equipped:
-			get_child(child_count_with_equipped - 1).get_child(0).flip_h = true
-			get_child(child_count_with_equipped - 1).position = Vector2(90, 18)
+#		### If the player is ALSO holding equipment.......
+#		if get_child_count() == child_count_with_equipped:
+#			get_child(child_count_with_equipped - 1).get_child(0).flip_h = true
+#			get_child(child_count_with_equipped - 1).position = Vector2(90, 18)
 	else:
 		$AnimatedSprite2D.flip_h = false
-		if get_child_count() == child_count_with_equipped:
-			get_child(child_count_with_equipped - 1).get_child(0).flip_h = false
-			get_child(child_count_with_equipped - 1).position = Vector2(90, -90)
+#		if get_child_count() == child_count_with_equipped:
+#			get_child(child_count_with_equipped - 1).get_child(0).flip_h = false
+#			get_child(child_count_with_equipped - 1).position = Vector2(90, -90)
 	
 	$RayCast2D.rotation_degrees = 90*[Vector2.DOWN,Vector2.LEFT,Vector2.UP,Vector2.RIGHT].find(direction)
 

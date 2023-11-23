@@ -1,22 +1,19 @@
 extends Control
 
-@onready var itemCollection = $InvSprite/ItemCollection
-@onready var fauxItemCollection = $InvSprite/FauxItemColl
+@onready var faux_item_collection = get_tree().get_first_node_in_group("FauxColl")
+@onready var item_collection = get_tree().get_first_node_in_group("ItemColl")
 @export var grav_affected_item_scene: PackedScene
 
 var maxInCollection = 10
 
 
 func add_item(item):
-	item.reparent(fauxItemCollection)
-	if !item.uses_multi_slots:
-		var new_slot_filler = grav_affected_item_scene.instantiate()
-		itemCollection.add_child(new_slot_filler)
-		var match_item = RemoteTransform2D.new()
-		match_item.set_remote_node(item.get_path())
-		new_slot_filler.add_child(match_item)
-	else:
-		item.generate_slot_fillers()
+	item.reparent(item_collection)
+	var new_slot_filler = grav_affected_item_scene.instantiate()
+	faux_item_collection.add_child(new_slot_filler)
+	var match_item = RemoteTransform2D.new()
+	match_item.set_remote_node(item.get_path())
+	new_slot_filler.add_child(match_item)
 
 #func delete_item(pos):
 #	get_child(grid_pos).get_child(pos).get_child(0).queue_free()

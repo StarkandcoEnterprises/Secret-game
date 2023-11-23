@@ -9,12 +9,6 @@ class_name equipment
 
 var uses_multi_slots = false
 
-###Debugging cells###
-	#for c in map.get_used_cells(layer):
-	#	var debug = c
-	#	pass
-
-
 func use(direction, delta):
 	var item_kept = true
 	#TODO put in group "affects ground"? - Hoe, watering can, seeds.. Then pass an atlas pos for new tile
@@ -72,3 +66,5 @@ func get_tile_pos() -> Vector2:
 	tile_pos.y = hannah.global_position.y - (int(hannah.global_position.y) % 64)
 	tile_pos = Vector2(int(tile_pos.x) / 64, int(tile_pos.y) / 64)
 	return tile_pos
+
+
