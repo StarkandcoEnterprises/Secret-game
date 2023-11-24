@@ -8,12 +8,10 @@ size = Vector2(45, 45)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a7xm8"]
 size = Vector2(45, 45)
 
-[node name="FauxItemForInv" type="RigidBody2D"]
+[node name="FauxItemForInv" type="CharacterBody2D"]
+scale = Vector2(2, 1)
 disable_mode = 1
 input_pickable = true
-mass = 0.5
-max_contacts_reported = 2
-contact_monitor = true
 script = ExtResource("1_4755b")
 
 [node name="RigidShape" type="CollisionShape2D" parent="."]

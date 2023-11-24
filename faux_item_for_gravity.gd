@@ -1,12 +1,16 @@
-extends RigidBody2D
+extends CharacterBody2D
 
 var selectable = false
 var selected = false
+var slotted = false
 
 var slots_available = 0
-var slots_needed = 1
+var slots_needed = 2
+
+var to_center = 25
 
 var overlapping_areas = []
+var SPEED = 10
 
 @onready var debugOutput = get_tree().get_first_node_in_group("DebugOutput")
 
@@ -15,9 +19,12 @@ var top_left_of_slots = Vector2.ZERO
 func _process(delta):
 	if selected:
 		global_position = get_global_mouse_position()
-	if global_position.y >= 648:
+	elif global_position.y >= 648:
 		position.y = 0
 		position.x = 0
+	elif !slotted:
+		velocity += Vector2.DOWN * SPEED
+		move_and_slide()
 
 func _on_mouse_entered():
 	if not global.is_dragging:
@@ -33,12 +40,10 @@ func _on_slots_area_entered(area):
 			slots_available += 1
 			overlapping_areas.append(area)
 			##A whole bunch of nonsense to try and get the left most slot of all areas entered
-			debugOutput.update_text(str(top_left_of_slots.x,",",top_left_of_slots.y))
 			if top_left_of_slots == Vector2.ZERO or area.get_parent().position.x + 45 <= top_left_of_slots.x:
-				top_left_of_slots.x = area.get_parent().position.x + 45
+				top_left_of_slots.x = area.get_parent().position.x + 45 + to_center
 				if top_left_of_slots.y == 0 or area.get_parent().position.y + 41 <= top_left_of_slots.y:
 					top_left_of_slots.y = area.get_parent().position.y + 41
-			debugOutput.update_text(str(top_left_of_slots.x,",",top_left_of_slots.y))
 
 func _on_slots_area_exited(area):
 	if area.get_parent().is_in_group("GridBlock"):
@@ -53,18 +58,6 @@ func _on_slots_area_exited(area):
 
 func are_all_slots_free():
 	return slots_available == slots_needed
-
-func toggle_slotted(slotted):
-	if slotted:
-		$RigidShape.disabled = true
-		gravity_scale = 0
-		linear_velocity = Vector2.ZERO
-		debugOutput.update_text(str(global_position))
-		global_position = top_left_of_slots
-	else:
-		$RigidShape.disabled = false
-		gravity_scale = 1
-		linear_velocity = Vector2.DOWN
 
 func toggle_selected(select):
 	if !select:
@@ -92,6 +85,7 @@ func _input(event):
 					#Remove any the areas a reference to this object and mark them as full
 					for area in overlapping_areas:
 						area.get_parent().remove_item()
+					slotted = false
 			
 			#Else, if it's a release and there are not enough free slots underneath
 			elif !event.pressed and !are_all_slots_free():
@@ -99,7 +93,6 @@ func _input(event):
 				#It's not selected, or being dragged. 
 				#Scale is reset, gravity/collision is reapplied as it may have been previously slotted
 				toggle_selected(false)
-				toggle_slotted(false)
 			
 			#Otherwise if it's a release and the slots are free
 			elif !event.pressed and are_all_slots_free():
@@ -111,4 +104,6 @@ func _input(event):
 				#It's not selected, or being dragged. 
 				#Scale is reset, gravity/collision is removed as it has been slotted
 				toggle_selected(false)
-				toggle_slotted(true)
+				slotted = true
+				global_position = top_left_of_slots
+				global_position = top_left_of_slots

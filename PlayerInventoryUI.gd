@@ -13,6 +13,7 @@ func add_item(item):
 	faux_item_collection.add_child(new_slot_filler)
 	var match_item = RemoteTransform2D.new()
 	match_item.set_remote_node(item.get_path())
+	match_item.add_to_group("Remote")
 	new_slot_filler.add_child(match_item)
 
 #func delete_item(pos):

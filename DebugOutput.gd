@@ -3,6 +3,7 @@ extends Label
 #@onready var debugOutput = get_tree().get_first_node_in_group("DebugOutput")
 
 func update_text(string):
+	print(string)
 	text = text + "\n" + string
 	if get_line_count() >= 10:
 		var new_text_array = text.split("\n")

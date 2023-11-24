@@ -61,13 +61,12 @@ func next_day():
 	
 	hannah.process_mode = 0
 	$UI/DayOverUI.visible = false
-	$Daytime.wait_time = 20
+	$Daytime.wait_time = 500
 	$Daytime.paused = false
 	$Daytime.start()
 	
 	remove_child(timer)
 
-###hide it awayyyyyy
 
 func get_seed_on_tile(cell) -> Object:
 	if seeds.get_child_count() > 0:
@@ -75,12 +74,13 @@ func get_seed_on_tile(cell) -> Object:
 			if s.position == Vector2(cell * 64) + Vector2(32,32):
 				return s
 	return null
-	
-
-func check_is_wet_tile(cell) -> bool:
-	return tileMap.get_cell_atlas_coords(0,Vector2i(cell.x, cell.y)) == Vector2i(0,0) and tileMap.get_cell_alternative_tile(0, Vector2i(cell.x, cell.y)) == 1
 
 func _on_spawn_seed_pressed():
 	var new_seed = corn_seed.instantiate()
 	new_seed.position = Vector2(400, 150)
 	seeds.add_child(new_seed)
+
+
+###hide it awayyyyyy
+func check_is_wet_tile(cell) -> bool:
+	return tileMap.get_cell_atlas_coords(0,Vector2i(cell.x, cell.y)) == Vector2i(0,0) and tileMap.get_cell_alternative_tile(0, Vector2i(cell.x, cell.y)) == 1
