@@ -10,11 +10,9 @@ var speed = 300.0
 @onready var inventory = get_tree().get_nodes_in_group("Inventory")[0]
 var equipped
 var interacting = false
-var child_count_with_equipped 
 var startInvVisible = true
 
 func _ready():
-	child_count_with_equipped = get_child_count() + 1
 	subviewport.world_2d = get_viewport().world_2d
 
 func _input(event):
@@ -63,7 +61,6 @@ func _physics_process(delta):
 		velocity = Vector2.ZERO
 		velocity = Input.get_vector("left","right","up","down") * speed
 		face_direction(Input.get_vector("left","right","up","down"))
-		var debug = velocity
 		
 		#Move and check for collision 
 		var collision = move_and_collide(velocity * delta)

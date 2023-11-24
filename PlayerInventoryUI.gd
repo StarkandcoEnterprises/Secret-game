@@ -4,7 +4,6 @@ extends Control
 @onready var item_collection = get_tree().get_first_node_in_group("ItemColl")
 @export var grav_affected_item_scene: PackedScene
 
-var maxInCollection = 10
 
 
 func add_item(item):

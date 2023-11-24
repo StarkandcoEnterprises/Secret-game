@@ -7,7 +7,6 @@ class_name equipment
 
 @export var seed_scene: PackedScene
 
-var uses_multi_slots = false
 
 func use(direction, delta):
 	var item_kept = true
