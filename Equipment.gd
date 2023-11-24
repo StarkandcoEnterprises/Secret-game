@@ -7,10 +7,6 @@ class_name equipment
 
 @export var seed_scene: PackedScene
 
-###Debugging cells###
-	#for c in map.get_used_cells(layer):
-	#	var debug = c
-	#	pass
 
 func use(direction, delta):
 	var item_kept = true
@@ -69,3 +65,5 @@ func get_tile_pos() -> Vector2:
 	tile_pos.y = hannah.global_position.y - (int(hannah.global_position.y) % 64)
 	tile_pos = Vector2(int(tile_pos.x) / 64, int(tile_pos.y) / 64)
 	return tile_pos
+
+

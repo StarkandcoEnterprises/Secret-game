@@ -1,7 +1,6 @@
-[gd_resource type="TileSet" load_steps=5 format=3 uid="uid://dfphrrdav6xyo"]
+[gd_resource type="TileSet" load_steps=3 format=3 uid="uid://dfphrrdav6xyo"]
 
 [ext_resource type="Texture2D" uid="uid://c40jl31rwwkwi" path="res://Art/using_tilesets_kenney_abstract_platformer_tile_sheet_alt.png" id="1_8dqrj"]
-[ext_resource type="PackedScene" uid="uid://8bymefvq6l4k" path="res://cpu_particles_2d.tscn" id="2_efwnd"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_t42w8"]
 texture = ExtResource("1_8dqrj")
@@ -802,9 +801,6 @@ texture_region_size = Vector2i(64, 64)
 21:11/0/physics_layer_0/linear_velocity = Vector2(0, 0)
 21:11/0/physics_layer_0/angular_velocity = 0.0
 
-[sub_resource type="TileSetScenesCollectionSource" id="TileSetScenesCollectionSource_se00u"]
-scenes/1/scene = ExtResource("2_efwnd")
-
 [resource]
 tile_size = Vector2i(64, 64)
 uv_clipping = true
@@ -813,4 +809,3 @@ terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Terrain 0"
 terrain_set_0/terrain_0/color = Color(0.501961, 0.345098, 0.25098, 1)
 sources/0 = SubResource("TileSetAtlasSource_t42w8")
-sources/1 = SubResource("TileSetScenesCollectionSource_se00u")

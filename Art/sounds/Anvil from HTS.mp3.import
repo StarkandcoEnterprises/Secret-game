@@ -1,0 +1,19 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+uid="uid://w488wv8ms3dc"
+path="res://.godot/imported/Anvil from HTS.mp3-3f900f01c67f871dd700b0ccce89b7f5.mp3str"
+
+[deps]
+
+source_file="res://Art/sounds/Anvil from HTS.mp3"
+dest_files=["res://.godot/imported/Anvil from HTS.mp3-3f900f01c67f871dd700b0ccce89b7f5.mp3str"]
+
+[params]
+
+loop=false
+loop_offset=0
+bpm=0
+beat_count=0
+bar_beats=4

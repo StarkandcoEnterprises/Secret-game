@@ -1,0 +1,1383 @@
+[gd_scene load_steps=35 format=3 uid="uid://btqhgaed1j0it"]
+
+[ext_resource type="Script" path="res://Hannah.gd" id="1_8jlr8"]
+[ext_resource type="TileSet" uid="uid://dfphrrdav6xyo" path="res://main_tileset.tres" id="1_mwilu"]
+[ext_resource type="Script" path="res://main.gd" id="1_u1m27"]
+[ext_resource type="Script" path="res://PlayerInventoryUI.gd" id="3_hwl7w"]
+[ext_resource type="Script" path="res://Equipment.gd" id="4_wj8jx"]
+[ext_resource type="Script" path="res://WorldObject.gd" id="5_4wxi4"]
+[ext_resource type="Texture2D" uid="uid://cgiknppirw3av" path="res://Art/godot_guy.png" id="5_w4fn8"]
+[ext_resource type="Texture2D" uid="uid://cn0j6m8x6njyo" path="res://Art/icon.svg" id="7_x5kp1"]
+[ext_resource type="Texture2D" uid="uid://b8sxywscmeyf4" path="res://Art/Bed.png" id="8_qbdht"]
+[ext_resource type="Texture2D" uid="uid://cm6xs5htqrshd" path="res://Art/hoe.png" id="9_g8r5y"]
+[ext_resource type="Theme" uid="uid://d2t4qqcop8je" path="res://dayover.tres" id="10_4t3d4"]
+[ext_resource type="Texture2D" uid="uid://bjxvmatrivj87" path="res://Art/WateringCan.png" id="11_mkq7h"]
+[ext_resource type="PackedScene" uid="uid://c6x74ewrfcmkw" path="res://planted_seed.tscn" id="12_0ae5x"]
+[ext_resource type="Texture2D" uid="uid://bopbscsbdwhch" path="res://Art/Crate.png" id="13_haq3d"]
+[ext_resource type="Texture2D" uid="uid://cpgxs3oiwfbtu" path="res://Art/Corn/CornSeed.png" id="13_hgisj"]
+[ext_resource type="Texture2D" uid="uid://c8yk6rpq7kpny" path="res://Art/NEVER REMOVE.png" id="14_cpp8s"]
+[ext_resource type="Script" path="res://RigidBody2D.gd" id="16_gesn7"]
+[ext_resource type="Script" path="res://Node2D.gd" id="18_fim4c"]
+[ext_resource type="PackedScene" uid="uid://b3g3knxe0y3ls" path="res://corn.tscn" id="19_ki7lg"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cb7lw"]
+atlas = ExtResource("5_w4fn8")
+region = Rect2(50, 96, 90, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qmkkm"]
+atlas = ExtResource("5_w4fn8")
+region = Rect2(244, 96, 90, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jfqlh"]
+atlas = ExtResource("5_w4fn8")
+region = Rect2(438, 96, 90, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2nhh1"]
+atlas = ExtResource("5_w4fn8")
+region = Rect2(632, 96, 90, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nwrfh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cb7lw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qmkkm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jfqlh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2nhh1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ykaa3"]
+size = Vector2(64, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ioq5r"]
+size = Vector2(26, 26)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nk1bm"]
+size = Vector2(64, 128)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qppf5"]
+size = Vector2(38, 51)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s24o5"]
+size = Vector2(51, 38)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j6h07"]
+size = Vector2(32, 32)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lwi1o"]
+size = Vector2(128, 64)
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ra61"]
+bg_color = Color(0.101961, 0.0392157, 0.00784314, 1)
+border_width_left = 20
+border_width_top = 20
+border_color = Color(0.364706, 0.0352941, 0.0235294, 1)
+border_blend = true
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+
+[sub_resource type="Theme" id="Theme_sl3s6"]
+Panel/styles/panel = SubResource("StyleBoxFlat_8ra61")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gniob"]
+size = Vector2(60, 60)
+
+[node name="Main" type="Node2D"]
+script = ExtResource("1_u1m27")
+
+[node name="Daytime" type="Timer" parent="."]
+wait_time = 40.0
+one_shot = true
+autostart = true
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="World" type="Node2D" parent="SubViewportContainer/SubViewport"]
+
+[node name="TileMap" type="TileMap" parent="SubViewportContainer/SubViewport/World" groups=["Map"]]
+tile_set = ExtResource("1_mwilu")
+format = 2
+layer_0/name = "Ground"
+layer_0/z_index = -1
+layer_0/tile_data = PackedInt32Array(0, 1048576, 5, 1, 1048576, 5, 2, 1048576, 5, 3, 1048576, 5, 4, 1048576, 5, 5, 1048576, 5, 6, 1048576, 5, 7, 1048576, 5, 8, 1048576, 5, 9, 1048576, 5, 10, 1048576, 5, 11, 1048576, 5, 12, 1048576, 5, 13, 1048576, 5, 14, 1048576, 5, 15, 1048576, 5, 16, 1048576, 5, 17, 1048576, 5, 65553, 1048576, 5, 131089, 1048576, 5, 196625, 1048576, 5, 262161, 1048576, 5, 327697, 1048576, 5, 393233, 1048576, 5, 458769, 1048576, 5, 524305, 1048576, 5, 589841, 1048576, 5, 589840, 1048576, 5, 589839, 1048576, 5, 589838, 1048576, 5, 589837, 1048576, 5, 589836, 1048576, 5, 589835, 1048576, 5, 589834, 1048576, 5, 589833, 1048576, 5, 589832, 1048576, 5, 589831, 1048576, 5, 589830, 1048576, 5, 589829, 1048576, 5, 589828, 1048576, 5, 589827, 1048576, 5, 589826, 1048576, 5, 589825, 1048576, 5, 589824, 1048576, 5, 524288, 1048576, 5, 458752, 1048576, 5, 393216, 1048576, 5, 327680, 1048576, 5, 262144, 1048576, 5, 196608, 1048576, 5, 131072, 1048576, 5, 65536, 1048576, 5, 65537, 1048576, 5, 65538, 1048576, 5, 65539, 1048576, 5, 65540, 1048576, 5, 65541, 1048576, 5, 65542, 1048576, 5, 65543, 1048576, 5, 65544, 1048576, 5, 65545, 1048576, 5, 65546, 1048576, 5, 65547, 1048576, 5, 65548, 1048576, 5, 65549, 1048576, 5, 65550, 1048576, 5, 65551, 1048576, 5, 65552, 1048576, 5, 131088, 1048576, 5, 131087, 1048576, 5, 131086, 1048576, 5, 131085, 1048576, 5, 131084, 1048576, 5, 131083, 1048576, 5, 131082, 1048576, 5, 131081, 1048576, 5, 131080, 1048576, 5, 131079, 1048576, 5, 131078, 1048576, 5, 131077, 1048576, 5, 131076, 1048576, 5, 131075, 1048576, 5, 196611, 1048576, 5, 196610, 1048576, 5, 196609, 1048576, 5, 131073, 1048576, 5, 131074, 1048576, 5, 262145, 1048576, 5, 327681, 1048576, 5, 327682, 1048576, 5, 327683, 1048576, 5, 327684, 1048576, 5, 262148, 1048576, 5, 262147, 1048576, 5, 262146, 1048576, 5, 393217, 1048576, 5, 458753, 1048576, 5, 524289, 1048576, 5, 524290, 1048576, 5, 458754, 1048576, 5, 393218, 1048576, 5, 458755, 1048576, 5, 393219, 1048576, 5, 524291, 1048576, 5, 458756, 1048576, 5, 393220, 1048576, 5, 196612, 1048576, 5, 524293, 1048576, 5, 458757, 1048576, 5, 393221, 1048576, 5, 327685, 1048576, 5, 262149, 1048576, 5, 196613, 1048576, 5, 524292, 1048576, 5, 458758, 1048576, 5, 393222, 1048576, 5, 327686, 1048576, 5, 327687, 1048576, 5, 262151, 1048576, 5, 196615, 1048576, 5, 196614, 1048576, 5, 262150, 1048576, 5, 524294, 1048576, 5, 524295, 1048576, 5, 458759, 1048576, 5, 458760, 1048576, 5, 458761, 1048576, 5, 458762, 1048576, 5, 524298, 1048576, 5, 524299, 1048576, 5, 524300, 1048576, 5, 524301, 1048576, 5, 524302, 1048576, 5, 524303, 1048576, 5, 524304, 1048576, 5, 524296, 1048576, 5, 458763, 1048576, 5, 524297, 1048576, 5, 458765, 1048576, 5, 458766, 1048576, 5, 458767, 1048576, 5, 458768, 1048576, 5, 458764, 1048576, 5, 393227, 1048576, 5, 393228, 1048576, 5, 393226, 1048576, 5, 393225, 1048576, 5, 393224, 1048576, 5, 393223, 1048576, 5, 327688, 1048576, 5, 327689, 1048576, 5, 262153, 1048576, 5, 262152, 1048576, 5, 327691, 1048576, 5, 262155, 1048576, 5, 196618, 1048576, 5, 196617, 1048576, 5, 327690, 1048576, 5, 327692, 1048576, 5, 262156, 1048576, 5, 196620, 1048576, 5, 196619, 1048576, 5, 196616, 1048576, 5, 393229, 1048576, 5, 327693, 1048576, 5, 262157, 1048576, 5, 196622, 1048576, 5, 196621, 1048576, 5, 262154, 1048576, 5, 196623, 1048576, 5, 262158, 1048576, 5, 327694, 1048576, 5, 393230, 1048576, 5, 327695, 1048576, 5, 262159, 1048576, 5, 196624, 1048576, 5, 262160, 1048576, 5, 393231, 1048576, 5, 393232, 1048576, 5, 327696, 1048576, 5)
+layer_1/name = "Air"
+layer_1/enabled = true
+layer_1/modulate = Color(1, 1, 1, 1)
+layer_1/y_sort_enabled = false
+layer_1/y_sort_origin = 0
+layer_1/z_index = 10
+layer_1/tile_data = PackedInt32Array()
+layer_2/name = "On ground"
+layer_2/enabled = true
+layer_2/modulate = Color(1, 1, 1, 1)
+layer_2/y_sort_enabled = false
+layer_2/y_sort_origin = 0
+layer_2/z_index = 0
+layer_2/tile_data = PackedInt32Array(393218, 655360, 3, 524295, 655360, 3, 131087, 655360, 3, 131081, 589824, 3, 458756, 589824, 3, 524303, 589824, 3, 262155, 720896, 3, 393223, 720896, 3, 393231, 589824, 1, 131089, 589824, 1)
+
+[node name="Objects" type="Node2D" parent="SubViewportContainer/SubViewport/World"]
+
+[node name="Seeds" type="Node2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["SeedsParent"]]
+
+[node name="Hannah" type="CharacterBody2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["Hannah"]]
+position = Vector2(20, 20)
+script = ExtResource("1_8jlr8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SubViewportContainer/SubViewport/World/Objects/Hannah"]
+sprite_frames = SubResource("SpriteFrames_nwrfh")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Hannah"]
+position = Vector2(1, 4)
+shape = SubResource("RectangleShape2D_ykaa3")
+
+[node name="RayCast2D" type="RayCast2D" parent="SubViewportContainer/SubViewport/World/Objects/Hannah"]
+rotation = 4.71239
+scale = Vector2(1, 2)
+collision_mask = 3
+
+[node name="Item" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["Item"]]
+position = Vector2(100, 50)
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/Item"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("7_x5kp1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Item"]
+shape = SubResource("RectangleShape2D_ioq5r")
+
+[node name="ContextMenu" type="VBoxContainer" parent="SubViewportContainer/SubViewport/World/Objects/Item"]
+visible = false
+offset_right = 56.0
+offset_bottom = 40.0
+
+[node name="Throw Away" type="Button" parent="SubViewportContainer/SubViewport/World/Objects/Item/ContextMenu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Throw Away"
+
+[node name="Bed" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects"]
+position = Vector2(900, 100)
+script = ExtResource("5_4wxi4")
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/Bed"]
+texture = ExtResource("8_qbdht")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Bed"]
+shape = SubResource("RectangleShape2D_nk1bm")
+
+[node name="Hoe" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["Equipment", "Hoe", "Item"]]
+position = Vector2(200, 50)
+script = ExtResource("4_wj8jx")
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/Hoe"]
+texture = ExtResource("9_g8r5y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Hoe"]
+shape = SubResource("RectangleShape2D_qppf5")
+
+[node name="ContextMenu" type="VBoxContainer" parent="SubViewportContainer/SubViewport/World/Objects/Hoe"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Equip" type="Button" parent="SubViewportContainer/SubViewport/World/Objects/Hoe/ContextMenu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Equip"
+
+[node name="WateringCan" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["Equipment", "Hoe", "Item"]]
+position = Vector2(400, 50)
+script = ExtResource("4_wj8jx")
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/WateringCan"]
+texture = ExtResource("11_mkq7h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/WateringCan"]
+shape = SubResource("RectangleShape2D_s24o5")
+
+[node name="ContextMenu" type="VBoxContainer" parent="SubViewportContainer/SubViewport/World/Objects/WateringCan"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Equip" type="Button" parent="SubViewportContainer/SubViewport/World/Objects/WateringCan/ContextMenu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Equip"
+
+[node name="CornSeed" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["Equipment", "Hoe", "Item"]]
+position = Vector2(400, 150)
+script = ExtResource("4_wj8jx")
+seed_scene = ExtResource("12_0ae5x")
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/CornSeed"]
+texture = ExtResource("13_hgisj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/CornSeed"]
+shape = SubResource("RectangleShape2D_j6h07")
+
+[node name="ContextMenu" type="VBoxContainer" parent="SubViewportContainer/SubViewport/World/Objects/CornSeed"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Equip" type="Button" parent="SubViewportContainer/SubViewport/World/Objects/CornSeed/ContextMenu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Equip"
+
+[node name="Throw Away2" type="Button" parent="SubViewportContainer/SubViewport/World/Objects/CornSeed/ContextMenu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Throw Away"
+
+[node name="Crate" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects"]
+position = Vector2(700, 500)
+script = ExtResource("5_4wxi4")
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/Crate"]
+texture = ExtResource("13_haq3d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Crate"]
+shape = SubResource("RectangleShape2D_lwi1o")
+
+[node name="UI" type="CanvasLayer" parent="."]
+
+[node name="PlayerInventoryUI" type="Control" parent="UI" groups=["Inventory"]]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("3_hwl7w")
+
+[node name="GridContainer" type="GridContainer" parent="UI/PlayerInventoryUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+columns = 20
+
+[node name="ColorRect" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect2" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect3" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect4" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect5" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect6" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect7" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect8" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect9" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect10" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect11" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect12" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect13" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect14" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect15" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect16" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect17" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect18" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect19" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect20" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect21" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect22" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect23" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect24" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect25" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect26" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect27" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect28" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect29" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect30" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect31" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect32" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect33" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect34" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect35" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect36" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect37" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect38" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect39" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect40" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect41" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect42" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect43" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect44" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect45" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect46" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect47" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect48" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect49" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect50" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect51" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect52" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect53" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect54" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect55" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect56" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect57" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect58" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect59" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect60" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect61" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect62" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect63" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect64" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect65" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect66" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect67" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect68" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect69" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect70" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect71" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect72" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect73" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect74" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect75" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect76" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect77" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect78" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect79" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect80" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect81" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect82" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect83" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect84" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect85" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect86" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect87" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect88" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect89" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect90" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect91" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect92" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect93" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect94" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect95" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect96" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect97" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect98" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect99" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect100" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect101" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect102" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect103" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect104" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect105" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect106" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect107" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect108" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect109" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect110" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect111" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect112" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect113" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect114" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect115" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect116" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect117" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect118" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect119" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect120" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect121" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect122" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect123" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect124" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect125" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect126" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect127" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect128" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect129" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect130" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect131" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect132" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect133" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect134" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect135" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect136" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect137" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect138" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect139" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect140" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect141" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect142" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect143" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect144" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect145" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect146" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect147" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect148" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect149" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect150" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect151" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect152" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect153" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect154" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect155" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect156" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect157" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect158" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect159" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ColorRect160" type="ColorRect" parent="UI/PlayerInventoryUI/GridContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+color = Color(0.501961, 0.247059, 0, 1)
+
+[node name="ReferenceRect" type="ReferenceRect" parent="UI/PlayerInventoryUI"]
+layout_mode = 0
+offset_left = 1.0
+offset_top = 1.0
+offset_right = 55.0
+offset_bottom = 78.0
+editor_only = false
+
+[node name="DayOverUI" type="Control" parent="UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ColorRect" type="ColorRect" parent="UI/DayOverUI"]
+modulate = Color(0, 0, 0, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 1)
+
+[node name="NextDay" type="Button" parent="UI/DayOverUI"]
+visible = false
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -39.5
+offset_top = -31.0
+offset_right = 39.5
+grow_horizontal = 2
+grow_vertical = 0
+theme = ExtResource("10_4t3d4")
+text = "Next Day"
+
+[node name="DialogueUI" type="Control" parent="UI"]
+visible = false
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -576.0
+offset_top = -150.0
+offset_right = 576.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="DialoguePanel" type="Panel" parent="UI/DialogueUI"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_sl3s6")
+
+[node name="Text" type="Label" parent="UI/DialogueUI/DialoguePanel"]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 30.0
+offset_right = 242.0
+offset_bottom = 56.0
+theme_override_colors/font_color = Color(1, 0.776471, 0.270588, 1)
+theme_override_font_sizes/font_size = 20
+text = "Some text goes here!"
+
+[node name="Options" type="Control" parent="UI/DialogueUI/DialoguePanel"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Yes" type="Button" parent="UI/DialogueUI/DialoguePanel/Options"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 480.0
+offset_top = 59.0
+offset_right = 515.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Yes"
+
+[node name="No" type="Button" parent="UI/DialogueUI/DialoguePanel/Options"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 600.0
+offset_top = 59.0
+offset_right = 635.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "No"
+
+[node name="RigidBody2D" type="RigidBody2D" parent="."]
+position = Vector2(600, 600)
+gravity_scale = 0.0
+continuous_cd = 2
+max_contacts_reported = 1
+contact_monitor = true
+can_sleep = false
+script = ExtResource("16_gesn7")
+
+[node name="Sprite2D" type="Sprite2D" parent="RigidBody2D"]
+scale = Vector2(0.5, 0.5)
+texture = ExtResource("14_cpp8s")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="RigidBody2D"]
+shape = SubResource("RectangleShape2D_gniob")
+
+[node name="Node2D" type="Node2D" parent="."]
+script = ExtResource("18_fim4c")
+block1 = ExtResource("19_ki7lg")
+
+[connection signal="timeout" from="Daytime" to="." method="_on_daytime_timeout"]
+[connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects/Item/ContextMenu/Throw Away" to="UI/PlayerInventoryUI" method="_on_throw_away_pressed"]
+[connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects/Hoe/ContextMenu/Equip" to="SubViewportContainer/SubViewport/World/Objects/Hannah" method="_on_equip_pressed"]
+[connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects/WateringCan/ContextMenu/Equip" to="SubViewportContainer/SubViewport/World/Objects/Hannah" method="_on_equip_pressed"]
+[connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects/CornSeed/ContextMenu/Equip" to="SubViewportContainer/SubViewport/World/Objects/Hannah" method="_on_equip_pressed"]
+[connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects/CornSeed/ContextMenu/Throw Away2" to="UI/PlayerInventoryUI" method="_on_throw_away_pressed"]
+[connection signal="pressed" from="UI/DayOverUI/NextDay" to="." method="_on_next_day_pressed"]
+[connection signal="pressed" from="UI/DialogueUI/DialoguePanel/Options/Yes" to="SubViewportContainer/SubViewport/World/Objects/Bed" method="_on_yes_pressed"]
+[connection signal="pressed" from="UI/DialogueUI/DialoguePanel/Options/No" to="SubViewportContainer/SubViewport/World/Objects/Bed" method="_on_no_pressed"]
+[connection signal="body_entered" from="RigidBody2D" to="RigidBody2D" method="_on_body_entered"]
+[connection signal="body_shape_entered" from="RigidBody2D" to="RigidBody2D" method="_on_body_shape_entered"]

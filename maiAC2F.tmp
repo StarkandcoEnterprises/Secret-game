@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://ho5ewtbo6mdn"]
+[gd_scene load_steps=31 format=3 uid="uid://btqhgaed1j0it"]
 
 [ext_resource type="Script" path="res://Hannah.gd" id="1_8jlr8"]
 [ext_resource type="TileSet" uid="uid://dfphrrdav6xyo" path="res://main_tileset.tres" id="1_mwilu"]
@@ -9,15 +9,13 @@
 [ext_resource type="Texture2D" uid="uid://cgiknppirw3av" path="res://Art/godot_guy.png" id="5_w4fn8"]
 [ext_resource type="Texture2D" uid="uid://cn0j6m8x6njyo" path="res://Art/icon.svg" id="7_x5kp1"]
 [ext_resource type="Texture2D" uid="uid://b8sxywscmeyf4" path="res://Art/Bed.png" id="8_qbdht"]
+[ext_resource type="Texture2D" uid="uid://cm6xs5htqrshd" path="res://Art/hoe.png" id="9_g8r5y"]
 [ext_resource type="Theme" uid="uid://d2t4qqcop8je" path="res://dayover.tres" id="10_4t3d4"]
-[ext_resource type="PackedScene" uid="uid://cfh82pdd0am2e" path="res://hoe.tscn" id="10_06xem"]
 [ext_resource type="Texture2D" uid="uid://bjxvmatrivj87" path="res://Art/WateringCan.png" id="11_mkq7h"]
-[ext_resource type="PackedScene" uid="uid://trjqiocd54ea" path="res://corn_seed.tscn" id="11_uafqe"]
+[ext_resource type="PackedScene" uid="uid://c6x74ewrfcmkw" path="res://planted_seed.tscn" id="12_0ae5x"]
 [ext_resource type="Texture2D" uid="uid://bopbscsbdwhch" path="res://Art/Crate.png" id="13_haq3d"]
-[ext_resource type="PackedScene" uid="uid://dpe0gjlh5ydxw" path="res://faux_item_for_gravity.tscn" id="15_g3u56"]
+[ext_resource type="Texture2D" uid="uid://cpgxs3oiwfbtu" path="res://Art/Corn/CornSeed.png" id="13_hgisj"]
 [ext_resource type="Texture2D" uid="uid://54r6ntyde5ku" path="res://Art/InventoryGrid.png" id="15_w3dle"]
-[ext_resource type="Script" path="res://GridBlock.gd" id="17_2pg2b"]
-[ext_resource type="Script" path="res://DebugOutput.gd" id="18_qyy6u"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cb7lw"]
 atlas = ExtResource("5_w4fn8")
@@ -64,26 +62,17 @@ size = Vector2(26, 26)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nk1bm"]
 size = Vector2(64, 128)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qppf5"]
+size = Vector2(38, 51)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s24o5"]
 size = Vector2(51, 38)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_j6h07"]
+size = Vector2(32, 32)
+
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lwi1o"]
 size = Vector2(128, 64)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_rqafy"]
-size = Vector2(48, 48)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2c26w"]
-size = Vector2(56, 655)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bx6tn"]
-size = Vector2(56, 655)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_l04lm"]
-size = Vector2(539, 47.5)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ifhhy"]
-size = Vector2(1187, 428.75)
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ra61"]
 bg_color = Color(0.101961, 0.0392157, 0.00784314, 1)
@@ -99,52 +88,20 @@ Panel/styles/panel = SubResource("StyleBoxFlat_8ra61")
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_u1m27")
-corn_seed = ExtResource("11_uafqe")
 
 [node name="Daytime" type="Timer" parent="."]
-wait_time = 500.0
+wait_time = 40.0
 one_shot = true
 autostart = true
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
-offset_right = 1152.0
-offset_bottom = 648.0
+offset_right = 40.0
+offset_bottom = 40.0
 
 [node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
 handle_input_locally = false
 size = Vector2i(1152, 648)
 render_target_update_mode = 4
-
-[node name="Hannah" type="CharacterBody2D" parent="SubViewportContainer/SubViewport" groups=["Hannah"]]
-z_index = 1
-position = Vector2(20, 20)
-script = ExtResource("1_8jlr8")
-
-[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SubViewportContainer/SubViewport/Hannah"]
-sprite_frames = SubResource("SpriteFrames_nwrfh")
-autoplay = "default"
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/Hannah"]
-position = Vector2(1, 4)
-shape = SubResource("RectangleShape2D_ykaa3")
-
-[node name="RayCast2D" type="RayCast2D" parent="SubViewportContainer/SubViewport/Hannah"]
-rotation = 4.71239
-scale = Vector2(1, 2)
-collision_mask = 3
-
-[node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport/Hannah"]
-visible = false
-position_smoothing_speed = 2.0
-drag_horizontal_enabled = true
-drag_vertical_enabled = true
-drag_left_margin = 0.4
-drag_top_margin = 0.4
-drag_right_margin = 0.4
-drag_bottom_margin = 0.4
-
-[node name="Marker2D" type="Marker2D" parent="SubViewportContainer/SubViewport/Hannah"]
-position = Vector2(512, 256)
 
 [node name="World" type="Node2D" parent="SubViewportContainer/SubViewport"]
 
@@ -173,9 +130,28 @@ layer_2/tile_data = PackedInt32Array(393218, 655360, 3, 524295, 655360, 3, 13108
 
 [node name="Seeds" type="Node2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["SeedsParent"]]
 
+[node name="Hannah" type="CharacterBody2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["Hannah"]]
+position = Vector2(20, 20)
+script = ExtResource("1_8jlr8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SubViewportContainer/SubViewport/World/Objects/Hannah"]
+sprite_frames = SubResource("SpriteFrames_nwrfh")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Hannah"]
+position = Vector2(1, 4)
+shape = SubResource("RectangleShape2D_ykaa3")
+
+[node name="RayCast2D" type="RayCast2D" parent="SubViewportContainer/SubViewport/World/Objects/Hannah"]
+rotation = 4.71239
+scale = Vector2(1, 2)
+collision_mask = 3
+
+[node name="Camera2D" type="Camera2D" parent="SubViewportContainer/SubViewport/World/Objects/Hannah"]
+position = Vector2(-20, -20)
+
 [node name="Item" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["Item"]]
 position = Vector2(100, 50)
-script = ExtResource("4_wj8jx")
 
 [node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/Item"]
 scale = Vector2(0.2, 0.2)
@@ -204,8 +180,25 @@ texture = ExtResource("8_qbdht")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Bed"]
 shape = SubResource("RectangleShape2D_nk1bm")
 
-[node name="Hoe" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("10_06xem")]
-position = Vector2(200, 200)
+[node name="Hoe" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["Equipment", "Hoe", "Item"]]
+position = Vector2(200, 50)
+script = ExtResource("4_wj8jx")
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/Hoe"]
+texture = ExtResource("9_g8r5y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Hoe"]
+shape = SubResource("RectangleShape2D_qppf5")
+
+[node name="ContextMenu" type="VBoxContainer" parent="SubViewportContainer/SubViewport/World/Objects/Hoe"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Equip" type="Button" parent="SubViewportContainer/SubViewport/World/Objects/Hoe/ContextMenu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Equip"
 
 [node name="WateringCan" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["Equipment", "Hoe", "Item"]]
 position = Vector2(400, 50)
@@ -227,7 +220,31 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 8
 text = "Equip"
 
-[node name="CornSeed" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("11_uafqe")]
+[node name="CornSeed" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["Equipment", "Hoe", "Item"]]
+position = Vector2(400, 150)
+script = ExtResource("4_wj8jx")
+seed_scene = ExtResource("12_0ae5x")
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/CornSeed"]
+texture = ExtResource("13_hgisj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/CornSeed"]
+shape = SubResource("RectangleShape2D_j6h07")
+
+[node name="ContextMenu" type="VBoxContainer" parent="SubViewportContainer/SubViewport/World/Objects/CornSeed"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Equip" type="Button" parent="SubViewportContainer/SubViewport/World/Objects/CornSeed/ContextMenu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Equip"
+
+[node name="Throw Away2" type="Button" parent="SubViewportContainer/SubViewport/World/Objects/CornSeed/ContextMenu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Throw Away"
 
 [node name="Crate" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects"]
 position = Vector2(700, 500)
@@ -239,109 +256,159 @@ texture = ExtResource("13_haq3d")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Crate"]
 shape = SubResource("RectangleShape2D_lwi1o")
 
+[node name="Objects2" type="Node2D" parent="SubViewportContainer/SubViewport/World"]
+
+[node name="Seeds" type="Node2D" parent="SubViewportContainer/SubViewport/World/Objects2" groups=["SeedsParent"]]
+
+[node name="Hannah" type="CharacterBody2D" parent="SubViewportContainer/SubViewport/World/Objects2" groups=["Hannah"]]
+position = Vector2(20, 20)
+script = ExtResource("1_8jlr8")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="SubViewportContainer/SubViewport/World/Objects2/Hannah"]
+sprite_frames = SubResource("SpriteFrames_nwrfh")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects2/Hannah"]
+position = Vector2(1, 4)
+shape = SubResource("RectangleShape2D_ykaa3")
+
+[node name="RayCast2D" type="RayCast2D" parent="SubViewportContainer/SubViewport/World/Objects2/Hannah"]
+rotation = 4.71239
+scale = Vector2(1, 2)
+collision_mask = 3
+
+[node name="Item" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects2" groups=["Item"]]
+position = Vector2(100, 50)
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects2/Item"]
+scale = Vector2(0.2, 0.2)
+texture = ExtResource("7_x5kp1")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects2/Item"]
+shape = SubResource("RectangleShape2D_ioq5r")
+
+[node name="ContextMenu" type="VBoxContainer" parent="SubViewportContainer/SubViewport/World/Objects2/Item"]
+visible = false
+offset_right = 56.0
+offset_bottom = 40.0
+
+[node name="Throw Away" type="Button" parent="SubViewportContainer/SubViewport/World/Objects2/Item/ContextMenu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Throw Away"
+
+[node name="Bed" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects2"]
+position = Vector2(900, 100)
+script = ExtResource("5_4wxi4")
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects2/Bed"]
+texture = ExtResource("8_qbdht")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects2/Bed"]
+shape = SubResource("RectangleShape2D_nk1bm")
+
+[node name="Hoe" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects2" groups=["Equipment", "Hoe", "Item"]]
+position = Vector2(200, 50)
+script = ExtResource("4_wj8jx")
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects2/Hoe"]
+texture = ExtResource("9_g8r5y")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects2/Hoe"]
+shape = SubResource("RectangleShape2D_qppf5")
+
+[node name="ContextMenu" type="VBoxContainer" parent="SubViewportContainer/SubViewport/World/Objects2/Hoe"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Equip" type="Button" parent="SubViewportContainer/SubViewport/World/Objects2/Hoe/ContextMenu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Equip"
+
+[node name="WateringCan" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects2" groups=["Equipment", "Hoe", "Item"]]
+position = Vector2(400, 50)
+script = ExtResource("4_wj8jx")
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects2/WateringCan"]
+texture = ExtResource("11_mkq7h")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects2/WateringCan"]
+shape = SubResource("RectangleShape2D_s24o5")
+
+[node name="ContextMenu" type="VBoxContainer" parent="SubViewportContainer/SubViewport/World/Objects2/WateringCan"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Equip" type="Button" parent="SubViewportContainer/SubViewport/World/Objects2/WateringCan/ContextMenu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Equip"
+
+[node name="CornSeed" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects2" groups=["Equipment", "Hoe", "Item"]]
+position = Vector2(400, 150)
+script = ExtResource("4_wj8jx")
+seed_scene = ExtResource("12_0ae5x")
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects2/CornSeed"]
+texture = ExtResource("13_hgisj")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects2/CornSeed"]
+shape = SubResource("RectangleShape2D_j6h07")
+
+[node name="ContextMenu" type="VBoxContainer" parent="SubViewportContainer/SubViewport/World/Objects2/CornSeed"]
+visible = false
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Equip" type="Button" parent="SubViewportContainer/SubViewport/World/Objects2/CornSeed/ContextMenu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Equip"
+
+[node name="Throw Away2" type="Button" parent="SubViewportContainer/SubViewport/World/Objects2/CornSeed/ContextMenu"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 8
+text = "Throw Away"
+
+[node name="Crate" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects2"]
+position = Vector2(700, 500)
+script = ExtResource("5_4wxi4")
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects2/Crate"]
+texture = ExtResource("13_haq3d")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects2/Crate"]
+shape = SubResource("RectangleShape2D_lwi1o")
+
 [node name="UI" type="CanvasLayer" parent="."]
 
 [node name="PlayerInventoryUI" type="Control" parent="UI" groups=["Inventory"]]
+visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 1152.0
 offset_bottom = 648.0
 script = ExtResource("3_hwl7w")
-grav_affected_item_scene = ExtResource("15_g3u56")
 
-[node name="InvSprite" type="Sprite2D" parent="UI/PlayerInventoryUI"]
+[node name="GridSprite" type="Sprite2D" parent="UI/PlayerInventoryUI"]
 texture = ExtResource("15_w3dle")
 centered = false
 
-[node name="Grid" type="Node2D" parent="UI/PlayerInventoryUI/InvSprite"]
-position = Vector2(21, 18)
+[node name="Node2D" type="Node2D" parent="UI/PlayerInventoryUI/GridSprite"]
 
-[node name="GridContainer" type="GridContainer" parent="UI/PlayerInventoryUI/InvSprite/Grid"]
-offset_right = 612.0
-offset_bottom = 575.0
-columns = 12
-
-[node name="GridBlock" type="Control" parent="UI/PlayerInventoryUI/InvSprite/Grid/GridContainer" groups=["GridBlock"]]
-custom_minimum_size = Vector2(47.5, 48)
-layout_mode = 2
-script = ExtResource("17_2pg2b")
-
-[node name="Area2D" type="Area2D" parent="UI/PlayerInventoryUI/InvSprite/Grid/GridContainer/GridBlock"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/PlayerInventoryUI/InvSprite/Grid/GridContainer/GridBlock/Area2D"]
-position = Vector2(24, 24)
-shape = SubResource("RectangleShape2D_rqafy")
-
-[node name="GridBlock2" type="Control" parent="UI/PlayerInventoryUI/InvSprite/Grid/GridContainer" groups=["GridBlock"]]
-custom_minimum_size = Vector2(47.5, 48)
-layout_mode = 2
-script = ExtResource("17_2pg2b")
-
-[node name="Area2D" type="Area2D" parent="UI/PlayerInventoryUI/InvSprite/Grid/GridContainer/GridBlock2"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/PlayerInventoryUI/InvSprite/Grid/GridContainer/GridBlock2/Area2D"]
-position = Vector2(24, 24)
-shape = SubResource("RectangleShape2D_rqafy")
-
-[node name="GridBlock3" type="Control" parent="UI/PlayerInventoryUI/InvSprite/Grid/GridContainer" groups=["GridBlock"]]
-custom_minimum_size = Vector2(47.5, 48)
-layout_mode = 2
-script = ExtResource("17_2pg2b")
-
-[node name="Area2D" type="Area2D" parent="UI/PlayerInventoryUI/InvSprite/Grid/GridContainer/GridBlock3"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/PlayerInventoryUI/InvSprite/Grid/GridContainer/GridBlock3/Area2D"]
-position = Vector2(24, 24)
-shape = SubResource("RectangleShape2D_rqafy")
-
-[node name="GridBlock4" type="Control" parent="UI/PlayerInventoryUI/InvSprite/Grid/GridContainer" groups=["GridBlock"]]
-custom_minimum_size = Vector2(47.5, 48)
-layout_mode = 2
-script = ExtResource("17_2pg2b")
-
-[node name="Area2D" type="Area2D" parent="UI/PlayerInventoryUI/InvSprite/Grid/GridContainer/GridBlock4"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/PlayerInventoryUI/InvSprite/Grid/GridContainer/GridBlock4/Area2D"]
-position = Vector2(24, 24)
-shape = SubResource("RectangleShape2D_rqafy")
-
-[node name="FauxItemColl" type="Node2D" parent="UI/PlayerInventoryUI/InvSprite" groups=["FauxColl"]]
-position = Vector2(900, 330)
-
-[node name="ItemCollection" type="Node2D" parent="UI/PlayerInventoryUI/InvSprite" groups=["ItemColl"]]
-position = Vector2(900, 330)
-
-[node name="Equipped" type="Node2D" parent="UI/PlayerInventoryUI/InvSprite"]
-position = Vector2(690, 24)
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="UI/PlayerInventoryUI/InvSprite"]
+[node name="SubViewportContainer" type="SubViewportContainer" parent="UI/PlayerInventoryUI/GridSprite"]
 offset_left = 835.0
 offset_top = 50.0
 offset_right = 963.0
 offset_bottom = 178.0
 
-[node name="SubViewport" type="SubViewport" parent="UI/PlayerInventoryUI/InvSprite/SubViewportContainer"]
+[node name="SubViewport" type="SubViewport" parent="UI/PlayerInventoryUI/GridSprite/SubViewportContainer"]
 handle_input_locally = false
 size = Vector2i(128, 128)
-render_target_update_mode = 4
-
-[node name="Container" type="StaticBody2D" parent="UI/PlayerInventoryUI"]
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="UI/PlayerInventoryUI/Container"]
-position = Vector2(659, 317.5)
-shape = SubResource("RectangleShape2D_2c26w")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="UI/PlayerInventoryUI/Container"]
-position = Vector2(1140, 318)
-shape = SubResource("RectangleShape2D_bx6tn")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="UI/PlayerInventoryUI/Container"]
-position = Vector2(898.5, 621.75)
-shape = SubResource("RectangleShape2D_l04lm")
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="UI/PlayerInventoryUI/Container"]
-position = Vector2(572.5, -216.625)
-shape = SubResource("RectangleShape2D_ifhhy")
+render_target_update_mode = 0
 
 [node name="DayOverUI" type="Control" parent="UI"]
 visible = false
@@ -447,30 +514,17 @@ grow_horizontal = 2
 grow_vertical = 0
 text = "No"
 
-[node name="Window" type="Window" parent="."]
-position = Vector2i(0, 36)
-size = Vector2i(500, 600)
-
-[node name="Spawn Seed" type="Button" parent="Window"]
-offset_right = 8.0
-offset_bottom = 8.0
-text = "Spawn seed"
-
-[node name="DebugOutput" type="Label" parent="Window" groups=["DebugOutput"]]
-offset_left = 5.0
-offset_top = 40.0
-offset_right = 505.0
-offset_bottom = 600.0
-text = "null"
-script = ExtResource("18_qyy6u")
-
 [connection signal="timeout" from="Daytime" to="." method="_on_daytime_timeout"]
 [connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects/Item/ContextMenu/Throw Away" to="UI/PlayerInventoryUI" method="_on_throw_away_pressed"]
-[connection signal="body_entered" from="UI/PlayerInventoryUI/InvSprite/Grid/GridContainer/GridBlock/Area2D" to="UI/PlayerInventoryUI/InvSprite/Grid/GridContainer/GridBlock" method="_on_area_2d_body_entered"]
-[connection signal="body_entered" from="UI/PlayerInventoryUI/InvSprite/Grid/GridContainer/GridBlock2/Area2D" to="UI/PlayerInventoryUI/InvSprite/Grid/GridContainer/GridBlock2" method="_on_area_2d_body_entered"]
-[connection signal="body_entered" from="UI/PlayerInventoryUI/InvSprite/Grid/GridContainer/GridBlock3/Area2D" to="UI/PlayerInventoryUI/InvSprite/Grid/GridContainer/GridBlock3" method="_on_area_2d_body_entered"]
-[connection signal="body_entered" from="UI/PlayerInventoryUI/InvSprite/Grid/GridContainer/GridBlock4/Area2D" to="UI/PlayerInventoryUI/InvSprite/Grid/GridContainer/GridBlock4" method="_on_area_2d_body_entered"]
+[connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects/Hoe/ContextMenu/Equip" to="SubViewportContainer/SubViewport/World/Objects/Hannah" method="_on_equip_pressed"]
+[connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects/WateringCan/ContextMenu/Equip" to="SubViewportContainer/SubViewport/World/Objects/Hannah" method="_on_equip_pressed"]
+[connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects/CornSeed/ContextMenu/Equip" to="SubViewportContainer/SubViewport/World/Objects/Hannah" method="_on_equip_pressed"]
+[connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects/CornSeed/ContextMenu/Throw Away2" to="UI/PlayerInventoryUI" method="_on_throw_away_pressed"]
+[connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects2/Item/ContextMenu/Throw Away" to="UI/PlayerInventoryUI" method="_on_throw_away_pressed"]
+[connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects2/Hoe/ContextMenu/Equip" to="SubViewportContainer/SubViewport/World/Objects2/Hannah" method="_on_equip_pressed"]
+[connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects2/WateringCan/ContextMenu/Equip" to="SubViewportContainer/SubViewport/World/Objects2/Hannah" method="_on_equip_pressed"]
+[connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects2/CornSeed/ContextMenu/Equip" to="SubViewportContainer/SubViewport/World/Objects2/Hannah" method="_on_equip_pressed"]
+[connection signal="pressed" from="SubViewportContainer/SubViewport/World/Objects2/CornSeed/ContextMenu/Throw Away2" to="UI/PlayerInventoryUI" method="_on_throw_away_pressed"]
 [connection signal="pressed" from="UI/DayOverUI/NextDay" to="." method="_on_next_day_pressed"]
 [connection signal="pressed" from="UI/DialogueUI/DialoguePanel/Options/Yes" to="SubViewportContainer/SubViewport/World/Objects/Bed" method="_on_yes_pressed"]
 [connection signal="pressed" from="UI/DialogueUI/DialoguePanel/Options/No" to="SubViewportContainer/SubViewport/World/Objects/Bed" method="_on_no_pressed"]
-[connection signal="pressed" from="Window/Spawn Seed" to="." method="_on_spawn_seed_pressed"]

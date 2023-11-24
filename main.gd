@@ -1,14 +1,16 @@
 extends Node2D
 
 @export var debug = true
-var debugWindow = $Window if debug else null
+@onready var debugWindow = $Window if debug else null
 
 var seed_dict = {}
 
-@onready var hannah = $SubViewportContainer/SubViewport/World/Objects/Hannah
 @onready var tileMap = $SubViewportContainer/SubViewport/World/TileMap
 @onready var seeds = $SubViewportContainer/SubViewport/World/Objects/Seeds
+
 @export var corn_seed: PackedScene
+
+@onready var hannah = $SubViewportContainer/SubViewport/Hannah
 
 func _on_daytime_timeout():
 	$Daytime.paused = true
@@ -16,9 +18,6 @@ func _on_daytime_timeout():
 	$UI/DayOverUI.visible = true
 	
 	hannah.inventory.visible = false
-	
-	if hannah.inventory.check_menu_visibility_for_selected():
-		hannah.inventory.toggle_context_menu_for_selected()
 	
 	hannah.process_mode = 4
 	
@@ -62,13 +61,12 @@ func next_day():
 	
 	hannah.process_mode = 0
 	$UI/DayOverUI.visible = false
-	$Daytime.wait_time = 20
+	$Daytime.wait_time = 500
 	$Daytime.paused = false
 	$Daytime.start()
 	
 	remove_child(timer)
 
-###hide it awayyyyyy
 
 func get_seed_on_tile(cell) -> Object:
 	if seeds.get_child_count() > 0:
@@ -77,12 +75,12 @@ func get_seed_on_tile(cell) -> Object:
 				return s
 	return null
 
-func check_is_wet_tile(cell) -> bool:
-	return tileMap.get_cell_atlas_coords(0,Vector2i(cell.x, cell.y)) == Vector2i(0,0) and tileMap.get_cell_alternative_tile(0, Vector2i(cell.x, cell.y)) == 1
-
-
-
 func _on_spawn_seed_pressed():
 	var new_seed = corn_seed.instantiate()
 	new_seed.position = Vector2(400, 150)
 	seeds.add_child(new_seed)
+
+
+###hide it awayyyyyy
+func check_is_wet_tile(cell) -> bool:
+	return tileMap.get_cell_atlas_coords(0,Vector2i(cell.x, cell.y)) == Vector2i(0,0) and tileMap.get_cell_alternative_tile(0, Vector2i(cell.x, cell.y)) == 1
