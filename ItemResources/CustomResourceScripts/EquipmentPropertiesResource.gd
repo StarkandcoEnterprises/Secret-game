@@ -1,4 +1,4 @@
-extends ItemResource
+extends Resource
 
 class_name EquipmentPropertiesResource
 
