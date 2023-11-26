@@ -3,11 +3,14 @@ extends CharacterBody2D
 
 var speed = 300.0
 
-
-@onready var subviewport = $"../../../UI/PlayerInventoryUI/InvSprite/SubViewportContainer/SubViewport"
+@onready var subviewport = UI.get_node("/root/UI/PlayerInventoryUI/InvSprite/SubViewportContainer/SubViewport")
 
 #Get the inventory object - probably this should just be a child of the player? TODO refactor
-@onready var inventory = get_tree().get_nodes_in_group("Inventory")[0]
+@onready var inventory = get_tree().get_first_node_in_group("Inventory")
+@onready var raycast = get_tree().get_first_node_in_group("RayCast")
+@onready var marker = get_tree().get_first_node_in_group("Marker")
+@onready var sprite = get_tree().get_first_node_in_group("Sprite")
+
 var equipped
 var interacting = false
 var startInvVisible = true
@@ -15,13 +18,16 @@ var startInvVisible = true
 func _ready():
 	subviewport.world_2d = get_viewport().world_2d
 
+
 func _input(event):
 	if !interacting:
 		
+
 		#Here is inventory handling and interacting with world objects
-		if !inventory.visible and event.is_action_pressed("interact") and $RayCast2D.is_colliding() and $RayCast2D.get_collider().has_method("interact"):
+		if !inventory.visible and event.is_action_pressed("interact") and raycast.is_colliding() and raycast.get_collider().has_method("interact"):
+			debug.stack_and_text(str(!inventory.visible,"  ",event.is_action_pressed("interact"),"  ",raycast.is_colliding()))
 			interacting = true
-			$RayCast2D.get_collider().interact()
+			raycast.get_collider().interact()
 		elif event.is_action_pressed("inventory"):
 			
 			#Just in case I have the inventory visible at game runtime
@@ -39,7 +45,7 @@ func _input(event):
 				#Instantiate the inventory camera
 				var inv_cam = Camera2D.new()
 				inv_cam.custom_viewport = subviewport
-				inv_cam.position = $Marker2D.position
+				inv_cam.position = marker.position
 				inv_cam.add_to_group("InvCam")
 				add_child(inv_cam)
 
@@ -50,7 +56,7 @@ func _physics_process(delta):
 		
 		#use any equipment
 		if is_instance_valid(equipped) and Input.is_action_pressed("interact"):
-			var kept = equipped.use($AnimatedSprite2D.flip_h, delta)
+			var kept = equipped.use(sprite.flip_h, delta)
 			if !kept:
 				equipped = null
 		elif is_instance_valid(equipped) and Input.is_action_pressed("unequip"):
@@ -75,11 +81,11 @@ func _physics_process(delta):
 
 func face_direction(direction):
 	if direction == Vector2.LEFT:
-		$AnimatedSprite2D.flip_h = true
+		sprite.flip_h = true
 	else:
-		$AnimatedSprite2D.flip_h = false
+		sprite.flip_h = false
 	
-	$RayCast2D.rotation_degrees = 90*[Vector2.DOWN,Vector2.LEFT,Vector2.UP,Vector2.RIGHT].find(direction)
+	marker.rotation_degrees = 90*[Vector2.DOWN,Vector2.LEFT,Vector2.UP,Vector2.RIGHT].find(direction)
 
 #Equip equipment - TODO FIX TO USE THE BAR WHEN WE HAVE INVENTORY WORKING
 func _on_equip_pressed():
@@ -89,8 +95,9 @@ func _on_equip_pressed():
 	inventory.toggle_context_menu_for_selected()
 	inventory.remove_item(equipped, self)
 	inventory.get_child(1).show()
-	if $AnimatedSprite2D.flip_h == true:
+	if sprite.flip_h == true:
 		equipped.position = Vector2(90,18)
 	else:
 		equipped.position = Vector2(-45,36)
 	equipped.rotation_degrees = 0
+

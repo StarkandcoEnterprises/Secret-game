@@ -1,0 +1,129 @@
+[gd_scene load_steps=10 format=3 uid="uid://cp1lycwjvfvbu"]
+
+[ext_resource type="Script" path="res://InventoryResources/PlayerInventoryUI.gd" id="1_40yka"]
+[ext_resource type="PackedScene" uid="uid://dpe0gjlh5ydxw" path="res://InventoryResources/faux_item_for_gravity.tscn" id="2_0hwdv"]
+[ext_resource type="Texture2D" uid="uid://54r6ntyde5ku" path="res://Art/InventoryGrid.png" id="3_805em"]
+[ext_resource type="Script" path="res://InventoryResources/GridBlock.gd" id="4_pp2g1"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rqafy"]
+size = Vector2(48, 48)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2c26w"]
+size = Vector2(56, 655)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bx6tn"]
+size = Vector2(56, 655)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l04lm"]
+size = Vector2(539, 47.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ifhhy"]
+size = Vector2(1187, 428.75)
+
+[node name="PlayerInventoryUI" type="Control" groups=["Inventory"]]
+visible = false
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("1_40yka")
+grav_affected_item_scene = ExtResource("2_0hwdv")
+
+[node name="InvSprite" type="Sprite2D" parent="."]
+texture = ExtResource("3_805em")
+centered = false
+
+[node name="Grid" type="Node2D" parent="InvSprite"]
+position = Vector2(21, 18)
+
+[node name="GridContainer" type="GridContainer" parent="InvSprite/Grid"]
+offset_right = 612.0
+offset_bottom = 575.0
+columns = 12
+
+[node name="GridBlock" type="Control" parent="InvSprite/Grid/GridContainer" groups=["GridBlock"]]
+custom_minimum_size = Vector2(47.5, 48)
+layout_mode = 2
+script = ExtResource("4_pp2g1")
+
+[node name="Area2D" type="Area2D" parent="InvSprite/Grid/GridContainer/GridBlock"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvSprite/Grid/GridContainer/GridBlock/Area2D"]
+position = Vector2(24, 24)
+shape = SubResource("RectangleShape2D_rqafy")
+
+[node name="GridBlock2" type="Control" parent="InvSprite/Grid/GridContainer" groups=["GridBlock"]]
+custom_minimum_size = Vector2(47.5, 48)
+layout_mode = 2
+script = ExtResource("4_pp2g1")
+
+[node name="Area2D" type="Area2D" parent="InvSprite/Grid/GridContainer/GridBlock2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvSprite/Grid/GridContainer/GridBlock2/Area2D"]
+position = Vector2(24, 24)
+shape = SubResource("RectangleShape2D_rqafy")
+
+[node name="GridBlock3" type="Control" parent="InvSprite/Grid/GridContainer" groups=["GridBlock"]]
+custom_minimum_size = Vector2(47.5, 48)
+layout_mode = 2
+script = ExtResource("4_pp2g1")
+
+[node name="Area2D" type="Area2D" parent="InvSprite/Grid/GridContainer/GridBlock3"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvSprite/Grid/GridContainer/GridBlock3/Area2D"]
+position = Vector2(24, 24)
+shape = SubResource("RectangleShape2D_rqafy")
+
+[node name="GridBlock4" type="Control" parent="InvSprite/Grid/GridContainer" groups=["GridBlock"]]
+custom_minimum_size = Vector2(47.5, 48)
+layout_mode = 2
+script = ExtResource("4_pp2g1")
+
+[node name="Area2D" type="Area2D" parent="InvSprite/Grid/GridContainer/GridBlock4"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvSprite/Grid/GridContainer/GridBlock4/Area2D"]
+position = Vector2(24, 24)
+shape = SubResource("RectangleShape2D_rqafy")
+
+[node name="FauxItemColl" type="Node2D" parent="InvSprite" groups=["FauxColl"]]
+position = Vector2(900, 330)
+
+[node name="ItemCollection" type="Node2D" parent="InvSprite" groups=["ItemColl"]]
+position = Vector2(900, 330)
+
+[node name="Equipped" type="Node2D" parent="InvSprite"]
+position = Vector2(690, 24)
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="InvSprite"]
+offset_left = 835.0
+offset_top = 50.0
+offset_right = 963.0
+offset_bottom = 178.0
+
+[node name="SubViewport" type="SubViewport" parent="InvSprite/SubViewportContainer"]
+handle_input_locally = false
+size = Vector2i(128, 128)
+render_target_update_mode = 0
+
+[node name="Container" type="StaticBody2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Container"]
+position = Vector2(659, 317.5)
+shape = SubResource("RectangleShape2D_2c26w")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Container"]
+position = Vector2(1140, 318)
+shape = SubResource("RectangleShape2D_bx6tn")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="Container"]
+position = Vector2(898.5, 621.75)
+shape = SubResource("RectangleShape2D_l04lm")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="Container"]
+position = Vector2(572.5, -216.625)
+shape = SubResource("RectangleShape2D_ifhhy")
+
+[connection signal="body_entered" from="InvSprite/Grid/GridContainer/GridBlock/Area2D" to="InvSprite/Grid/GridContainer/GridBlock" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="InvSprite/Grid/GridContainer/GridBlock2/Area2D" to="InvSprite/Grid/GridContainer/GridBlock2" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="InvSprite/Grid/GridContainer/GridBlock3/Area2D" to="InvSprite/Grid/GridContainer/GridBlock3" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="InvSprite/Grid/GridContainer/GridBlock4/Area2D" to="InvSprite/Grid/GridContainer/GridBlock4" method="_on_area_2d_body_entered"]

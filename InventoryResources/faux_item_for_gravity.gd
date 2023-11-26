@@ -34,25 +34,36 @@ func _on_mouse_exited():
 	if not global.is_dragging:
 		selectable = false
 
+#We are in an area... is it a grid block? Is it full?
 func _on_slots_area_entered(area):
 	if area.get_parent().is_in_group("GridBlock"):
 		if !area.get_parent().full:
+			
+			#No, we could slot here.
 			slots_available += 1
 			overlapping_areas.append(area)
-			##A whole bunch of nonsense to try and get the left most slot of all areas entered
+			
+			##A whole bunch of nonsense to try and get the left most slot of all areas entered that needs refactoring
 			if top_left_of_slots == Vector2.ZERO or area.get_parent().position.x + 45 <= top_left_of_slots.x:
 				top_left_of_slots.x = area.get_parent().position.x + 45 + to_center
 				if top_left_of_slots.y == 0 or area.get_parent().position.y + 41 <= top_left_of_slots.y:
 					top_left_of_slots.y = area.get_parent().position.y + 41
 
+#We are leaving an area. If we were slotted or considering being here, we don't want to be anymore
 func _on_slots_area_exited(area):
 	if area.get_parent().is_in_group("GridBlock"):
+		
+		#If it's not full, then we were considering entering it
 		if !area.get_parent().full:
 			slots_available -= 1
 			overlapping_areas.erase(area)
+		
+		#Even though it was not full, it might have been the slot we just left
 		elif area.get_parent().contains_ref == self:
 			area.get_parent().remove_item()
 			slots_available -= 1
+	
+	#If we have no more overlapping areas, we can forget the top left slot value
 	if overlapping_areas.size() == 0:
 		top_left_of_slots = Vector2.ZERO
 
@@ -63,6 +74,7 @@ func toggle_selected(select):
 	if !select:
 		selected = false
 		global.is_dragging = false
+		
 	else:
 		selected = true
 		global.is_dragging = true

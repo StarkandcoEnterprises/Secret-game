@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://6n8xmup3jvqw"]
+
+[ext_resource type="Script" path="res://CoreResources/WorldObject.gd" id="1_sy6xw"]
+[ext_resource type="Texture2D" uid="uid://bopbscsbdwhch" path="res://Art/Crate.png" id="2_yfdbt"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lwi1o"]
+size = Vector2(128, 64)
+
+[node name="Crate" type="StaticBody2D"]
+position = Vector2(700, 500)
+script = ExtResource("1_sy6xw")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_yfdbt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_lwi1o")

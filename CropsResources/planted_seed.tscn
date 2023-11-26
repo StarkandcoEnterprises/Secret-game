@@ -1,0 +1,50 @@
+[gd_scene load_steps=10 format=3 uid="uid://c6x74ewrfcmkw"]
+
+[ext_resource type="Script" path="res://CropsResources/planted_seed.gd" id="1_0djgo"]
+[ext_resource type="PackedScene" uid="uid://b3g3knxe0y3ls" path="res://CropsResources/corn.tscn" id="2_48gri"]
+[ext_resource type="Texture2D" uid="uid://n1wyyh5v8uce" path="res://Art/PlantedSeed.png" id="3_y6t5e"]
+[ext_resource type="Texture2D" uid="uid://bq1hua4msahwu" path="res://Art/Corn/CornSprout.png" id="4_vxe16"]
+[ext_resource type="Texture2D" uid="uid://ctuaccol3ah6p" path="res://Art/Corn/CornGrowth1.png" id="5_s7nfj"]
+[ext_resource type="Texture2D" uid="uid://br7ujmul1jyyp" path="res://Art/Corn/CornGrowth2.png" id="6_a4v1o"]
+[ext_resource type="Texture2D" uid="uid://b0hf6i8exkpsy" path="res://Art/Corn/CornGrowth3.png" id="7_2p73r"]
+[ext_resource type="Texture2D" uid="uid://nvesdbwq6kh8" path="res://Art/Corn/CornGrown.png" id="8_scybe"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lur78"]
+size = Vector2(24, 24)
+
+[node name="PlantedSeed" type="StaticBody2D" groups=["WorldObject"]]
+position = Vector2(200, 400)
+collision_layer = 2
+script = ExtResource("1_0djgo")
+corn_scene = ExtResource("2_48gri")
+
+[node name="SeedSprite" type="Sprite2D" parent="." groups=["sprite1"]]
+texture = ExtResource("3_y6t5e")
+
+[node name="SproutSprite" type="Sprite2D" parent="." groups=["sprite2"]]
+visible = false
+position = Vector2(2, -9)
+texture = ExtResource("4_vxe16")
+
+[node name="Growth1Sprite" type="Sprite2D" parent="." groups=["sprite3"]]
+visible = false
+position = Vector2(2, -8)
+texture = ExtResource("5_s7nfj")
+
+[node name="Growth2Sprite" type="Sprite2D" parent="." groups=["sprite4"]]
+visible = false
+position = Vector2(2, -6)
+texture = ExtResource("6_a4v1o")
+
+[node name="Growth3Sprite" type="Sprite2D" parent="." groups=["sprite5"]]
+visible = false
+position = Vector2(2, -10)
+texture = ExtResource("7_2p73r")
+
+[node name="GrownSprite" type="Sprite2D" parent="." groups=["sprite6"]]
+visible = false
+position = Vector2(2, -10)
+texture = ExtResource("8_scybe")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_lur78")

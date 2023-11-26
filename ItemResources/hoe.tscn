@@ -1,0 +1,18 @@
+[gd_scene load_steps=4 format=3 uid="uid://cfh82pdd0am2e"]
+
+[ext_resource type="Script" path="res://ItemResources/hoe.gd" id="1_bpxib"]
+[ext_resource type="Texture2D" uid="uid://cm6xs5htqrshd" path="res://Art/hoe.png" id="2_j0i66"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qppf5"]
+size = Vector2(19, 25.5)
+
+[node name="Hoe" type="StaticBody2D" groups=["Equipment", "Hoe", "Item"]]
+scale = Vector2(2, 2)
+script = ExtResource("1_bpxib")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_j0i66")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(2, -14.5)
+shape = SubResource("RectangleShape2D_qppf5")

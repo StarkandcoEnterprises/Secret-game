@@ -4,9 +4,11 @@ extends Control
 @onready var item_collection = get_tree().get_first_node_in_group("ItemColl")
 @export var grav_affected_item_scene: PackedScene
 
-
+#@onready var debug = $"../../Window"
 
 func add_item(item):
+	item.position = Vector2.ZERO
+	#debug.stack_and_text(str("Adding item: ",item))
 	item.reparent(item_collection)
 	var new_slot_filler = grav_affected_item_scene.instantiate()
 	faux_item_collection.add_child(new_slot_filler)
