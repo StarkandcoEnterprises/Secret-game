@@ -48,6 +48,7 @@ position = Vector2(20, 20)
 script = ExtResource("1_jbrk5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Sprite"]]
+unique_name_in_owner = true
 sprite_frames = SubResource("SpriteFrames_nwrfh")
 autoplay = "default"
 
@@ -56,6 +57,7 @@ position = Vector2(1, 4)
 shape = SubResource("RectangleShape2D_ykaa3")
 
 [node name="RayCast2D" type="RayCast2D" parent="." groups=["RayCast"]]
+unique_name_in_owner = true
 rotation = 4.71239
 scale = Vector2(1, 2)
 collision_mask = 3
@@ -71,4 +73,5 @@ drag_right_margin = 0.4
 drag_bottom_margin = 0.4
 
 [node name="Marker2D" type="Marker2D" parent="." groups=["Marker"]]
+unique_name_in_owner = true
 position = Vector2(512, 256)

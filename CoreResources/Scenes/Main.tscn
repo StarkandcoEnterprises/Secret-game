@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ho5ewtbo6mdn"]
+[gd_scene load_steps=17 format=3 uid="uid://ho5ewtbo6mdn"]
 
 [ext_resource type="TileSet" uid="uid://dfphrrdav6xyo" path="res://CoreResources/InstancedResources/MainTileset.tres" id="1_mwilu"]
 [ext_resource type="Script" path="res://CoreResources/GDScripts/Main.gd" id="1_u1m27"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://ItemResources/GDScripts/Equipment.gd" id="6_duohr"]
 [ext_resource type="Texture2D" uid="uid://cn0j6m8x6njyo" path="res://Art/Images/icon.svg" id="7_x5kp1"]
 [ext_resource type="Texture2D" uid="uid://b8sxywscmeyf4" path="res://Art/Images/BuildingScenes/Bed.png" id="8_qbdht"]
+[ext_resource type="PackedScene" uid="uid://cpq0waabh274t" path="res://CoreResources/Scenes/UI.tscn" id="11_jcwwp"]
 [ext_resource type="Texture2D" uid="uid://bjxvmatrivj87" path="res://Art/Images/Items/WateringCan.png" id="11_mkq7h"]
 [ext_resource type="PackedScene" uid="uid://trjqiocd54ea" path="res://ItemResources/Scenes/CornSeedPacket.tscn" id="11_uafqe"]
 [ext_resource type="Texture2D" uid="uid://bopbscsbdwhch" path="res://Art/Images/BuildingScenes/Crate.png" id="13_haq3d"]
@@ -28,6 +29,7 @@ size = Vector2(128, 64)
 script = ExtResource("1_u1m27")
 
 [node name="Daytime" type="Timer" parent="." groups=["DayTimer"]]
+unique_name_in_owner = true
 wait_time = 500.0
 one_shot = true
 autostart = true
@@ -42,10 +44,12 @@ size = Vector2i(1152, 648)
 render_target_update_mode = 4
 
 [node name="Hannah" parent="SubViewportContainer/SubViewport" instance=ExtResource("2_xi62l")]
+unique_name_in_owner = true
 
 [node name="World" type="Node2D" parent="SubViewportContainer/SubViewport"]
 
 [node name="TileMap" type="TileMap" parent="SubViewportContainer/SubViewport/World" groups=["Map"]]
+unique_name_in_owner = true
 tile_set = ExtResource("1_mwilu")
 format = 2
 layer_0/name = "Ground"
@@ -69,6 +73,7 @@ layer_2/tile_data = PackedInt32Array(393218, 655360, 3, 524295, 655360, 3, 13108
 [node name="Objects" type="Node2D" parent="SubViewportContainer/SubViewport/World"]
 
 [node name="Seeds" type="Node2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["SeedsParent"]]
+unique_name_in_owner = true
 
 [node name="Item" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["Item"]]
 position = Vector2(100, 50)
@@ -132,6 +137,8 @@ texture = ExtResource("13_haq3d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Crate"]
 shape = SubResource("RectangleShape2D_lwi1o")
+
+[node name="UI" parent="." instance=ExtResource("11_jcwwp")]
 
 [node name="Window" parent="." instance=ExtResource("18_fpf16")]
 position = Vector2i(-600, 36)
