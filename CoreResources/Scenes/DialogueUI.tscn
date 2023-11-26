@@ -1,0 +1,85 @@
+[gd_scene load_steps=3 format=3 uid="uid://c6mqdm5lea244"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ra61"]
+bg_color = Color(0.101961, 0.0392157, 0.00784314, 1)
+border_width_left = 20
+border_width_top = 20
+border_color = Color(0.364706, 0.0352941, 0.0235294, 1)
+border_blend = true
+corner_radius_top_left = 20
+corner_radius_top_right = 20
+
+[sub_resource type="Theme" id="Theme_sl3s6"]
+Panel/styles/panel = SubResource("StyleBoxFlat_8ra61")
+
+[node name="DialogueUI" type="Control"]
+visible = false
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -576.0
+offset_top = -150.0
+offset_right = 576.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="DialoguePanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_sl3s6")
+
+[node name="Label" type="Label" parent="DialoguePanel"]
+layout_mode = 0
+offset_left = 80.0
+offset_top = 30.0
+offset_right = 242.0
+offset_bottom = 56.0
+theme_override_colors/font_color = Color(1, 0.776471, 0.270588, 1)
+theme_override_font_sizes/font_size = 20
+text = "Some text goes here!"
+
+[node name="Options" type="Control" parent="DialoguePanel"]
+visible = false
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="Yes" type="Button" parent="DialoguePanel/Options"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 480.0
+offset_top = 59.0
+offset_right = 515.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "Yes"
+
+[node name="No" type="Button" parent="DialoguePanel/Options"]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = 600.0
+offset_top = 59.0
+offset_right = 635.0
+offset_bottom = 90.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "No"
+
+[connection signal="pressed" from="DialoguePanel/Options/Yes" to="." method="_on_yes_pressed"]
+[connection signal="pressed" from="DialoguePanel/Options/No" to="." method="_on_no_pressed"]

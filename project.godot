@@ -11,15 +11,13 @@ config_version=5
 [application]
 
 config/name="Secret game"
-run/main_scene="res://CoreResources/main.tscn"
+run/main_scene="res://CoreResources/Scenes/Main.tscn"
 config/features=PackedStringArray("4.1", "Mobile")
-config/icon="res://Art/icon.svg"
+config/icon="res://Art/Images/icon.svg"
 
 [autoload]
 
-global="*res://CoreResources/global.gd"
-UI="*res://CoreResources/ui.tscn"
-debug="*res://Debug/debug_window.tscn"
+global="*res://CoreResources/GDScripts/global.gd"
 
 [display]
 
