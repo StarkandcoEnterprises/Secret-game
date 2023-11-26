@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dpe0gjlh5ydxw"]
 
-[ext_resource type="Script" path="res://InventoryResources/GDScripts/FauxInvItem.gd" id="1_n3bq4"]
+[ext_resource type="Script" path="res://InventoryResources/GDScripts/BaseItem.gd" id="1_vx76w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5thya"]
 size = Vector2(45, 45)
@@ -8,13 +8,12 @@ size = Vector2(45, 45)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_a7xm8"]
 size = Vector2(45, 45)
 
-[node name="FauxItemForInv" type="CharacterBody2D"]
-scale = Vector2(2, 1)
+[node name="BaseItem" type="CharacterBody2D"]
 disable_mode = 1
 input_pickable = true
-script = ExtResource("1_n3bq4")
+script = ExtResource("1_vx76w")
 
-[node name="RigidShape" type="CollisionShape2D" parent="."]
+[node name="CharShape" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_5thya")
 
 [node name="Slots" type="Area2D" parent="."]

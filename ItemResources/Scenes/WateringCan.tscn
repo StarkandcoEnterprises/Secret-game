@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://cehw2pqkk34o5"]
 
 [ext_resource type="Script" path="res://ItemResources/GDScripts/Equipment.gd" id="1_l14ml"]
-[ext_resource type="Texture2D" uid="uid://bjxvmatrivj87" path="res://Art/Images/Items/WateringCan.png" id="2_37m0a"]
+[ext_resource type="Texture2D" uid="uid://bjxvmatrivj87" path="res://Art/Images/Items/Tools/WateringCan.png" id="2_37m0a"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s24o5"]
 size = Vector2(51, 38)

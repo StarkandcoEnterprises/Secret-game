@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bjxvmatrivj87"
-path="res://.godot/imported/WateringCan.png-3e5b6161dfe58359ac4f34b611137c6c.ctex"
+path="res://.godot/imported/WateringCan.png-870cab886a90bc28c41a1b80244b94e1.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Art/Images/Items/WateringCan.png"
-dest_files=["res://.godot/imported/WateringCan.png-3e5b6161dfe58359ac4f34b611137c6c.ctex"]
+source_file="res://Art/Images/Items/Tools/WateringCan.png"
+dest_files=["res://.godot/imported/WateringCan.png-870cab886a90bc28c41a1b80244b94e1.ctex"]
 
 [params]
 

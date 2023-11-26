@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://ho5ewtbo6mdn"]
+[gd_scene load_steps=18 format=3 uid="uid://ho5ewtbo6mdn"]
 
 [ext_resource type="TileSet" uid="uid://dfphrrdav6xyo" path="res://CoreResources/InstancedResources/MainTileset.tres" id="1_mwilu"]
 [ext_resource type="Script" path="res://CoreResources/GDScripts/Main.gd" id="1_u1m27"]
@@ -6,9 +6,10 @@
 [ext_resource type="Script" path="res://CoreResources/GDScripts/WorldObject.gd" id="5_4wxi4"]
 [ext_resource type="Script" path="res://ItemResources/GDScripts/Equipment.gd" id="6_duohr"]
 [ext_resource type="Texture2D" uid="uid://cn0j6m8x6njyo" path="res://Art/Images/icon.svg" id="7_x5kp1"]
+[ext_resource type="Texture2D" uid="uid://bjxvmatrivj87" path="res://Art/Images/Items/Tools/WateringCan.png" id="8_77utq"]
 [ext_resource type="Texture2D" uid="uid://b8sxywscmeyf4" path="res://Art/Images/BuildingScenes/Bed.png" id="8_qbdht"]
+[ext_resource type="PackedScene" uid="uid://dai01872lqc5m" path="res://ItemResources/Scenes/sword.tscn" id="11_0w52w"]
 [ext_resource type="PackedScene" uid="uid://cpq0waabh274t" path="res://CoreResources/Scenes/UI.tscn" id="11_jcwwp"]
-[ext_resource type="Texture2D" uid="uid://bjxvmatrivj87" path="res://Art/Images/Items/WateringCan.png" id="11_mkq7h"]
 [ext_resource type="PackedScene" uid="uid://trjqiocd54ea" path="res://ItemResources/Scenes/CornSeedPacket.tscn" id="11_uafqe"]
 [ext_resource type="Texture2D" uid="uid://bopbscsbdwhch" path="res://Art/Images/BuildingScenes/Crate.png" id="13_haq3d"]
 [ext_resource type="PackedScene" uid="uid://6wfbysp7xism" path="res://Debug/Scenes/DebugWindow.tscn" id="18_fpf16"]
@@ -105,7 +106,7 @@ position = Vector2(400, 50)
 script = ExtResource("6_duohr")
 
 [node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/WateringCan"]
-texture = ExtResource("11_mkq7h")
+texture = ExtResource("8_77utq")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/WateringCan"]
 shape = SubResource("RectangleShape2D_s24o5")
@@ -131,6 +132,9 @@ texture = ExtResource("13_haq3d")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Crate"]
 shape = SubResource("RectangleShape2D_lwi1o")
+
+[node name="Sword" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("11_0w52w")]
+position = Vector2(500, 50)
 
 [node name="UI" parent="." instance=ExtResource("11_jcwwp")]
 

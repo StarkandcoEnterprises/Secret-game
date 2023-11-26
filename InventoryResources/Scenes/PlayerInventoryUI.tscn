@@ -1,8 +1,8 @@
 [gd_scene load_steps=10 format=3 uid="uid://cp1lycwjvfvbu"]
 
 [ext_resource type="Script" path="res://InventoryResources/GDScripts/PlayerInventoryUI.gd" id="1_40yka"]
-[ext_resource type="PackedScene" uid="uid://dpe0gjlh5ydxw" path="res://InventoryResources/Scenes/FauxInvItem.tscn" id="2_0hwdv"]
-[ext_resource type="Texture2D" uid="uid://54r6ntyde5ku" path="res://Art/InventoryGrid.png" id="3_805em"]
+[ext_resource type="PackedScene" uid="uid://dpe0gjlh5ydxw" path="res://InventoryResources/Scenes/BaseItem.tscn" id="2_0hwdv"]
+[ext_resource type="Texture2D" uid="uid://54r6ntyde5ku" path="res://Art/Images/Inventory/InventoryGrid.png" id="3_805em"]
 [ext_resource type="Script" path="res://InventoryResources/GDScripts/GridBlock.gd" id="4_pp2g1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_rqafy"]

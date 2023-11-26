@@ -1,4 +1,5 @@
 extends CharacterBody2D
+class_name BaseItem
 
 var selectable = false
 var selected = false
@@ -16,15 +17,20 @@ const SPEED = 10
 
 var top_left_of_slots = Vector2.ZERO
 
+@export var properties = BaseResource.new()
+
+var in_inventory = false
+
 func _process(delta):
-	if selected:
-		global_position = get_global_mouse_position()
-	elif global_position.y >= 648:
-		position.y = 0
-		position.x = 0
-	elif !slotted:
-		velocity += Vector2.DOWN * SPEED
-		move_and_slide()
+	if in_inventory:
+		if selected:
+			global_position = get_global_mouse_position()
+		elif global_position.y >= 648:
+			position.y = 0
+			position.x = 0
+		elif !slotted:
+			velocity += Vector2.DOWN * SPEED
+			move_and_slide()
 
 func _on_mouse_entered():
 	if not global.is_dragging:
@@ -79,6 +85,11 @@ func toggle_selected(select):
 		selected = true
 		global.is_dragging = true
 
+func added_to_inventory():
+	in_inventory = true
+	scale.x = properties.item_properties.size.x
+	scale.y = properties.item_properties.size.y
+	
 func _input(event):
 	#Make sure we are hovering over it and not already dragging anything.
 	if selectable:

@@ -1,0 +1,43 @@
+[gd_scene load_steps=12 format=3 uid="uid://dai01872lqc5m"]
+
+[ext_resource type="Script" path="res://ItemResources/GDScripts/Sword.gd" id="1_wdrmt"]
+[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/WeaponPropertiesResource.gd" id="2_1e2i1"]
+[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/EquipmentPropertiesResource.gd" id="3_6aagf"]
+[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/ItemPropertiesResource.gd" id="4_es0vf"]
+[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/ItemResource.gd" id="5_5c6s2"]
+[ext_resource type="Texture2D" uid="uid://die0ho437c2kg" path="res://Art/Images/Items/Weapons/Sword.png" id="6_hwwgj"]
+
+[sub_resource type="Resource" id="Resource_0k7ev"]
+script = ExtResource("2_1e2i1")
+damage = 15
+speed = 1
+range = 10
+
+[sub_resource type="Resource" id="Resource_a1500"]
+script = ExtResource("3_6aagf")
+durability = 100
+max_durability = 100
+
+[sub_resource type="Resource" id="Resource_pyrwd"]
+script = ExtResource("4_es0vf")
+price = 1000
+size = Vector2(4, 2)
+
+[sub_resource type="Resource" id="Resource_nbrgr"]
+script = ExtResource("5_5c6s2")
+item_properties = SubResource("Resource_pyrwd")
+equipment_properties = SubResource("Resource_a1500")
+abstract_properties = SubResource("Resource_0k7ev")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_10r1u"]
+size = Vector2(128, 64)
+
+[node name="Sword" type="CharacterBody2D"]
+script = ExtResource("1_wdrmt")
+properties = SubResource("Resource_nbrgr")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_10r1u")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("6_hwwgj")

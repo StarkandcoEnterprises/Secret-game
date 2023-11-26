@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://ItemResources/GDScripts/Equipment.gd" id="1_nifj0"]
 [ext_resource type="PackedScene" uid="uid://c6x74ewrfcmkw" path="res://CropsResources/Scenes/PlantedSeed.tscn" id="2_grxvw"]
-[ext_resource type="Texture2D" uid="uid://cpgxs3oiwfbtu" path="res://Art/Corn/CornSeed.png" id="3_ifbmc"]
+[ext_resource type="Texture2D" uid="uid://cpgxs3oiwfbtu" path="res://Art/Images/Crops/Corn/CornSeed.png" id="3_ifbmc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_j6h07"]
 size = Vector2(32, 32)
