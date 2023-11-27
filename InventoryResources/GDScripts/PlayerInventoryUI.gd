@@ -1,21 +1,8 @@
 extends Control
 
-@onready var faux_item_collection = get_tree().get_first_node_in_group("FauxColl")
-@onready var item_collection = get_tree().get_first_node_in_group("ItemColl")
-@export var grav_affected_item_scene: PackedScene
-
-#@onready var debug = $"../../Window"
-
-func add_item(item):
-	item.position = Vector2.ZERO
-	#debug.stack_and_text(str("Adding item: ",item))
-	item.reparent(item_collection)
-	var new_slot_filler = grav_affected_item_scene.instantiate()
-	faux_item_collection.add_child(new_slot_filler)
-	var match_item = RemoteTransform2D.new()
-	match_item.set_remote_node(item.get_path())
-	match_item.add_to_group("Remote")
-	new_slot_filler.add_child(match_item)
+func add_item(item: BaseItem):
+	item.reparent(%ItemCollection)
+	item.added_to_inventory()
 
 #func delete_item(pos):
 #	get_child(grid_pos).get_child(pos).get_child(0).queue_free()

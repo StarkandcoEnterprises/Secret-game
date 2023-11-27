@@ -1,30 +1,38 @@
-[gd_scene load_steps=18 format=3 uid="uid://ho5ewtbo6mdn"]
+[gd_scene load_steps=20 format=3 uid="uid://ho5ewtbo6mdn"]
 
-[ext_resource type="TileSet" uid="uid://dfphrrdav6xyo" path="res://CoreResources/InstancedResources/MainTileset.tres" id="1_mwilu"]
+[ext_resource type="TileSet" uid="uid://dfphrrdav6xyo" path="res://CoreResources/OtherResources/MainTileset.tres" id="1_mwilu"]
 [ext_resource type="Script" path="res://CoreResources/GDScripts/Main.gd" id="1_u1m27"]
 [ext_resource type="PackedScene" uid="uid://dqxfciw668dqi" path="res://CoreResources/Scenes/Hannah.tscn" id="2_xi62l"]
 [ext_resource type="Script" path="res://CoreResources/GDScripts/WorldObject.gd" id="5_4wxi4"]
-[ext_resource type="Script" path="res://ItemResources/GDScripts/Equipment.gd" id="6_duohr"]
-[ext_resource type="Texture2D" uid="uid://cn0j6m8x6njyo" path="res://Art/Images/icon.svg" id="7_x5kp1"]
-[ext_resource type="Texture2D" uid="uid://bjxvmatrivj87" path="res://Art/Images/Items/Tools/WateringCan.png" id="8_77utq"]
+[ext_resource type="PackedScene" uid="uid://vtbhegusqn5x" path="res://ItemResources/ItemScenes/Sword.tscn" id="7_su3dt"]
 [ext_resource type="Texture2D" uid="uid://b8sxywscmeyf4" path="res://Art/Images/BuildingScenes/Bed.png" id="8_qbdht"]
-[ext_resource type="PackedScene" uid="uid://dai01872lqc5m" path="res://ItemResources/Scenes/sword.tscn" id="11_0w52w"]
+[ext_resource type="PackedScene" uid="uid://dpe0gjlh5ydxw" path="res://ItemResources/ItemScenes/BaseItem.tscn" id="8_rl1kk"]
+[ext_resource type="PackedScene" uid="uid://3npr6v7jihp4" path="res://ItemResources/SlotsScenes/Triple_Slot.tscn" id="9_02lt4"]
+[ext_resource type="Texture2D" uid="uid://cpgxs3oiwfbtu" path="res://Art/Images/Crops/Corn/CornSeed.png" id="9_5fg4v"]
+[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/ItemPropertiesResource.gd" id="9_x7w2u"]
+[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/ItemResource.gd" id="10_73lc6"]
 [ext_resource type="PackedScene" uid="uid://cpq0waabh274t" path="res://CoreResources/Scenes/UI.tscn" id="11_jcwwp"]
-[ext_resource type="PackedScene" uid="uid://trjqiocd54ea" path="res://ItemResources/Scenes/CornSeedPacket.tscn" id="11_uafqe"]
 [ext_resource type="Texture2D" uid="uid://bopbscsbdwhch" path="res://Art/Images/BuildingScenes/Crate.png" id="13_haq3d"]
 [ext_resource type="PackedScene" uid="uid://6wfbysp7xism" path="res://Debug/Scenes/DebugWindow.tscn" id="18_fpf16"]
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ioq5r"]
-size = Vector2(26, 26)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nk1bm"]
 size = Vector2(64, 128)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_s24o5"]
-size = Vector2(51, 38)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lwi1o"]
 size = Vector2(128, 64)
+
+[sub_resource type="Resource" id="Resource_egd5m"]
+script = ExtResource("9_x7w2u")
+price = 100
+slots_needed = 3
+
+[sub_resource type="Resource" id="Resource_c6i1q"]
+script = ExtResource("10_73lc6")
+item_properties = SubResource("Resource_egd5m")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lbt50"]
+resource_local_to_scene = true
+size = Vector2(45, 45)
 
 [node name="Main" type="Node2D"]
 script = ExtResource("1_u1m27")
@@ -70,27 +78,6 @@ layer_2/tile_data = PackedInt32Array(393218, 655360, 3, 524295, 655360, 3, 13108
 [node name="Seeds" type="Node2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["SeedsParent"]]
 unique_name_in_owner = true
 
-[node name="Item" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["Item"]]
-position = Vector2(100, 50)
-script = ExtResource("6_duohr")
-
-[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/Item"]
-scale = Vector2(0.2, 0.2)
-texture = ExtResource("7_x5kp1")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Item"]
-shape = SubResource("RectangleShape2D_ioq5r")
-
-[node name="ContextMenu" type="VBoxContainer" parent="SubViewportContainer/SubViewport/World/Objects/Item"]
-visible = false
-offset_right = 56.0
-offset_bottom = 40.0
-
-[node name="Throw Away" type="Button" parent="SubViewportContainer/SubViewport/World/Objects/Item/ContextMenu"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "Throw Away"
-
 [node name="Bed" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects"]
 position = Vector2(900, 100)
 script = ExtResource("5_4wxi4")
@@ -100,28 +87,6 @@ texture = ExtResource("8_qbdht")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Bed"]
 shape = SubResource("RectangleShape2D_nk1bm")
-
-[node name="WateringCan" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["Equipment", "Hoe", "Item"]]
-position = Vector2(400, 50)
-script = ExtResource("6_duohr")
-
-[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/WateringCan"]
-texture = ExtResource("8_77utq")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/WateringCan"]
-shape = SubResource("RectangleShape2D_s24o5")
-
-[node name="ContextMenu" type="VBoxContainer" parent="SubViewportContainer/SubViewport/World/Objects/WateringCan"]
-visible = false
-offset_right = 40.0
-offset_bottom = 40.0
-
-[node name="Equip" type="Button" parent="SubViewportContainer/SubViewport/World/Objects/WateringCan/ContextMenu"]
-layout_mode = 2
-theme_override_font_sizes/font_size = 8
-text = "Equip"
-
-[node name="CornSeed" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("11_uafqe")]
 
 [node name="Crate" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects"]
 position = Vector2(700, 500)
@@ -133,13 +98,25 @@ texture = ExtResource("13_haq3d")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Crate"]
 shape = SubResource("RectangleShape2D_lwi1o")
 
-[node name="Sword" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("11_0w52w")]
-position = Vector2(500, 50)
+[node name="Sword" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("7_su3dt")]
+position = Vector2(200, 0)
+
+[node name="BaseItem" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("8_rl1kk")]
+position = Vector2(300, 50)
+properties = SubResource("Resource_c6i1q")
+slot_shape = ExtResource("9_02lt4")
+
+[node name="CharShape" parent="SubViewportContainer/SubViewport/World/Objects/BaseItem" index="0"]
+shape = SubResource("RectangleShape2D_lbt50")
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/BaseItem"]
+texture = ExtResource("9_5fg4v")
 
 [node name="UI" parent="." instance=ExtResource("11_jcwwp")]
 
 [node name="Window" parent="." instance=ExtResource("18_fpf16")]
-position = Vector2i(-600, 36)
+title = "DebugOutput"
+position = Vector2i(-500, 36)
 
 [node name="Daytime" type="Timer" parent="." groups=["DayTimer"]]
 unique_name_in_owner = true
@@ -148,3 +125,5 @@ one_shot = true
 autostart = true
 
 [connection signal="timeout" from="Daytime" to="." method="_on_daytime_timeout"]
+
+[editable path="SubViewportContainer/SubViewport/World/Objects/BaseItem"]

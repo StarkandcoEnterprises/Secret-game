@@ -1,5 +1,7 @@
 extends Window
 
+class_name DebugOutput
+
 @export var corn_seed: PackedScene
 
 func _process(_delta):
