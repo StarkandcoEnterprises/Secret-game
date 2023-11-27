@@ -1,0 +1,40 @@
+[gd_scene load_steps=11 format=3 uid="uid://c4ee4x5n22t8y"]
+
+[ext_resource type="PackedScene" uid="uid://dpe0gjlh5ydxw" path="res://ItemResources/ItemScenes/BaseItem.tscn" id="1_jyvay"]
+[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/EquipmentPropertiesResource.gd" id="2_ix2we"]
+[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/ItemPropertiesResource.gd" id="3_0qjc1"]
+[ext_resource type="Texture2D" uid="uid://cm6xs5htqrshd" path="res://Art/Images/Items/Tools/hoe.png" id="3_rkns7"]
+[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/ItemResource.gd" id="4_5611y"]
+[ext_resource type="PackedScene" uid="uid://bxrwd4dpwqy11" path="res://ItemResources/SlotUseScenes/DoubleSlot.tscn" id="5_6qnma"]
+
+[sub_resource type="Resource" id="Resource_mv1wp"]
+script = ExtResource("2_ix2we")
+durability = 10
+max_durability = 10
+
+[sub_resource type="Resource" id="Resource_rndmf"]
+script = ExtResource("3_0qjc1")
+price = 100
+slots_needed = 2
+
+[sub_resource type="Resource" id="Resource_6jrrc"]
+script = ExtResource("4_5611y")
+item_properties = SubResource("Resource_rndmf")
+equipment_properties = SubResource("Resource_mv1wp")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_qctfy"]
+resource_local_to_scene = true
+size = Vector2(45, 45)
+
+[node name="Hoe" instance=ExtResource("1_jyvay")]
+properties = SubResource("Resource_6jrrc")
+slot_shape = ExtResource("5_6qnma")
+
+[node name="CharShape" parent="." index="0"]
+shape = SubResource("RectangleShape2D_qctfy")
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="2"]
+position = Vector2(2, 7)
+rotation = 1.5708
+scale = Vector2(2, 2)
+texture = ExtResource("3_rkns7")

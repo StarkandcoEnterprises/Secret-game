@@ -18,12 +18,19 @@ var center = Vector2.ZERO
 
 var overlapping_areas = []
 
+var equipped_bar
+var equipped = false
+var new_sprite
+
 ##DEBUG
-@onready var debugOutput:DebugOutput = get_tree().get_first_node_in_group("DebugOutput")
+@onready var debug_output:DebugOutput = get_tree().get_first_node_in_group("DebugOutput")
 
 func _ready():
 	var new_shape = slot_shape.instantiate()
 	%Slots.add_child(new_shape)
+	await get_tree().process_frame
+	equipped_bar = get_tree().get_first_node_in_group("EquippedBar")
+	new_sprite = $Sprite2D.duplicate()
 
 func _process(delta):
 	if in_inventory:
@@ -55,7 +62,7 @@ func _on_slots_area_entered(area):
 			
 		#Reset top left
 		reset_top_left()
-	debugOutput.stack_and_text(str("Slots Available:", slots_available, "   overlapping areas ", $Slots.get_overlapping_areas()))
+	debug_output.stack_and_text(str("Slots Available:", slots_available, "   overlapping areas ", $Slots.get_overlapping_areas()))
 
 
 #We are leaving an area. If we were slotted or considering being here, we don't want to be anymore
@@ -77,7 +84,7 @@ func _on_slots_area_exited(area):
 	center = Vector2.ZERO
 	#we should recalculate our position
 	reset_top_left()
-	debugOutput.stack_and_text(str("Slots Available:", slots_available, "   overlapping areas ", $Slots.get_overlapping_areas()))
+	debug_output.stack_and_text(str("Slots Available:", slots_available, "   overlapping areas ", $Slots.get_overlapping_areas()))
 
 func reset_top_left():
 	center = Vector2.ZERO
@@ -86,18 +93,32 @@ func reset_top_left():
 		if $Slots.get_child(0) is CollisionPolygon2D:
 			
 			for a in overlapping_areas:
-				
-				#If we're not yet holding a value (we're in no slots) or our position is more to the left, store that x
-				if center == Vector2.ZERO or a.global_position.x +  (%Slots.get_child(0).width / 2) <= center.x:
-					center.x = a.global_position.x +  (%Slots.get_child(0).width / 2) + (3 * %Slots.get_child(0).width / 45)
-					
-				#If we're not yet holding a y value (we were in no slots) or our position is upwards of the last, store that y
-					if center.y == 0 or a.global_position.y + (%Slots.get_child(0).height / 2) <= center.y:
-						center.y = a.global_position.y + (%Slots.get_child(0).height / 2) + (3 * %Slots.get_child(0).height / 45)
+				#If we're rotated once or thrice, we need to use our width to add to our x instead of height as in our else
+				if int(rotation_degrees) % 180 == 0.0:
+					#If we're not yet holding a value (we're in no slots) or our position is more to the left, store that x
+					if center == Vector2.ZERO or a.global_position.x +  (%Slots.get_child(0).width / 2) <= center.x:
+						center.x = a.global_position.x +  (%Slots.get_child(0).width / 2) + (3 * %Slots.get_child(0).width / 45)
 						
-				#If we weren't holding 0 and we're not more left, we might need to more upwards
-				elif a.global_position.y <= center.y:
-					center.y = a.global_position.y + (%Slots.get_child(0).height / 2) + (3 * %Slots.get_child(0).height / 45)
+					#If we're not yet holding a y value (we were in no slots) or our position is upwards of the last, store that y
+						if center.y == 0 or a.global_position.y + (%Slots.get_child(0).height / 2) <= center.y:
+							center.y = a.global_position.y + (%Slots.get_child(0).height / 2) + (3 * %Slots.get_child(0).height / 45)
+							
+					#If we weren't holding 0 and we're not more left, we might need to more upwards
+					elif a.global_position.y <= center.y:
+						center.y = a.global_position.y + (%Slots.get_child(0).height / 2) + (3 * %Slots.get_child(0).height / 45)
+				else:
+					#If we're not yet holding a value (we're in no slots) or our position is more to the left, store that x
+					if center == Vector2.ZERO or a.global_position.x +  (%Slots.get_child(0).height / 2) <= center.x:
+						center.x = a.global_position.x +  (%Slots.get_child(0).height / 2) + (3 * %Slots.get_child(0).height / 45)
+						
+					#If we're not yet holding a y value (we were in no slots) or our position is upwards of the last, store that y
+						if center.y == 0 or a.global_position.y + (%Slots.get_child(0).width / 2) <= center.y:
+							center.y = a.global_position.y + (%Slots.get_child(0).width / 2) + (3 * %Slots.get_child(0).width / 45)
+							
+					#If we weren't holding 0 and we're not more left, we might need to more upwards
+					elif a.global_position.y <= center.y:
+						center.y = a.global_position.y + (%Slots.get_child(0).width / 2) + (3 * %Slots.get_child(0).width / 45)
+		
 		else:
 			for a in overlapping_areas:
 				if int(rotation_degrees) % 180 == 0.0:
@@ -166,6 +187,12 @@ func _input(event):
 					for area in overlapping_areas:
 						area.get_parent().remove_item()
 					slotted = false
+					if properties.equipment_properties:
+						for slot in equipped_bar.get_children():
+							if slot.get_child(0) == new_sprite:
+								slot.remove_child(new_sprite)
+								return
+					
 			
 			#Else, if it's a release and there are not enough free slots underneath
 			elif !event.pressed and !are_all_slots_free():
@@ -186,6 +213,12 @@ func _input(event):
 				toggle_selected(false)
 				slotted = true
 				global_position = center
+				if properties.equipment_properties:
+					for slot in equipped_bar.get_children():
+						if slot.get_child_count() == 0:
+							slot.add_child(new_sprite)
+							new_sprite.position = Vector2(32, 28)
+							return
 		
 		#If we get a right click and item selected, rotate
 		elif selected and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:

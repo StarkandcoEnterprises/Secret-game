@@ -1,8 +1,9 @@
-[gd_scene load_steps=8 format=3 uid="uid://cp1lycwjvfvbu"]
+[gd_scene load_steps=9 format=3 uid="uid://cp1lycwjvfvbu"]
 
 [ext_resource type="Script" path="res://InventoryResources/GDScripts/PlayerInventoryUI.gd" id="1_40yka"]
 [ext_resource type="Texture2D" uid="uid://54r6ntyde5ku" path="res://Art/Images/Inventory/InventoryGrid.png" id="3_805em"]
 [ext_resource type="PackedScene" uid="uid://dxwcslf2sife4" path="res://InventoryResources/Scenes/GridBlock.tscn" id="3_lho2p"]
+[ext_resource type="Texture2D" uid="uid://bgk71dfa0v4q" path="res://Art/Images/Inventory/ItemBar.png" id="4_25wh8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2c26w"]
 size = Vector2(56, 655)
@@ -23,7 +24,84 @@ offset_right = 1152.0
 offset_bottom = 648.0
 script = ExtResource("1_40yka")
 
+[node name="EquippedBar" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -304.0
+offset_top = -64.0
+offset_right = 304.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="EquippedSprite" type="Sprite2D" parent="EquippedBar"]
+texture = ExtResource("4_25wh8")
+centered = false
+
+[node name="Control" type="Control" parent="EquippedBar"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+anchors_preset = 0
+offset_left = 4.0
+offset_top = 8.0
+offset_right = 604.0
+offset_bottom = 64.0
+
+[node name="EquippedContainer" type="HBoxContainer" parent="EquippedBar/Control" groups=["EquippedBar"]]
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.125
+anchor_right = -0.0133333
+offset_top = -7.0
+offset_right = 608.0
+offset_bottom = 57.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Equipped1" type="Control" parent="EquippedBar/Control/EquippedContainer"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="Equipped2" type="Control" parent="EquippedBar/Control/EquippedContainer"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="Equipped3" type="Control" parent="EquippedBar/Control/EquippedContainer"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="Equipped4" type="Control" parent="EquippedBar/Control/EquippedContainer"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="Equipped5" type="Control" parent="EquippedBar/Control/EquippedContainer"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="Equipped6" type="Control" parent="EquippedBar/Control/EquippedContainer"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="Equipped7" type="Control" parent="EquippedBar/Control/EquippedContainer"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="Equipped8" type="Control" parent="EquippedBar/Control/EquippedContainer"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="Equipped9" type="Control" parent="EquippedBar/Control/EquippedContainer"]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
 [node name="InvSprite" type="Sprite2D" parent="."]
+visible = false
 texture = ExtResource("3_805em")
 centered = false
 
@@ -225,9 +303,6 @@ layout_mode = 2
 unique_name_in_owner = true
 position = Vector2(900, 330)
 
-[node name="EquippedBar" type="Node2D" parent="InvSprite"]
-position = Vector2(690, 24)
-
 [node name="SubViewportContainer" type="SubViewportContainer" parent="InvSprite"]
 offset_left = 835.0
 offset_top = 50.0
@@ -237,22 +312,25 @@ offset_bottom = 178.0
 [node name="SubViewport" type="SubViewport" parent="InvSprite/SubViewportContainer"]
 handle_input_locally = false
 size = Vector2i(128, 128)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
-[node name="Container" type="StaticBody2D" parent="."]
+[node name="LooseContainer" type="StaticBody2D" parent="InvSprite"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Container"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="InvSprite/LooseContainer"]
 position = Vector2(659, 317.5)
 shape = SubResource("RectangleShape2D_2c26w")
 
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Container"]
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="InvSprite/LooseContainer"]
 position = Vector2(1140, 318)
 shape = SubResource("RectangleShape2D_bx6tn")
 
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="Container"]
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="InvSprite/LooseContainer"]
 position = Vector2(898.5, 621.75)
 shape = SubResource("RectangleShape2D_l04lm")
 
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="Container"]
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="InvSprite/LooseContainer"]
 position = Vector2(572.5, -216.625)
 shape = SubResource("RectangleShape2D_ifhhy")
+
+[node name="Pickup spawn" type="Marker2D" parent="InvSprite/LooseContainer"]
+position = Vector2(901, 60)

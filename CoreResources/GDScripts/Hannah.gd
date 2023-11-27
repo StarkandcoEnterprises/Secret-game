@@ -5,10 +5,8 @@ var speed = 300.0
 
 var subviewport
 
-#Get the inventory object - probably this should just be a child of the player? TODO refactor
 @onready var inventory = get_tree().get_first_node_in_group("Inventory")
 @onready var debug = get_tree().get_first_node_in_group("DebugOutput")
-@onready var start_inv_visible = inventory.visible
 
 var equipped
 var interacting = false
@@ -22,34 +20,31 @@ func _input(event):
 	if !interacting:
 		
 		#Here is inventory handling and interacting with world objects
-		if !inventory.visible and event.is_action_pressed("interact") and %RayCast2D.is_colliding() and %RayCast2D.get_collider().has_method("interact"):
+		if !inventory.get_node("/root/Main/UI/PlayerInventoryUI/InvSprite/").visible and event.is_action_pressed("interact") and %RayCast2D.is_colliding() and %RayCast2D.get_collider().has_method("interact"):
 			interacting = true
 			%RayCast2D.get_collider().interact()
 		elif event.is_action_pressed("inventory"):
-			
-			#Just in case I have the inventory visible at game runtime
-			if inventory.visible and !start_inv_visible:
-				inventory.hide()
-				var inv_cam = get_tree().get_nodes_in_group("InvCam")[0]
-				remove_child(inv_cam)
+							
+			if inventory.get_node("/root/Main/UI/PlayerInventoryUI/EquippedBar/").visible:
+				inventory.get_node("/root/Main/UI/PlayerInventoryUI/EquippedBar/").hide()
+				inventory.get_node("/root/Main/UI/PlayerInventoryUI/InvSprite/").show()
 				
-			#Normal inventory handling
-			elif inventory.visible:
-				inventory.hide()
-			else:
-				inventory.show()
-			
 				#Instantiate the inventory camera
 				var inv_cam = Camera2D.new()
 				inv_cam.custom_viewport = subviewport
 				inv_cam.position = %Marker2D.position
 				inv_cam.add_to_group("InvCam")
 				add_child(inv_cam)
+				
+			else:
+				inventory.get_node("/root/Main/UI/PlayerInventoryUI/EquippedBar/").show()
+				inventory.get_node("/root/Main/UI/PlayerInventoryUI/InvSprite/").hide()
+			
 
 
 
 func _physics_process(delta):
-	if !interacting and !inventory.visible:
+	if !interacting and !inventory.get_node("/root/Main/UI/PlayerInventoryUI/InvSprite/").visible:
 		
 		#use any equipment
 		if is_instance_valid(equipped) and Input.is_action_pressed("interact"):
@@ -71,7 +66,7 @@ func _physics_process(delta):
 			
 			#If it's an item, add it to the inventory
 			if collision.get_collider() is BaseItem:
-				inventory.add_item(collision.get_collider())#
+				inventory.add_item(collision.get_collider())
 #				#We also need to get rid of its collision shape TODO this doesn't work for interactions after this point....
 #				collision.get_collider().get_child(1).queue_free()
 

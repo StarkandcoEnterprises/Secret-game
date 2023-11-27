@@ -6,7 +6,7 @@
 [ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/EquipmentPropertiesResource.gd" id="3_jivsq"]
 [ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/ItemPropertiesResource.gd" id="4_1uphw"]
 [ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/ItemResource.gd" id="5_kl845"]
-[ext_resource type="PackedScene" uid="uid://bxrwd4dpwqy11" path="res://ItemResources/SlotsScenes/Double_Slot.tscn" id="6_g4fs7"]
+[ext_resource type="PackedScene" uid="uid://bxrwd4dpwqy11" path="res://ItemResources/SlotUseScenes/DoubleSlot.tscn" id="6_g4fs7"]
 
 [sub_resource type="Resource" id="Resource_45163"]
 script = ExtResource("2_uu2u4")

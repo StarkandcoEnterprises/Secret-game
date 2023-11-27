@@ -2,7 +2,7 @@ extends Node2D
 
 var seed_dict = {}
 
-var dayover_UI 
+var dayover_UI 	
 var dayover_background
 var dayover_button
 

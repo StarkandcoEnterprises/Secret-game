@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://ItemResources/GDScripts/BaseItem.gd" id="1_75vyy"]
 [ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/ItemPropertiesResource.gd" id="2_80luf"]
 [ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/ItemResource.gd" id="3_vh3gf"]
-[ext_resource type="PackedScene" uid="uid://b8jawbgc5jhs2" path="res://ItemResources/SlotsScenes/Single_Slot.tscn" id="4_64af8"]
+[ext_resource type="PackedScene" uid="uid://b8jawbgc5jhs2" path="res://ItemResources/SlotUseScenes/SingleSlot.tscn" id="4_64af8"]
 
 [sub_resource type="Resource" id="Resource_ha4li"]
 script = ExtResource("2_80luf")
