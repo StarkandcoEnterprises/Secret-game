@@ -1,0 +1,54 @@
+[gd_scene load_steps=14 format=3 uid="uid://daw47pxp18agf"]
+
+[ext_resource type="PackedScene" uid="uid://dpe0gjlh5ydxw" path="res://ItemResources/ItemScenes/BaseItem.tscn" id="1_u26uw"]
+[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/ItemResource.gd" id="2_6jufu"]
+[ext_resource type="Script" path="res://ItemResources/GDScripts/BreakpointHammer.gd" id="2_7psnx"]
+[ext_resource type="Texture2D" uid="uid://gwo21kbtljud" path="res://Art/Images/Items/Weapons/BreakpointHammerFromHTS.png" id="2_bjtu0"]
+[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/WeaponPropertiesResource.gd" id="3_2voch"]
+[ext_resource type="PackedScene" uid="uid://b6qg1yg3x43xn" path="res://ItemResources/SlotUseScenes/DoubleSeparatedSlots.tscn" id="3_nw2ao"]
+[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/EquipmentPropertiesResource.gd" id="4_dvavv"]
+[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/ItemPropertiesResource.gd" id="5_smien"]
+
+[sub_resource type="Resource" id="Resource_2qcqr"]
+script = ExtResource("3_2voch")
+damage = 100
+speed = 2
+reach = 10
+poison = 5
+
+[sub_resource type="Resource" id="Resource_rnmuu"]
+script = ExtResource("4_dvavv")
+durability = 100
+max_durability = 100
+
+[sub_resource type="Resource" id="Resource_p7n1n"]
+script = ExtResource("5_smien")
+price = 5000
+slots_needed = 2
+
+[sub_resource type="Resource" id="Resource_ea1cy"]
+script = ExtResource("2_6jufu")
+item_properties = SubResource("Resource_p7n1n")
+equipment_properties = SubResource("Resource_rnmuu")
+abstract_properties = SubResource("Resource_2qcqr")
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1m8ld"]
+resource_local_to_scene = true
+size = Vector2(45, 45)
+
+[node name="BreakpointHammer" instance=ExtResource("1_u26uw")]
+script = ExtResource("2_7psnx")
+properties = SubResource("Resource_ea1cy")
+slot_shape = ExtResource("3_nw2ao")
+
+[node name="CharShape" parent="." index="0"]
+shape = SubResource("RectangleShape2D_1m8ld")
+
+[node name="Slots" parent="." index="1"]
+rotation = 1.5708
+
+[node name="Sprite2D" type="Sprite2D" parent="." index="2"]
+unique_name_in_owner = true
+position = Vector2(0, -10)
+scale = Vector2(0.4, 0.4)
+texture = ExtResource("2_bjtu0")

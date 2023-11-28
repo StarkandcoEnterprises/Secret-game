@@ -44,6 +44,7 @@ size = Vector2(64, 80)
 
 [node name="Hannah" type="CharacterBody2D" groups=["Hannah"]]
 z_index = 1
+position = Vector2(20, 20)
 script = ExtResource("1_jbrk5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Sprite"]]
@@ -75,10 +76,6 @@ drag_bottom_margin = 0.4
 unique_name_in_owner = true
 position = Vector2(512, 256)
 
-[node name="HandsLeft" type="Marker2D" parent="."]
+[node name="InHands" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(-59, -21)
-
-[node name="HandsRight" type="Marker2D" parent="."]
-unique_name_in_owner = true
-position = Vector2(65, -21)
+position = Vector2(29, 21)

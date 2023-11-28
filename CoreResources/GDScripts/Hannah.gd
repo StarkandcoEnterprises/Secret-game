@@ -1,5 +1,6 @@
 extends CharacterBody2D
 
+class_name Hannah
 
 var speed = 300.0
 
@@ -39,9 +40,21 @@ func _input(event):
 			else:
 				inventory.get_node("/root/Main/UI/PlayerInventoryUI/EquippedBar/").show()
 				inventory.get_node("/root/Main/UI/PlayerInventoryUI/InvSprite/").hide()
+##############################################################################################
+##############################################################################################
+#########################Update when adding something please Conor############################
+##############################################################################################
+##############################################################################################
+				if get_child_count() > 7:
+					get_child(7).queue_free()
 			
 
+func equip_item(item: BaseItem):
+	%HandsRight.add_child(item.equip())
+	##SEE ABOVE
 
+func unequip_item():
+	%HandsRight.get_child(0).queue_free()
 
 func _physics_process(delta):
 	if !interacting and !inventory.get_node("/root/Main/UI/PlayerInventoryUI/InvSprite/").visible:
@@ -67,28 +80,19 @@ func _physics_process(delta):
 			#If it's an item, add it to the inventory
 			if collision.get_collider() is BaseItem:
 				inventory.add_item(collision.get_collider())
-#				#We also need to get rid of its collision shape TODO this doesn't work for interactions after this point....
-#				collision.get_collider().get_child(1).queue_free()
 
 func face_direction(direction):
 	if direction == Vector2.LEFT:
 		%AnimatedSprite2D.flip_h = true
+		if %HandsRight.get_child_count() > 0:
+			%HandsRight.get_child(0).reparent(%HandsLeft)
+			%HandsLeft.get_child(0).position = %HandsLeft.position
 	else:
 		%AnimatedSprite2D.flip_h = false
-	debug.stack_and_text(str(90*[Vector2.DOWN,Vector2.LEFT,Vector2.UP,Vector2.RIGHT].find(direction)))
+		if %HandsLeft.get_child_count() > 0:
+			%HandsLeft.get_child(0).reparent(%HandsRight)
+			%HandsRight.get_child(0).position = %HandsRight.position
 	%RayCast2D.rotation_degrees = 90*[Vector2.DOWN,Vector2.LEFT,Vector2.UP,Vector2.RIGHT].find(direction)
 
-#Equip equipment - TODO FIX TO USE THE BAR WHEN WE HAVE INVENTORY WORKING
-func _on_equip_pressed():
-	if equipped: 
-		inventory.add_item(equipped)
-	equipped = inventory.get_child(inventory.grid_pos).get_child(inventory.cursor_pos).get_child(0)
-	inventory.toggle_context_menu_for_selected()
-	inventory.remove_item(equipped, self)
-	inventory.get_child(1).show()
-	if %AnimatedSprite2D.flip_h == true:
-		equipped.position = Vector2(90,18)
-	else:
-		equipped.position = Vector2(-45,36)
-	equipped.rotation_degrees = 0
+
 

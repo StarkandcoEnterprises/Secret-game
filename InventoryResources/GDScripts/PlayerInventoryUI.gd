@@ -2,21 +2,37 @@ extends Control
 
 var current_slot = 0
 
+@onready var hannah: Hannah = get_tree().get_first_node_in_group("Hannah")
+
 func add_item(item: BaseItem):
 	item.reparent(%ItemCollection)
 	item.added_to_inventory()
-	item.update_collision()
 
 func _input(event):
 	if event is InputEventKey and event.is_action_pressed("slot1"):
 		select_on_bar(1)
 	if event is InputEventKey and event.is_action_pressed("slot2"):
 		select_on_bar(2)
+	if event is InputEventKey and event.is_action_pressed("slot3"):
+		select_on_bar(3)
+	if event is InputEventKey and event.is_action_pressed("slot4"):
+		select_on_bar(4)
+	if event is InputEventKey and event.is_action_pressed("slot5"):
+		select_on_bar(5)
+	if event is InputEventKey and event.is_action_pressed("slot6"):
+		select_on_bar(6)
+	if event is InputEventKey and event.is_action_pressed("slot7"):
+		select_on_bar(7)
+	if event is InputEventKey and event.is_action_pressed("slot8"):
+		select_on_bar(8)
+	if event is InputEventKey and event.is_action_pressed("slot9"):
+		select_on_bar(9)
 
 func select_on_bar(new_slot):
 	if %EquippedContainer.get_node(str("Equipped", new_slot)).get_child_count() > 0:
 		if current_slot != 0 and current_slot != new_slot:
 			%EquippedContainer.get_node(str("Equipped", current_slot)).get_child(1).queue_free()
+			hannah.unequip_item()
 		if new_slot != 0 and current_slot != new_slot:
 			current_slot = new_slot
 			var reference_rect = ReferenceRect.new() 
@@ -24,6 +40,7 @@ func select_on_bar(new_slot):
 			reference_rect.size = Vector2(64, 55)
 			reference_rect.position = Vector2(5,0)
 			%EquippedContainer.get_node(str("Equipped", new_slot)).add_child(reference_rect)
+			hannah.equip_item(%EquippedContainer.get_node(str("Equipped", current_slot)).get_child(0).equip())
 
 func reset_slot(slot_to_reset):
 	%EquippedContainer.get_node(str("Equipped", slot_to_reset)).get_child(0).queue_free()
