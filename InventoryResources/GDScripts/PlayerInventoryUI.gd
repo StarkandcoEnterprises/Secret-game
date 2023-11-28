@@ -40,7 +40,7 @@ func select_on_bar(new_slot):
 			reference_rect.size = Vector2(64, 55)
 			reference_rect.position = Vector2(5,0)
 			%EquippedContainer.get_node(str("Equipped", new_slot)).add_child(reference_rect)
-			hannah.equip_item(%EquippedContainer.get_node(str("Equipped", current_slot)).get_child(0).equip())
+			hannah.equip_item(%EquippedContainer.get_node(str("Equipped", current_slot)).get_child(0).parent.duplicate())
 
 func reset_slot(slot_to_reset):
 	%EquippedContainer.get_node(str("Equipped", slot_to_reset)).get_child(0).queue_free()

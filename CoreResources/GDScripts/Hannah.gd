@@ -18,8 +18,10 @@ func _ready():
 	subviewport.world_2d = get_viewport().world_2d
 
 func equip_item(item: BaseItem):
-	%HandsRight.add_child(item.equip())
-	equipped = item
+	var new_version = item.duplicate()
+	%HandsRight.add_child(new_version)
+	new_version.position = Vector2.ZERO
+	equipped = new_version
 
 
 func unequip_held():
@@ -33,7 +35,7 @@ func unequip_item(item: BaseItem):
 	if %HandsRight.get_child_count() > 0:
 		if %HandsRight.get_child(0).name == item.name:
 			%HandsRight.get_child(0).queue_free()
-	else:
+	elif %HandsLeft.get_child_count() > 0:
 		if %HandsLeft.get_child(0).name == item.name:
 			%HandsLeft.get_child(0).queue_free()
 	equipped = null
@@ -43,12 +45,10 @@ func face_direction(direction):
 		%AnimatedSprite2D.flip_h = true
 		if %HandsRight.get_child_count() > 0:
 			%HandsRight.get_child(0).reparent(%HandsLeft)
-			%HandsLeft.get_child(0).position = %HandsLeft.position
 	else:
 		%AnimatedSprite2D.flip_h = false
 		if %HandsLeft.get_child_count() > 0:
 			%HandsLeft.get_child(0).reparent(%HandsRight)
-			%HandsRight.get_child(0).position = %HandsRight.position
 	%RayCast2D.rotation_degrees = 90*[Vector2.DOWN,Vector2.LEFT,Vector2.UP,Vector2.RIGHT].find(direction)
 
 

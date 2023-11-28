@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://dpe0gjlh5ydxw"]
 
-[ext_resource type="Script" path="res://ItemResources/GDScripts/BaseItem.gd" id="1_75vyy"]
-[ext_resource type="Texture2D" uid="uid://c8yk6rpq7kpny" path="res://Art/Images/Character/NEVER REMOVE.png" id="2_sghod"]
+[ext_resource type="Script" path="res://ItemResources/GDScripts/BaseItem.gd" id="1_em6ot"]
+[ext_resource type="Texture2D" uid="uid://c8yk6rpq7kpny" path="res://Art/Images/Character/NEVER REMOVE.png" id="2_4ln6m"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t61cn"]
 resource_local_to_scene = true
@@ -10,7 +10,7 @@ size = Vector2(45, 45)
 [node name="BaseItem" type="CharacterBody2D"]
 disable_mode = 1
 input_pickable = true
-script = ExtResource("1_75vyy")
+script = ExtResource("1_em6ot")
 
 [node name="CharShape" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
@@ -21,7 +21,7 @@ unique_name_in_owner = true
 
 [node name="WorldAndInventory" type="Sprite2D" parent="."]
 unique_name_in_owner = true
-texture = ExtResource("2_sghod")
+texture = ExtResource("2_4ln6m")
 
 [connection signal="area_entered" from="Slots" to="." method="_on_slots_area_entered"]
 [connection signal="area_exited" from="Slots" to="." method="_on_slots_area_exited"]

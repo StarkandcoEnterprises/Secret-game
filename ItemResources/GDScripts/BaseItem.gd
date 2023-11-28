@@ -32,9 +32,6 @@ func _process(delta):
 			move_and_slide()
 
 
-func equip():
-	return self.duplicate()
-
 func are_all_slots_free():
 	return slots_available == item_properties.slots_needed
 

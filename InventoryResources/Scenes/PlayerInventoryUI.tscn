@@ -104,6 +104,7 @@ custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 
 [node name="InvSprite" type="Sprite2D" parent="."]
+visible = false
 texture = ExtResource("3_805em")
 centered = false
 
@@ -314,7 +315,7 @@ offset_bottom = 178.0
 [node name="SubViewport" type="SubViewport" parent="InvSprite/SubViewportContainer"]
 handle_input_locally = false
 size = Vector2i(128, 128)
-render_target_update_mode = 4
+render_target_update_mode = 0
 
 [node name="LooseContainer" type="StaticBody2D" parent="InvSprite"]
 
