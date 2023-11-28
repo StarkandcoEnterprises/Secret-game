@@ -1,5 +1,5 @@
-extends Equipment
+extends BaseEquipment
 
-class_name AbsWeaponArmour
+class_name BaseWeapon
 
 @export var abstract_properties:AbstractPropertiesResource

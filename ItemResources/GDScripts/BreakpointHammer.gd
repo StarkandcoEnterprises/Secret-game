@@ -1,4 +1,4 @@
-extends AbsWeaponArmour
+extends BaseWeapon
 
 func added_to_inventory():
 	super()

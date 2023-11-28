@@ -1,0 +1,32 @@
+[gd_scene load_steps=8 format=3 uid="uid://cvdbl8hqwcurp"]
+
+[ext_resource type="PackedScene" uid="uid://dgi3axrdwp53i" path="res://ItemResources/CoreItemScenes/BaseEquipment.tscn" id="1_5bxr7"]
+[ext_resource type="Script" path="res://ItemResources/GDScripts/BaseArmour.gd" id="2_xoxbe"]
+[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/ArmourPropertiesResource.gd" id="3_l88ii"]
+[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/ItemPropertiesResource.gd" id="4_aixtg"]
+
+[sub_resource type="Resource" id="Resource_1vxqa"]
+script = ExtResource("3_l88ii")
+defense = 10
+frost_resistance = 0
+fire_resistance = 0
+electrical_resistance = 0
+corrosion_resistance = 0
+movement_penalty = 0
+
+[sub_resource type="Resource" id="Resource_a502s"]
+script = ExtResource("4_aixtg")
+price = 100
+slots_needed = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2bg6y"]
+resource_local_to_scene = true
+size = Vector2(45, 45)
+
+[node name="Armour" instance=ExtResource("1_5bxr7")]
+script = ExtResource("2_xoxbe")
+abstract_properties = SubResource("Resource_1vxqa")
+item_properties = SubResource("Resource_a502s")
+
+[node name="CharShape" parent="." index="0"]
+shape = SubResource("RectangleShape2D_2bg6y")

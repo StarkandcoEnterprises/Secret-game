@@ -1,6 +1,6 @@
 extends BaseItem
 
-class_name Equipment
+class_name BaseEquipment
 
 @export var equipment_properties:EquipmentPropertiesResource
 @export var slot_shape:PackedScene

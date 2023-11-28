@@ -1,6 +1,6 @@
 [gd_scene load_steps=9 format=3 uid="uid://cpxjnrxgdhia1"]
 
-[ext_resource type="PackedScene" uid="uid://dgi3axrdwp53i" path="res://ItemResources/CoreItemScenes/Equipment.tscn" id="1_lxnjj"]
+[ext_resource type="PackedScene" uid="uid://dgi3axrdwp53i" path="res://ItemResources/CoreItemScenes/BaseEquipment.tscn" id="1_lxnjj"]
 [ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/EquipmentPropertiesResource.gd" id="2_lm55x"]
 [ext_resource type="Texture2D" uid="uid://bjxvmatrivj87" path="res://Art/Images/Items/Tools/WateringCan.png" id="2_piv82"]
 [ext_resource type="PackedScene" uid="uid://b8jawbgc5jhs2" path="res://ItemResources/SlotUseScenes/SingleSlot.tscn" id="3_riidf"]

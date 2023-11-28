@@ -9,7 +9,7 @@ var subviewport
 @onready var inventory = get_tree().get_first_node_in_group("Inventory")
 @onready var debug = get_tree().get_first_node_in_group("DebugOutput")
 
-var equipped: Equipment
+var equipped: BaseEquipment
 var interacting = false
 
 func _ready():
