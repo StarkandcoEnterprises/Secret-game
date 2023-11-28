@@ -32,7 +32,7 @@ func select_on_bar(new_slot):
 	if %EquippedContainer.get_node(str("Equipped", new_slot)).get_child_count() > 0:
 		if current_slot != 0 and current_slot != new_slot:
 			%EquippedContainer.get_node(str("Equipped", current_slot)).get_child(1).queue_free()
-			hannah.unequip_item()
+			hannah.unequip_held()
 		if new_slot != 0 and current_slot != new_slot:
 			current_slot = new_slot
 			var reference_rect = ReferenceRect.new() 

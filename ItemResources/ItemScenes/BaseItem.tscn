@@ -1,18 +1,7 @@
-[gd_scene load_steps=8 format=3 uid="uid://dpe0gjlh5ydxw"]
+[gd_scene load_steps=4 format=3 uid="uid://dpe0gjlh5ydxw"]
 
 [ext_resource type="Script" path="res://ItemResources/GDScripts/BaseItem.gd" id="1_75vyy"]
-[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/ItemPropertiesResource.gd" id="2_80luf"]
-[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/ItemResource.gd" id="3_vh3gf"]
-[ext_resource type="PackedScene" uid="uid://b8jawbgc5jhs2" path="res://ItemResources/SlotUseScenes/SingleSlot.tscn" id="4_64af8"]
-
-[sub_resource type="Resource" id="Resource_ha4li"]
-script = ExtResource("2_80luf")
-price = 100
-slots_needed = 1
-
-[sub_resource type="Resource" id="Resource_mnblj"]
-script = ExtResource("3_vh3gf")
-item_properties = SubResource("Resource_ha4li")
+[ext_resource type="Texture2D" uid="uid://c8yk6rpq7kpny" path="res://Art/Images/Character/NEVER REMOVE.png" id="2_sghod"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t61cn"]
 resource_local_to_scene = true
@@ -22,8 +11,6 @@ size = Vector2(45, 45)
 disable_mode = 1
 input_pickable = true
 script = ExtResource("1_75vyy")
-properties = SubResource("Resource_mnblj")
-slot_shape = ExtResource("4_64af8")
 
 [node name="CharShape" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
@@ -31,6 +18,10 @@ shape = SubResource("RectangleShape2D_t61cn")
 
 [node name="Slots" type="Area2D" parent="."]
 unique_name_in_owner = true
+
+[node name="WorldAndInventory" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+texture = ExtResource("2_sghod")
 
 [connection signal="area_entered" from="Slots" to="." method="_on_slots_area_entered"]
 [connection signal="area_exited" from="Slots" to="." method="_on_slots_area_exited"]

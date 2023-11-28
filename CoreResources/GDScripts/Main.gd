@@ -62,11 +62,11 @@ func next_day():
 	await timer.timeout
 	
 	%Hannah.process_mode = 0
+	%Hannah.inventory.visible = true
 	dayover_UI.visible = false
 	%Daytime.wait_time = 500
 	%Daytime.paused = false
 	%Daytime.start()
-	
 	remove_child(timer)
 
 

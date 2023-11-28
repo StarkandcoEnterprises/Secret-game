@@ -1,47 +1,43 @@
-[gd_scene load_steps=13 format=3 uid="uid://vtbhegusqn5x"]
+[gd_scene load_steps=12 format=3 uid="uid://vtbhegusqn5x"]
 
 [ext_resource type="PackedScene" uid="uid://dpe0gjlh5ydxw" path="res://ItemResources/ItemScenes/BaseItem.tscn" id="1_3tpya"]
+[ext_resource type="Script" path="res://ItemResources/GDScripts/AbsWeaponArmour.gd" id="2_lf45p"]
 [ext_resource type="Texture2D" uid="uid://die0ho437c2kg" path="res://Art/Images/Items/Weapons/Sword.png" id="2_rk73y"]
 [ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/WeaponPropertiesResource.gd" id="2_uu2u4"]
 [ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/EquipmentPropertiesResource.gd" id="3_jivsq"]
 [ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/ItemPropertiesResource.gd" id="4_1uphw"]
-[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/ItemResource.gd" id="5_kl845"]
 [ext_resource type="PackedScene" uid="uid://bxrwd4dpwqy11" path="res://ItemResources/SlotUseScenes/DoubleSlot.tscn" id="6_g4fs7"]
 
-[sub_resource type="Resource" id="Resource_45163"]
+[sub_resource type="Resource" id="Resource_f0qao"]
 script = ExtResource("2_uu2u4")
 damage = 10
 speed = 1
 reach = 10
 poison = 0
 
-[sub_resource type="Resource" id="Resource_1nnqa"]
+[sub_resource type="Resource" id="Resource_wvcxh"]
 script = ExtResource("3_jivsq")
 durability = 10
 max_durability = 10
 
-[sub_resource type="Resource" id="Resource_68tm1"]
+[sub_resource type="Resource" id="Resource_66v4o"]
 script = ExtResource("4_1uphw")
 price = 100
 slots_needed = 2
-
-[sub_resource type="Resource" id="Resource_f3ja6"]
-script = ExtResource("5_kl845")
-item_properties = SubResource("Resource_68tm1")
-equipment_properties = SubResource("Resource_1nnqa")
-abstract_properties = SubResource("Resource_45163")
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2jaie"]
 resource_local_to_scene = true
 size = Vector2(45, 45)
 
 [node name="Sword" instance=ExtResource("1_3tpya")]
-properties = SubResource("Resource_f3ja6")
+script = ExtResource("2_lf45p")
+abstract_properties = SubResource("Resource_f0qao")
+equipment_properties = SubResource("Resource_wvcxh")
 slot_shape = ExtResource("6_g4fs7")
+item_properties = SubResource("Resource_66v4o")
 
 [node name="CharShape" parent="." index="0"]
 shape = SubResource("RectangleShape2D_2jaie")
 
-[node name="Sprite2D" type="Sprite2D" parent="." index="2"]
-scale = Vector2(0.4, 0.4)
+[node name="WorldAndInventory" parent="." index="2"]
 texture = ExtResource("2_rk73y")

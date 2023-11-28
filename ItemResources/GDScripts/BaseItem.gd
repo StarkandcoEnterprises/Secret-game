@@ -2,8 +2,7 @@ extends CharacterBody2D
 
 class_name BaseItem
 
-@export var properties:BaseResource = BaseResource.new() 
-@export var slot_shape:PackedScene
+@export var item_properties:ItemPropertiesResource
 
 var in_inventory = false
 var selectable = false
@@ -18,22 +17,8 @@ var center = Vector2.ZERO
 
 var overlapping_areas = []
 
-var equipped_bar
-var equipped = false
-var equipped_bar_self
-
 ##DEBUG
 @onready var debug_output:DebugOutput = get_tree().get_first_node_in_group("DebugOutput")
-
-
-#This stuff could happen when added to inventory but I added it here so it's definitely already available
-func _ready():
-	var new_shape = slot_shape.instantiate()
-	%Slots.add_child(new_shape)
-	await get_tree().process_frame
-	equipped_bar = get_tree().get_first_node_in_group("EquippedBar")
-	equipped_bar_self = self.duplicate()
-
 
 func _process(delta):
 	if in_inventory:
@@ -50,6 +35,26 @@ func _process(delta):
 func equip():
 	return self.duplicate()
 
+func are_all_slots_free():
+	return slots_available == item_properties.slots_needed
+
+func toggle_selected(select):
+	if !select:
+		selected = false
+		global.is_dragging = false
+		
+	else:
+		selected = true
+		global.is_dragging = true
+
+func added_to_inventory():
+	in_inventory = true
+	if is_instance_valid(get_child(2)):
+		if get_child(2).scale.x <= 1:
+			get_child(2).scale = Vector2(1, 1)
+		get_child(2).position = Vector2(0, 0)
+
+
 
 func _on_mouse_entered():
 	if not global.is_dragging:
@@ -60,14 +65,6 @@ func _on_mouse_exited():
 	if not global.is_dragging:
 		selectable = false
 
-
-func update_collision():
-	var new_shape = slot_shape.instantiate()
-	if "shape" in new_shape:
-		%CharShape.shape = new_shape.shape.duplicate()
-	else:
-		%CharShape.queue_free()
-		add_child(new_shape)
 
 
 #We are in an area... is it a grid block? Is it full?
@@ -98,37 +95,12 @@ func _on_slots_area_exited(area):
 			area.get_parent().remove_item()
 			slots_available -= 1
 			overlapping_areas.erase(area)
-
-	#Always forget the topleft value?
-	center = Vector2.ZERO
+		debug_output.stack_and_text(str("Slots Available:", slots_available, "   overlapping areas ", $Slots.get_overlapping_areas()))
 	#we should recalculate our position
 	reset_top_left()
-	debug_output.stack_and_text(str("Slots Available:", slots_available, "   overlapping areas ", $Slots.get_overlapping_areas()))
-
-
-func are_all_slots_free():
-	return slots_available == properties.item_properties.slots_needed
-
-
-func toggle_selected(select):
-	if !select:
-		selected = false
-		global.is_dragging = false
-		
-	else:
-		selected = true
-		global.is_dragging = true
-
-
-func added_to_inventory():
-	update_collision()
-	in_inventory = true
-	if is_instance_valid(get_child(2)):
-		if get_child(2).scale.x <= 1:
-			get_child(2).scale = Vector2(1, 1)
-		get_child(2).position = Vector2(0, 0)
-
-
+	#Always forget the topleft value?
+	center = Vector2.ZERO
+	
 func _input(event):
 	#Make sure we are hovering over it and not already dragging anything.
 	if selectable:
@@ -149,16 +121,6 @@ func _input(event):
 					for area in overlapping_areas:
 						area.get_parent().remove_item()
 					slotted = false
-					if properties.equipment_properties:
-						for slot in equipped_bar.get_children():
-							if slot.get_child_count() > 0:
-								if slot.get_child(0) == equipped_bar_self:
-									slot.remove_child(equipped_bar_self)
-									if slot.get_child_count() > 0:
-										slot.get_child(0).queue_free()
-										slot.get_parent().get_parent().get_parent().get_parent().current_slot = 0
-									return
-			
 			
 			#Else, if it's a release and there are not enough free slots underneath
 			elif !event.pressed and !are_all_slots_free():
@@ -179,14 +141,6 @@ func _input(event):
 				toggle_selected(false)
 				slotted = true
 				global_position = center
-				if properties.equipment_properties:
-					for slot in equipped_bar.get_children():
-						if slot.get_child_count() == 0:
-							slot.add_child(equipped_bar_self)
-							if equipped_bar_self.get_node("Sprite2D").scale.x > 1:
-								equipped_bar_self.get_node("Sprite2D").scale = Vector2(1, 1)
-							equipped_bar_self.position = Vector2(32, 28)
-							return
 		
 		#If we get a right click and item selected, rotate
 		elif selected and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:

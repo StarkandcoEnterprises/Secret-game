@@ -54,8 +54,10 @@ offset_bottom = 64.0
 unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
+anchor_left = -0.0133333
 anchor_top = 0.125
 anchor_right = -0.0133333
+anchor_bottom = 0.125
 offset_top = -7.0
 offset_right = 608.0
 offset_bottom = 57.0
@@ -65,44 +67,43 @@ theme_override_constants/separation = 3
 alignment = 1
 metadata/_edit_use_anchors_ = true
 
-[node name="Equipped1" type="Control" parent="EquippedBar/Control/EquippedContainer"]
+[node name="Equipped1" type="Control" parent="EquippedBar/Control/EquippedContainer" groups=["EquipSlots"]]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 
-[node name="Equipped2" type="Control" parent="EquippedBar/Control/EquippedContainer"]
+[node name="Equipped2" type="Control" parent="EquippedBar/Control/EquippedContainer" groups=["EquipSlots"]]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 
-[node name="Equipped3" type="Control" parent="EquippedBar/Control/EquippedContainer"]
+[node name="Equipped3" type="Control" parent="EquippedBar/Control/EquippedContainer" groups=["EquipSlots"]]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 
-[node name="Equipped4" type="Control" parent="EquippedBar/Control/EquippedContainer"]
+[node name="Equipped4" type="Control" parent="EquippedBar/Control/EquippedContainer" groups=["EquipSlots"]]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 
-[node name="Equipped5" type="Control" parent="EquippedBar/Control/EquippedContainer"]
+[node name="Equipped5" type="Control" parent="EquippedBar/Control/EquippedContainer" groups=["EquipSlots"]]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 
-[node name="Equipped6" type="Control" parent="EquippedBar/Control/EquippedContainer"]
+[node name="Equipped6" type="Control" parent="EquippedBar/Control/EquippedContainer" groups=["EquipSlots"]]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 
-[node name="Equipped7" type="Control" parent="EquippedBar/Control/EquippedContainer"]
+[node name="Equipped7" type="Control" parent="EquippedBar/Control/EquippedContainer" groups=["EquipSlots"]]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 
-[node name="Equipped8" type="Control" parent="EquippedBar/Control/EquippedContainer"]
+[node name="Equipped8" type="Control" parent="EquippedBar/Control/EquippedContainer" groups=["EquipSlots"]]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 
-[node name="Equipped9" type="Control" parent="EquippedBar/Control/EquippedContainer"]
+[node name="Equipped9" type="Control" parent="EquippedBar/Control/EquippedContainer" groups=["EquipSlots"]]
 custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 
 [node name="InvSprite" type="Sprite2D" parent="."]
-visible = false
 texture = ExtResource("3_805em")
 centered = false
 
@@ -313,7 +314,7 @@ offset_bottom = 178.0
 [node name="SubViewport" type="SubViewport" parent="InvSprite/SubViewportContainer"]
 handle_input_locally = false
 size = Vector2i(128, 128)
-render_target_update_mode = 0
+render_target_update_mode = 4
 
 [node name="LooseContainer" type="StaticBody2D" parent="InvSprite"]
 
@@ -326,11 +327,11 @@ position = Vector2(1140, 318)
 shape = SubResource("RectangleShape2D_bx6tn")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="InvSprite/LooseContainer"]
-position = Vector2(898.5, 621.75)
+position = Vector2(902.5, 621.75)
 shape = SubResource("RectangleShape2D_l04lm")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="InvSprite/LooseContainer"]
-position = Vector2(572.5, -216.625)
+position = Vector2(572.5, -217.625)
 shape = SubResource("RectangleShape2D_ifhhy")
 
 [node name="Pickup spawn" type="Marker2D" parent="InvSprite/LooseContainer"]

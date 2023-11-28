@@ -6,4 +6,7 @@ class_name EquipmentPropertiesResource
 @export var max_durability: int = 10
 
 func use():
-	pass
+	durability -= 1
+
+func repair():
+	durability = max_durability

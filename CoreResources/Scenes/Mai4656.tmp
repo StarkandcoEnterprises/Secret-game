@@ -97,7 +97,7 @@ unique_name_in_owner = true
 
 [node name="Window" parent="." instance=ExtResource("18_fpf16")]
 title = "DebugOutput"
-position = Vector2i(500, 36)
+position = Vector2i(700, 36)
 
 [node name="Daytime" type="Timer" parent="." groups=["DayTimer"]]
 unique_name_in_owner = true

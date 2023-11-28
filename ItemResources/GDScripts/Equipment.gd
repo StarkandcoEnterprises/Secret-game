@@ -1,69 +1,73 @@
-extends StaticBody2D
+extends BaseItem
 
-class_name equipment
+class_name Equipment
 
-@onready var hannah = get_tree().get_nodes_in_group("Hannah")[0]
-@onready var map  = get_tree().get_nodes_in_group("Map")[0]
+@export var equipment_properties:EquipmentPropertiesResource
+@export var slot_shape:PackedScene
+@onready var hannah: Hannah = get_tree().get_first_node_in_group("Hannah")
 
-@export var seed_scene: PackedScene
+var equipped_bar
+var equipped = false
+var equipped_bar_self
 
 
-func use(direction, delta):
-	var item_kept = true
-	#TODO put in group "affects ground"? - Hoe, watering can, seeds.. Then pass an atlas pos for new tile
-	if name == "Hoe":
-		use_hoe(direction, delta)
-	if name == "WateringCan":
-		use_watering_can()
-	if name == "CornSeed":
-		item_kept = plant_seed()
-		if !item_kept: queue_free()
-	return item_kept
+#This stuff could happen when added to inventory but I added it here so it's definitely already available
+func _ready():
+	var new_shape = slot_shape.instantiate()
+	%Slots.add_child(new_shape)
+	await get_tree().process_frame
+	equipped_bar = get_tree().get_first_node_in_group("EquippedBar")
+	equipped_bar_self = self.duplicate()
 
-func use_hoe(facingLeft, delta):
-	var tile_pos = get_tile_pos()
-	for layer in map.get_layers_count():
-		if map.get_layer_name(layer) == "Ground":
-			#Grass to tilled ground
-			if map.get_cell_atlas_coords(layer,tile_pos) == Vector2i(16, 5):
-				map.set_cell(layer, tile_pos, 0, Vector2(0, 0))
-	rotate_tool(facingLeft, delta)
 
-func use_watering_can():
-	var tile_pos = get_tile_pos()
-	for layer in map.get_layers_count():
-		if map.get_layer_name(layer) == "Ground":
-			#Ground to wet ground
-			if map.get_cell_atlas_coords(layer,tile_pos) == Vector2i(0,0):
-				map.set_cell(layer, tile_pos, 0, Vector2(0, 0), 1)
+func _process(delta):
+	if in_inventory:
+		if selected:
+			global_position = get_global_mouse_position()
+		elif global_position.y >= 648:
+			position.y = 0
+			position.x = 0
+		elif !slotted:
+			velocity += Vector2.DOWN * SPEED * delta
+			move_and_slide()
 
-func plant_seed() -> bool:
-	var seed_kept = true
-	var tile_pos = get_tile_pos()
-	for layer in map.get_layers_count():
-		if map.get_cell_atlas_coords(layer,tile_pos) == Vector2i(0,0):
-			var new_seed = seed_scene.instantiate()
-			new_seed.position = (tile_pos * 64) + Vector2(32,32)
-			get_tree().get_nodes_in_group("SeedsParent")[0].add_child(new_seed)
-			seed_kept = false
-	return seed_kept
+func added_to_inventory():
+	update_collision()
+	super()
 
-func rotate_tool(facingLeft, delta):
-	if facingLeft:
-		rotation_degrees = lerp(rotation_degrees + 60, rotation_degrees, 5 * delta)
-		if rotation_degrees >= 150:
-			rotation_degrees = 0
+func use():
+	if equipment_properties.durability > 0:
+		pass #rotation, also effect complexity for tools....
+		equipment_properties.use()
+		position.x += 90
+
+func _input(event):
+	if get_node("/root/Main/UI/PlayerInventoryUI/InvSprite/").visible:
+		super(event)
+		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+			if event.pressed and selectable:
+				for slot in equipped_bar.get_children():
+					if slot.get_child_count() > 0:
+						if slot.get_child(0) == equipped_bar_self:
+							slot.remove_child(equipped_bar_self)
+							if slot.get_child_count() > 0:
+								slot.get_child(0).queue_free()
+								slot.get_parent().get_parent().get_parent().get_parent().current_slot = 0
+								hannah.unequip_item(self)
+							return
+			elif !event.pressed and selectable and are_all_slots_free():
+				for slot in equipped_bar.get_children():
+					if slot.get_child_count() == 0:
+						slot.add_child(equipped_bar_self)
+						if %WorldAndInventory.scale.x > 1:
+							%WorldAndInventory.scale = Vector2(1, 1)
+						equipped_bar_self.position = Vector2(32, 28)
+						return
+
+func update_collision():
+	var new_shape = slot_shape.instantiate()
+	if "shape" in new_shape:
+		%CharShape.shape = new_shape.shape.duplicate()
 	else:
-		rotation_degrees = lerp(rotation_degrees + 90, rotation_degrees, 5 * delta)
-		#TODO FIGURE OUT ROTATION FOR THIS NONSENSE
-		if rotation_degrees <= 150:
-			rotation_degrees = 0
-
-func get_tile_pos() -> Vector2:
-	var tile_pos = Vector2.ZERO
-	tile_pos.x = hannah.global_position.x - (int(hannah.global_position.x) % 64)
-	tile_pos.y = hannah.global_position.y - (int(hannah.global_position.y) % 64)
-	tile_pos = Vector2(int(tile_pos.x) / 64, int(tile_pos.y) / 64)
-	return tile_pos
-
-
+		%CharShape.queue_free()
+		add_child(new_shape)
