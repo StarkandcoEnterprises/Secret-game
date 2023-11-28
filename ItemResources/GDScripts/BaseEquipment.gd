@@ -3,7 +3,6 @@ extends BaseItem
 class_name BaseEquipment
 
 @export var equipment_properties:EquipmentPropertiesResource
-@export var slot_shape:PackedScene
 @onready var hannah: Hannah = get_tree().get_first_node_in_group("Hannah")
 
 var equipped_bar
@@ -13,23 +12,10 @@ var bar_sprite
 
 #This stuff could happen when added to inventory but I added it here so it's definitely already available
 func _ready():
-	var new_shape = slot_shape.instantiate()
-	%Slots.add_child(new_shape)
+	super()
 	await get_tree().process_frame
 	equipped_bar = get_tree().get_first_node_in_group("EquippedBar")
 	bar_sprite = %EquipmentBarSprite
-
-
-func _process(delta):
-	if in_inventory:
-		if selected:
-			global_position = get_global_mouse_position()
-		elif global_position.y >= 648:
-			position.y = 0
-			position.x = 0
-		elif !slotted:
-			velocity += Vector2.DOWN * SPEED * delta
-			move_and_slide()
 
 func added_to_inventory():
 	update_collision()

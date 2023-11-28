@@ -3,6 +3,7 @@ extends CharacterBody2D
 class_name BaseItem
 
 @export var item_properties:ItemPropertiesResource
+@export var slot_shape:PackedScene
 
 var in_inventory = false
 var selectable = false
@@ -19,6 +20,10 @@ var overlapping_areas = []
 
 ##DEBUG
 @onready var debug_output:DebugOutput = get_tree().get_first_node_in_group("DebugOutput")
+
+func _ready():
+	var new_shape = slot_shape.instantiate()
+	%Slots.add_child(new_shape)
 
 func _process(delta):
 	if in_inventory:

@@ -1,0 +1,29 @@
+[gd_scene load_steps=7 format=3 uid="uid://5tt5ph4sunce"]
+
+[ext_resource type="PackedScene" uid="uid://dgi3axrdwp53i" path="res://ItemResources/CoreItemScenes/BaseEquipment.tscn" id="1_y5kod"]
+[ext_resource type="Texture2D" uid="uid://cm6xs5htqrshd" path="res://Art/Images/Items/Tools/hoe.png" id="2_a0kcb"]
+[ext_resource type="Resource" uid="uid://7hh4tvaoxbq6" path="res://ItemResources/InstancedItemResources/HoeEquipment.tres" id="2_lndfa"]
+[ext_resource type="Resource" uid="uid://dwbmwdotlnmn8" path="res://ItemResources/InstancedItemResources/HoeItem.tres" id="3_f0pm3"]
+[ext_resource type="PackedScene" uid="uid://bxrwd4dpwqy11" path="res://ItemResources/SlotUseScenes/DoubleSlot.tscn" id="4_f5a0c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_aobck"]
+resource_local_to_scene = true
+size = Vector2(45, 45)
+
+[node name="Hoe" instance=ExtResource("1_y5kod")]
+equipment_properties = ExtResource("2_lndfa")
+item_properties = ExtResource("3_f0pm3")
+slot_shape = ExtResource("4_f5a0c")
+
+[node name="CharShape" parent="." index="0"]
+shape = SubResource("RectangleShape2D_aobck")
+
+[node name="WorldAndInventory" parent="." index="2"]
+rotation = 1.5708
+scale = Vector2(2, 2)
+texture = ExtResource("2_a0kcb")
+offset = Vector2(10, 0)
+
+[node name="EquipmentBarSprite" parent="." index="3"]
+rotation = 1.5708
+texture = ExtResource("2_a0kcb")

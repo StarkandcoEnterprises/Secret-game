@@ -1,0 +1,30 @@
+[gd_scene load_steps=8 format=3 uid="uid://csk3bl4ga3lpc"]
+
+[ext_resource type="PackedScene" uid="uid://bp11lp4i3pnb5" path="res://ItemResources/CoreItemScenes/BaseWeapon.tscn" id="1_x4fjy"]
+[ext_resource type="Resource" uid="uid://b72p4pl36yso5" path="res://ItemResources/InstancedItemResources/BreakpointHammerWeapon.tres" id="2_d6563"]
+[ext_resource type="Resource" uid="uid://cxw8n3akywx0e" path="res://ItemResources/InstancedItemResources/BreakpointHammerEquipment.tres" id="3_7cj3t"]
+[ext_resource type="Resource" uid="uid://olrsktt4okj4" path="res://ItemResources/InstancedItemResources/BreakpointHammerItem.tres" id="4_5f4gk"]
+[ext_resource type="PackedScene" uid="uid://b6qg1yg3x43xn" path="res://ItemResources/SlotUseScenes/DoubleSeparatedSlots.tscn" id="5_aob6j"]
+[ext_resource type="Texture2D" uid="uid://gwo21kbtljud" path="res://Art/Images/Items/Weapons/BreakpointHammerFromHTS.png" id="6_ro6g0"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8wkak"]
+resource_local_to_scene = true
+size = Vector2(45, 45)
+
+[node name="BreakpointHammer" instance=ExtResource("1_x4fjy")]
+rotation = 1.5708
+abstract_properties = ExtResource("2_d6563")
+equipment_properties = ExtResource("3_7cj3t")
+item_properties = ExtResource("4_5f4gk")
+slot_shape = ExtResource("5_aob6j")
+
+[node name="CharShape" parent="." index="0"]
+shape = SubResource("RectangleShape2D_8wkak")
+
+[node name="WorldAndInventory" parent="." index="2"]
+rotation = -1.5708
+texture = ExtResource("6_ro6g0")
+
+[node name="EquipmentBarSprite" parent="." index="3"]
+rotation = -1.5708
+texture = ExtResource("6_ro6g0")

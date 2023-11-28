@@ -77,8 +77,8 @@ position = Vector2(512, 256)
 
 [node name="HandsLeft" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(-59, -21)
+position = Vector2(-82, -9)
 
 [node name="HandsRight" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(65, -21)
+position = Vector2(79, -14)

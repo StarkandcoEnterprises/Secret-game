@@ -4,5 +4,5 @@
 
 [resource]
 script = ExtResource("1_qb58f")
-price = 100
-slots_needed = 1
+price = 5
+slots_needed = 2

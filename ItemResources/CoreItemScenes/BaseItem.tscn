@@ -1,8 +1,9 @@
-[gd_scene load_steps=5 format=3 uid="uid://dpe0gjlh5ydxw"]
+[gd_scene load_steps=6 format=3 uid="uid://dpe0gjlh5ydxw"]
 
 [ext_resource type="Script" path="res://ItemResources/GDScripts/BaseItem.gd" id="1_em6ot"]
 [ext_resource type="Resource" uid="uid://divp22rdie4uj" path="res://ItemResources/CorePropertyResources/BaseItemProperties.tres" id="2_3ueyt"]
 [ext_resource type="Texture2D" uid="uid://c8yk6rpq7kpny" path="res://Art/Images/Character/NEVER REMOVE.png" id="2_4ln6m"]
+[ext_resource type="PackedScene" uid="uid://b8jawbgc5jhs2" path="res://ItemResources/SlotUseScenes/SingleSlot.tscn" id="3_ypjus"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_t61cn"]
 resource_local_to_scene = true
@@ -13,6 +14,7 @@ disable_mode = 1
 input_pickable = true
 script = ExtResource("1_em6ot")
 item_properties = ExtResource("2_3ueyt")
+slot_shape = ExtResource("3_ypjus")
 
 [node name="CharShape" type="CollisionShape2D" parent="."]
 unique_name_in_owner = true
