@@ -111,7 +111,8 @@ func toggle_selected(select):
 func added_to_inventory():
 	in_inventory = true
 	if is_instance_valid(get_child(2)):
-		get_child(2).scale = Vector2(1, 1)
+		if get_child(2).scale.x <= 1:
+			get_child(2).scale = Vector2(1, 1)
 		get_child(2).position = Vector2(0, 0)
 	
 func _input(event):
@@ -137,6 +138,9 @@ func _input(event):
 						for slot in equipped_bar.get_children():
 							if slot.get_child(0) == new_sprite:
 								slot.remove_child(new_sprite)
+								if slot.get_child_count() > 0:
+									slot.get_child(0).queue_free()
+									slot.get_parent().get_parent().get_parent().get_parent().current_slot = 0
 								return
 					
 			
@@ -163,6 +167,8 @@ func _input(event):
 					for slot in equipped_bar.get_children():
 						if slot.get_child_count() == 0:
 							slot.add_child(new_sprite)
+							if new_sprite.scale.x > 1:
+								new_sprite.scale = Vector2(1, 1)
 							new_sprite.position = Vector2(32, 28)
 							return
 		
