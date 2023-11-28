@@ -51,6 +51,14 @@ func _on_mouse_exited():
 	if not global.is_dragging:
 		selectable = false
 
+func update_collision():
+	var new_shape = slot_shape.instantiate()
+	if "shape" in new_shape:
+		%CharShape.shape = new_shape.shape.duplicate()
+	else:
+		%CharShape.queue_free()
+		add_child(new_shape)
+
 #We are in an area... is it a grid block? Is it full?
 func _on_slots_area_entered(area):
 	if area.get_parent().is_in_group("GridBlock"):
@@ -86,6 +94,82 @@ func _on_slots_area_exited(area):
 	reset_top_left()
 	debug_output.stack_and_text(str("Slots Available:", slots_available, "   overlapping areas ", $Slots.get_overlapping_areas()))
 
+func are_all_slots_free():
+	return slots_available == properties.item_properties.slots_needed
+
+func toggle_selected(select):
+	if !select:
+		selected = false
+		global.is_dragging = false
+		
+	else:
+		selected = true
+		global.is_dragging = true
+
+
+
+func added_to_inventory():
+	in_inventory = true
+	if is_instance_valid(get_child(2)):
+		get_child(2).scale = Vector2(1, 1)
+		get_child(2).position = Vector2(0, 0)
+	
+func _input(event):
+	#Make sure we are hovering over it and not already dragging anything.
+	if selectable:
+		#IF we get a left click
+		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+			
+			#If it's a press of the click and the mouse exists (? stole this I'm sure)
+			if event.pressed and get_global_mouse_position:
+				
+				#We are now dragging it, it is selected, and it's a little bigger!
+				toggle_selected(true)
+				
+				#IF we're still a child of a slot, we shouldn't be
+				if overlapping_areas.size() > 0:
+				
+					#Remove any the areas a reference to this object and mark them as full
+					for area in overlapping_areas:
+						area.get_parent().remove_item()
+					slotted = false
+					if properties.equipment_properties:
+						for slot in equipped_bar.get_children():
+							if slot.get_child(0) == new_sprite:
+								slot.remove_child(new_sprite)
+								return
+					
+			
+			#Else, if it's a release and there are not enough free slots underneath
+			elif !event.pressed and !are_all_slots_free():
+				
+				#It's not selected, or being dragged. 
+				#Scale is reset, gravity/collision is reapplied as it may have been previously slotted
+				toggle_selected(false)
+			
+			#Otherwise if it's a release and the slots are free
+			elif !event.pressed and are_all_slots_free():
+				
+				#Give all the areas a reference to this object and mark them as full
+				for area in overlapping_areas:
+					area.get_parent().accept_item(self)
+					
+				#It's not selected, or being dragged. 
+				#Scale is reset, gravity/collision is removed as it has been slotted
+				toggle_selected(false)
+				slotted = true
+				global_position = center
+				if properties.equipment_properties:
+					for slot in equipped_bar.get_children():
+						if slot.get_child_count() == 0:
+							slot.add_child(new_sprite)
+							new_sprite.position = Vector2(32, 28)
+							return
+		
+		#If we get a right click and item selected, rotate
+		elif selected and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
+			rotation_degrees += 90
+			
 func reset_top_left():
 	center = Vector2.ZERO
 	##A whole bunch of nonsense to try and get the left most slot of all areas entered that needs refactoring
@@ -150,76 +234,3 @@ func reset_top_left():
 	else:
 		center = Vector2.ZERO
 
-func are_all_slots_free():
-	return slots_available == properties.item_properties.slots_needed
-
-func toggle_selected(select):
-	if !select:
-		selected = false
-		global.is_dragging = false
-		
-	else:
-		selected = true
-		global.is_dragging = true
-
-func added_to_inventory():
-	in_inventory = true
-	if is_instance_valid(get_child(2)):
-		get_child(2).scale = Vector2(1, 1)
-		get_child(2).position = Vector2(0, 0)
-	
-func _input(event):
-	#Make sure we are hovering over it and not already dragging anything.
-	if selectable:
-		#IF we get a left click
-		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-			
-			#If it's a press of the click and the mouse exists (? stole this I'm sure)
-			if event.pressed and get_global_mouse_position:
-				
-				#We are now dragging it, it is selected, and it's a little bigger!
-				toggle_selected(true)
-				
-				#IF we're still a child of a slot, we shouldn't be
-				if overlapping_areas.size() > 0:
-				
-					#Remove any the areas a reference to this object and mark them as full
-					for area in overlapping_areas:
-						area.get_parent().remove_item()
-					slotted = false
-					if properties.equipment_properties:
-						for slot in equipped_bar.get_children():
-							if slot.get_child(0) == new_sprite:
-								slot.remove_child(new_sprite)
-								return
-					
-			
-			#Else, if it's a release and there are not enough free slots underneath
-			elif !event.pressed and !are_all_slots_free():
-				
-				#It's not selected, or being dragged. 
-				#Scale is reset, gravity/collision is reapplied as it may have been previously slotted
-				toggle_selected(false)
-			
-			#Otherwise if it's a release and the slots are free
-			elif !event.pressed and are_all_slots_free():
-				
-				#Give all the areas a reference to this object and mark them as full
-				for area in overlapping_areas:
-					area.get_parent().accept_item(self)
-					
-				#It's not selected, or being dragged. 
-				#Scale is reset, gravity/collision is removed as it has been slotted
-				toggle_selected(false)
-				slotted = true
-				global_position = center
-				if properties.equipment_properties:
-					for slot in equipped_bar.get_children():
-						if slot.get_child_count() == 0:
-							slot.add_child(new_sprite)
-							new_sprite.position = Vector2(32, 28)
-							return
-		
-		#If we get a right click and item selected, rotate
-		elif selected and event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
-			rotation_degrees += 90

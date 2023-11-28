@@ -3,6 +3,7 @@ extends Control
 func add_item(item: BaseItem):
 	item.reparent(%ItemCollection)
 	item.added_to_inventory()
+	item.update_collision()
 
 #func delete_item(pos):
 #	get_child(grid_pos).get_child(pos).get_child(0).queue_free()
