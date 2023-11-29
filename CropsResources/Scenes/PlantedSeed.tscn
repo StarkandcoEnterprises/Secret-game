@@ -1,13 +1,30 @@
-[gd_scene load_steps=10 format=3 uid="uid://c6x74ewrfcmkw"]
+[gd_scene load_steps=12 format=3 uid="uid://c6x74ewrfcmkw"]
 
 [ext_resource type="Script" path="res://CropsResources/GDScripts/PlantedSeed.gd" id="1_0djgo"]
-[ext_resource type="PackedScene" uid="uid://b3g3knxe0y3ls" path="res://CropsResources/Scenes/Corn.tscn" id="2_48gri"]
-[ext_resource type="Texture2D" uid="uid://n1wyyh5v8uce" path="res://Art/PlantedSeed.png" id="3_y6t5e"]
-[ext_resource type="Texture2D" uid="uid://bq1hua4msahwu" path="res://Art/Corn/CornSprout.png" id="4_vxe16"]
-[ext_resource type="Texture2D" uid="uid://ctuaccol3ah6p" path="res://Art/Corn/CornGrowth1.png" id="5_s7nfj"]
-[ext_resource type="Texture2D" uid="uid://br7ujmul1jyyp" path="res://Art/Corn/CornGrowth2.png" id="6_a4v1o"]
-[ext_resource type="Texture2D" uid="uid://b0hf6i8exkpsy" path="res://Art/Corn/CornGrowth3.png" id="7_2p73r"]
-[ext_resource type="Texture2D" uid="uid://nvesdbwq6kh8" path="res://Art/Corn/CornGrown.png" id="8_scybe"]
+[ext_resource type="Texture2D" uid="uid://dhvg4migg4h36" path="res://Art/Images/Crops/Corn/Corn.png" id="2_v8agb"]
+[ext_resource type="Texture2D" uid="uid://n1wyyh5v8uce" path="res://Art/Images/Crops/PlantedSeed.png" id="3_y6t5e"]
+[ext_resource type="Texture2D" uid="uid://bq1hua4msahwu" path="res://Art/Images/Crops/Corn/CornSprout.png" id="4_vxe16"]
+[ext_resource type="Texture2D" uid="uid://ctuaccol3ah6p" path="res://Art/Images/Crops/Corn/CornGrowth1.png" id="5_s7nfj"]
+[ext_resource type="Texture2D" uid="uid://br7ujmul1jyyp" path="res://Art/Images/Crops/Corn/CornGrowth2.png" id="6_a4v1o"]
+[ext_resource type="Texture2D" uid="uid://b0hf6i8exkpsy" path="res://Art/Images/Crops/Corn/CornGrowth3.png" id="7_2p73r"]
+[ext_resource type="Texture2D" uid="uid://nvesdbwq6kh8" path="res://Art/Images/Crops/Corn/CornGrown.png" id="8_scybe"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_3uldy"]
+radius = 5.0
+height = 24.0531
+
+[sub_resource type="PackedScene" id="PackedScene_ipjbe"]
+_bundled = {
+"conn_count": 0,
+"conns": PackedInt32Array(),
+"editable_instances": [],
+"names": PackedStringArray("Corn", "StaticBody2D", "Sprite2D", "Sprite2D", "texture", "CollisionShape2D", "CollisionShape2D", "rotation", "shape"),
+"node_count": 3,
+"node_paths": [NodePath("."), NodePath(".")],
+"nodes": PackedInt32Array(-1, -1, 1, 0, -1, 0, 0, 1073741824, 0, 3, 2, -1, 1, 4, 0, 0, 1073741825, 0, 6, 5, -1, 2, 7, 1, 8, 2, 0),
+"variants": [ExtResource("2_v8agb"), 0.794125, SubResource("CapsuleShape2D_3uldy")],
+"version": 3
+}
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lur78"]
 size = Vector2(24, 24)
@@ -16,7 +33,7 @@ size = Vector2(24, 24)
 position = Vector2(200, 400)
 collision_layer = 2
 script = ExtResource("1_0djgo")
-corn_scene = ExtResource("2_48gri")
+corn_scene = SubResource("PackedScene_ipjbe")
 
 [node name="SeedSprite" type="Sprite2D" parent="." groups=["sprite1"]]
 unique_name_in_owner = true

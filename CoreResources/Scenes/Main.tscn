@@ -4,11 +4,11 @@
 [ext_resource type="Script" path="res://CoreResources/GDScripts/Main.gd" id="1_u1m27"]
 [ext_resource type="PackedScene" uid="uid://dqxfciw668dqi" path="res://CoreResources/Scenes/Hannah.tscn" id="2_xi62l"]
 [ext_resource type="Script" path="res://CoreResources/GDScripts/WorldObject.gd" id="5_4wxi4"]
-[ext_resource type="PackedScene" uid="uid://cpxjnrxgdhia1" path="res://ItemResources/InstancedItemScenes/WateringCan.tscn" id="6_5lh5n"]
-[ext_resource type="PackedScene" uid="uid://dst6rhe3urvht" path="res://ItemResources/InstancedItemScenes/Stone.tscn" id="7_86fp1"]
+[ext_resource type="PackedScene" uid="uid://dst6rhe3urvht" path="res://ItemResources/InstancedItemScenes/Stone.tscn" id="6_rthgg"]
+[ext_resource type="PackedScene" uid="uid://5tt5ph4sunce" path="res://ItemResources/InstancedItemScenes/Hoe.tscn" id="7_1bdow"]
+[ext_resource type="PackedScene" uid="uid://cpxjnrxgdhia1" path="res://ItemResources/InstancedItemScenes/WateringCan.tscn" id="7_77n01"]
 [ext_resource type="Texture2D" uid="uid://b8sxywscmeyf4" path="res://Art/Images/BuildingScenes/Bed.png" id="8_qbdht"]
-[ext_resource type="PackedScene" uid="uid://5tt5ph4sunce" path="res://ItemResources/InstancedItemScenes/Hoe.tscn" id="8_sy847"]
-[ext_resource type="PackedScene" uid="uid://csk3bl4ga3lpc" path="res://ItemResources/InstancedItemScenes/BreakpointHammer.tscn" id="9_y2umo"]
+[ext_resource type="PackedScene" uid="uid://t0g41xsrwde2" path="res://ItemResources/InstancedItemScenes/BreakpointHammer.tscn" id="9_y2umo"]
 [ext_resource type="PackedScene" uid="uid://cpq0waabh274t" path="res://CoreResources/Scenes/UI.tscn" id="11_jcwwp"]
 [ext_resource type="Texture2D" uid="uid://bopbscsbdwhch" path="res://Art/Images/BuildingScenes/Crate.png" id="13_haq3d"]
 [ext_resource type="PackedScene" uid="uid://6wfbysp7xism" path="res://Debug/Scenes/DebugWindow.tscn" id="18_fpf16"]
@@ -80,13 +80,13 @@ texture = ExtResource("13_haq3d")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Crate"]
 shape = SubResource("RectangleShape2D_lwi1o")
 
-[node name="Stone" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("7_86fp1")]
-
-[node name="WateringCan" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("6_5lh5n")]
-
-[node name="Hoe" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("8_sy847")]
-
 [node name="BreakpointHammer" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("9_y2umo")]
+
+[node name="Hoe" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("7_1bdow")]
+
+[node name="Stone" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("6_rthgg")]
+
+[node name="WateringCan" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("7_77n01")]
 
 [node name="Hannah" parent="SubViewportContainer/SubViewport/World" instance=ExtResource("2_xi62l")]
 unique_name_in_owner = true

@@ -4,28 +4,58 @@ var current_slot = 0
 
 @onready var hannah: Hannah = get_tree().get_first_node_in_group("Hannah")
 
+func _ready():
+	%InvSubViewport.world_2d = get_tree().root.get_viewport().world_2d
+
 func add_item(item: BaseItem):
 	item.reparent(%ItemCollection)
+	item.position = %PickupSpawn.position
 	item.added_to_inventory()
 
-func _input(event):
+func _unhandled_input(event):
+	if event.is_action_pressed("inventory"):
+		
+		if %EquippedBar.visible:
+			%EquippedBar.hide()
+			%InvSprite.show()
+			hannah.set_physics_process(false)
+			hannah.set_process_input(false)
+			
+			#Instantiate the inventory camera
+			var inv_cam = Camera2D.new()
+			inv_cam.custom_viewport = %InvSubViewport
+			hannah.get_node("CamMarker").add_child(inv_cam)
+			
+		else:
+			%EquippedBar.show()
+			%InvSprite.hide()
+			hannah.set_physics_process(true)
+			hannah.set_process_input(true)
+			hannah.get_node("CamMarker").get_child(0).queue_free()
+##############################################################################################
+##############################################################################################
+#########################Update when adding something please Conor############################
+##############################################################################################
+##############################################################################################
+		if get_child_count() > 7:
+			get_child(7).queue_free()
 	if event is InputEventKey and event.is_action_pressed("slot1"):
 		select_on_bar(1)
-	if event is InputEventKey and event.is_action_pressed("slot2"):
+	elif event is InputEventKey and event.is_action_pressed("slot2"):
 		select_on_bar(2)
-	if event is InputEventKey and event.is_action_pressed("slot3"):
+	elif event is InputEventKey and event.is_action_pressed("slot3"):
 		select_on_bar(3)
-	if event is InputEventKey and event.is_action_pressed("slot4"):
+	elif event is InputEventKey and event.is_action_pressed("slot4"):
 		select_on_bar(4)
-	if event is InputEventKey and event.is_action_pressed("slot5"):
+	elif event is InputEventKey and event.is_action_pressed("slot5"):
 		select_on_bar(5)
-	if event is InputEventKey and event.is_action_pressed("slot6"):
+	elif event is InputEventKey and event.is_action_pressed("slot6"):
 		select_on_bar(6)
-	if event is InputEventKey and event.is_action_pressed("slot7"):
+	elif event is InputEventKey and event.is_action_pressed("slot7"):
 		select_on_bar(7)
-	if event is InputEventKey and event.is_action_pressed("slot8"):
+	elif event is InputEventKey and event.is_action_pressed("slot8"):
 		select_on_bar(8)
-	if event is InputEventKey and event.is_action_pressed("slot9"):
+	elif event is InputEventKey and event.is_action_pressed("slot9"):
 		select_on_bar(9)
 
 func select_on_bar(new_slot):

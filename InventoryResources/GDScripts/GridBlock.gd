@@ -1,5 +1,4 @@
-extends Control
-
+extends Area2D
 
 var full = false
 var contains_ref

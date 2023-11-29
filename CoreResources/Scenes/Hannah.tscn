@@ -71,14 +71,20 @@ drag_top_margin = 0.4
 drag_right_margin = 0.4
 drag_bottom_margin = 0.4
 
-[node name="Marker2D" type="Marker2D" parent="." groups=["Marker"]]
+[node name="CamMarker" type="Marker2D" parent="." groups=["Marker"]]
 unique_name_in_owner = true
 position = Vector2(512, 256)
 
-[node name="HandsLeft" type="Marker2D" parent="."]
-unique_name_in_owner = true
-position = Vector2(-82, -9)
+[node name="ArmLeft" type="Marker2D" parent="."]
+position = Vector2(-41, 12)
 
-[node name="HandsRight" type="Marker2D" parent="."]
+[node name="HandsLeft" type="Marker2D" parent="ArmLeft"]
 unique_name_in_owner = true
-position = Vector2(79, -14)
+position = Vector2(-33, -35)
+
+[node name="ArmRight" type="Marker2D" parent="."]
+position = Vector2(51, 16)
+
+[node name="HandsRight" type="Marker2D" parent="ArmRight"]
+unique_name_in_owner = true
+position = Vector2(25, -37)

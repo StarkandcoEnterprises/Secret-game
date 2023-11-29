@@ -11,7 +11,7 @@ speed = 1
 reach = 10
 poison = 0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2bg6y"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lemcd"]
 resource_local_to_scene = true
 size = Vector2(45, 45)
 
@@ -19,5 +19,5 @@ size = Vector2(45, 45)
 script = ExtResource("2_hpx8s")
 abstract_properties = SubResource("Resource_3smas")
 
-[node name="CharShape" parent="." index="0"]
-shape = SubResource("RectangleShape2D_2bg6y")
+[node name="ItemCharShape" parent="." index="0"]
+shape = SubResource("RectangleShape2D_lemcd")

@@ -21,7 +21,7 @@ func _on_daytime_timeout():
 	
 	%Hannah.inventory.visible = false
 	
-	%Hannah.process_mode = 4
+	%Hannah.process_mode = Node.PROCESS_MODE_DISABLED
 	
 	var tween = get_tree().create_tween()
 	tween.tween_property(dayover_background, "modulate", Color(0,0,0,1), 1)
@@ -61,7 +61,7 @@ func next_day():
 	
 	await timer.timeout
 	
-	%Hannah.process_mode = 0
+	%Hannah.process_mode = Node.PROCESS_MODE_INHERIT
 	%Hannah.inventory.visible = true
 	dayover_UI.visible = false
 	%Daytime.wait_time = 500

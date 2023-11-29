@@ -17,30 +17,29 @@ func _ready():
 	equipped_bar = get_tree().get_first_node_in_group("EquippedBar")
 	bar_sprite = %EquipmentBarSprite
 
-func added_to_inventory():
-	update_collision()
-	super()
-
 func use():
 	if equipment_properties.durability > 0:
-		pass #rotation, also effect complexity for tools....
 		equipment_properties.use()
-		position.x += 90
+		if get_parent() == get_node("HandsRight"):
+			get_parent().get_parent().rotation_degrees += 90
+		elif get_parent() == get_node("HandsRight"):
+			get_parent().get_parent().rotation_degrees -= 90
 
 func _input(event):
-	if selectable:
-		super(event)
-		if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
-			if !event.pressed and are_all_slots_free():
-				#It would be nice if the equipment didn't have to care about this equipped bar stuff.
-				for slot in equipped_bar.get_children():
+	super(event)
+	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
+		if !event.pressed and are_all_slots_free():
+			#It would be nice if the equipment didn't have to care about this equipped bar stuff.
+			for slot in equipped_bar.get_children():
+				if slot.get_child_count() > 0:
 					if slot.get_child_count() == 0:
 						bar_sprite.visible = true
 						bar_sprite.reparent(slot)
 						slot.get_child(slot.get_child_count() - 1).position =  Vector2(32, 28)
 						return
-			elif event.pressed:
-				for slot in equipped_bar.get_children():
+		elif event.pressed:
+			for slot in equipped_bar.get_children():
+				if slot.get_child_count() > 0:
 					if slot.get_child(0) == bar_sprite:
 						bar_sprite.reparent(self)
 						bar_sprite.visible = false
@@ -49,11 +48,3 @@ func _input(event):
 							slot.get_parent().get_parent().get_parent().get_parent().current_slot = 0
 							hannah.unequip_item(self)
 						return
-
-func update_collision():
-	var new_shape = slot_shape.instantiate()
-	if "shape" in new_shape:
-		%CharShape.shape = new_shape.shape.duplicate()
-	else:
-		%CharShape.queue_free()
-		add_child(new_shape)

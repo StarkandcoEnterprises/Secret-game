@@ -6,7 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://c8yk6rpq7kpny" path="res://Art/Images/Character/NEVER REMOVE.png" id="5_nqmkw"]
 [ext_resource type="Script" path="res://ItemResources/GDScripts/EquipmentBarSprite.gd" id="6_pxmfm"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_16a8v"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_extvn"]
 resource_local_to_scene = true
 size = Vector2(45, 45)
 
@@ -14,8 +14,8 @@ size = Vector2(45, 45)
 script = ExtResource("2_cheqt")
 equipment_properties = ExtResource("3_fec4y")
 
-[node name="CharShape" parent="." index="0"]
-shape = SubResource("RectangleShape2D_16a8v")
+[node name="ItemCharShape" parent="." index="0"]
+shape = SubResource("RectangleShape2D_extvn")
 
 [node name="EquipmentBarSprite" type="Sprite2D" parent="." index="3"]
 unique_name_in_owner = true

@@ -25,6 +25,7 @@ offset_bottom = 648.0
 script = ExtResource("1_40yka")
 
 [node name="EquippedBar" type="Control" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -104,6 +105,7 @@ custom_minimum_size = Vector2(64, 0)
 layout_mode = 2
 
 [node name="InvSprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
 visible = false
 texture = ExtResource("3_805em")
 centered = false
@@ -312,7 +314,8 @@ offset_top = 50.0
 offset_right = 963.0
 offset_bottom = 178.0
 
-[node name="SubViewport" type="SubViewport" parent="InvSprite/SubViewportContainer"]
+[node name="InvSubViewport" type="SubViewport" parent="InvSprite/SubViewportContainer"]
+unique_name_in_owner = true
 handle_input_locally = false
 size = Vector2i(128, 128)
 render_target_update_mode = 0
@@ -335,5 +338,6 @@ shape = SubResource("RectangleShape2D_l04lm")
 position = Vector2(572.5, -217.625)
 shape = SubResource("RectangleShape2D_ifhhy")
 
-[node name="Pickup spawn" type="Marker2D" parent="InvSprite/LooseContainer"]
-position = Vector2(901, 60)
+[node name="PickupSpawn" type="Marker2D" parent="InvSprite/LooseContainer"]
+unique_name_in_owner = true
+position = Vector2(896, 225)

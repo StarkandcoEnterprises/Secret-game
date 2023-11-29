@@ -4,18 +4,11 @@ class_name Hannah
 
 var speed = 300.0
 
-var subviewport
-
 @onready var inventory = get_tree().get_first_node_in_group("Inventory")
 @onready var debug = get_tree().get_first_node_in_group("DebugOutput")
 
 var equipped: BaseEquipment
 var interacting = false
-
-func _ready():
-	await get_tree().process_frame
-	subviewport = get_node("/root/Main/UI/PlayerInventoryUI/InvSprite/SubViewportContainer/SubViewport")
-	subviewport.world_2d = get_viewport().world_2d
 
 func equip_item(item: BaseItem):
 	var new_version = item.duplicate()
@@ -53,10 +46,10 @@ func face_direction(direction):
 
 
 func _physics_process(delta):
-	if !interacting and !inventory.get_node("/root/Main/UI/PlayerInventoryUI/InvSprite/").visible:
+	if !interacting:
 		
 		#use any equipment
-		if is_instance_valid(equipped) and Input.is_action_pressed("interact"):
+		if is_instance_valid(equipped) and Input.is_action_just_pressed("interact"):
 			equipped.use()
 		elif is_instance_valid(equipped) and Input.is_action_pressed("unequip"):
 			unequip_held()
@@ -77,33 +70,7 @@ func _physics_process(delta):
 
 func _input(event):
 	if !interacting:
-		
 		#Here is inventory handling and interacting with world objects
-		if !inventory.get_node("/root/Main/UI/PlayerInventoryUI/InvSprite/").visible and event.is_action_pressed("interact") and %RayCast2D.is_colliding() and %RayCast2D.get_collider().has_method("interact"):
+		if event.is_action_pressed("interact") and %RayCast2D.is_colliding() and %RayCast2D.get_collider().has_method("interact"):
 			interacting = true
 			%RayCast2D.get_collider().interact()
-		elif event.is_action_pressed("inventory"):
-							
-			if inventory.get_node("/root/Main/UI/PlayerInventoryUI/EquippedBar/").visible:
-				inventory.get_node("/root/Main/UI/PlayerInventoryUI/EquippedBar/").hide()
-				inventory.get_node("/root/Main/UI/PlayerInventoryUI/InvSprite/").show()
-				
-				#Instantiate the inventory camera
-				var inv_cam = Camera2D.new()
-				inv_cam.custom_viewport = subviewport
-				inv_cam.position = %Marker2D.position
-				inv_cam.add_to_group("InvCam")
-				add_child(inv_cam)
-				
-			else:
-				inventory.get_node("/root/Main/UI/PlayerInventoryUI/EquippedBar/").show()
-				inventory.get_node("/root/Main/UI/PlayerInventoryUI/InvSprite/").hide()
-##############################################################################################
-##############################################################################################
-#########################Update when adding something please Conor############################
-##############################################################################################
-##############################################################################################
-				if get_child_count() > 7:
-					get_child(7).queue_free()
-			
-

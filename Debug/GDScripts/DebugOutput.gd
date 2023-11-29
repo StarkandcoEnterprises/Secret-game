@@ -36,6 +36,5 @@ func update_text(string):
 
 func _on_spawn_seed_pressed():
 	var new_seed = corn_seed.instantiate()
-	var debug = get_tree().get_first_node_in_group("ObjectHolder")
 	get_tree().get_first_node_in_group("ObjectHolder").add_child(new_seed)
 	new_seed.position = Vector2(400, 150)

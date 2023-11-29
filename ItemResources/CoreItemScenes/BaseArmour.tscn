@@ -19,7 +19,7 @@ script = ExtResource("4_aixtg")
 price = 100
 slots_needed = 1
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_2bg6y"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fr6xv"]
 resource_local_to_scene = true
 size = Vector2(45, 45)
 
@@ -28,5 +28,5 @@ script = ExtResource("2_xoxbe")
 abstract_properties = SubResource("Resource_1vxqa")
 item_properties = SubResource("Resource_a502s")
 
-[node name="CharShape" parent="." index="0"]
-shape = SubResource("RectangleShape2D_2bg6y")
+[node name="ItemCharShape" parent="." index="0"]
+shape = SubResource("RectangleShape2D_fr6xv")

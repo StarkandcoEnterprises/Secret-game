@@ -6,7 +6,7 @@
 [ext_resource type="Resource" uid="uid://dwbmwdotlnmn8" path="res://ItemResources/InstancedItemResources/HoeItem.tres" id="3_f0pm3"]
 [ext_resource type="PackedScene" uid="uid://bxrwd4dpwqy11" path="res://ItemResources/SlotUseScenes/DoubleSlot.tscn" id="4_f5a0c"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_aobck"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_n2por"]
 resource_local_to_scene = true
 size = Vector2(45, 45)
 
@@ -15,8 +15,8 @@ equipment_properties = ExtResource("2_lndfa")
 item_properties = ExtResource("3_f0pm3")
 slot_shape = ExtResource("4_f5a0c")
 
-[node name="CharShape" parent="." index="0"]
-shape = SubResource("RectangleShape2D_aobck")
+[node name="ItemCharShape" parent="." index="0"]
+shape = SubResource("RectangleShape2D_n2por")
 
 [node name="WorldAndInventory" parent="." index="2"]
 rotation = 1.5708
