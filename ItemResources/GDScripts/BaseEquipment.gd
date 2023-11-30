@@ -12,7 +12,6 @@ var bar_sprite
 
 #This stuff could happen when added to inventory but I added it here so it's definitely already available
 func _ready():
-	super()
 	await get_tree().process_frame
 	equipped_bar = get_tree().get_first_node_in_group("EquippedBar")
 	bar_sprite = %EquipmentBarSprite
@@ -21,11 +20,17 @@ func use():
 	if equipment_properties.durability > 0:
 		equipment_properties.use()
 		if get_parent().name == "HandsRight":
-			get_parent().get_parent().rotation_degrees += 90
+			var tween = get_tree().create_tween()
+			tween.tween_property(get_parent().get_parent(), "rotation_degrees", 90, 1)
+			tween.play()
+			get_parent().get_parent().rotation_degrees = 0
 		elif get_parent().name ==  "HandsRight":
-			get_parent().get_parent().rotation_degrees -= 90
+			var tween = get_tree().create_tween()
+			tween.tween_property(get_parent().get_parent(), "rotation_degrees", -90, 1)
+			tween.play()
+			get_parent().get_parent().rotation_degrees = 0
 
-func _input(event):
+func _unhandled_input(event):
 	super(event)
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT:
 		if !event.pressed and are_all_slots_free():

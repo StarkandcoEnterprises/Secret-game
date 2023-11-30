@@ -1,23 +1,32 @@
-[gd_scene load_steps=6 format=3 uid="uid://bp11lp4i3pnb5"]
+[gd_scene load_steps=7 format=3 uid="uid://hxpjbiqmim05"]
 
-[ext_resource type="PackedScene" uid="uid://dgi3axrdwp53i" path="res://ItemResources/CoreItemScenes/BaseEquipment.tscn" id="1_8byfw"]
+[ext_resource type="PackedScene" uid="uid://cfkgfq3yopgbq" path="res://ItemResources/CoreItemScenes/BaseEquipment.tscn" id="1_8byfw"]
 [ext_resource type="Script" path="res://ItemResources/GDScripts/BaseWeapon.gd" id="2_hpx8s"]
 [ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/WeaponPropertiesResource.gd" id="3_3ntvx"]
 
-[sub_resource type="Resource" id="Resource_3smas"]
+[sub_resource type="Resource" id="Resource_3kk2y"]
 script = ExtResource("3_3ntvx")
 damage = 10
 speed = 1
 reach = 10
 poison = 0
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_lemcd"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_e61gm"]
 resource_local_to_scene = true
-size = Vector2(45, 45)
+size = Vector2(40, 40)
 
-[node name="Weapon" instance=ExtResource("1_8byfw")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_oy32y"]
+resource_local_to_scene = true
+size = Vector2(40, 40)
+
+[node name="BaseWeapon" instance=ExtResource("1_8byfw")]
 script = ExtResource("2_hpx8s")
-abstract_properties = SubResource("Resource_3smas")
+abstract_properties = SubResource("Resource_3kk2y")
+equipment_properties = null
+item_properties = null
 
-[node name="ItemCharShape" parent="." index="0"]
-shape = SubResource("RectangleShape2D_lemcd")
+[node name="ItemCharShape" parent="." index="1"]
+shape = SubResource("RectangleShape2D_e61gm")
+
+[node name="ItemSlotsShape" parent="ItemUsedSlots" index="0"]
+shape = SubResource("RectangleShape2D_oy32y")

@@ -4,8 +4,6 @@ var current_slot = 0
 
 @onready var hannah: Hannah = get_tree().get_first_node_in_group("Hannah")
 
-func _ready():
-	%InvSubViewport.world_2d = get_tree().root.get_viewport().world_2d
 
 func add_item(item: BaseItem):
 	item.reparent(%ItemCollection)
@@ -18,27 +16,24 @@ func _unhandled_input(event):
 		if %EquippedBar.visible:
 			%EquippedBar.hide()
 			%InvSprite.show()
-			hannah.set_physics_process(false)
-			hannah.set_process_input(false)
+			if hannah:
+				hannah.set_physics_process(false)
+				hannah.set_process_input(false)
 			
-			#Instantiate the inventory camera
-			var inv_cam = Camera2D.new()
-			inv_cam.custom_viewport = %InvSubViewport
-			hannah.get_node("CamMarker").add_child(inv_cam)
 			
 		else:
 			%EquippedBar.show()
 			%InvSprite.hide()
-			hannah.set_physics_process(true)
-			hannah.set_process_input(true)
-			hannah.get_node("CamMarker").get_child(0).queue_free()
+			if hannah:
+				hannah.set_physics_process(true)
+				hannah.set_process_input(true)
+			
 ##############################################################################################
 ##############################################################################################
 #########################Update when adding something please Conor############################
 ##############################################################################################
 ##############################################################################################
-		if get_child_count() > 7:
-			get_child(7).queue_free()
+
 	if event is InputEventKey and event.is_action_pressed("slot1"):
 		select_on_bar(1)
 	elif event is InputEventKey and event.is_action_pressed("slot2"):
@@ -59,18 +54,20 @@ func _unhandled_input(event):
 		select_on_bar(9)
 
 func select_on_bar(new_slot):
-	if %EquippedContainer.get_node(str("Equipped", new_slot)).get_child_count() > 0:
-		if current_slot != 0 and current_slot != new_slot:
-			%EquippedContainer.get_node(str("Equipped", current_slot)).get_child(1).queue_free()
-			hannah.unequip_held()
-		if new_slot != 0 and current_slot != new_slot:
-			current_slot = new_slot
-			var reference_rect = ReferenceRect.new() 
-			reference_rect.editor_only = false
-			reference_rect.size = Vector2(64, 55)
-			reference_rect.position = Vector2(5,0)
-			%EquippedContainer.get_node(str("Equipped", new_slot)).add_child(reference_rect)
-			hannah.equip_item(%EquippedContainer.get_node(str("Equipped", current_slot)).get_child(0).parent.duplicate())
+	if %EquippedContainer.get_node(str("Equipped", new_slot)).get_child_count() == 0: return
+	if current_slot != 0 and current_slot != new_slot:
+		%EquippedContainer.get_node(str("Equipped", current_slot)).get_child(1).queue_free()
+		
+		if hannah: hannah.unequip_held()
+	if new_slot != 0 and current_slot != new_slot:
+		current_slot = new_slot
+		var reference_rect = ReferenceRect.new() 
+		reference_rect.editor_only = false
+		reference_rect.size = Vector2(64, 55)
+		reference_rect.position = Vector2(5,0)
+		%EquippedContainer.get_node(str("Equipped", new_slot)).add_child(reference_rect)
+		
+		if hannah: hannah.equip_item(%EquippedContainer.get_node(str("Equipped", current_slot)).get_child(0).parent.duplicate())
 
 func reset_slot(slot_to_reset):
 	%EquippedContainer.get_node(str("Equipped", slot_to_reset)).get_child(0).queue_free()

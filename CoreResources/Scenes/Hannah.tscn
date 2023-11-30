@@ -44,6 +44,7 @@ size = Vector2(64, 80)
 
 [node name="Hannah" type="CharacterBody2D" groups=["Hannah"]]
 z_index = 1
+motion_mode = 1
 script = ExtResource("1_jbrk5")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Sprite"]]
@@ -70,10 +71,6 @@ drag_left_margin = 0.4
 drag_top_margin = 0.4
 drag_right_margin = 0.4
 drag_bottom_margin = 0.4
-
-[node name="CamMarker" type="Marker2D" parent="." groups=["Marker"]]
-unique_name_in_owner = true
-position = Vector2(512, 256)
 
 [node name="ArmLeft" type="Marker2D" parent="."]
 position = Vector2(-41, 12)

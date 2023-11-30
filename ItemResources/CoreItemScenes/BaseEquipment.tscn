@@ -1,24 +1,31 @@
-[gd_scene load_steps=7 format=3 uid="uid://dgi3axrdwp53i"]
+[gd_scene load_steps=8 format=3 uid="uid://cfkgfq3yopgbq"]
 
-[ext_resource type="PackedScene" uid="uid://dpe0gjlh5ydxw" path="res://ItemResources/CoreItemScenes/BaseItem.tscn" id="1_3akks"]
+[ext_resource type="PackedScene" uid="uid://unaoh2lply4h" path="res://ItemResources/CoreItemScenes/BaseItem.tscn" id="1_3akks"]
 [ext_resource type="Script" path="res://ItemResources/GDScripts/BaseEquipment.gd" id="2_cheqt"]
 [ext_resource type="Resource" uid="uid://c4u6jcm5b7jb6" path="res://ItemResources/CorePropertyResources/BaseEquipmentProperties.tres" id="3_fec4y"]
-[ext_resource type="Texture2D" uid="uid://c8yk6rpq7kpny" path="res://Art/Images/Character/NEVER REMOVE.png" id="5_nqmkw"]
+[ext_resource type="Texture2D" uid="uid://cn0j6m8x6njyo" path="res://Art/Images/icon.svg" id="4_j7sjq"]
 [ext_resource type="Script" path="res://ItemResources/GDScripts/EquipmentBarSprite.gd" id="6_pxmfm"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_extvn"]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_p845x"]
 resource_local_to_scene = true
-size = Vector2(45, 45)
+size = Vector2(40, 40)
 
-[node name="Equipment" instance=ExtResource("1_3akks")]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ne8fo"]
+resource_local_to_scene = true
+size = Vector2(40, 40)
+
+[node name="BaseEquipment" instance=ExtResource("1_3akks")]
 script = ExtResource("2_cheqt")
 equipment_properties = ExtResource("3_fec4y")
 
-[node name="ItemCharShape" parent="." index="0"]
-shape = SubResource("RectangleShape2D_extvn")
+[node name="ItemCharShape" parent="." index="1"]
+shape = SubResource("RectangleShape2D_p845x")
+
+[node name="ItemSlotsShape" parent="ItemUsedSlots" index="0"]
+shape = SubResource("RectangleShape2D_ne8fo")
 
 [node name="EquipmentBarSprite" type="Sprite2D" parent="." index="3"]
 unique_name_in_owner = true
 visible = false
-texture = ExtResource("5_nqmkw")
+texture = ExtResource("4_j7sjq")
 script = ExtResource("6_pxmfm")

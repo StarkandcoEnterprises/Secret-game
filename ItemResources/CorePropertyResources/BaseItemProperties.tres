@@ -5,4 +5,4 @@
 [resource]
 script = ExtResource("1_qb58f")
 price = 5
-slots_needed = 2
+slots_needed = 1
