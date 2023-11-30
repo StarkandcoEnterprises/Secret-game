@@ -20,11 +20,12 @@ item_properties = ExtResource("4_5f4gk")
 slot_shape = ExtResource("5_aob6j")
 
 [node name="ItemCharShape" parent="." index="0"]
-unique_name_in_owner = false
 shape = SubResource("RectangleShape2D_phdx3")
 
 [node name="WorldAndInventory" parent="." index="2"]
 texture = ExtResource("6_ro6g0")
 
 [node name="EquipmentBarSprite" parent="." index="3"]
+rotation = -1.5708
+scale = Vector2(0.5, 0.5)
 texture = ExtResource("6_ro6g0")

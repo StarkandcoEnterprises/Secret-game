@@ -20,9 +20,9 @@ func _ready():
 func use():
 	if equipment_properties.durability > 0:
 		equipment_properties.use()
-		if get_parent() == get_node("HandsRight"):
+		if get_parent().name == "HandsRight":
 			get_parent().get_parent().rotation_degrees += 90
-		elif get_parent() == get_node("HandsRight"):
+		elif get_parent().name ==  "HandsRight":
 			get_parent().get_parent().rotation_degrees -= 90
 
 func _input(event):
@@ -31,12 +31,11 @@ func _input(event):
 		if !event.pressed and are_all_slots_free():
 			#It would be nice if the equipment didn't have to care about this equipped bar stuff.
 			for slot in equipped_bar.get_children():
-				if slot.get_child_count() > 0:
-					if slot.get_child_count() == 0:
-						bar_sprite.visible = true
-						bar_sprite.reparent(slot)
-						slot.get_child(slot.get_child_count() - 1).position =  Vector2(32, 28)
-						return
+				if slot.get_child_count() == 0:
+					bar_sprite.visible = true
+					bar_sprite.reparent(slot)
+					slot.get_child(slot.get_child_count() - 1).position =  Vector2(32, 28)
+					return
 		elif event.pressed:
 			for slot in equipped_bar.get_children():
 				if slot.get_child_count() > 0:

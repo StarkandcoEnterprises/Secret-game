@@ -20,8 +20,8 @@ func equip_item(item: BaseItem):
 func unequip_held():
 	if %HandsRight.get_child_count() > 0:
 		%HandsRight.get_child(0).queue_free()
-	else:
-		%HandsRight.get_child(0).queue_free()
+	elif %HandsLeft.get_child_count() > 0:
+		%HandsLeft.get_child(0).queue_free()
 	equipped = null
 	
 func unequip_item(item: BaseItem):

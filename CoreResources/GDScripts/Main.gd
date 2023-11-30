@@ -78,9 +78,6 @@ func get_seed_on_tile(cell) -> Object:
 	return null
 
 
-
 ###hide it awayyyyyy
 func check_is_wet_tile(cell) -> bool:
 	return %TileMap.get_cell_atlas_coords(0,Vector2i(cell.x, cell.y)) == Vector2i(0,0) and %TileMap.get_cell_alternative_tile(0, Vector2i(cell.x, cell.y)) == 1
-
-
