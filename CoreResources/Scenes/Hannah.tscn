@@ -72,16 +72,16 @@ drag_top_margin = 0.4
 drag_right_margin = 0.4
 drag_bottom_margin = 0.4
 
-[node name="ArmLeft" type="Marker2D" parent="."]
-position = Vector2(-128, 9)
+[node name="LeftArm" type="Marker2D" parent="."]
+position = Vector2(-190, 22)
 
-[node name="HandsLeft" type="Marker2D" parent="ArmLeft"]
+[node name="LeftHand" type="Marker2D" parent="LeftArm"]
 unique_name_in_owner = true
-position = Vector2(33, -37)
+position = Vector2(-11, -7)
 
-[node name="ArmRight" type="Marker2D" parent="."]
-position = Vector2(76, 30)
+[node name="RightArm" type="Marker2D" parent="."]
+position = Vector2(178, 8)
 
-[node name="HandsRight" type="Marker2D" parent="ArmRight"]
+[node name="RightHand" type="Marker2D" parent="RightArm"]
 unique_name_in_owner = true
 position = Vector2(14, 11)

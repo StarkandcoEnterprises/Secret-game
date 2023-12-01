@@ -11,13 +11,18 @@ func add_item(item: BaseItem):
 	item.added_to_inventory()
 
 func _unhandled_input(event):
-	if !event is InputEventKey: return
 	
-	if event.is_action_pressed("inventory"):
+	if !event is InputEventKey: return
+	if !event.pressed: return
+	
+	if event.is_action_pressed("unequip"):
+		select_on_bar(0)
+	elif event.is_action_pressed("inventory"):
 		
 		if %EquippedBar.visible:
 			%EquippedBar.hide()
 			%InvSprite.show()
+			mouse_filter = MOUSE_FILTER_PASS
 			if hannah:
 				hannah.set_physics_process(false)
 				hannah.set_process_input(false)
@@ -26,50 +31,44 @@ func _unhandled_input(event):
 		else:
 			%EquippedBar.show()
 			%InvSprite.hide()
+			mouse_filter = MOUSE_FILTER_STOP
 			
 			if hannah:
 				hannah.set_physics_process(true)
 				hannah.set_process_input(true)
-			
-##############################################################################################
-##############################################################################################
-#########################Update when adding something please Conor############################
-##############################################################################################
-##############################################################################################
-	if event.as_text() in ["1","2","3","4","5","6","7","8","9"]:
+		
+	elif event.as_text() in ["1","2","3","4","5","6","7","8","9","0"]:
 		select_on_bar(int(event.as_text()))
 
 
 ##This is not working
 func select_on_bar(new_slot: int):
-	
-	if  current_slot == new_slot: 
-		if hannah: 
+	#If we're passing 0, the same slot, or an empty slot - just unequip things.
+	if new_slot == 0 or new_slot == current_slot or %EquippedContainer.get_node(str("Equipped", new_slot)).get_child_count() == 0:
+		if hannah:
 			hannah.unequip_held()
-			return
-	if %EquippedContainer.get_node(str("Equipped", new_slot)).get_child_count() == 0: return
+			
+		#Clear our old ref rect
+		if current_slot != 0:
+			%EquippedContainer.get_node(str("Equipped", current_slot)).get_child(1).queue_free()
+			current_slot = 0
+		return
 	
-	#Clear our old equipped item if needed
-	if current_slot != 0:
-		
-		%EquippedContainer.get_node(str("Equipped", current_slot)).get_child(1).queue_free()
-		
-		if hannah: hannah.unequip_held()
-		
-	current_slot = new_slot
+	#Unequip current if the passed slot is empty
 	
 	#Highlight the selected box
 	var reference_rect = ReferenceRect.new() 
 	reference_rect.editor_only = false
 	reference_rect.size = Vector2(64, 55)
 	reference_rect.position = Vector2(5,0)
-	%EquippedContainer.get_node(str("Equipped", current_slot)).add_child(reference_rect)
+	%EquippedContainer.get_node(str("Equipped", new_slot)).add_child(reference_rect)
+	
+	current_slot = new_slot
 	
 	#Equip
-	if hannah: hannah.equip_item(%EquippedContainer.get_node(str("Equipped", current_slot)).get_child(0).parent.duplicate())
-
-func reset_slot(slot_to_reset):
-	%EquippedContainer.get_node(str("Equipped", slot_to_reset)).get_child(0).queue_free()
+	if hannah: 
+		hannah.equip_item(%EquippedContainer.get_node(str("Equipped", new_slot)).get_child(0).parent.duplicate())
+		hannah.equipped.interact_state = hannah.equipped.Interact_State.IN_WORLD 
 
 #func delete_item(pos):
 #	get_child(grid_pos).get_child(pos).get_child(0).queue_free()

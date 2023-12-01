@@ -10,13 +10,14 @@ enum Interact_State {
 	IN_INVENTORY,
 	SELECTABLE,
 	SELECTED,
-	SLOTTED,
-	SLOTTED_SELECTABLE
+	SLOTTED_SELECTABLE,
+	SLOTTED
 }
 
 var interact_state = Interact_State.IN_WORLD
 
 const SPEED = 300
+const SINGLE_BLOCK_SIZE = 40
 
 var center = Vector2.ZERO
 
@@ -58,16 +59,19 @@ func added_to_inventory():
 	get_child(2).scale = Vector2(1, 1)
 
 func _on_mouse_entered():
+	if interact_state == Interact_State.IN_WORLD: return
 	if interact_state == Interact_State.SLOTTED: interact_state = Interact_State.SLOTTED_SELECTABLE
 	elif interact_state != Interact_State.SELECTED: interact_state = Interact_State.SELECTABLE
 
 func _on_mouse_exited():
+	if interact_state == Interact_State.IN_WORLD: return
 	if interact_state == Interact_State.SLOTTED_SELECTABLE: interact_state = Interact_State.SLOTTED
 	elif interact_state != Interact_State.SELECTED: interact_state = Interact_State.IN_INVENTORY
 
 
 #We are in an area... is it a grid block? Is it full?
 func _on_slots_area_entered(area):
+	if interact_state == Interact_State.IN_WORLD: return
 	if !area.is_in_group("GridBlock"): return
 	if area.full: return
 	
@@ -77,6 +81,7 @@ func _on_slots_area_entered(area):
 
 #We are leaving an area. If we were slotted or considering being here, we don't want to be anymore
 func _on_slots_area_exited(area):
+	if interact_state == Interact_State.IN_WORLD: return
 	if !area.is_in_group("GridBlock"): return
 	
 	#If it's not full, then we were considering entering it
@@ -94,7 +99,9 @@ func _on_slots_area_exited(area):
 
 
 
-func _unhandled_input(event):	
+func _unhandled_input(event):
+	#Not necessary when in world
+	if interact_state == Interact_State.IN_WORLD: return
 	#We only care about mouse inputs
 	if !event is InputEventMouseButton: return 
 	
@@ -118,6 +125,7 @@ func _unhandled_input(event):
 		rotation_degrees += 90
 
 func slot():
+	if interact_state == Interact_State.IN_WORLD: return
 	#Give all the areas a reference to this object and mark them as full
 	for area in overlapping_areas:
 		area.accept_item(self)
@@ -130,6 +138,7 @@ func slot():
 
 
 func start_drag():
+	if interact_state == Interact_State.IN_WORLD: return
 	#We are now dragging it, it is selected, and it's a little bigger!
 	interact_state = Interact_State.SELECTED
 	
@@ -143,42 +152,47 @@ func start_drag():
 
 
 func find_slotted_center():
+	if interact_state == Interact_State.IN_WORLD: return
 	center = Vector2.ZERO
 	#A whole bunch of nonsense to try and get the left most slot of all areas entered that needs refactoring
 	if !are_all_slots_free(): return
 	
 	
 	#It is also now split between simple rectangles with size and collisionpolygons...
-	var tempX = 0
-	var tempY = 0
-	var tempWidth
-	var tempHeight
+	var temp_x = 0
+	var temp_y = 0
+	var temp_width
+	var temp_height
 	
 	if %ItemUsedSlots.get_child(0) is CollisionPolygon2D:
-		tempWidth = %ItemUsedSlots.get_child(0).width
-		tempHeight = %ItemUsedSlots.get_child(0).height
+		
+		temp_width = %ItemUsedSlots.get_child(0).width
+		temp_height = %ItemUsedSlots.get_child(0).height
+		
 	else:
-		tempWidth = %ItemUsedSlots.get_child(0).shape.size.x
-		tempHeight = %ItemUsedSlots.get_child(0).shape.size.y
+		
+		temp_width = %ItemUsedSlots.get_child(0).shape.size.x
+		temp_height = %ItemUsedSlots.get_child(0).shape.size.y
+	
+	if int(rotation_degrees) % 180 != 0:
+		var temp_store = temp_width
+		temp_width = temp_height
+		temp_height = temp_store
+		
 		
 	for a in overlapping_areas:
 		
-		#If we're not yet holding a value (we're over no slots) or our position is more to the left, store that x
-		if center == Vector2.ZERO or a.global_position.x +  (tempWidth / 2) <= center.x:
-			tempX = a.global_position.x +  (tempWidth / 2) + (3 * tempWidth / 40)
+		#If we're not yet holding a x value (we were over no slots) or our position is more to the left, store our x
+		if center == Vector2.ZERO or a.global_position.x +  (temp_width / 2) <= center.x:
+			temp_x = a.global_position.x +  (temp_width / 2) + (3 * temp_width / SINGLE_BLOCK_SIZE)
 		
-		#If we're not yet holding a y value (we were in no slots) or our position is upwards of the last, store that y
-			if center.y == 0 or a.global_position.y + (tempHeight / 2) <= center.y:
-				tempY = a.global_position.y + (tempHeight / 2) + (3 * tempHeight / 40)
+		#If we're not yet holding a y value (we were in over slots) or our position is more upwards, store our y
+			if center.y == 0 or a.global_position.y + (temp_height / 2) <= center.y:
+				temp_y = a.global_position.y + (temp_height / 2) + (3 * temp_height / SINGLE_BLOCK_SIZE)
 		
-		#If we weren't holding 0 and we're not more left, we might need to more upwards
+		#If we weren't holding 0 and we're not more left, we might need to be more upwards
 		elif a.global_position.y <= center.y:
-			tempY = a.global_position.y + (tempHeight / 2) + (3 * tempHeight / 40)
+			temp_y = a.global_position.y + (temp_height / 2) + (3 * temp_height / SINGLE_BLOCK_SIZE)
 		
-		#If we're rotated once or thrice, we need to use our width to invert our center position?
-		if int(rotation_degrees) % 180 == 0.0:
-			center.x = tempX
-			center.y = tempY
-		else:
-			center.x = tempY
-			center.y = tempX
+		center.x = temp_x
+		center.y = temp_y

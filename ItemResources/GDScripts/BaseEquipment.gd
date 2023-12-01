@@ -32,6 +32,7 @@ func use():
 			tween.play()
 
 func _unhandled_input(event):
+	if interact_state == Interact_State.IN_WORLD: return
 	super(event)
 	
 	if !event is InputEventMouseButton: return
@@ -50,8 +51,10 @@ func _unhandled_input(event):
 			
 			#Tell the inventory? That the current slot is 0 lol
 			slot.get_parent().get_parent().get_parent().get_parent().current_slot = 0
-			hannah.unequip_item(self)
-			#No need to unequip other things
+			if hannah: hannah.unequip_held()
+			#Need to also possibly remove the reference rect....
+			if slot.get_child_count() > 0:
+				slot.get_child(0).queue_free()
 			return
 	
 	elif are_all_slots_free():
