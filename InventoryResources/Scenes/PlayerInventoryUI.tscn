@@ -1,11 +1,10 @@
-[gd_scene load_steps=11 format=3 uid="uid://cp1lycwjvfvbu"]
+[gd_scene load_steps=10 format=3 uid="uid://cp1lycwjvfvbu"]
 
 [ext_resource type="Script" path="res://InventoryResources/GDScripts/PlayerInventoryUI.gd" id="1_40yka"]
 [ext_resource type="Texture2D" uid="uid://54r6ntyde5ku" path="res://Art/Images/Inventory/InventoryGrid.png" id="3_805em"]
 [ext_resource type="PackedScene" uid="uid://dxwcslf2sife4" path="res://InventoryResources/Scenes/GridBlock.tscn" id="3_lho2p"]
 [ext_resource type="Texture2D" uid="uid://bgk71dfa0v4q" path="res://Art/Images/Inventory/ItemBar.png" id="4_25wh8"]
 [ext_resource type="Script" path="res://InventoryResources/Scenes/InvCam.gd" id="5_hrt7i"]
-[ext_resource type="PackedScene" uid="uid://cfkgfq3yopgbq" path="res://ItemResources/CoreItemScenes/BaseEquipment.tscn" id="5_o487i"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2c26w"]
 size = Vector2(56, 655)
@@ -311,8 +310,6 @@ layout_mode = 2
 [node name="ItemCollection" type="Node2D" parent="InvSprite" groups=["ItemColl"]]
 unique_name_in_owner = true
 position = Vector2(900, 330)
-
-[node name="BaseEquipment" parent="InvSprite/ItemCollection" instance=ExtResource("5_o487i")]
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="InvSprite"]
 offset_left = 835.0

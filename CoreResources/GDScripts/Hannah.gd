@@ -10,11 +10,13 @@ var speed = 300.0
 var equipped: BaseEquipment
 var interacting = false
 
+var direction
+
 func equip_item(item: BaseItem):
 	
 	var new_version = item.duplicate()
-	
 	%RightHand.add_child(new_version)
+	if direction == Vector2.LEFT: face_direction()
 	
 	new_version.position = Vector2.ZERO
 	
@@ -28,16 +30,21 @@ func unequip_held():
 	
 	equipped = null
 
-func face_direction(direction):
+func face_direction():
 	if direction == Vector2.ZERO: return
 	
 	if direction == Vector2.LEFT:
 		%AnimatedSprite2D.flip_h = true
-		if %RightHand.get_child_count() > 0: %RightHand.get_child(0).reparent(%LeftHand)
-		
+		if %RightHand.get_child_count() > 0: 
+			%RightHand.get_child(0).reparent(%LeftHand)
+			%LeftHand.get_child(0).position = Vector2.ZERO
+			%LeftHand.get_child(0).get_child(0).flip_h = true
 	else:
 		%AnimatedSprite2D.flip_h = false
-		if %LeftHand.get_child_count() > 0: %LeftHand.get_child(0).reparent(%RightHand)
+		if %LeftHand.get_child_count() > 0: 
+			%LeftHand.get_child(0).reparent(%RightHand)
+			%RightHand.get_child(0).position = Vector2.ZERO
+			%RightHand.get_child(0).get_child(0).flip_h = false
 	
 	%RayCast2D.rotation_degrees = 90*[Vector2.DOWN,Vector2.LEFT,Vector2.UP,Vector2.RIGHT].find(direction)
 
@@ -51,8 +58,10 @@ func _physics_process(delta):
 	
 	#Check for movement
 	velocity = Vector2.ZERO
-	velocity = Input.get_vector("left","right","up","down") * speed
-	face_direction(Input.get_vector("left","right","up","down"))
+	direction = Input.get_vector("left","right","up","down")
+	
+	velocity = direction * speed
+	face_direction()
 	
 	#Move and check for collision 
 	var collision = move_and_collide(velocity * delta)
@@ -76,3 +85,9 @@ func _unhandled_input(event):
 		
 		interacting = true
 		%RayCast2D.get_collider().interact()
+	if event.is_action_pressed("inventory") and is_physics_processing():
+		set_physics_process(false)
+		set_process_input(false)
+	elif event.is_action_pressed("inventory"):
+		set_physics_process(true)
+		set_process_input(true)

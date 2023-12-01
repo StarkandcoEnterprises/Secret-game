@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://cfkgfq3yopgbq"]
+[gd_scene load_steps=8 format=3 uid="uid://cfkgfq3yopgbq"]
 
 [ext_resource type="PackedScene" uid="uid://unaoh2lply4h" path="res://ItemResources/CoreItemScenes/BaseItem.tscn" id="1_3akks"]
 [ext_resource type="Script" path="res://ItemResources/GDScripts/BaseEquipment.gd" id="2_cheqt"]
@@ -14,12 +14,6 @@ size = Vector2(40, 40)
 resource_local_to_scene = true
 size = Vector2(40, 40)
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_5wnpl"]
-bg_color = Color(1, 0.270588, 0.596078, 1)
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_gooha"]
-bg_color = Color(0.670588, 0.466667, 1, 1)
-
 [node name="BaseEquipment" instance=ExtResource("1_3akks")]
 script = ExtResource("2_cheqt")
 equipment_properties = ExtResource("3_fec4y")
@@ -32,22 +26,20 @@ shape = SubResource("RectangleShape2D_ne8fo")
 
 [node name="EquipmentBarSprite" type="Sprite2D" parent="." index="3"]
 unique_name_in_owner = true
-visible = false
 texture = ExtResource("4_j7sjq")
 script = ExtResource("6_pxmfm")
 
 [node name="ProgressBar" type="ProgressBar" parent="EquipmentBarSprite" index="0"]
+unique_name_in_owner = true
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -101.5
-offset_top = -24.0
-offset_right = -26.5
-offset_bottom = -14.0
+offset_left = -113.0
+offset_top = -40.0
+offset_right = -13.0
+offset_bottom = -28.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/background = SubResource("StyleBoxFlat_5wnpl")
-theme_override_styles/fill = SubResource("StyleBoxFlat_gooha")
 show_percentage = false

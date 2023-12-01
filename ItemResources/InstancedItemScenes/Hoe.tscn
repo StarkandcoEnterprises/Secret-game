@@ -1,30 +1,19 @@
-[gd_scene load_steps=8 format=3 uid="uid://csq5revg6j7nt"]
+[gd_scene load_steps=7 format=3 uid="uid://csq5revg6j7nt"]
 
 [ext_resource type="PackedScene" uid="uid://cfkgfq3yopgbq" path="res://ItemResources/CoreItemScenes/BaseEquipment.tscn" id="1_y5kod"]
-[ext_resource type="Texture2D" uid="uid://cm6xs5htqrshd" path="res://Art/Images/Items/Tools/hoe.png" id="2_a0kcb"]
-[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/EquipmentPropertiesResource.gd" id="2_xjbhg"]
-[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/ItemPropertiesResource.gd" id="3_yuxvq"]
+[ext_resource type="Script" path="res://ItemResources/GDScripts/Hoe.gd" id="2_khl42"]
+[ext_resource type="Resource" uid="uid://7hh4tvaoxbq6" path="res://ItemResources/InstancedItemResources/HoeEquipment.tres" id="2_lndfa"]
+[ext_resource type="Resource" uid="uid://dwbmwdotlnmn8" path="res://ItemResources/InstancedItemResources/HoeItem.tres" id="3_f0pm3"]
 [ext_resource type="Shape2D" uid="uid://bnxj8owogslgt" path="res://ItemResources/SlotUseScenes/DoubleSlot.tres" id="4_6giqe"]
-
-[sub_resource type="Resource" id="Resource_r1en5"]
-script = ExtResource("2_xjbhg")
-durability = 50
-max_durability = 50
-
-[sub_resource type="Resource" id="Resource_m316a"]
-script = ExtResource("3_yuxvq")
-price = 100
-slots_needed = 2
+[ext_resource type="Texture2D" uid="uid://bmd3innxkuqvi" path="res://Art/Images/Items/Tools/Hoe2.png" id="4_jdlor"]
 
 [node name="Hoe" instance=ExtResource("1_y5kod")]
-equipment_properties = SubResource("Resource_r1en5")
-item_properties = SubResource("Resource_m316a")
+script = ExtResource("2_khl42")
+equipment_properties = ExtResource("2_lndfa")
+item_properties = ExtResource("3_f0pm3")
 
 [node name="ItemSprite" parent="." index="0"]
-position = Vector2(3, 5)
-rotation = 1.5708
-scale = Vector2(2, 2)
-texture = ExtResource("2_a0kcb")
+texture = ExtResource("4_jdlor")
 
 [node name="ItemCharShape" parent="." index="1"]
 shape = ExtResource("4_6giqe")
@@ -33,5 +22,5 @@ shape = ExtResource("4_6giqe")
 shape = ExtResource("4_6giqe")
 
 [node name="EquipmentBarSprite" parent="." index="3"]
-rotation = 1.5708
-texture = ExtResource("2_a0kcb")
+scale = Vector2(0.75, 0.75)
+texture = ExtResource("4_jdlor")
