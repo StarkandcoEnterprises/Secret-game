@@ -82,13 +82,14 @@ func _unhandled_input(event):
 			
 			equipped_slot = equip_slot
 			
+			durability_bar.visible = true
 			bar_sprite.visible = true
+			
+			durability_bar.reparent(bar_sprite)
 			bar_sprite.reparent(equip_slot)
+			
 			bar_sprite.rotation_degrees = 0
 			
-			durability_bar.visible = true
-			durability_bar.reparent(bar_sprite)
-			durability_bar.rotation_degrees = 0
 			
 			equip_slot.get_child(equip_slot.get_child_count() - 1).position =  Vector2(32, 28)
 			return
