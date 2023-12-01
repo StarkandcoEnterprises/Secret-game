@@ -100,8 +100,10 @@ func _on_slots_area_exited(area):
 
 
 func _unhandled_input(event):
+	
 	#Not necessary when in world
 	if interact_state == Interact_State.IN_WORLD: return
+	
 	#We only care about mouse inputs
 	if !event is InputEventMouseButton: return 
 	

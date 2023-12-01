@@ -48,6 +48,10 @@ func select_on_bar(new_slot: int):
 			current_slot = 0
 		return
 	
+	if current_slot != 0: 
+		%EquippedContainer.get_node(str("Equipped", current_slot)).get_child(1).queue_free()
+		hannah.unequip_held()
+	
 	#Unequip current if the passed slot is empty
 	
 	#Highlight the selected box
@@ -62,5 +66,6 @@ func select_on_bar(new_slot: int):
 	#Equip
 	if hannah: 
 		hannah.equip_item(%EquippedContainer.get_node(str("Equipped", new_slot)).get_child(0).parent.duplicate())
+		hannah.equipped.rotation_degrees = 0
 		hannah.equipped.interact_state = hannah.equipped.Interact_State.IN_WORLD 
 

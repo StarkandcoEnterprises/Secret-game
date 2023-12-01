@@ -13,6 +13,7 @@ equipment_properties = ExtResource("2_lndfa")
 item_properties = ExtResource("3_f0pm3")
 
 [node name="ItemSprite" parent="." index="0"]
+position = Vector2(0, 7)
 texture = ExtResource("4_jdlor")
 
 [node name="ItemCharShape" parent="." index="1"]

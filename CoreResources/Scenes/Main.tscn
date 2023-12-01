@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ho5ewtbo6mdn"]
+[gd_scene load_steps=14 format=3 uid="uid://ho5ewtbo6mdn"]
 
 [ext_resource type="TileSet" uid="uid://dfphrrdav6xyo" path="res://CoreResources/OtherResources/MainTileset.tres" id="1_mwilu"]
 [ext_resource type="Script" path="res://CoreResources/GDScripts/Main.gd" id="1_u1m27"]
@@ -6,6 +6,7 @@
 [ext_resource type="Script" path="res://CoreResources/GDScripts/WorldObject.gd" id="5_4wxi4"]
 [ext_resource type="PackedScene" uid="uid://cx85qdydat8pe" path="res://ItemResources/InstancedItemScenes/Stone.tscn" id="6_rthgg"]
 [ext_resource type="PackedScene" uid="uid://csq5revg6j7nt" path="res://ItemResources/InstancedItemScenes/Hoe.tscn" id="7_1bdow"]
+[ext_resource type="PackedScene" uid="uid://vrklgttf0tdi" path="res://ItemResources/InstancedItemScenes/WateringCan.tscn" id="7_77n01"]
 [ext_resource type="Texture2D" uid="uid://b8sxywscmeyf4" path="res://Art/Images/BuildingScenes/Bed.png" id="8_qbdht"]
 [ext_resource type="PackedScene" uid="uid://cpq0waabh274t" path="res://CoreResources/Scenes/UI.tscn" id="11_jcwwp"]
 [ext_resource type="Texture2D" uid="uid://bopbscsbdwhch" path="res://Art/Images/BuildingScenes/Crate.png" id="13_haq3d"]
@@ -72,6 +73,8 @@ shape = SubResource("RectangleShape2D_lwi1o")
 [node name="Stone" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("6_rthgg")]
 
 [node name="Hoe" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("7_1bdow")]
+
+[node name="WateringCan" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("7_77n01")]
 
 [node name="Hannah" parent="SubViewportContainer/SubViewport/World" instance=ExtResource("2_xi62l")]
 unique_name_in_owner = true

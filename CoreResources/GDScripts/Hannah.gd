@@ -38,12 +38,14 @@ func face_direction():
 		if %RightHand.get_child_count() > 0: 
 			%RightHand.get_child(0).reparent(%LeftHand)
 			%LeftHand.get_child(0).position = Vector2.ZERO
+			%LeftHand.get_child(0).rotation = 0
 			%LeftHand.get_child(0).get_child(0).flip_h = true
 	else:
 		%AnimatedSprite2D.flip_h = false
 		if %LeftHand.get_child_count() > 0: 
 			%LeftHand.get_child(0).reparent(%RightHand)
 			%RightHand.get_child(0).position = Vector2.ZERO
+			%RightHand.get_child(0).rotation = 0
 			%RightHand.get_child(0).get_child(0).flip_h = false
 	
 	%RayCast2D.rotation_degrees = 90*[Vector2.DOWN,Vector2.LEFT,Vector2.UP,Vector2.RIGHT].find(direction)

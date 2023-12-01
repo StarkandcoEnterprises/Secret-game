@@ -6,6 +6,8 @@ class_name BaseEquipment
 @onready var hannah: Hannah = get_tree().get_first_node_in_group("Hannah")
 
 var equipped_bar
+var equipped_slot
+
 var bar_sprite
 var in_use = false
 
@@ -30,40 +32,49 @@ func use():
 	tween.tween_property(self, "in_use", false, 0)
 	tween.play()
 
+	#IN_WORLD,
+	#IN_INVENTORY,
+	#SELECTABLE,
+	#SELECTED,
+	#SLOTTED_SELECTABLE,
+	#SLOTTED
+
 func _unhandled_input(event):
-	if interact_state == Interact_State.IN_WORLD: return
-	super(event)
 	
 	if !event is InputEventMouseButton: return
+	
+	super(event)
+	if interact_state != Interact_State.SLOTTED_SELECTABLE and interact_state != Interact_State.SELECTED: return
+	
+	
 	if event.button_index != MOUSE_BUTTON_LEFT: return
 	
 	if event.pressed:
 		#Try and unslot ourselves, nasty business
-		for equip_slot in equipped_bar.get_children():
-			
-			if equip_slot.get_child_count() == 0: continue
-			if equip_slot.get_child(0) != bar_sprite: continue
-			
-			#Get our bar sprite back
-			bar_sprite.reparent(self)
-			bar_sprite.visible = false
-			
-			#Tell the inventory? That the current slot is 0 lol
-			equip_slot.get_parent().get_parent().get_parent().get_parent().current_slot = 0
-			if hannah: hannah.unequip_held()
-			#Need to also possiblyf remove the reference rect....
-			if equip_slot.get_child_count() > 0:
-				equip_slot.get_child(0).queue_free()
-			return
+		#Get our bar sprite back
+		if !equipped_slot: return
+		bar_sprite.reparent(self)
+		bar_sprite.visible = false
+		#Tell the inventory? That the current slot is 0 lol
+		equipped_slot.get_parent().get_parent().get_parent().get_parent().current_slot = 0
 	
-	elif are_all_slots_free():
+		#Need to also possibly remove the reference rect....
+		if equipped_slot.get_child_count() > 0:
+			equipped_slot.get_child(0).queue_free()
+			
+		equipped_slot = null
+		
+		if hannah: hannah.unequip_held()
+
+	else:
 		#Slot ourselves
 		#It would be nice if the equipment didn't have to care about this equipped bar stuff.
 		for equip_slot in equipped_bar.get_children():
 			
 			if equip_slot.get_child_count() != 0: continue
-			
+			equipped_slot = equip_slot
 			bar_sprite.visible = true
 			bar_sprite.reparent(equip_slot)
+			bar_sprite.rotation_degrees = 0
 			equip_slot.get_child(equip_slot.get_child_count() - 1).position =  Vector2(32, 28)
 			return
