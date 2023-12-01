@@ -11,6 +11,8 @@ func add_item(item: BaseItem):
 	item.added_to_inventory()
 
 func _unhandled_input(event):
+	if !event is InputEventKey: return
+	
 	if event.is_action_pressed("inventory"):
 		
 		if %EquippedBar.visible:
@@ -24,6 +26,7 @@ func _unhandled_input(event):
 		else:
 			%EquippedBar.show()
 			%InvSprite.hide()
+			
 			if hannah:
 				hannah.set_physics_process(true)
 				hannah.set_process_input(true)
@@ -33,41 +36,37 @@ func _unhandled_input(event):
 #########################Update when adding something please Conor############################
 ##############################################################################################
 ##############################################################################################
+	if event.as_text() in ["1","2","3","4","5","6","7","8","9"]:
+		select_on_bar(int(event.as_text()))
 
-	if event is InputEventKey and event.is_action_pressed("slot1"):
-		select_on_bar(1)
-	elif event is InputEventKey and event.is_action_pressed("slot2"):
-		select_on_bar(2)
-	elif event is InputEventKey and event.is_action_pressed("slot3"):
-		select_on_bar(3)
-	elif event is InputEventKey and event.is_action_pressed("slot4"):
-		select_on_bar(4)
-	elif event is InputEventKey and event.is_action_pressed("slot5"):
-		select_on_bar(5)
-	elif event is InputEventKey and event.is_action_pressed("slot6"):
-		select_on_bar(6)
-	elif event is InputEventKey and event.is_action_pressed("slot7"):
-		select_on_bar(7)
-	elif event is InputEventKey and event.is_action_pressed("slot8"):
-		select_on_bar(8)
-	elif event is InputEventKey and event.is_action_pressed("slot9"):
-		select_on_bar(9)
 
-func select_on_bar(new_slot):
+##This is not working
+func select_on_bar(new_slot: int):
+	
+	if  current_slot == new_slot: 
+		if hannah: 
+			hannah.unequip_held()
+			return
 	if %EquippedContainer.get_node(str("Equipped", new_slot)).get_child_count() == 0: return
-	if current_slot != 0 and current_slot != new_slot:
+	
+	#Clear our old equipped item if needed
+	if current_slot != 0:
+		
 		%EquippedContainer.get_node(str("Equipped", current_slot)).get_child(1).queue_free()
 		
 		if hannah: hannah.unequip_held()
-	if new_slot != 0 and current_slot != new_slot:
-		current_slot = new_slot
-		var reference_rect = ReferenceRect.new() 
-		reference_rect.editor_only = false
-		reference_rect.size = Vector2(64, 55)
-		reference_rect.position = Vector2(5,0)
-		%EquippedContainer.get_node(str("Equipped", new_slot)).add_child(reference_rect)
 		
-		if hannah: hannah.equip_item(%EquippedContainer.get_node(str("Equipped", current_slot)).get_child(0).parent.duplicate())
+	current_slot = new_slot
+	
+	#Highlight the selected box
+	var reference_rect = ReferenceRect.new() 
+	reference_rect.editor_only = false
+	reference_rect.size = Vector2(64, 55)
+	reference_rect.position = Vector2(5,0)
+	%EquippedContainer.get_node(str("Equipped", current_slot)).add_child(reference_rect)
+	
+	#Equip
+	if hannah: hannah.equip_item(%EquippedContainer.get_node(str("Equipped", current_slot)).get_child(0).parent.duplicate())
 
 func reset_slot(slot_to_reset):
 	%EquippedContainer.get_node(str("Equipped", slot_to_reset)).get_child(0).queue_free()

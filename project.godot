@@ -15,10 +15,6 @@ run/main_scene="res://CoreResources/Scenes/Main.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://Art/Images/icon.svg"
 
-[autoload]
-
-global="*res://CoreResources/GDScripts/global.gd"
-
 [display]
 
 window/subwindows/embed_subwindows=false
