@@ -127,7 +127,7 @@ func _unhandled_input(event):
 		rotation_degrees += 90
 
 func slot():
-	if interact_state == Interact_State.IN_WORLD: return
+	
 	#Give all the areas a reference to this object and mark them as full
 	for area in overlapping_areas:
 		area.accept_item(self)
@@ -140,7 +140,7 @@ func slot():
 
 
 func start_drag():
-	if interact_state == Interact_State.IN_WORLD: return
+	
 	#We are now dragging it, it is selected, and it's a little bigger!
 	interact_state = Interact_State.SELECTED
 	
@@ -154,7 +154,7 @@ func start_drag():
 
 
 func find_slotted_center():
-	if interact_state == Interact_State.IN_WORLD: return
+	
 	center = Vector2.ZERO
 	#A whole bunch of nonsense to try and get the left most slot of all areas entered that needs refactoring
 	if !are_all_slots_free(): return

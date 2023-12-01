@@ -30,9 +30,3 @@ shape = SubResource("RectangleShape2D_esb3n")
 
 [node name="EquipmentBarSprite" parent="." index="3"]
 texture = ExtResource("2_piv82")
-
-[node name="ProgressBar" parent="EquipmentBarSprite" index="0"]
-offset_left = -62.5
-offset_top = 1.0
-offset_right = 12.5
-offset_bottom = 11.0

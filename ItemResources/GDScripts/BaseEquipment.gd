@@ -7,8 +7,10 @@ class_name BaseEquipment
 
 var equipped_bar
 var equipped_slot
-
 var bar_sprite
+var durability_bar
+
+
 var in_use = false
 
 #This stuff could happen when added to inventory but I added it here so it's definitely already available
@@ -16,7 +18,7 @@ func _ready():
 	await get_tree().process_frame
 	equipped_bar = get_tree().get_first_node_in_group("EquippedBar")
 	bar_sprite = %EquipmentBarSprite
-	
+	durability_bar = %DurabilityBar
 
 func use():
 	var debug = equipment_properties.durability
@@ -53,8 +55,13 @@ func _unhandled_input(event):
 		#Try and unslot ourselves, nasty business
 		#Get our bar sprite back
 		if !equipped_slot: return
+		
 		bar_sprite.reparent(self)
 		bar_sprite.visible = false
+		
+		durability_bar.reparent(self)
+		durability_bar.visible = false
+		
 		#Tell the inventory? That the current slot is 0 lol
 		equipped_slot.get_parent().get_parent().get_parent().get_parent().current_slot = 0
 	
@@ -72,9 +79,16 @@ func _unhandled_input(event):
 		for equip_slot in equipped_bar.get_children():
 			
 			if equip_slot.get_child_count() != 0: continue
+			
 			equipped_slot = equip_slot
+			
 			bar_sprite.visible = true
 			bar_sprite.reparent(equip_slot)
 			bar_sprite.rotation_degrees = 0
+			
+			durability_bar.visible = true
+			durability_bar.reparent(bar_sprite)
+			durability_bar.rotation_degrees = 0
+			
 			equip_slot.get_child(equip_slot.get_child_count() - 1).position =  Vector2(32, 28)
 			return
