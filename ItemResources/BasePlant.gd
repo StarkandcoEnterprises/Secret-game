@@ -3,8 +3,15 @@ extends WorldObject
 class_name BasePlant 
 
 var planted_days = 0
+
+const MIN_SPROUT = 8
+const MAX_SPROUT = 21
+const FIRST_GROWTH = 10
+const SECOND_GROWTH = 25
+const THIRD_GROWTH = 65
 const MAX_PLANTED_DAYS = 125
-var sprouted = 0
+
+var try_sprout = randi_range(8, 21)
 
 enum Life_Cycle {
 	PLANTED,
@@ -38,13 +45,13 @@ func interact():
 
 func grow():
 	planted_days += 1
-	var try_sprout = randi_range(8, 21)
 	match pos_in_cycle:
 		Life_Cycle.PLANTED:
-			if planted_days < try_sprout: return
-			%SeedSprite.visible = false
-			%SproutSprite.visible = true
-			pos_in_cycle = Life_Cycle.SPROUTED
+			if planted_days < try_sprout: try_sprout = randi_range(8, 21)
+			else:
+				%SeedSprite.visible = false
+				%SproutSprite.visible = true
+				pos_in_cycle = Life_Cycle.SPROUTED
 		Life_Cycle.SPROUTED:
 			if planted_days < try_sprout + 10: return
 			%SproutSprite.visible = false

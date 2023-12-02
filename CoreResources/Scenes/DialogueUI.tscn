@@ -1,4 +1,6 @@
-[gd_scene load_steps=3 format=3 uid="uid://c6mqdm5lea244"]
+[gd_scene load_steps=4 format=3 uid="uid://c6mqdm5lea244"]
+
+[ext_resource type="Script" path="res://CoreResources/Scenes/DialogueUI.gd" id="1_m61a3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ra61"]
 bg_color = Color(0.101961, 0.0392157, 0.00784314, 1)
@@ -12,7 +14,7 @@ corner_radius_top_right = 20
 [sub_resource type="Theme" id="Theme_sl3s6"]
 Panel/styles/panel = SubResource("StyleBoxFlat_8ra61")
 
-[node name="DialogueUI" type="Control"]
+[node name="DialogueUI" type="Control" groups=["DialogueUI"]]
 visible = false
 layout_mode = 3
 anchors_preset = 7
@@ -25,6 +27,7 @@ offset_top = -150.0
 offset_right = 576.0
 grow_horizontal = 2
 grow_vertical = 0
+script = ExtResource("1_m61a3")
 
 [node name="DialoguePanel" type="Panel" parent="."]
 layout_mode = 1
@@ -36,6 +39,7 @@ grow_vertical = 2
 theme = SubResource("Theme_sl3s6")
 
 [node name="Label" type="Label" parent="DialoguePanel"]
+unique_name_in_owner = true
 layout_mode = 0
 offset_left = 80.0
 offset_top = 30.0
@@ -46,12 +50,14 @@ theme_override_font_sizes/font_size = 20
 text = "Some text goes here!"
 
 [node name="Options" type="Control" parent="DialoguePanel"]
+unique_name_in_owner = true
 visible = false
 anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
 [node name="Yes" type="Button" parent="DialoguePanel/Options"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -67,6 +73,7 @@ grow_vertical = 0
 text = "Yes"
 
 [node name="No" type="Button" parent="DialoguePanel/Options"]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5

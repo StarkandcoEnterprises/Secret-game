@@ -1,0 +1,48 @@
+[gd_scene load_steps=9 format=3 uid="uid://c5siac6rsa28v"]
+
+[ext_resource type="Script" path="res://ItemResources/BasePlant.gd" id="1_ja02e"]
+[ext_resource type="Texture2D" uid="uid://n1wyyh5v8uce" path="res://Art/Images/Crops/PlantedSeed.png" id="2_dbhg3"]
+[ext_resource type="Texture2D" uid="uid://bq1hua4msahwu" path="res://Art/Images/Crops/Corn/CornSprout.png" id="3_0xwff"]
+[ext_resource type="Texture2D" uid="uid://ctuaccol3ah6p" path="res://Art/Images/Crops/Corn/CornGrowth1.png" id="4_me67h"]
+[ext_resource type="Texture2D" uid="uid://br7ujmul1jyyp" path="res://Art/Images/Crops/Corn/CornGrowth2.png" id="5_jariv"]
+[ext_resource type="Texture2D" uid="uid://b0hf6i8exkpsy" path="res://Art/Images/Crops/Corn/CornGrowth3.png" id="6_i1u1a"]
+[ext_resource type="Texture2D" uid="uid://nvesdbwq6kh8" path="res://Art/Images/Crops/Corn/CornGrown.png" id="7_din0l"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6p33m"]
+size = Vector2(64, 64)
+
+[node name="BasePlant" type="StaticBody2D"]
+script = ExtResource("1_ja02e")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_6p33m")
+
+[node name="SeedSprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, 8)
+texture = ExtResource("2_dbhg3")
+
+[node name="SproutSprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+texture = ExtResource("3_0xwff")
+
+[node name="Growth1Sprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+texture = ExtResource("4_me67h")
+
+[node name="Growth2Sprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+texture = ExtResource("5_jariv")
+
+[node name="Growth3Sprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+texture = ExtResource("6_i1u1a")
+
+[node name="GrownSprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+texture = ExtResource("7_din0l")

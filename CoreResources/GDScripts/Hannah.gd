@@ -10,7 +10,7 @@ var speed = 300.0
 var equipped: BaseEquipment
 var interacting = false
 
-var direction
+var direction: Vector2 = Vector2.ZERO
 
 func equip_item(item: BaseItem):
 	
@@ -31,7 +31,6 @@ func unequip_held():
 	equipped = null
 
 func face_direction():
-	if direction == Vector2.ZERO: return
 	
 	if direction == Vector2.LEFT:
 		%AnimatedSprite2D.flip_h = true
@@ -54,19 +53,13 @@ func face_direction():
 func _physics_process(delta):
 	if interacting: return
 	
-	#use any equipment
-	if is_instance_valid(equipped) and Input.is_action_just_pressed("interact"):
-		equipped.use()
-	
-	#Check for movement
-	velocity = Vector2.ZERO
-	direction = Input.get_vector("left","right","up","down")
-	
+	#Prepare
 	velocity = direction * speed
-	face_direction()
 	
 	#Move and check for collision 
 	var collision = move_and_collide(velocity * delta)
+	
+	velocity = Vector2.ZERO
 	
 	if !collision: return
 	
@@ -78,18 +71,26 @@ func _physics_process(delta):
 	inventory.add_item(collision.get_collider())
 
 
-func _unhandled_input(event):
+func _unhandled_input(_event):
 	if interacting: return
+
+	direction = Input.get_vector("left","right","up","down")
+	if direction != Vector2.ZERO: face_direction()
 	
 	#Here is inventory handling and interacting with world objects
-	if event.is_action_pressed("interact") and %RayCast2D.is_colliding() and \
+	if Input.is_action_just_pressed("interact") and %RayCast2D.is_colliding() and \
 	%RayCast2D.get_collider().has_method("interact"):
 		
 		interacting = true
 		%RayCast2D.get_collider().interact()
-	if event.is_action_pressed("inventory") and is_physics_processing():
-		set_physics_process(false)
-		set_process_input(false)
-	elif event.is_action_pressed("inventory"):
-		set_physics_process(true)
-		set_process_input(true)
+		
+	if Input.is_action_just_pressed("inventory"):
+		toggle_processing()
+
+	#use any equipment
+	if is_instance_valid(equipped) and Input.is_action_just_pressed("interact"):
+		equipped.use()
+
+func toggle_processing():
+	set_physics_process(is_physics_processing())
+	set_process_input(is_processing_input())

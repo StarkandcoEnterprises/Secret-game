@@ -33,13 +33,6 @@ func use():
 	tween.tween_property(self, "in_use", false, 0)
 	tween.play()
 
-	#IN_WORLD,
-	#IN_INVENTORY,
-	#SELECTABLE,
-	#SELECTED,
-	#SLOTTED_SELECTABLE,
-	#SLOTTED
-
 func _unhandled_input(event):
 	
 	if !event is InputEventMouseButton: return

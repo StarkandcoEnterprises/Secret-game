@@ -6,9 +6,12 @@ class_name WateringCan
 
 func use():
 	super()
+	
 	if !map or equipment_properties.durability <= 0: return
+	
 	var tile_pos = map.local_to_map(global_position)
-	for layer in map.get_layers_count():
-		if map.get_layer_name(layer) != "Ground": continue
-		if map.get_cell_atlas_coords(layer,tile_pos) != Vector2i(0, 0): continue
-		map.set_cell(layer, tile_pos, 0, Vector2(0, 0), 1)
+	
+	if map.get_cell_atlas_coords(0, tile_pos) != Vector2i(0, 0) \
+	or map.get_cell_alternative_tile(0, tile_pos) != 0: return
+	
+	map.set_cell(0, tile_pos, 0, Vector2(0, 0), 1)
