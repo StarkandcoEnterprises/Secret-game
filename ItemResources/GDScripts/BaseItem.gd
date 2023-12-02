@@ -156,13 +156,8 @@ func start_drag():
 func find_slotted_center():
 	
 	center = Vector2.ZERO
-	#A whole bunch of nonsense to try and get the left most slot of all areas entered that needs refactoring
 	if !are_all_slots_free(): return
 	
-	
-	#It is also now split between simple rectangles with size and collisionpolygons...
-	var temp_x = 0
-	var temp_y = 0
 	var temp_width
 	var temp_height
 	
@@ -185,16 +180,13 @@ func find_slotted_center():
 	for a in overlapping_areas:
 		
 		#If we're not yet holding a x value (we were over no slots) or our position is more to the left, store our x
-		if center == Vector2.ZERO or a.global_position.x +  (temp_width / 2) <= center.x:
-			temp_x = a.global_position.x +  (temp_width / 2) + (3 * temp_width / SINGLE_BLOCK_SIZE)
-		
-		#If we're not yet holding a y value (we were in over slots) or our position is more upwards, store our y
-			if center.y == 0 or a.global_position.y + (temp_height / 2) <= center.y:
-				temp_y = a.global_position.y + (temp_height / 2) + (3 * temp_height / SINGLE_BLOCK_SIZE)
+		if center == Vector2.ZERO or a.global_position.x +  (temp_width / 2) <= center.x: 
+			center.x = a.global_position.x +  (temp_width / 2) + (3 * temp_width / SINGLE_BLOCK_SIZE)
+			
+			#If we're not yet holding a y value (we were in over slots) or our position is more upwards, store our y
+			if center.y != 0 or a.global_position.y + (temp_height / 2) > center.y: continue
+			center.y = a.global_position.y + (temp_height / 2) + (3 * temp_height / SINGLE_BLOCK_SIZE)
 		
 		#If we weren't holding 0 and we're not more left, we might need to be more upwards
-		elif a.global_position.y <= center.y:
-			temp_y = a.global_position.y + (temp_height / 2) + (3 * temp_height / SINGLE_BLOCK_SIZE)
-		
-		center.x = temp_x
-		center.y = temp_y
+		elif a.global_position.y > center.y:continue
+		center.y = a.global_position.y + (temp_height / 2) + (3 * temp_height / SINGLE_BLOCK_SIZE)

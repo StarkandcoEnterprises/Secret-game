@@ -51,7 +51,7 @@ layer_2/tile_data = PackedInt32Array(393218, 655360, 3, 524295, 655360, 3, 13108
 
 [node name="Sword" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("3_h8gdf")]
 
-[node name="Seeds" type="Node2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["SeedsParent"]]
+[node name="Plants" type="Node2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["SeedsParent"]]
 unique_name_in_owner = true
 
 [node name="Bed" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects"]
@@ -94,7 +94,7 @@ visible = false
 
 [node name="Daytime" type="Timer" parent="." groups=["DayTimer"]]
 unique_name_in_owner = true
-wait_time = 500.0
+wait_time = 5.0
 one_shot = true
 autostart = true
 
