@@ -180,13 +180,13 @@ func find_slotted_center():
 	for a in overlapping_areas:
 		
 		#If we're not yet holding a x value (we were over no slots) or our position is more to the left, store our x
-		if center == Vector2.ZERO or a.global_position.x +  (temp_width / 2) <= center.x: 
+		if center == Vector2.ZERO or a.global_position.x +  (temp_width / 2) <= center.x:
 			center.x = a.global_position.x +  (temp_width / 2) + (3 * temp_width / SINGLE_BLOCK_SIZE)
-			
-			#If we're not yet holding a y value (we were in over slots) or our position is more upwards, store our y
-			if center.y != 0 or a.global_position.y + (temp_height / 2) > center.y: continue
+		
+		#If we're not yet holding a y value (we were in over slots) or our position is more upwards, store our y
+			if center.y != 0 and a.global_position.y + (temp_height / 2) > center.y: continue
 			center.y = a.global_position.y + (temp_height / 2) + (3 * temp_height / SINGLE_BLOCK_SIZE)
 		
 		#If we weren't holding 0 and we're not more left, we might need to be more upwards
-		elif a.global_position.y > center.y:continue
+		elif a.global_position.y > center.y: continue
 		center.y = a.global_position.y + (temp_height / 2) + (3 * temp_height / SINGLE_BLOCK_SIZE)

@@ -2,7 +2,7 @@ extends Node2D
 
 var dayover_UI 
 
-const DAYTIME_VALUE = 500
+const DAYTIME_VALUE = 5
 
 func _ready():
 	await get_tree().process_frame
