@@ -1,5 +1,6 @@
 extends Control
 
+class_name DialogueUI
 
 func update_text(newText: String):
 	%Label.text = newText

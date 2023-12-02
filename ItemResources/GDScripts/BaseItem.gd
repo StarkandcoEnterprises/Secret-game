@@ -49,14 +49,7 @@ func are_all_slots_free():
 
 func added_to_inventory():
 	interact_state = Interact_State.IN_INVENTORY
-	
-	if !is_instance_valid(get_child(2)): return
-	
-	get_child(2).position = Vector2(0, 0)
-	
-	if get_child(2).scale.x > 1: return
-	
-	get_child(2).scale = Vector2(1, 1)
+	position = Vector2.ZERO
 
 func _on_mouse_entered():
 	if interact_state == Interact_State.IN_WORLD: return

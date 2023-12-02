@@ -11,6 +11,7 @@
 [node name="Hoe" instance=ExtResource("1_y5kod")]
 script = ExtResource("2_khl42")
 equipment_properties = ExtResource("2_lndfa")
+discarded_on_use = false
 item_properties = ExtResource("3_f0pm3")
 
 [node name="ItemSprite" parent="." index="0"]

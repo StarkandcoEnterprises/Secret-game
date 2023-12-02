@@ -1,5 +1,7 @@
 extends Control
 
+class_name InventoryUI
+
 var current_slot = 0
 
 @onready var hannah: Hannah = get_tree().get_first_node_in_group("Hannah")
@@ -13,26 +15,22 @@ func add_item(item: BaseItem):
 func _unhandled_input(event):
 	
 	if !event is InputEventKey: return
+	
 	if !event.pressed: return
 	
 	if event.is_action_pressed("unequip"):
 		select_on_bar(0)
 	elif event.is_action_pressed("inventory"):
-		
-		if %EquippedBar.visible:
-			%EquippedBar.hide()
-			%InvSprite.show()
-			mouse_filter = MOUSE_FILTER_PASS
-			
-			
-		else:
-			%EquippedBar.show()
-			%InvSprite.hide()
-			mouse_filter = MOUSE_FILTER_STOP
-		
+		invert_inventory_and_bar()
 		
 	elif event.as_text() in ["1","2","3","4","5","6","7","8","9","0"]:
 		select_on_bar(int(event.as_text()))
+
+func invert_inventory_and_bar():
+	%EquippedBar.visible = !%EquippedBar.visible
+	%InvSprite.visible = !%InvSprite.visible
+	mouse_filter = MOUSE_FILTER_PASS if mouse_filter == MOUSE_FILTER_STOP else MOUSE_FILTER_STOP
+	if hannah: hannah.toggle_processing()
 
 
 ##This is not working

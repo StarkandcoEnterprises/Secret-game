@@ -6,6 +6,7 @@
 [ext_resource type="Texture2D" uid="uid://cn0j6m8x6njyo" path="res://Art/Images/icon.svg" id="3_hrx7p"]
 
 [node name="BaseItem" type="CharacterBody2D"]
+input_pickable = true
 script = ExtResource("1_em6ot")
 item_properties = ExtResource("2_3ueyt")
 

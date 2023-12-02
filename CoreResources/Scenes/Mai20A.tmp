@@ -10,7 +10,7 @@
 [ext_resource type="PackedScene" uid="uid://vrklgttf0tdi" path="res://ItemResources/InstancedItemScenes/WateringCan.tscn" id="7_77n01"]
 [ext_resource type="Texture2D" uid="uid://b8sxywscmeyf4" path="res://Art/Images/BuildingScenes/Bed.png" id="8_qbdht"]
 [ext_resource type="PackedScene" uid="uid://ncboup6o1765" path="res://ItemResources/InstancedItemScenes/CornSeed.tscn" id="10_aery0"]
-[ext_resource type="PackedScene" uid="uid://bmcq3jsxe7x1x" path="res://CoreResources/Scenes/UI.tscn" id="11_jcwwp"]
+[ext_resource type="PackedScene" uid="uid://cpq0waabh274t" path="res://CoreResources/Scenes/UI.tscn" id="11_jcwwp"]
 [ext_resource type="Texture2D" uid="uid://bopbscsbdwhch" path="res://Art/Images/BuildingScenes/Crate.png" id="13_haq3d"]
 [ext_resource type="PackedScene" uid="uid://6wfbysp7xism" path="res://Debug/Scenes/DebugWindow.tscn" id="18_fpf16"]
 
@@ -87,9 +87,10 @@ unique_name_in_owner = true
 
 [node name="UI" parent="." instance=ExtResource("11_jcwwp")]
 
-[node name="Debug" parent="." instance=ExtResource("18_fpf16")]
+[node name="Window" parent="." instance=ExtResource("18_fpf16")]
 title = "DebugOutput"
 position = Vector2i(500, 36)
+visible = false
 
 [node name="Daytime" type="Timer" parent="." groups=["DayTimer"]]
 unique_name_in_owner = true

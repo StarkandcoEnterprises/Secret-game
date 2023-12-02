@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://c6mqdm5lea244"]
 
-[ext_resource type="Script" path="res://CoreResources/Scenes/DialogueUI.gd" id="1_m61a3"]
+[ext_resource type="Script" path="res://CoreResources/GDScripts/DialogueUI.gd" id="1_m61a3"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ra61"]
 bg_color = Color(0.101961, 0.0392157, 0.00784314, 1)
@@ -87,6 +87,3 @@ offset_bottom = 90.0
 grow_horizontal = 2
 grow_vertical = 0
 text = "No"
-
-[connection signal="pressed" from="DialoguePanel/Options/Yes" to="." method="_on_yes_pressed"]
-[connection signal="pressed" from="DialoguePanel/Options/No" to="." method="_on_no_pressed"]

@@ -10,6 +10,7 @@ var equipped_slot
 var bar_sprite
 var durability_bar
 
+@export var discarded_on_use: bool
 
 var in_use = false
 
@@ -19,11 +20,24 @@ func _ready():
 	equipped_bar = get_tree().get_first_node_in_group("EquippedBar")
 	bar_sprite = %EquipmentBarSprite
 	durability_bar = %DurabilityBar
+	
+
+func _process(delta):
+	super(delta)
+	if interact_state != Interact_State.SLOTTED: return
+	if equipment_properties.durability <= 0 and discarded_on_use:
+		
+		hannah.unequip_held()
+		equipped_bar.get_child(hannah.inventory.current_slot - 1).get_child(1).queue_free()
+		
+		hannah.inventory.current_slot = 0
+		
+		bar_sprite.call_deferred("queue_free")
+		call_deferred("queue_free")
 
 func use():
 	if in_use or equipment_properties.durability <= 0: return
 	equipment_properties.use()
-	
 	var tween_rotation
 	tween_rotation = 90 if get_parent().name == "RightHand" else -90 if get_parent().name == "LeftHand" else 0
 	in_use = true
@@ -32,6 +46,15 @@ func use():
 	tween.tween_property(get_parent().get_parent(), "rotation_degrees", 0, 0)
 	tween.tween_property(self, "in_use", false, 0)
 	tween.play()
+		
+	var timer = Timer.new()
+	timer.one_shot = true
+	add_child(timer)
+	timer.start()
+	
+	await timer.timeout
+	remove_child(timer)
+	
 
 func _unhandled_input(event):
 	
@@ -59,7 +82,7 @@ func _unhandled_input(event):
 	
 		#Need to also possibly remove the reference rect....
 		if equipped_slot.get_child_count() > 0:
-			equipped_slot.get_child(0).queue_free()
+			equipped_slot.get_child(0).call_deferred("queue_free")
 			
 		equipped_slot = null
 		
@@ -81,7 +104,6 @@ func _unhandled_input(event):
 			bar_sprite.reparent(equip_slot)
 			
 			bar_sprite.rotation_degrees = 0
-			
 			
 			equip_slot.get_child(equip_slot.get_child_count() - 1).position =  Vector2(32, 28)
 			return

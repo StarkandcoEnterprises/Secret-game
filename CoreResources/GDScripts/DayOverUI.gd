@@ -1,5 +1,7 @@
 extends Control
 
+class_name DayoverUI
+
 signal next_day_UI_finished
 
 func day_timeout():
