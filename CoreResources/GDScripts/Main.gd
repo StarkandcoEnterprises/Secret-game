@@ -41,7 +41,7 @@ func reset_watering_and_grow():
 		if check_is_wet_tile(Vector2i(c.x, c.y)):
 			if get_seed_on_tile(Vector2i(c.x, c.y)):
 				get_seed_on_tile(Vector2i(c.x, c.y)).grow()
-			%TileMap.set_cell(0, 0, 0, Vector2(0, 0), 0)
+			%TileMap.set_cell(0, Vector2i(c.x, c.y), 0, Vector2(0, 0), 0)
 
 func _on_next_day_pressed():
 	next_day()

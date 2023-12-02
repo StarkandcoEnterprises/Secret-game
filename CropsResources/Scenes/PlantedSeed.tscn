@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://c6x74ewrfcmkw"]
 
-[ext_resource type="Script" path="res://CropsResources/GDScripts/PlantedSeed.gd" id="1_0djgo"]
+[ext_resource type="Script" path="res://ItemResources/BasePlant.gd" id="1_0djgo"]
 [ext_resource type="Texture2D" uid="uid://dhvg4migg4h36" path="res://Art/Images/Crops/Corn/Corn.png" id="2_v8agb"]
 [ext_resource type="Texture2D" uid="uid://n1wyyh5v8uce" path="res://Art/Images/Crops/PlantedSeed.png" id="3_y6t5e"]
 [ext_resource type="Texture2D" uid="uid://bq1hua4msahwu" path="res://Art/Images/Crops/Corn/CornSprout.png" id="4_vxe16"]

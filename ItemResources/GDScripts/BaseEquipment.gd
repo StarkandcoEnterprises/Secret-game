@@ -21,7 +21,6 @@ func _ready():
 	durability_bar = %DurabilityBar
 
 func use():
-	var debug = equipment_properties.durability
 	if in_use or equipment_properties.durability <= 0: return
 	equipment_properties.use()
 	
