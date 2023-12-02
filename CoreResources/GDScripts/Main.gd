@@ -2,14 +2,16 @@ extends Node2D
 
 var dayover_UI 
 
-const DAYTIME_VALUE = 5
+const DAYTIME_VALUE = 50
 
 func _ready():
 	await get_tree().process_frame
 	dayover_UI = get_node("/root/Main/UI/DayOverUI")
 	dayover_UI.next_day_UI_finished.connect(next_day)
+	%Daytime.stop()
 	%Daytime.wait_time = DAYTIME_VALUE
-
+	%Daytime.start()
+	
 #Pauses day time, makes inventory visible, hides inventory/bar, disables hannah, tween on background
 func _on_daytime_timeout():
 	
