@@ -3,12 +3,8 @@ extends WorldObject
 class_name BasePlant 
 
 var planted_days = 0
-var max_planted_days = 125
+const MAX_PLANTED_DAYS = 125
 var sprouted = 0
-var grow1 = false
-var grow2 = false
-var grow3 = false
-var grown = false
 
 enum Life_Cycle {
 	PLANTED,
@@ -22,6 +18,9 @@ enum Life_Cycle {
 var pos_in_cycle = Life_Cycle.PLANTED 
 
 @export var produce_scene: PackedScene
+
+func _ready():
+	$CollisionShape2D.set_deferred("disabled", true)
 
 func _input(event):
 	if event.is_action_pressed("debug"):
@@ -62,7 +61,8 @@ func grow():
 			%Growth3Sprite.visible = true
 			pos_in_cycle = Life_Cycle.THIRD_GROWTH
 		Life_Cycle.THIRD_GROWTH:
-			if float(max_planted_days) / float(planted_days) < 1: return
+			if float(MAX_PLANTED_DAYS) / float(planted_days) < 1: return
 			%Growth3Sprite.visible = false
 			%GrownSprite.visible = true
 			pos_in_cycle = Life_Cycle.GROWN
+			$CollisionShape2D.set_deferred("disabled", false)

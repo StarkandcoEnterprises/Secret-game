@@ -21,6 +21,8 @@ func interact():
 		sleep_prompt()
 	if name == "Crate":
 		crate_interaction()
+	else:
+		end_interaction()
 
 func crate_interaction():
 	pass
