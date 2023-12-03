@@ -1,0 +1,87 @@
+[gd_scene load_steps=9 format=3 uid="uid://dqxfciw668dqi"]
+
+[ext_resource type="Script" path="res://CoreResources/GDScripts/Hannah.gd" id="1_jbrk5"]
+[ext_resource type="Texture2D" uid="uid://cgiknppirw3av" path="res://Art/Images/Character/godot_guy.png" id="2_6fdrp"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_cb7lw"]
+atlas = ExtResource("2_6fdrp")
+region = Rect2(50, 96, 90, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qmkkm"]
+atlas = ExtResource("2_6fdrp")
+region = Rect2(244, 96, 90, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jfqlh"]
+atlas = ExtResource("2_6fdrp")
+region = Rect2(438, 96, 90, 96)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2nhh1"]
+atlas = ExtResource("2_6fdrp")
+region = Rect2(632, 96, 90, 96)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_nwrfh"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_cb7lw")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qmkkm")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_jfqlh")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2nhh1")
+}],
+"loop": true,
+"name": &"default",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ykaa3"]
+size = Vector2(64, 80)
+
+[node name="Hannah" type="CharacterBody2D" groups=["Hannah"]]
+z_index = 1
+motion_mode = 1
+script = ExtResource("1_jbrk5")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." groups=["Sprite"]]
+unique_name_in_owner = true
+sprite_frames = SubResource("SpriteFrames_nwrfh")
+autoplay = "default"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(1, 4)
+shape = SubResource("RectangleShape2D_ykaa3")
+
+[node name="RayCast2D" type="RayCast2D" parent="." groups=["RayCast"]]
+unique_name_in_owner = true
+rotation = 4.71239
+scale = Vector2(1, 2)
+collision_mask = 3
+
+[node name="Camera2D" type="Camera2D" parent="."]
+visible = false
+position_smoothing_speed = 2.0
+drag_horizontal_enabled = true
+drag_vertical_enabled = true
+drag_left_margin = 0.4
+drag_top_margin = 0.4
+drag_right_margin = 0.4
+drag_bottom_margin = 0.4
+
+[node name="LeftArm" type="Marker2D" parent="."]
+position = Vector2(-89, 15)
+
+[node name="LeftHand" type="Marker2D" parent="LeftArm"]
+unique_name_in_owner = true
+position = Vector2(-11, -7)
+
+[node name="RightArm" type="Marker2D" parent="."]
+position = Vector2(93, 9)
+
+[node name="RightHand" type="Marker2D" parent="RightArm"]
+unique_name_in_owner = true
+position = Vector2(14, 11)

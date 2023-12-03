@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://b6qg1yg3x43xn"]
+
+[ext_resource type="Script" path="res://ItemResources/SlotUseScenes/SingleCornerSlot.gd" id="1_doiui"]
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D"]
+position = Vector2(-40, -40)
+polygon = PackedVector2Array(40, 0, 0, 0, 0, 40, 40, 40, 40, 80, 80, 80, 80, 40, 40.001, 40)
+script = ExtResource("1_doiui")

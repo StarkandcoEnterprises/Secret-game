@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="EquipmentPropertiesResource" load_steps=2 format=3 uid="uid://cxw8n3akywx0e"]
+
+[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/EquipmentPropertiesResource.gd" id="1_u5apf"]
+
+[resource]
+resource_name = "BreakpointHammerEquipment"
+script = ExtResource("1_u5apf")
+durability = 200
+max_durability = 200

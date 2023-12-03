@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BasePlant" load_steps=3 format=3 uid="uid://b18bubx4t83rx"]
+
+[ext_resource type="PackedScene" uid="uid://dngq2mjwbo6si" path="res://ItemResources/InstancedItemScenes/Corn.tscn" id="1_87yyj"]
+[ext_resource type="Script" path="res://CropsResources/GDScripts/PlantResource.gd" id="2_efl43"]
+
+[resource]
+script = ExtResource("2_efl43")
+min_sprout = 8
+max_sprout = 21
+first_growth = 10
+second_growth = 25
+third_growth = 65
+max_planted_days = 125
+produce_scene = ExtResource("1_87yyj")

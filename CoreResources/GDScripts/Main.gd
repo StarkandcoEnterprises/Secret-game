@@ -1,31 +1,36 @@
 extends Node2D
 
-var seed_dict = {}
+class_name Main
 
-var dayover_UI 
-var dayover_background
-var dayover_button
+## Main class from which all objects are loaded
+##
+## Manages some day time elements but is the container for all non-UI game objects
 
+## Holds the UI for the end of the day
+var dayover_UI: DayoverUI
+
+## Holds the length of the day in seconds
+const DAYTIME_VALUE = 50
+
+## Sets up a Daytime timer and gets / connects the Dayover UI / button
 func _ready():
 	await get_tree().process_frame
-	dayover_UI = get_node("/root/Main/UI/DayOverUI")
-	dayover_background = get_node("/root/Main/UI/DayOverUI/ColorRect")
-	dayover_button = get_node("/root/Main/UI/DayOverUI/NextDay")
-	get_node("/root/Main/UI/DayOverUI/NextDay").pressed.connect(_on_next_day_pressed)
-
-
-func _on_daytime_timeout():
-	%Daytime.paused = true
+	dayover_UI = get_tree().get_first_node_in_group("DayOverUI")
+	dayover_UI.next_day_UI_finished.connect(next_day)
 	
-	dayover_UI.visible = true
+	%Daytime.stop()
+	%Daytime.wait_time = DAYTIME_VALUE
+	%Daytime.start()
+	
+## Hides [InventoryUI], disables [Hannah], calls [method DayoverUI.day_timeout] and [method Main.reset_watering_and_grow]
+func _on_daytime_timeout():
+	
+	dayover_UI.day_timeout()
 	
 	%Hannah.inventory.visible = false
 	
-	%Hannah.process_mode = 4
-	
-	var tween = get_tree().create_tween()
-	tween.tween_property(dayover_background, "modulate", Color(0,0,0,1), 1)
-	tween.play()
+	if %Hannah.is_processing_input():
+		%Hannah.toggle_processing()
 	
 	var timer = Timer.new()
 	timer.one_shot = true
@@ -33,54 +38,34 @@ func _on_daytime_timeout():
 	timer.start()
 	
 	await timer.timeout
-	dayover_button.visible = true
 	remove_child(timer)
-
-func reset_watering_and_grow():
-	for c in %TileMap.get_used_cells(0):
-		if check_is_wet_tile(Vector2i(c.x, c.y)):
-			if get_seed_on_tile(Vector2i(c.x, c.y)):
-				get_seed_on_tile(Vector2i(c.x, c.y)).grow()
-			%TileMap.set_cell(0, c, 0, Vector2(0, 0), 0)
-
-func _on_next_day_pressed():
-	next_day()
-	dayover_button.visible = false
-
-func next_day():
+	
 	reset_watering_and_grow()
+
+## Re-enables [Hannah]'s processing. Restarts Daytime Timer
+func next_day():
 	
-	var tween = get_tree().create_tween()
-	tween.tween_property(dayover_background, "modulate", Color(0,0,0,0), 1)
-	tween.play()
+	%Hannah.toggle_processing()
+	%Hannah.inventory.visible = true
 	
-	var timer = Timer.new()
-	timer.one_shot = true
-	add_child(timer)
-	timer.start()
-	
-	await timer.timeout
-	
-	%Hannah.process_mode = 0
-	dayover_UI.visible = false
-	%Daytime.wait_time = 500
-	%Daytime.paused = false
+	%Daytime.wait_time = DAYTIME_VALUE
 	%Daytime.start()
+
+## Loops through all Plants in the scene and makes them grow if necessary. Also makes wet ground dry.
+func reset_watering_and_grow():
 	
-	remove_child(timer)
+	if %Plants.get_child_count() == 0: return
+	
+	for plant in %Plants.get_children():
+		if !is_wet_tile(plant.global_position): continue
+		plant.grow()
+	
+	for cell_pos in %TileMap.get_used_cells(0):
+		if !is_wet_tile(%TileMap.map_to_local(cell_pos)): continue
+		%TileMap.set_cell(0, cell_pos, 0, Vector2(0, 0), 0)
 
-
-func get_seed_on_tile(cell) -> Object:
-	if %Seeds.get_child_count() > 0:
-		for s in %Seeds.get_children():
-			if s.position == Vector2(cell * 64) + Vector2(32,32):
-				return s
-	return null
-
-
-
-###hide it awayyyyyy
-func check_is_wet_tile(cell) -> bool:
-	return %TileMap.get_cell_atlas_coords(0,Vector2i(cell.x, cell.y)) == Vector2i(0,0) and %TileMap.get_cell_alternative_tile(0, Vector2i(cell.x, cell.y)) == 1
-
-
+##Checks if a tile is wet based on it's position in the gameworld
+func is_wet_tile(local_position) -> bool:
+	
+	return %TileMap.get_cell_atlas_coords(0, %TileMap.local_to_map(local_position)) == Vector2i(0,0) \
+	and %TileMap.get_cell_alternative_tile(0, %TileMap.local_to_map(local_position)) == 1

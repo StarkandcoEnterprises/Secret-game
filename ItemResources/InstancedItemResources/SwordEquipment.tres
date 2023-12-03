@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="EquipmentPropertiesResource" load_steps=2 format=3 uid="uid://d31j5jqhgs7fj"]
+
+[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/EquipmentPropertiesResource.gd" id="1_qgmix"]
+
+[resource]
+script = ExtResource("1_qgmix")
+durability = 50
+max_durability = 50

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ItemPropertiesResource" load_steps=2 format=3 uid="uid://cji4grq5vmcov"]
+
+[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/ItemPropertiesResource.gd" id="1_xdbxp"]
+
+[resource]
+script = ExtResource("1_xdbxp")
+price = 100
+slots_needed = 1

@@ -1,8 +1,9 @@
-[gd_scene load_steps=2 format=3 uid="uid://ccthdeb3aigs8"]
+[gd_scene load_steps=3 format=3 uid="uid://ccthdeb3aigs8"]
 
-[ext_resource type="Theme" uid="uid://d2t4qqcop8je" path="res://CoreResources/InstancedResources/Dayover.tres" id="1_h8mgk"]
+[ext_resource type="Theme" uid="uid://d2t4qqcop8je" path="res://CoreResources/OtherResources/Dayover.tres" id="1_h8mgk"]
+[ext_resource type="Script" path="res://CoreResources/GDScripts/DayOverUI.gd" id="1_orp8c"]
 
-[node name="DayOverUI" type="Control"]
+[node name="DayOverUI" type="Control" groups=["DayOverUI"]]
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -10,8 +11,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_orp8c")
 
-[node name="ColorRect" type="ColorRect" parent="."]
+[node name="Background" type="ColorRect" parent="."]
+unique_name_in_owner = true
 modulate = Color(0, 0, 0, 0)
 layout_mode = 1
 anchors_preset = 15
@@ -22,6 +25,7 @@ grow_vertical = 2
 color = Color(0, 0, 0, 1)
 
 [node name="NextDay" type="Button" parent="."]
+unique_name_in_owner = true
 visible = false
 layout_mode = 1
 anchors_preset = 7
@@ -36,3 +40,5 @@ grow_horizontal = 2
 grow_vertical = 0
 theme = ExtResource("1_h8mgk")
 text = "Next Day"
+
+[connection signal="pressed" from="NextDay" to="." method="_on_next_day_pressed"]
