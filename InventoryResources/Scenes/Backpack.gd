@@ -9,6 +9,8 @@ enum State {
 var open: bool = false
 var drop_ref
 
+var index_of_selected_item
+
 var current_state = State.SELECTABLE
 
 func _on_interact_area_entered(area):
@@ -47,3 +49,17 @@ func _on_close_pressed():
 	if current_state != State.OPEN: return
 	current_state = State.SELECTABLE
 	toggle_UI()
+
+
+func _on_item_list_item_selected(index):
+	if !index_of_selected_item == null:
+		%BackpackItems.get_child(index_of_selected_item).interact_state = %BackpackItems.get_child(index_of_selected_item).Interact_State.IN_BACKPACK
+	%BackpackItems.get_child(index).interact_state = %BackpackItems.get_child(index).Interact_State.SELECTED_IN_BACKPACK
+	index_of_selected_item = index
+
+
+func _on_item_list_empty_clicked(_at_position, _mouse_button_index):
+	if !index_of_selected_item == null:
+		%BackpackItems.get_child(index_of_selected_item).interact_state = %BackpackItems.get_child(index_of_selected_item).Interact_State.IN_BACKPACK
+		%ItemList.deselect(index_of_selected_item)
+		index_of_selected_item = null

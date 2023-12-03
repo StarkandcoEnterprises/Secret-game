@@ -15,8 +15,8 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2c26w"]
 size = Vector2(56, 655)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_bx6tn"]
-size = Vector2(53, 655)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8nkpb"]
+size = Vector2(869, 1074.5)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l04lm"]
 size = Vector2(517, 47.5)
@@ -355,8 +355,8 @@ position = Vector2(659, 317.5)
 shape = SubResource("RectangleShape2D_2c26w")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="InvSprite/LooseContainer"]
-position = Vector2(1138.5, 318)
-shape = SubResource("RectangleShape2D_bx6tn")
+position = Vector2(1546.5, 108.25)
+shape = SubResource("RectangleShape2D_8nkpb")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="InvSprite/LooseContainer"]
 position = Vector2(898.5, 621.75)
@@ -425,6 +425,7 @@ grow_vertical = 2
 script = ExtResource("8_exe71")
 
 [node name="ItemList" type="ItemList" parent="InvSprite/Backpack/BackpackUI" groups=["Backpack"]]
+unique_name_in_owner = true
 custom_minimum_size = Vector2(378, 378)
 layout_mode = 1
 anchors_preset = 8
@@ -467,9 +468,12 @@ grow_vertical = 2
 text = "X"
 
 [node name="BackpackItems" type="Node2D" parent="InvSprite/Backpack/BackpackUI" groups=["BackpackItems"]]
+unique_name_in_owner = true
 visible = false
 
 [connection signal="area_entered" from="InvSprite/Backpack/Interact" to="InvSprite/Backpack" method="_on_interact_area_entered"]
 [connection signal="area_exited" from="InvSprite/Backpack/Interact" to="InvSprite/Backpack" method="_on_interact_area_exited"]
 [connection signal="pressed" from="InvSprite/Backpack/Open" to="InvSprite/Backpack" method="_on_open_pressed"]
+[connection signal="empty_clicked" from="InvSprite/Backpack/BackpackUI/ItemList" to="InvSprite/Backpack" method="_on_item_list_empty_clicked"]
+[connection signal="item_selected" from="InvSprite/Backpack/BackpackUI/ItemList" to="InvSprite/Backpack" method="_on_item_list_item_selected"]
 [connection signal="pressed" from="InvSprite/Backpack/BackpackUI/Close" to="InvSprite/Backpack" method="_on_close_pressed"]

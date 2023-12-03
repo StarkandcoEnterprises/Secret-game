@@ -129,45 +129,65 @@ func _on_slots_area_exited(area):
 	elif area.is_in_group("BackpackArea") and interact_state == Interact_State.DROPPABLE:
 		interact_state = Interact_State.SELECTED
 
-
-
 func _unhandled_input(event):
+	# Not necessary when in the world
+	if interact_state == Interact_State.IN_WORLD:
+		return
 	
-	#Not necessary when in world
-	if interact_state == Interact_State.IN_WORLD: return
+	# We only care about mouse inputs
+	if not event is InputEventMouseButton:
+		return 
 	
-	#We only care about mouse inputs
-	if !event is InputEventMouseButton: return 
-	
-	#If we're not selectable or selected
+	# If we're not selectable or selected
 	if interact_state not in [Interact_State.SELECTABLE, Interact_State.SELECTED, Interact_State.SLOTTED_SELECTABLE, \
-								Interact_State.DROPPABLE,Interact_State.SELECTED_IN_BACKPACK]: return
+								Interact_State.DROPPABLE, Interact_State.SELECTED_IN_BACKPACK]:
+		return
 	
 	if event.button_index == MOUSE_BUTTON_LEFT:
-		
-		#If it's a press of the click and we're not in backpack
-		if event.pressed and interact_state != Interact_State.SELECTED_IN_BACKPACK: start_drag()
-		
-		#We are clicked and in the backpack
-		elif event.pressed and interact_state == Interact_State.SELECTED_IN_BACKPACK: 
-			reparent(loose_ref)
-			start_drag()
-		
-		#Else, if it's a release and there are not enough free slots underneath/ It is not droppable
-		elif !are_all_slots_free() and interact_state != Interact_State.DROPPABLE: interact_state = Interact_State.SELECTABLE
-		
-		#Otherwise if it's a release and the slots are free
-		elif are_all_slots_free(): slot()
-		
-		#Otherwise it is droppable, it's in the backpack now!
-		else: 
-			
-			backpack_ref.add_item(string_name, %ItemSprite.texture, true)
-			reparent(backpack_item_ref)
-			interact_state = Interact_State.IN_BACKPACK
-	#If we get a right click and item selected, rotate
-	elif interact_state == Interact_State.SELECTED and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
-		rotation_degrees += 90
+		handle_left_click(event)
+	
+	# If we get a right click and item selected, rotate
+	elif interact_state == Interact_State.SELECTED and event.is_pressed() and event.button_index == MOUSE_BUTTON_RIGHT:
+		rotate_selected_item()
+
+# Separate function to handle left click actions
+func handle_left_click(event):
+	# If it's a press of the click and we're not in the backpack
+	if event.is_pressed() and interact_state != Interact_State.SELECTED_IN_BACKPACK: 
+		start_drag()
+	
+	# We are selected in the backpack
+	elif interact_state == Interact_State.SELECTED_IN_BACKPACK: 
+		handle_backpack_selection()
+	
+	# Else, if it's a release and there are not enough free slots underneath / It is not droppable
+	elif not are_all_slots_free() and interact_state != Interact_State.DROPPABLE: 
+		interact_state = Interact_State.SELECTABLE
+	
+	# Otherwise, if it's a release and the slots are free
+	elif are_all_slots_free(): 
+		slot()
+	
+	# Otherwise, it is droppable, it's in the backpack now!
+	else: 
+		handle_droppable()
+
+# Separate function to handle actions when selected in the backpack
+func handle_backpack_selection():
+	reparent(loose_ref)
+	backpack_ref.remove_item(backpack_ref.get_parent().get_parent().index_of_selected_item)
+	backpack_ref.get_parent().get_parent().index_of_selected_item = null
+	start_drag()
+
+# Separate function to handle actions when it is droppable
+func handle_droppable():
+	backpack_ref.add_item(string_name, %ItemSprite.texture, true)
+	reparent(backpack_item_ref)
+	interact_state = Interact_State.IN_BACKPACK
+
+# Separate function to handle rotating the selected item
+func rotate_selected_item():
+	rotation_degrees += 90
 
 func slot():
 	
