@@ -5,8 +5,8 @@ uniform vec4 top_right : source_color;
 uniform vec4 bottom_left : source_color;
 uniform vec4 bottom_right : source_color;
 
-uniform float border_hori_threshold = 0.01;
-uniform float border_vert_threshold = 0.02;
+uniform float border_hori_threshold;
+uniform float border_vert_threshold;
 
 void fragment() {
 	// Figure out our relation to the border

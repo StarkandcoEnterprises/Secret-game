@@ -25,6 +25,7 @@ bg_color = Color(0.670588, 0.466667, 1, 1)
 script = ExtResource("2_cheqt")
 equipment_properties = ExtResource("3_fec4y")
 discarded_on_use = false
+backpack_storable = false
 
 [node name="ItemCharShape" parent="." index="1"]
 shape = SubResource("RectangleShape2D_p845x")

@@ -2,8 +2,8 @@ extends CharacterBody2D
 
 class_name BaseItem
 
-@export var item_properties:ItemPropertiesResource
-
+@export var item_properties: ItemPropertiesResource
+@export var backpack_storable: bool = true
 
 enum Interact_State {
 	IN_WORLD,
@@ -11,7 +11,10 @@ enum Interact_State {
 	SELECTABLE,
 	SELECTED,
 	SLOTTED_SELECTABLE,
-	SLOTTED
+	SLOTTED,
+	DROPPABLE,
+	IN_BACKPACK,
+	SELECTED_IN_BACKPACK
 }
 
 var interact_state = Interact_State.IN_WORLD
@@ -20,75 +23,111 @@ const SPEED = 300
 const SINGLE_BLOCK_SIZE = 40
 
 var center = Vector2.ZERO
-
 var overlapping_areas = []
 
+var loose_ref
+var backpack_ref
+var backpack_item_ref
+
+@onready var regex = RegEx.new()
+var string_name: String = ""
+
+func _ready():
+	await get_tree().process_frame
+	loose_ref = get_tree().get_first_node_in_group("LooseItems")
+	backpack_ref = get_tree().get_first_node_in_group("Backpack")
+	backpack_item_ref = get_tree().get_first_node_in_group("BackpackItems")
+	regex.compile("[A-Z][a-z]+")
+	var matches = regex.search_all(name)
+	for case in matches:
+		string_name += case.get_string() + " "
 
 func _process(delta):
-	
-	if interact_state == Interact_State.SLOTTED or \
-	interact_state == Interact_State.SLOTTED_SELECTABLE or\
-	interact_state == Interact_State.IN_WORLD: return
-	
-	if interact_state == Interact_State.SELECTED:
-		global_position = get_global_mouse_position()
+	if should_skip_processing(): return
+	handle_movement(delta)
+
+func should_skip_processing() -> bool:
+	return interact_state in [Interact_State.SLOTTED, Interact_State.SLOTTED_SELECTABLE, \
+								Interact_State.IN_WORLD, Interact_State.IN_BACKPACK, Interact_State.SELECTED_IN_BACKPACK]
+
+func handle_movement(delta):
+	if interact_state in [Interact_State.SELECTED, Interact_State.DROPPABLE]:
+		move_with_mouse()
 		
-	elif global_position.y >= 648 or global_position.y <= -200:
-		position.y = 0
-		position.x = 0
+	elif is_out_of_bounds():
+		reset_position()
 		
 	else:
-		velocity += Vector2.DOWN * SPEED * delta
+		apply_gravity(delta)
 		move_and_slide()
 
+func is_out_of_bounds() -> bool:
+	return global_position.y >= 648 or global_position.y <= -200
 
+func reset_position():
+	position.y = 0
+	position.x = 0
 
-func are_all_slots_free():
+func apply_gravity(delta):
+	velocity += Vector2.DOWN * SPEED * delta
+
+func move_with_mouse():
+	global_position = get_global_mouse_position()
+
+func are_all_slots_free() -> bool:
 	return overlapping_areas.size() == item_properties.slots_needed
-
 
 func added_to_inventory():
 	interact_state = Interact_State.IN_INVENTORY
-	position = Vector2.ZERO
 
 func _on_mouse_entered():
-	if interact_state == Interact_State.IN_WORLD: return
+	if should_skip_mouse_events(): return
 	if interact_state == Interact_State.SLOTTED: interact_state = Interact_State.SLOTTED_SELECTABLE
 	elif interact_state != Interact_State.SELECTED: interact_state = Interact_State.SELECTABLE
 
 func _on_mouse_exited():
-	if interact_state == Interact_State.IN_WORLD: return
+	if should_skip_mouse_events(): return
 	if interact_state == Interact_State.SLOTTED_SELECTABLE: interact_state = Interact_State.SLOTTED
 	elif interact_state != Interact_State.SELECTED: interact_state = Interact_State.IN_INVENTORY
 
+func should_skip_mouse_events() -> bool:
+	return interact_state in [Interact_State.IN_WORLD, Interact_State.IN_BACKPACK, Interact_State.SELECTED_IN_BACKPACK]
 
 #We are in an area... is it a grid block? Is it full?
 func _on_slots_area_entered(area):
-	if interact_state == Interact_State.IN_WORLD: return
-	if !area.is_in_group("GridBlock"): return
-	if area.full: return
-	
-	#No, we could slot here.
-	overlapping_areas.append(area)
-	find_slotted_center()
+	if interact_state in [Interact_State.IN_WORLD,Interact_State.IN_BACKPACK,Interact_State.SELECTED_IN_BACKPACK]: return
+	if area.is_in_group("GridBlock"):
+		if area.full: return
+		
+		#No, we could slot here.
+		overlapping_areas.append(area)
+		find_slotted_center()
+		
+	elif area.is_in_group("BackpackArea") and interact_state == Interact_State.SELECTED:
+		await get_tree().process_frame
+		if area.get_parent().current_state == area.get_parent().State.ITEM_HOVER:
+			interact_state = Interact_State.DROPPABLE
 
 #We are leaving an area. If we were slotted or considering being here, we don't want to be anymore
 func _on_slots_area_exited(area):
-	if interact_state == Interact_State.IN_WORLD: return
-	if !area.is_in_group("GridBlock"): return
-	
-	#If it's not full, then we were considering entering it
-	if !area.full:
-		overlapping_areas.erase(area)
-	
-	#Even though it was not full, it might have been the slot we just left
-	elif area.contains_ref == self:
-		area.remove_item()
-		overlapping_areas.erase(area)
+	if interact_state in [Interact_State.IN_WORLD,Interact_State.IN_BACKPACK,Interact_State.SELECTED_IN_BACKPACK]: return
+	if area.is_in_group("GridBlock"):
+		
+		#If it's not full, then we were considering entering it
+		if !area.full:
+			overlapping_areas.erase(area)
+		
+		#Even though it was not full, it might have been the slot we just left
+		elif area.contains_ref == self:
+			area.remove_item()
+			overlapping_areas.erase(area)
 
-	#Always forget the topleft value?
-	center = Vector2.ZERO
-	find_slotted_center()
+		#Always forget the topleft value?
+		center = Vector2.ZERO
+		find_slotted_center()
+		
+	elif area.is_in_group("BackpackArea") and interact_state == Interact_State.DROPPABLE:
+		interact_state = Interact_State.SELECTED
 
 
 
@@ -101,20 +140,31 @@ func _unhandled_input(event):
 	if !event is InputEventMouseButton: return 
 	
 	#If we're not selectable or selected
-	if interact_state != Interact_State.SELECTABLE and interact_state != Interact_State.SELECTED \
-	and interact_state != Interact_State.SLOTTED_SELECTABLE: return
+	if interact_state not in [Interact_State.SELECTABLE, Interact_State.SELECTED, Interact_State.SLOTTED_SELECTABLE, \
+								Interact_State.DROPPABLE,Interact_State.SELECTED_IN_BACKPACK]: return
 	
 	if event.button_index == MOUSE_BUTTON_LEFT:
 		
-		#If it's a press of the click
-		if event.pressed: start_drag()
+		#If it's a press of the click and we're not in backpack
+		if event.pressed and interact_state != Interact_State.SELECTED_IN_BACKPACK: start_drag()
 		
-		#Else, if it's a release and there are not enough free slots underneath
-		elif !are_all_slots_free(): interact_state = Interact_State.SELECTABLE
+		#We are clicked and in the backpack
+		elif event.pressed and interact_state == Interact_State.SELECTED_IN_BACKPACK: 
+			reparent(loose_ref)
+			start_drag()
+		
+		#Else, if it's a release and there are not enough free slots underneath/ It is not droppable
+		elif !are_all_slots_free() and interact_state != Interact_State.DROPPABLE: interact_state = Interact_State.SELECTABLE
 		
 		#Otherwise if it's a release and the slots are free
-		else: slot()
-
+		elif are_all_slots_free(): slot()
+		
+		#Otherwise it is droppable, it's in the backpack now!
+		else: 
+			
+			backpack_ref.add_item(string_name, %ItemSprite.texture, true)
+			reparent(backpack_item_ref)
+			interact_state = Interact_State.IN_BACKPACK
 	#If we get a right click and item selected, rotate
 	elif interact_state == Interact_State.SELECTED and event.pressed and event.button_index == MOUSE_BUTTON_RIGHT:
 		rotation_degrees += 90
@@ -130,8 +180,6 @@ func slot():
 	interact_state = Interact_State.SLOTTED_SELECTABLE
 	global_position = center
 
-
-
 func start_drag():
 	
 	#We are now dragging it, it is selected, and it's a little bigger!
@@ -143,8 +191,6 @@ func start_drag():
 	#Remove any the areas a reference to this object and mark them as full
 	for area in overlapping_areas:
 		area.remove_item()
-
-
 
 func find_slotted_center():
 	

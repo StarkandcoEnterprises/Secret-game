@@ -23,13 +23,13 @@ func _ready():
  
 ## Equips a [BaseEquipment]
 func equip_item(equipment: BaseEquipment):
-	
 	var new_version = equipment.duplicate()
-	%RightHand.add_child(new_version)
-	if direction == Vector2.LEFT: face_direction()
-	
+	if !%AnimatedSprite2D.flip_h:
+		%RightHand.add_child(new_version)
+	else:
+		new_version.get_node("%ItemSprite").flip_h = true
+		%LeftHand.add_child(new_version)
 	new_version.position = Vector2.ZERO
-	
 	equipped = new_version
 
 ## Unequips any held [BaseEquipment]
@@ -42,23 +42,20 @@ func unequip_held():
 
 ## Flips sprite or equipped based on [member Hannah.direction]
 func face_direction():
-	
-	if direction == Vector2.LEFT:
-		%AnimatedSprite2D.flip_h = true
-		if %RightHand.get_child_count() > 0: 
-			%RightHand.get_child(0).reparent(%LeftHand)
-			%LeftHand.get_child(0).position = Vector2.ZERO
-			%LeftHand.get_child(0).rotation = 0
-			%LeftHand.get_child(0).get_child(0).flip_h = true
-	else:
-		%AnimatedSprite2D.flip_h = false
-		if %LeftHand.get_child_count() > 0: 
-			%LeftHand.get_child(0).reparent(%RightHand)
-			%RightHand.get_child(0).position = Vector2.ZERO
-			%RightHand.get_child(0).rotation = 0
-			%RightHand.get_child(0).get_child(0).flip_h = false
-	
 	%RayCast2D.rotation_degrees = 90*[Vector2.DOWN,Vector2.LEFT,Vector2.UP,Vector2.RIGHT].find(direction)
+	if direction == Vector2.LEFT:
+		flip_and_adjust_hand(%LeftHand, %RightHand, true)
+	else:
+		flip_and_adjust_hand(%RightHand, %LeftHand, false)
+
+func flip_and_adjust_hand(source_hand, target_hand, flip_sprite):
+	%AnimatedSprite2D.flip_h = flip_sprite
+	if source_hand.get_child_count() > 0:
+		equipped = source_hand.get_child(0)
+		equipped.reparent(target_hand)
+		equipped.position = Vector2.ZERO
+		equipped.rotation = 0
+		equipped.get_child(0).flip_h = flip_sprite
 
 ## Move based on [member Hannah.direction] * [member Hannah.speed], and handle any collisions by checking they are items and if so adding to inventory
 func _physics_process(delta):
@@ -76,7 +73,7 @@ func _physics_process(delta):
 	if collision.get_collider().interact_state != collision.get_collider().Interact_State.IN_WORLD: return
 	
 	#If it's an item, add it to the inventory
-	inventory.add_item(collision.get_collider())
+	inventory.first_add_item(collision.get_collider())
 
 
 ##Handles capturing [member Hannah.direction], interacting with [WorldObject]s, and the starting point for [method BaseEquipment.use]

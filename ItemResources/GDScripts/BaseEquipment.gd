@@ -16,7 +16,7 @@ var in_use = false
 
 #This stuff could happen when added to inventory but I added it here so it's definitely already available
 func _ready():
-	await get_tree().process_frame
+	super()
 	equipped_bar = get_tree().get_first_node_in_group("EquippedBar")
 	bar_sprite = %EquipmentBarSprite
 	durability_bar = %DurabilityBar

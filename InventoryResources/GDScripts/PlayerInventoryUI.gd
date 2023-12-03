@@ -6,8 +6,8 @@ var current_slot = 0
 
 @onready var hannah: Hannah = get_tree().get_first_node_in_group("Hannah")
 
-func add_item(item: BaseItem):
-	item.reparent(%ItemCollection)
+func first_add_item(item: BaseItem):
+	item.reparent(%LooseItems)
 	item.position = %PickupSpawn.position
 	item.added_to_inventory()
 
