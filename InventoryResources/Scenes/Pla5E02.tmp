@@ -1,4 +1,4 @@
-[gd_scene load_steps=18 format=3 uid="uid://cp1lycwjvfvbu"]
+[gd_scene load_steps=14 format=3 uid="uid://cp1lycwjvfvbu"]
 
 [ext_resource type="Script" path="res://InventoryResources/GDScripts/PlayerInventoryUI.gd" id="1_40yka"]
 [ext_resource type="Texture2D" uid="uid://54r6ntyde5ku" path="res://Art/Images/Inventory/InventoryGrid.png" id="3_805em"]
@@ -7,10 +7,7 @@
 [ext_resource type="Script" path="res://InventoryResources/Scenes/InvCam.gd" id="5_hrt7i"]
 [ext_resource type="Texture2D" uid="uid://cnbfv256bt617" path="res://Art/Images/Inventory/Backpack.png" id="6_vh5qg"]
 [ext_resource type="Script" path="res://InventoryResources/Scenes/Backpack.gd" id="7_eimyj"]
-[ext_resource type="Material" uid="uid://cp82k4qmnyipk" path="res://Art/UI/OpenBackpackMaterial.tres" id="8_6kq7e"]
-[ext_resource type="Shader" path="res://Art/UI/UIBackground.gdshader" id="8_8qwkv"]
 [ext_resource type="Script" path="res://InventoryResources/Scenes/BasePanel.gd" id="8_exe71"]
-[ext_resource type="Script" path="res://InventoryResources/Scenes/Close.gd" id="11_hwfpa"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2c26w"]
 size = Vector2(56, 655)
@@ -26,15 +23,6 @@ size = Vector2(1187, 428.75)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0stk6"]
 size = Vector2(64, 64)
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fruxg"]
-shader = ExtResource("8_8qwkv")
-shader_parameter/top_left = null
-shader_parameter/top_right = null
-shader_parameter/bottom_left = null
-shader_parameter/bottom_right = null
-shader_parameter/border_hori_threshold = 0.01
-shader_parameter/border_vert_threshold = 0.02
 
 [node name="PlayerInventoryUI" type="Control" groups=["Inventory"]]
 layout_mode = 3
@@ -130,23 +118,6 @@ unique_name_in_owner = true
 visible = false
 texture = ExtResource("3_805em")
 centered = false
-
-[node name="SubViewportContainer" type="SubViewportContainer" parent="InvSprite"]
-offset_left = 835.0
-offset_top = 50.0
-offset_right = 963.0
-offset_bottom = 178.0
-
-[node name="InvSubViewport" type="SubViewport" parent="InvSprite/SubViewportContainer"]
-unique_name_in_owner = true
-handle_input_locally = false
-gui_disable_input = true
-gui_embed_subwindows = true
-size = Vector2i(128, 128)
-render_target_update_mode = 0
-
-[node name="InvCam" type="Camera2D" parent="InvSprite/SubViewportContainer/InvSubViewport"]
-script = ExtResource("5_hrt7i")
 
 [node name="Grid" type="Node2D" parent="InvSprite"]
 position = Vector2(21, 18)
@@ -342,6 +313,27 @@ layout_mode = 2
 [node name="GridBlock62" parent="InvSprite/Grid/GridContainer" instance=ExtResource("3_lho2p")]
 layout_mode = 2
 
+[node name="ItemCollection" type="Node2D" parent="InvSprite" groups=["ItemColl"]]
+unique_name_in_owner = true
+position = Vector2(900, 330)
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="InvSprite"]
+offset_left = 835.0
+offset_top = 50.0
+offset_right = 963.0
+offset_bottom = 178.0
+
+[node name="InvSubViewport" type="SubViewport" parent="InvSprite/SubViewportContainer"]
+unique_name_in_owner = true
+handle_input_locally = false
+gui_disable_input = true
+gui_embed_subwindows = true
+size = Vector2i(128, 128)
+render_target_update_mode = 0
+
+[node name="InvCam" type="Camera2D" parent="InvSprite/SubViewportContainer/InvSubViewport"]
+script = ExtResource("5_hrt7i")
+
 [node name="LooseContainer" type="StaticBody2D" parent="InvSprite"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="InvSprite/LooseContainer"]
@@ -364,23 +356,18 @@ shape = SubResource("RectangleShape2D_ifhhy")
 unique_name_in_owner = true
 position = Vector2(896, 225)
 
-[node name="ItemCollection" type="Node2D" parent="InvSprite" groups=["ItemColl"]]
-unique_name_in_owner = true
-position = Vector2(900, 330)
-
-[node name="Backpack" type="Sprite2D" parent="InvSprite"]
+[node name="Backpack" type="Sprite2D" parent="."]
 position = Vector2(899, 235)
 texture = ExtResource("6_vh5qg")
 script = ExtResource("7_eimyj")
 
-[node name="Interact" type="Area2D" parent="InvSprite/Backpack"]
+[node name="Interact" type="Area2D" parent="Backpack"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="InvSprite/Backpack/Interact"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Backpack/Interact"]
 shape = SubResource("RectangleShape2D_0stk6")
 
-[node name="BackpackUI" type="Control" parent="InvSprite/Backpack"]
+[node name="BackpackUI" type="Control" parent="Backpack"]
 unique_name_in_owner = true
-visible = false
 layout_mode = 3
 anchors_preset = 8
 anchor_left = 0.5
@@ -395,25 +382,11 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 1
 
-[node name="BackpackBackground" type="Panel" parent="InvSprite/Backpack/BackpackUI"]
-material = ExtResource("8_6kq7e")
+[node name="BasePanel" type="NinePatchRect" parent="Backpack/BackpackUI"]
 layout_mode = 0
 offset_right = 720.0
 offset_bottom = 400.0
 script = ExtResource("8_exe71")
 
-[node name="Close" type="Button" parent="InvSprite/Backpack/BackpackUI"]
-material = SubResource("ShaderMaterial_fruxg")
-layout_mode = 0
-offset_left = 724.0
-offset_top = -82.0
-offset_right = 816.0
-theme_override_colors/font_color = Color(1, 1, 1, 1)
-text = "X"
-script = ExtResource("11_hwfpa")
-
-[connection signal="area_entered" from="InvSprite/Backpack/Interact" to="InvSprite/Backpack" method="_on_interact_area_entered"]
-[connection signal="area_exited" from="InvSprite/Backpack/Interact" to="InvSprite/Backpack" method="_on_interact_area_exited"]
-[connection signal="mouse_entered" from="InvSprite/Backpack/Interact" to="InvSprite/Backpack" method="_on_interact_mouse_entered"]
-[connection signal="mouse_exited" from="InvSprite/Backpack/Interact" to="InvSprite/Backpack" method="_on_interact_mouse_exited"]
-[connection signal="pressed" from="InvSprite/Backpack/BackpackUI/Close" to="InvSprite/Backpack" method="_on_close_pressed"]
+[connection signal="area_entered" from="Backpack/Interact" to="Backpack" method="_on_interact_area_entered"]
+[connection signal="area_exited" from="Backpack/Interact" to="Backpack" method="_on_interact_area_exited"]

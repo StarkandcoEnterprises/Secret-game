@@ -1,0 +1,12 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=3 uid="uid://cp82k4qmnyipk"]
+
+[ext_resource type="Shader" path="res://Art/UI/UIBackground.gdshader" id="1_uj5ju"]
+
+[resource]
+shader = ExtResource("1_uj5ju")
+shader_parameter/top_left = null
+shader_parameter/top_right = null
+shader_parameter/bottom_left = null
+shader_parameter/bottom_right = null
+shader_parameter/border_hori_threshold = 0.01
+shader_parameter/border_vert_threshold = 0.02
