@@ -47,32 +47,34 @@ layer_1/tile_data = PackedInt32Array()
 layer_2/name = "On ground"
 layer_2/tile_data = PackedInt32Array(393218, 655360, 3, 524295, 655360, 3, 131087, 655360, 3, 131081, 589824, 3, 458756, 589824, 3, 524303, 589824, 3, 262155, 720896, 3, 393223, 720896, 3, 393231, 589824, 1, 131089, 589824, 1)
 
-[node name="Objects" type="Node2D" parent="SubViewportContainer/SubViewport/World"]
+[node name="WorldPlacements" type="Node2D" parent="SubViewportContainer/SubViewport/World"]
 
-[node name="Sword" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("3_h8gdf")]
-
-[node name="Plants" type="Node2D" parent="SubViewportContainer/SubViewport/World/Objects" groups=["PlantsNode"]]
-unique_name_in_owner = true
-
-[node name="Bed" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects"]
+[node name="Bed" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/WorldPlacements"]
 position = Vector2(900, 100)
 script = ExtResource("5_4wxi4")
 
-[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/Bed"]
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/WorldPlacements/Bed"]
 texture = ExtResource("8_qbdht")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Bed"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/WorldPlacements/Bed"]
 shape = SubResource("RectangleShape2D_nk1bm")
 
-[node name="Crate" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/Objects"]
+[node name="Crate" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/WorldPlacements"]
 position = Vector2(700, 500)
 script = ExtResource("5_4wxi4")
 
-[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/Objects/Crate"]
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/WorldPlacements/Crate"]
 texture = ExtResource("13_haq3d")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/Objects/Crate"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/WorldPlacements/Crate"]
 shape = SubResource("RectangleShape2D_lwi1o")
+
+[node name="Plants" type="Node2D" parent="SubViewportContainer/SubViewport/World/WorldPlacements" groups=["PlantsNode"]]
+unique_name_in_owner = true
+
+[node name="Objects" type="Node2D" parent="SubViewportContainer/SubViewport/World"]
+
+[node name="Sword" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("3_h8gdf")]
 
 [node name="Stone" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("6_rthgg")]
 
