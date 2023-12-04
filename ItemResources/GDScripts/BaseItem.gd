@@ -169,14 +169,18 @@ func handle_left_click(event):
 		slot()
 	
 	# Otherwise, it is droppable, it's in the backpack now!
-	else: 
+	elif backpack_storable: 
 		handle_droppable()
+	
+	else:
+		interact_state = Interact_State.SELECTABLE
 
 # Separate function to handle actions when selected in the backpack
 func handle_backpack_selection():
 	reparent(loose_ref)
 	backpack_ref.remove_item(backpack_ref.get_parent().get_parent().index_of_selected_item)
 	backpack_ref.get_parent().get_parent().index_of_selected_item = null
+	collision_layer = 1
 	start_drag()
 
 # Separate function to handle actions when it is droppable
@@ -184,6 +188,7 @@ func handle_droppable():
 	backpack_ref.add_item(string_name, %ItemSprite.texture, true)
 	reparent(backpack_item_ref)
 	interact_state = Interact_State.IN_BACKPACK
+	collision_layer = 2
 
 # Separate function to handle rotating the selected item
 func rotate_selected_item():

@@ -13,6 +13,9 @@ var index_of_selected_item
 
 var current_state = State.SELECTABLE
 
+func _ready():
+	%BackpackItems.set_physics_process(false)
+
 func _on_interact_area_entered(area):
 	if !is_valid_item(area): return
 	if current_state != State.SELECTABLE: return
