@@ -23,11 +23,11 @@ func _ready():
 	%Daytime.start()
 	
 ## Hides [InventoryUI], disables [Hannah], calls [method DayoverUI.day_timeout] and [method Main.reset_watering_and_grow]
-func _on_daytime_timeout():
+func on_daytime_timeout():
 	
 	dayover_UI.day_timeout()
 	
-	%Hannah.inventory.visible = false
+	%Hannah.inventory.show_or_hide()
 	
 	if %Hannah.is_processing_input():
 		%Hannah.toggle_processing()
@@ -46,7 +46,7 @@ func _on_daytime_timeout():
 func next_day():
 	
 	%Hannah.toggle_processing()
-	%Hannah.inventory.visible = true
+	%Hannah.inventory.show_or_hide()
 	
 	%Daytime.wait_time = DAYTIME_VALUE
 	%Daytime.start()

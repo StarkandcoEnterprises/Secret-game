@@ -20,7 +20,7 @@ size = Vector2(64, 128)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_lwi1o"]
 size = Vector2(128, 64)
 
-[node name="Main" type="Node2D"]
+[node name="Main" type="Node2D" groups=["Main"]]
 script = ExtResource("1_u1m27")
 
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]

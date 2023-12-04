@@ -7,8 +7,8 @@ var current_slot = 0
 @onready var hannah: Hannah = get_tree().get_first_node_in_group("Hannah")
 
 func first_add_item(item: BaseItem):
-	item.reparent(%LooseItems)
-	item.position = %PickupSpawn.position
+	item.reparent(%InvSprite.get_node("%LooseItems"))
+	item.position = %InvSprite.get_node("%PickupSpawn").position
 	item.added_to_inventory()
 
 func _unhandled_input(event):
@@ -31,22 +31,21 @@ func invert_inventory_and_bar():
 	mouse_filter = MOUSE_FILTER_PASS if mouse_filter == MOUSE_FILTER_STOP else MOUSE_FILTER_STOP
 	if hannah: hannah.toggle_processing()
 
-
 ##This is not working
 func select_on_bar(new_slot: int):
 	#If we're passing 0, the same slot, or an empty slot - just unequip things.
-	if new_slot == 0 or new_slot == current_slot or %Hotbar.get_node(str("Equipped", new_slot)).get_child_count() == 0:
+	if new_slot == 0 or new_slot == current_slot or %HotbarUI.get_node("%Hotbar").get_node(str("Equipped", new_slot)).get_child_count() == 0:
 		if hannah:
 			hannah.unequip_held()
 			
 		#Clear our old ref rect
 		if current_slot != 0:
-			%Hotbar.get_node(str("Equipped", current_slot)).get_child(1).queue_free()
+			%HotbarUI.get_node("%Hotbar").get_node(str("Equipped", current_slot)).get_child(1).queue_free()
 			current_slot = 0
 		return
 	
 	if current_slot != 0: 
-		%Hotbar.get_node(str("Equipped", current_slot)).get_child(1).queue_free()
+		%HotbarUI.get_node("%Hotbar").get_node(str("Equipped", current_slot)).get_child(1).queue_free()
 		hannah.unequip_held()
 	
 	#Unequip current if the passed slot is empty
@@ -56,13 +55,15 @@ func select_on_bar(new_slot: int):
 	reference_rect.editor_only = false
 	reference_rect.size = Vector2(64, 55)
 	reference_rect.position = Vector2(5,0)
-	%Hotbar.get_node(str("Equipped", new_slot)).add_child(reference_rect)
+	%HotbarUI.get_node("%Hotbar").get_node(str("Equipped", new_slot)).add_child(reference_rect)
 	
 	current_slot = new_slot
 	
 	#Equip
 	if hannah: 
-		hannah.equip_item(%Hotbar.get_node(str("Equipped", new_slot)).get_child(0).parent.duplicate())
+		hannah.equip_item(%HotbarUI.get_node("%Hotbar").get_node(str("Equipped", new_slot)).get_child(0).parent.duplicate())
 		hannah.equipped.rotation_degrees = 0
 		hannah.equipped.interact_state = hannah.equipped.Interact_State.IN_WORLD 
 
+func show_or_hide():
+	visible = !visible

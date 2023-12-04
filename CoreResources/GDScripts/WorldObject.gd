@@ -22,7 +22,7 @@ func _ready():
 	await get_tree().process_frame
 	dialogue_UI = get_tree().get_first_node_in_group("DialogueUI")
 	hannah = get_tree().get_first_node_in_group("Hannah")
-	main = get_tree().root.get_child(0)
+	main = get_tree().get_first_node_in_group("Main")
 	dialogue_UI.get_node("%Yes").pressed.connect(_on_yes_pressed)
 	dialogue_UI.get_node("%No").pressed.connect(_on_no_pressed)
 
@@ -62,7 +62,7 @@ func _on_no_pressed():
 ## Current implementation to be moved to a bed object
 func _on_yes_pressed():
 	if name == "Bed":
-		main._on_daytime_timeout()
+		main.on_daytime_timeout()
 		dialogue_UI.toggle_UI_visibility()
 		dialogue_UI.toggle_option_visibility()
 

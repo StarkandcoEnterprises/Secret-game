@@ -44,9 +44,9 @@ func unequip_held():
 func face_direction():
 	%RayCast2D.rotation_degrees = 90*[Vector2.DOWN,Vector2.LEFT,Vector2.UP,Vector2.RIGHT].find(direction)
 	if direction == Vector2.LEFT:
-		flip_and_adjust_hand(%LeftHand, %RightHand, true)
+		flip_and_adjust_hand(%RightHand, %LeftHand, true)
 	else:
-		flip_and_adjust_hand(%RightHand, %LeftHand, false)
+		flip_and_adjust_hand(%LeftHand, %RightHand, false)
 
 func flip_and_adjust_hand(source_hand, target_hand, flip_sprite):
 	%AnimatedSprite2D.flip_h = flip_sprite

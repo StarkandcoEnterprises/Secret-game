@@ -1,0 +1,84 @@
+[gd_scene load_steps=2 format=3 uid="uid://bsvkfnywpkchn"]
+
+[ext_resource type="Texture2D" uid="uid://bgk71dfa0v4q" path="res://Art/Images/Inventory/ItemBar.png" id="1_fpnkn"]
+
+[node name="HotbarUI" type="Control"]
+layout_mode = 3
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -304.0
+offset_top = -64.0
+offset_right = 304.0
+grow_horizontal = 2
+grow_vertical = 0
+mouse_filter = 1
+
+[node name="EquippedSprite" type="Sprite2D" parent="."]
+texture = ExtResource("1_fpnkn")
+centered = false
+
+[node name="HotbarContainer" type="Control" parent="."]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+anchors_preset = 0
+offset_left = 4.0
+offset_top = 8.0
+offset_right = 604.0
+offset_bottom = 64.0
+mouse_filter = 1
+
+[node name="Hotbar" type="HBoxContainer" parent="HotbarContainer" groups=["EquippedBar"]]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.0133333
+anchor_top = 0.125
+anchor_right = -0.0133333
+anchor_bottom = 0.125
+offset_top = -7.0
+offset_right = 608.0
+offset_bottom = 57.0
+grow_horizontal = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 3
+alignment = 1
+metadata/_edit_use_anchors_ = true
+
+[node name="Equipped1" type="Control" parent="HotbarContainer/Hotbar" groups=["EquipSlots"]]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="Equipped2" type="Control" parent="HotbarContainer/Hotbar" groups=["EquipSlots"]]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="Equipped3" type="Control" parent="HotbarContainer/Hotbar" groups=["EquipSlots"]]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="Equipped4" type="Control" parent="HotbarContainer/Hotbar" groups=["EquipSlots"]]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="Equipped5" type="Control" parent="HotbarContainer/Hotbar" groups=["EquipSlots"]]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="Equipped6" type="Control" parent="HotbarContainer/Hotbar" groups=["EquipSlots"]]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="Equipped7" type="Control" parent="HotbarContainer/Hotbar" groups=["EquipSlots"]]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="Equipped8" type="Control" parent="HotbarContainer/Hotbar" groups=["EquipSlots"]]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
+
+[node name="Equipped9" type="Control" parent="HotbarContainer/Hotbar" groups=["EquipSlots"]]
+custom_minimum_size = Vector2(64, 0)
+layout_mode = 2
