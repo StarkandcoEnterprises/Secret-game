@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://clhvm8eww1y6f"]
 
-[ext_resource type="Script" path="res://InventoryResources/Scenes/InvCam.gd" id="1_44wgy"]
+[ext_resource type="Script" path="res://InventoryResources/GDScripts/InvCam.gd" id="1_44wgy"]
 
 [node name="SubViewportContainer" type="SubViewportContainer"]
 offset_left = 835.0

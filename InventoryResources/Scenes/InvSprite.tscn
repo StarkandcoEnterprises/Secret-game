@@ -3,7 +3,7 @@
 [ext_resource type="Texture2D" uid="uid://54r6ntyde5ku" path="res://Art/Images/Inventory/InventoryGrid.png" id="1_cg7mn"]
 [ext_resource type="PackedScene" uid="uid://clhvm8eww1y6f" path="res://InventoryResources/Scenes/InvCam.tscn" id="2_oykpp"]
 [ext_resource type="PackedScene" uid="uid://dxwcslf2sife4" path="res://InventoryResources/Scenes/GridBlock.tscn" id="3_aihkd"]
-[ext_resource type="Script" path="res://InventoryResources/Scenes/EquipGrid.gd" id="3_uoghs"]
+[ext_resource type="Script" path="res://InventoryResources/GDScripts/EquipGrid.gd" id="3_uoghs"]
 [ext_resource type="PackedScene" uid="uid://cy5qbhuf8pqdl" path="res://InventoryResources/Scenes/Backpack.tscn" id="5_yek8w"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2c26w"]

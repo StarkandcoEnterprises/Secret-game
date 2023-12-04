@@ -37,6 +37,7 @@ func _ready():
 	loose_ref = get_tree().get_first_node_in_group("LooseItems")
 	backpack_ref = get_tree().get_first_node_in_group("Backpack")
 	backpack_item_ref = get_tree().get_first_node_in_group("BackpackItems")
+	
 	regex.compile("[A-Z][a-z]+")
 	var matches = regex.search_all(name)
 	for case in matches:
@@ -160,7 +161,7 @@ func handle_left_click(event):
 	elif interact_state == Interact_State.SELECTED_IN_BACKPACK: 
 		handle_backpack_selection()
 	
-	# Else, if it's a release and there are not enough free slots underneath / It is not droppable
+	# Else, if it's a release and there are not enough free slots underneath / It is not droppable, fall
 	elif not are_all_slots_free() and interact_state != Interact_State.DROPPABLE: 
 		interact_state = Interact_State.SELECTABLE
 	
@@ -172,6 +173,7 @@ func handle_left_click(event):
 	elif backpack_storable: 
 		handle_droppable()
 	
+	#Otherwise fall
 	else:
 		interact_state = Interact_State.SELECTABLE
 
