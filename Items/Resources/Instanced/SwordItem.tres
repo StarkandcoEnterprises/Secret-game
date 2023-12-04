@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="ItemPropertiesResource" load_steps=2 format=3 uid="uid://ckejrkx81j13q"]
+
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/ItemPropertiesResource.gd" id="1_ke2qt"]
+
+[resource]
+script = ExtResource("1_ke2qt")
+price = 5000
+slots_needed = 2

@@ -1,0 +1,45 @@
+[gd_scene load_steps=11 format=3 uid="uid://ncboup6o1765"]
+
+[ext_resource type="PackedScene" uid="uid://cfkgfq3yopgbq" path="res://Items/Scenes/Core/BaseEquipment.tscn" id="1_u7aok"]
+[ext_resource type="Texture2D" uid="uid://ekvvagy55l02" path="res://Art/Images/Crops/Corn/CornSeed.png" id="2_2tkgf"]
+[ext_resource type="Script" path="res://Items/GDScripts/Instanced/CornSeed.gd" id="2_4mdqb"]
+[ext_resource type="PackedScene" uid="uid://c4ah0j8wvv755" path="res://Plants/Scenes/Instanced/CornPlant.tscn" id="3_3qyht"]
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/EquipmentPropertiesResource.gd" id="4_7pi2w"]
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/ItemPropertiesResource.gd" id="5_b64ip"]
+
+[sub_resource type="Resource" id="Resource_ls1gl"]
+script = ExtResource("4_7pi2w")
+durability = 1
+max_durability = 100
+
+[sub_resource type="Resource" id="Resource_opqgc"]
+script = ExtResource("5_b64ip")
+price = 100
+slots_needed = 1
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_i0w5d"]
+resource_local_to_scene = true
+size = Vector2(40, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fua2s"]
+resource_local_to_scene = true
+size = Vector2(40, 40)
+
+[node name="CornSeed" instance=ExtResource("1_u7aok")]
+script = ExtResource("2_4mdqb")
+seed_scene = ExtResource("3_3qyht")
+equipment_properties = SubResource("Resource_ls1gl")
+discarded_on_use = true
+item_properties = SubResource("Resource_opqgc")
+
+[node name="ItemSprite" parent="." index="0"]
+texture = ExtResource("2_2tkgf")
+
+[node name="ItemCharShape" parent="." index="1"]
+shape = SubResource("RectangleShape2D_i0w5d")
+
+[node name="ItemSlotsShape" parent="ItemUsedSlots" index="0"]
+shape = SubResource("RectangleShape2D_fua2s")
+
+[node name="EquipmentBarSprite" parent="." index="3"]
+texture = ExtResource("2_2tkgf")

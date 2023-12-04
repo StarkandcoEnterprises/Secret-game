@@ -1,0 +1,19 @@
+[gd_scene load_steps=3 format=3 uid="uid://dxwcslf2sife4"]
+
+[ext_resource type="Script" path="res://Inventory/GDScripts/GridBlock.gd" id="1_g2t1c"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rqafy"]
+size = Vector2(6, 6)
+
+[node name="GridBlock" type="Control"]
+custom_minimum_size = Vector2(47.5, 48)
+layout_mode = 3
+anchors_preset = 0
+mouse_filter = 1
+
+[node name="Area2D" type="Area2D" parent="." groups=["GridBlock"]]
+script = ExtResource("1_g2t1c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(24, 24)
+shape = SubResource("RectangleShape2D_rqafy")

@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://cp1lycwjvfvbu"]
+
+[ext_resource type="Script" path="res://Inventory/GDScripts/PlayerInventoryUI.gd" id="1_40yka"]
+[ext_resource type="PackedScene" uid="uid://bsvkfnywpkchn" path="res://Inventory/Scenes/HotbarUI.tscn" id="2_geyxw"]
+[ext_resource type="PackedScene" uid="uid://cx5nrct0a17qy" path="res://Inventory/Scenes/InvSprite.tscn" id="3_8hmjt"]
+
+[node name="PlayerInventoryUI" type="Control" groups=["Inventory"]]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("1_40yka")
+
+[node name="HotbarUI" parent="." instance=ExtResource("2_geyxw")]
+unique_name_in_owner = true
+layout_mode = 1
+
+[node name="InvSprite" parent="." instance=ExtResource("3_8hmjt")]
+unique_name_in_owner = true

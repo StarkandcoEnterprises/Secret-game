@@ -1,0 +1,33 @@
+[gd_scene load_steps=8 format=3 uid="uid://vrklgttf0tdi"]
+
+[ext_resource type="PackedScene" uid="uid://cfkgfq3yopgbq" path="res://Items/Scenes/Core/BaseEquipment.tscn" id="1_lxnjj"]
+[ext_resource type="Resource" uid="uid://cfvavcwjtjnol" path="res://Items/Resources/Instanced/WateringCanEquipment.tres" id="2_2o5od"]
+[ext_resource type="Script" path="res://Items/GDScripts/Instanced/WateringCan.gd" id="2_hevdl"]
+[ext_resource type="Texture2D" uid="uid://bjxvmatrivj87" path="res://Art/Images/Items/Tools/WateringCan.png" id="2_piv82"]
+[ext_resource type="Resource" uid="uid://cji4grq5vmcov" path="res://Items/Resources/Instanced/WateringCanItem.tres" id="3_ar314"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bn16h"]
+resource_local_to_scene = true
+size = Vector2(40, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_esb3n"]
+resource_local_to_scene = true
+size = Vector2(40, 40)
+
+[node name="WateringCan" instance=ExtResource("1_lxnjj")]
+script = ExtResource("2_hevdl")
+equipment_properties = ExtResource("2_2o5od")
+discarded_on_use = false
+item_properties = ExtResource("3_ar314")
+
+[node name="ItemSprite" parent="." index="0"]
+texture = ExtResource("2_piv82")
+
+[node name="ItemCharShape" parent="." index="1"]
+shape = SubResource("RectangleShape2D_bn16h")
+
+[node name="ItemSlotsShape" parent="ItemUsedSlots" index="0"]
+shape = SubResource("RectangleShape2D_esb3n")
+
+[node name="EquipmentBarSprite" parent="." index="3"]
+texture = ExtResource("2_piv82")

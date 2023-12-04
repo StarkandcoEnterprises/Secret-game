@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="EquipmentPropertiesResource" load_steps=2 format=3 uid="uid://7hh4tvaoxbq6"]
-
-[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/EquipmentPropertiesResource.gd" id="1_sainl"]
-
-[resource]
-script = ExtResource("1_sainl")
-durability = 20
-max_durability = 20

@@ -1,0 +1,25 @@
+[gd_scene load_steps=6 format=3 uid="uid://cx85qdydat8pe"]
+
+[ext_resource type="PackedScene" uid="uid://unaoh2lply4h" path="res://Items/Scenes/Core/BaseItem.tscn" id="1_hbw32"]
+[ext_resource type="Resource" uid="uid://cctka64f6vsyn" path="res://Items/Resources/Instanced/Stone.tres" id="2_6br8h"]
+[ext_resource type="Texture2D" uid="uid://ds5oct7yvemlv" path="res://Art/Images/Items/Crafting/Stone.png" id="2_uiw3k"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ngp5b"]
+resource_local_to_scene = true
+size = Vector2(40, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_lt6qj"]
+resource_local_to_scene = true
+size = Vector2(40, 40)
+
+[node name="Stone" instance=ExtResource("1_hbw32")]
+item_properties = ExtResource("2_6br8h")
+
+[node name="ItemSprite" parent="." index="0"]
+texture = ExtResource("2_uiw3k")
+
+[node name="ItemCharShape" parent="." index="1"]
+shape = SubResource("RectangleShape2D_ngp5b")
+
+[node name="ItemSlotsShape" parent="ItemUsedSlots" index="0"]
+shape = SubResource("RectangleShape2D_lt6qj")

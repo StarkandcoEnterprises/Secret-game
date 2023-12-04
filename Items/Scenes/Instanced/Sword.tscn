@@ -1,0 +1,26 @@
+[gd_scene load_steps=8 format=3 uid="uid://d1jsmi6uh27f4"]
+
+[ext_resource type="PackedScene" uid="uid://hxpjbiqmim05" path="res://Items/Scenes/Core/BaseWeapon.tscn" id="1_vslw3"]
+[ext_resource type="Resource" uid="uid://cdaltjk578tua" path="res://Items/Resources/Instanced/SwordWeapon.tres" id="2_36pm5"]
+[ext_resource type="Resource" uid="uid://d31j5jqhgs7fj" path="res://Items/Resources/Instanced/SwordEquipment.tres" id="3_jn8fq"]
+[ext_resource type="Resource" uid="uid://ckejrkx81j13q" path="res://Items/Resources/Instanced/SwordItem.tres" id="4_7xkpp"]
+[ext_resource type="Texture2D" uid="uid://j7iuvrxmvliu" path="res://Art/Images/Items/Weapons/Sword2.png" id="5_m2kpl"]
+[ext_resource type="Shape2D" uid="uid://bnxj8owogslgt" path="res://Items/Scenes/Core/SlotUseScenes/DoubleSlot.tres" id="6_er02q"]
+[ext_resource type="Texture2D" uid="uid://die0ho437c2kg" path="res://Art/Images/Items/Weapons/Sword.png" id="7_wk45k"]
+
+[node name="Sword" instance=ExtResource("1_vslw3")]
+abstract_properties = ExtResource("2_36pm5")
+equipment_properties = ExtResource("3_jn8fq")
+item_properties = ExtResource("4_7xkpp")
+
+[node name="ItemSprite" parent="." index="0"]
+texture = ExtResource("5_m2kpl")
+
+[node name="ItemCharShape" parent="." index="1"]
+shape = ExtResource("6_er02q")
+
+[node name="ItemSlotsShape" parent="ItemUsedSlots" index="0"]
+shape = ExtResource("6_er02q")
+
+[node name="EquipmentBarSprite" parent="." index="3"]
+texture = ExtResource("7_wk45k")

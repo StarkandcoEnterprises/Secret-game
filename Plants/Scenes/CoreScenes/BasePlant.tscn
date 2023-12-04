@@ -1,0 +1,38 @@
+[gd_scene load_steps=12 format=3 uid="uid://c5siac6rsa28v"]
+
+[ext_resource type="Script" path="res://Plants/GDScripts/BasePlant.gd" id="1_ja02e"]
+[ext_resource type="Script" path="res://Plants/GDScripts/PlantResource.gd" id="2_817qe"]
+[ext_resource type="Texture2D" uid="uid://n1wyyh5v8uce" path="res://Art/Images/Crops/PlantedSeed.png" id="2_dbhg3"]
+[ext_resource type="Texture2D" uid="uid://bq1hua4msahwu" path="res://Art/Images/Crops/Corn/CornSprout.png" id="3_0xwff"]
+[ext_resource type="Script" path="res://Plants/GDScripts/PlantSprite.gd" id="3_mv2us"]
+[ext_resource type="Texture2D" uid="uid://ctuaccol3ah6p" path="res://Art/Images/Crops/Corn/CornGrowth1.png" id="4_me67h"]
+[ext_resource type="Texture2D" uid="uid://br7ujmul1jyyp" path="res://Art/Images/Crops/Corn/CornGrowth2.png" id="5_jariv"]
+[ext_resource type="Texture2D" uid="uid://b0hf6i8exkpsy" path="res://Art/Images/Crops/Corn/CornGrowth3.png" id="6_i1u1a"]
+[ext_resource type="Texture2D" uid="uid://nvesdbwq6kh8" path="res://Art/Images/Crops/Corn/CornGrown.png" id="7_din0l"]
+
+[sub_resource type="Resource" id="Resource_wlsub"]
+script = ExtResource("2_817qe")
+min_sprout = 8
+max_sprout = 21
+first_growth = 10
+second_growth = 25
+third_growth = 65
+max_planted_days = 125
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_6p33m"]
+size = Vector2(64, 64)
+
+[node name="Corn" type="StaticBody2D"]
+position = Vector2(200, 200)
+script = ExtResource("1_ja02e")
+plant_resource = SubResource("Resource_wlsub")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_6p33m")
+
+[node name="PlantSprite" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, 8)
+texture = ExtResource("2_dbhg3")
+script = ExtResource("3_mv2us")
+plant_sprites = Array[Texture2D]([ExtResource("2_dbhg3"), ExtResource("3_0xwff"), ExtResource("4_me67h"), ExtResource("5_jariv"), ExtResource("6_i1u1a"), ExtResource("7_din0l")])

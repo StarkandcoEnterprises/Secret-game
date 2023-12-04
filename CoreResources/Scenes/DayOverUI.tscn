@@ -1,6 +1,6 @@
 [gd_scene load_steps=3 format=3 uid="uid://ccthdeb3aigs8"]
 
-[ext_resource type="Theme" uid="uid://d2t4qqcop8je" path="res://CoreResources/OtherResources/Dayover.tres" id="1_h8mgk"]
+[ext_resource type="Theme" uid="uid://d2t4qqcop8je" path="res://CoreResources/Resources/Dayover.tres" id="1_h8mgk"]
 [ext_resource type="Script" path="res://CoreResources/GDScripts/DayOverUI.gd" id="1_orp8c"]
 
 [node name="DayOverUI" type="Control" groups=["DayOverUI"]]

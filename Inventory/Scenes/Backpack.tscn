@@ -1,0 +1,96 @@
+[gd_scene load_steps=9 format=3 uid="uid://cy5qbhuf8pqdl"]
+
+[ext_resource type="Texture2D" uid="uid://cnbfv256bt617" path="res://Art/Images/Inventory/Backpack.png" id="1_qhfc2"]
+[ext_resource type="Script" path="res://Inventory/GDScripts/Backpack.gd" id="2_tu4lo"]
+[ext_resource type="Material" uid="uid://cp82k4qmnyipk" path="res://Art/UI/OpenBackpackMaterial.tres" id="3_6pdqf"]
+[ext_resource type="Script" path="res://Inventory/GDScripts/BasePanel.gd" id="4_1njqv"]
+[ext_resource type="Script" path="res://Inventory/GDScripts/CustItemList.gd" id="5_h28ga"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_0stk6"]
+size = Vector2(64, 64)
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_pimes"]
+
+[sub_resource type="Theme" id="Theme_rp5yy"]
+ItemList/colors/font_color = Color(1, 1, 1, 1)
+ItemList/styles/panel = SubResource("StyleBoxEmpty_pimes")
+
+[node name="Backpack" type="Sprite2D"]
+position = Vector2(899, 235)
+texture = ExtResource("1_qhfc2")
+script = ExtResource("2_tu4lo")
+
+[node name="Interact" type="Area2D" parent="." groups=["BackpackArea"]]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interact"]
+shape = SubResource("RectangleShape2D_0stk6")
+
+[node name="Open" type="Button" parent="."]
+modulate = Color(1, 1, 1, 0)
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+
+[node name="BackpackUI" type="Control" parent="."]
+unique_name_in_owner = true
+visible = false
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -529.0
+offset_top = -154.0
+offset_right = -129.0
+offset_bottom = 246.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+
+[node name="BackpackBackground" type="Panel" parent="BackpackUI"]
+material = ExtResource("3_6pdqf")
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -200.0
+offset_right = 200.0
+offset_bottom = 200.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("4_1njqv")
+
+[node name="ItemList" type="ItemList" parent="BackpackUI" groups=["Backpack"]]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(378, 378)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -190.0
+offset_top = -190.0
+offset_right = 188.0
+offset_bottom = 188.0
+grow_horizontal = 2
+grow_vertical = 2
+theme = SubResource("Theme_rp5yy")
+fixed_column_width = 378
+fixed_icon_size = Vector2i(64, 64)
+script = ExtResource("5_h28ga")
+
+[node name="BackpackItems" type="Node2D" parent="BackpackUI" groups=["BackpackItems"]]
+unique_name_in_owner = true
+visible = false
+
+[connection signal="area_entered" from="Interact" to="." method="_on_interact_area_entered"]
+[connection signal="area_exited" from="Interact" to="." method="_on_interact_area_exited"]
+[connection signal="pressed" from="Open" to="." method="_on_open_pressed"]
+[connection signal="empty_clicked" from="BackpackUI/ItemList" to="." method="_on_item_list_empty_clicked"]
+[connection signal="item_selected" from="BackpackUI/ItemList" to="." method="_on_item_list_item_selected"]
