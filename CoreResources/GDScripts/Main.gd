@@ -29,7 +29,8 @@ func _ready():
 ## Hides [InventoryUI], disables [Hannah], calls [method DayoverUI.day_timeout] and [method Main.reset_watering_and_grow]
 func _on_daytime_timeout():
 	if dialogue_UI.calling_object:
-		dialogue_UI._on_option_selected("end_dialogue")
+		await dialogue_UI._on_option_selected("end_dialogue")
+		
 	dayover_UI.day_timeout()
 
 	if %Hannah.inventory.is_visible():

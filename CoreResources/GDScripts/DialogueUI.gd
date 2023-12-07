@@ -10,13 +10,15 @@ class_name DialogueManager
 @onready var optionsContainer : GridContainer = %OptionHolder
 ## Empty [Dictionary] to store the provided data for an interaction
 var dialogueTree : Dictionary
-
+## Empty ref for the calling object to callback to
 var calling_object
 
+## Calls the base panel stuff for the gradient shader and hides the panel
 func _ready(): 
 	super()
 	hide() 
 
+## Handles showing the panel, storing dialogue tree/calling object, and sets up the first text
 func show_dialogue(object_that_called, dialogue_data : Dictionary):
 	calling_object = object_that_called
 	# Show the panel 
@@ -26,51 +28,62 @@ func show_dialogue(object_that_called, dialogue_data : Dictionary):
 	# Set initial dialogue text 
 	set_dialogue_text(dialogueTree["text"]) 
 	# Generate option labels 
-	generate_option_labels(dialogueTree["options"])
+	generate_options_and_labels(dialogueTree["options"])
 
+## Sets the text of the dialogue label
 func set_dialogue_text(text : String): 
 	# Set the text of the dialogue label 
 	dialogueText.text = text 
 
-func generate_option_labels(options : Array): 
-	# Clear existing option labels 
-	for child in optionsContainer.get_children():
-		optionsContainer.remove_child(child)
-		child.queue_free()
-	# Generate option labels dynamically 
-	for option in options: 
-		var option_button = Button.new() 
-		option_button.text = option["text"] 
-		option_button.flat = true
-		option_button.add_theme_color_override("font_shadow_color", Color.BLACK)
-		option_button.add_theme_color_override("font_outline_color", Color.BLACK)
-		option_button.add_theme_constant_override("shadow_outline_size", 2) 
-		option_button.add_theme_constant_override("shadow_offset_x", 1) 
-		option_button.add_theme_constant_override("shadow_offset_y", 1) 
-		option_button.add_theme_constant_override("outline_size", 2) 
-		option_button.set_size(Vector2(125, 30))
-		option_button.alignment = HORIZONTAL_ALIGNMENT_LEFT
-		# Connect the label's pressed signal to an _on_option_selected function
-		option_button.pressed.connect(_on_option_selected.bind(option["callback"])) 
-		option_button.mouse_entered.connect(_on_option_button_mouse_entered.bind(option_button))
-		optionsContainer.add_child(option_button) 
-		
-	var option_size = Vector2(125, 30)
-	var margin = Vector2(10, 10)  # Margin size
-	var container_min_size = option_size * Vector2(1, options.size()) + 2 * margin
-	%OptionPanel.custom_minimum_size = container_min_size
-
-
+## Calls the original objects method to handle the callbacks
 func _on_option_selected(callback_name : String): 
 	# Hide the dialogue panel 
 	hide()
 	# Assuming the parent is the interactable object 
 	calling_object.call_dialogue_callback(callback_name) 
 	calling_object = null
+	%Cursor.global_position.x = -61
 
+## Hovers the cursor over the option entered by mouse
 func _on_option_button_mouse_entered(button: Button):
 	# Calculate the new position of the cursor
 	%Cursor.global_position = button.global_position + Vector2(-%Cursor.texture.get_size().x, 0)
 	
 	var offset = Vector2(10, 20)  # Adjust this value as needed
 	%Cursor.global_position += offset
+
+
+## Clears any previous options and sets up buttons and labels for each new options
+func generate_options_and_labels(options : Array): 
+	# Clear existing option labels 
+	for child in optionsContainer.get_children():
+		child.queue_free()
+		
+	for option in options:
+		# Create a new Button node
+		var button = Button.new()
+		optionsContainer.add_child(button)
+		button.flat = true
+		button.custom_minimum_size = Vector2(125, 30)
+		button.pressed.connect(_on_option_selected.bind(option["callback"])) 
+		button.mouse_entered.connect(_on_option_button_mouse_entered.bind(button))
+		
+		# Create a new Label node as a child of the Button node
+		var label = Label.new()
+		button.add_child(label)
+		
+		# Set the text of the Label node
+		label.text = option["text"]
+		
+		# Apply the same shadow settings as the dialogueText Label
+		label.add_theme_color_override("font_shadow_color", Color.BLACK)
+		label.add_theme_color_override("font_outline_color", Color.BLACK)
+		label.add_theme_constant_override("shadow_offset_x", 1)
+		label.add_theme_constant_override("shadow_offset_y", 1)
+		label.add_theme_constant_override("outline_size", 2)
+		label.add_theme_constant_override("shadow_outline_size", 2)
+
+	var option_size = Vector2(125, 30)
+	var margin = Vector2(15, 15)  # Margin size
+	var container_min_size = option_size * Vector2(1, options.size()) + 2 * margin
+	%OptionPanel.custom_minimum_size = container_min_size

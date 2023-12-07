@@ -28,4 +28,5 @@ func call_dialogue_callback(callback_name):
 	match callback_name:
 		"on_day_over":
 			main._on_daytime_timeout()
-	super(callback_name)
+		var _default:
+			super(callback_name)
