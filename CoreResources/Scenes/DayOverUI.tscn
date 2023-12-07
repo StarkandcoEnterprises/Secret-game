@@ -41,4 +41,8 @@ grow_vertical = 0
 theme = ExtResource("1_h8mgk")
 text = "Next Day"
 
+[node name="Timer" type="Timer" parent="."]
+unique_name_in_owner = true
+one_shot = true
+
 [connection signal="pressed" from="NextDay" to="." method="_on_next_day_pressed"]
