@@ -3,7 +3,7 @@ extends CharacterBody2D
 class_name BaseItem
 
 @export var item_properties: ItemPropertiesResource
-@export var backpack_storable: bool = true
+
 
 
 enum Interact_State {
@@ -13,6 +13,7 @@ enum Interact_State {
 	SELECTED,
 	SLOTTED_SELECTABLE,
 	SLOTTED,
+	EQUIPPED,
 	DROPPABLE,
 	IN_BACKPACK,
 	SELECTED_IN_BACKPACK
@@ -56,7 +57,8 @@ func _process(delta):
 
 func should_skip_processing() -> bool:
 	return interact_state in [Interact_State.SLOTTED, Interact_State.SLOTTED_SELECTABLE, \
-								Interact_State.IN_WORLD, Interact_State.IN_BACKPACK, Interact_State.SELECTED_IN_BACKPACK]
+								Interact_State.IN_WORLD, Interact_State.IN_BACKPACK, \
+								Interact_State.SELECTED_IN_BACKPACK, Interact_State.EQUIPPED]
 
 func handle_movement(delta):
 	if interact_state in [Interact_State.SELECTED, Interact_State.DROPPABLE]:
@@ -176,7 +178,7 @@ func handle_left_click(event):
 		slot()
 	
 	# Otherwise, it is droppable, it's in the backpack now!
-	elif backpack_storable: 
+	elif item_properties.backpack_storable: 
 		handle_drop()
 	
 	#Otherwise fall

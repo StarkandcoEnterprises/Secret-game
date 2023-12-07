@@ -1,12 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://6wfbysp7xism"]
+[gd_scene load_steps=3 format=3 uid="uid://6wfbysp7xism"]
 
 [ext_resource type="Script" path="res://Debug/GDScripts/DebugOutput.gd" id="1_nrxht"]
+[ext_resource type="PackedScene" uid="uid://ncboup6o1765" path="res://Items/Scenes/Instanced/CornSeed.tscn" id="2_h22e2"]
 
 [node name="Window" type="Window" groups=["DebugOutput"]]
 position = Vector2i(0, 36)
 size = Vector2i(500, 600)
 visible = false
 script = ExtResource("1_nrxht")
+corn_seed = ExtResource("2_h22e2")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 offset_right = 40.0
@@ -23,7 +25,7 @@ text = "FPS: 145"
 [node name="ObjectCount" type="Label" parent="VBoxContainer/HBoxContainer" groups=["ObjectCountOut"]]
 unique_name_in_owner = true
 layout_mode = 2
-text = "#Objects: 67861"
+text = "#Objects: 77019"
 
 [node name="Spawn Seed" type="Button" parent="VBoxContainer"]
 layout_mode = 2

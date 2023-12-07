@@ -2,9 +2,15 @@ extends BasePanel
 
 class_name DialogueManager
 
+## Manages display for any in game text interactions with objects or characters.
+
+## Ref to [Label] that is the container for any dialogue tetx 
 @onready var dialogueText : Label = %DialogueText
+## Ref to the [GridContainer] that holds any options necessary for the dialogue
 @onready var optionsContainer : GridContainer = %OptionHolder
+## Empty [Dictionary] to store the provided data for an interaction
 var dialogueTree : Dictionary
+
 var calling_object
 
 func _ready(): 

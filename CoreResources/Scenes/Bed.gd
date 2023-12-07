@@ -23,7 +23,7 @@ func _ready():
 	]
 }
 
-
+## Calls [method Main._on_daytime_timeout] if user selectes "Yes" option after [method Hannah.interact] with [Bed]
 func call_dialogue_callback(callback_name):
 	match callback_name:
 		"on_day_over":

@@ -51,10 +51,10 @@ func select_on_bar(new_slot: int):
 	#Unequip current if the passed slot is empty
 	
 	#Highlight the selected box
-	var reference_rect = ReferenceRect.new() 
-	reference_rect.editor_only = false
-	reference_rect.size = Vector2(64, 64)
-	%HotbarUI.get_node("%Hotbar").get_node(str("Equipped", new_slot)).add_child(reference_rect)
+	var highlight = Sprite2D.new()
+	highlight.texture = preload("res://Art/Images/Inventory/Highlight.png") 
+	highlight.position = Vector2(32, 32)  # Center the highlight on the item
+	%HotbarUI.get_node("%Hotbar").get_node(str("Equipped", new_slot)).add_child(highlight)
 	
 	current_slot = new_slot
 	
@@ -62,7 +62,6 @@ func select_on_bar(new_slot: int):
 	if hannah: 
 		hannah.equip_item(%HotbarUI.get_node("%Hotbar").get_node(str("Equipped", new_slot)).get_child(0).parent.duplicate())
 		hannah.equipped.rotation_degrees = 0
-		hannah.equipped.interact_state = hannah.equipped.Interact_State.IN_WORLD 
 
 func show_or_hide():
 	visible = !visible

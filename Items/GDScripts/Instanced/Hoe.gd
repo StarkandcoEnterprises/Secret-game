@@ -2,7 +2,7 @@ extends BaseEquipment
 
 class_name Hoe
 
-@onready var map: TileMap  = get_tree().get_nodes_in_group("Map")[0]
+@onready var map: TileMap  = get_tree().get_first_node_in_group("Map") 
 
 func use():
 	super()

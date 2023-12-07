@@ -24,12 +24,13 @@ func _ready():
 ## Equips a [BaseEquipment]
 func equip_item(equipment: BaseEquipment):
 	var new_version = equipment.duplicate()
+	new_version.position = Vector2.ZERO
+	new_version.interact_state = new_version.Interact_State.EQUIPPED
 	if !%AnimatedSprite2D.flip_h:
 		%RightHand.add_child(new_version)
 	else:
 		new_version.get_node("%ItemSprite").flip_h = true
 		%LeftHand.add_child(new_version)
-	new_version.position = Vector2.ZERO
 	equipped = new_version
 
 ## Unequips any held [BaseEquipment]
@@ -69,8 +70,7 @@ func _physics_process(delta):
 	if !collision: return
 	
 	if !collision.get_collider() is BaseItem: return
-	
-	if collision.get_collider().interact_state != collision.get_collider().Interact_State.IN_WORLD: return
+	if collision.get_collider().interact_state not in [collision.get_collider().Interact_State.IN_WORLD]: return
 	
 	#If it's an item, add it to the inventory
 	inventory.first_add_item(collision.get_collider())
