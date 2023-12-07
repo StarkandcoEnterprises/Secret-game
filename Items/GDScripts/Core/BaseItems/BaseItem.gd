@@ -5,6 +5,7 @@ class_name BaseItem
 @export var item_properties: ItemPropertiesResource
 @export var backpack_storable: bool = true
 
+
 enum Interact_State {
 	IN_WORLD,
 	IN_INVENTORY,
@@ -22,22 +23,28 @@ var interact_state = Interact_State.IN_WORLD
 const SPEED = 300
 const SINGLE_BLOCK_SIZE = 40
 
+const INV_COLLISION = 1
+const BACKPACK_COLLISION = 2
+
+
 var center = Vector2.ZERO
 var overlapping_areas = []
 
-var loose_ref
-var backpack_ref
-var backpack_item_ref
+var inventory_item_holder: Node2D
+var backpack_item_list
+var backpack_item_holder: Node2D
+var main_backpack_node: Sprite2D
 
 @onready var regex = RegEx.new()
 var string_name: String = ""
 
 func _ready():
 	await get_tree().process_frame
-	loose_ref = get_tree().get_first_node_in_group("LooseItems")
-	backpack_ref = get_tree().get_first_node_in_group("Backpack")
-	backpack_item_ref = get_tree().get_first_node_in_group("BackpackItems")
-	
+	inventory_item_holder = get_tree().get_first_node_in_group("LooseItems")
+	backpack_item_list = get_tree().get_first_node_in_group("Backpack")
+	backpack_item_holder = get_tree().get_first_node_in_group("BackpackItems")
+	main_backpack_node = get_tree().get_first_node_in_group("MainBackpackNode")
+
 	regex.compile("[A-Z][a-z]+")
 	var matches = regex.search_all(name)
 	for case in matches:
@@ -79,17 +86,17 @@ func are_all_slots_free() -> bool:
 	return overlapping_areas.size() == item_properties.slots_needed
 
 func added_to_inventory():
-	interact_state = Interact_State.IN_INVENTORY
+	set_interact_state(Interact_State.IN_INVENTORY)
 
 func _on_mouse_entered():
 	if should_skip_mouse_events(): return
-	if interact_state == Interact_State.SLOTTED: interact_state = Interact_State.SLOTTED_SELECTABLE
-	elif interact_state != Interact_State.SELECTED: interact_state = Interact_State.SELECTABLE
+	if interact_state == Interact_State.SLOTTED:  set_interact_state(Interact_State.SLOTTED_SELECTABLE)
+	elif interact_state != Interact_State.SELECTED:  set_interact_state(Interact_State.SELECTABLE)
 
 func _on_mouse_exited():
 	if should_skip_mouse_events(): return
-	if interact_state == Interact_State.SLOTTED_SELECTABLE: interact_state = Interact_State.SLOTTED
-	elif interact_state != Interact_State.SELECTED: interact_state = Interact_State.IN_INVENTORY
+	if interact_state == Interact_State.SLOTTED_SELECTABLE: set_interact_state(Interact_State.SLOTTED)
+	elif interact_state != Interact_State.SELECTED:  set_interact_state(Interact_State.IN_INVENTORY)
 
 func should_skip_mouse_events() -> bool:
 	return interact_state in [Interact_State.IN_WORLD, Interact_State.IN_BACKPACK, Interact_State.SELECTED_IN_BACKPACK]
@@ -107,7 +114,7 @@ func _on_slots_area_entered(area):
 	elif area.is_in_group("BackpackArea") and interact_state == Interact_State.SELECTED:
 		await get_tree().process_frame
 		if area.get_parent().current_state == area.get_parent().State.ITEM_HOVER:
-			interact_state = Interact_State.DROPPABLE
+			set_interact_state(Interact_State.DROPPABLE)
 
 #We are leaving an area. If we were slotted or considering being here, we don't want to be anymore
 func _on_slots_area_exited(area):
@@ -124,11 +131,10 @@ func _on_slots_area_exited(area):
 			overlapping_areas.erase(area)
 
 		#Always forget the topleft value?
-		center = Vector2.ZERO
 		find_slotted_center()
 		
 	elif area.is_in_group("BackpackArea") and interact_state == Interact_State.DROPPABLE:
-		interact_state = Interact_State.SELECTED
+		set_interact_state(Interact_State.SELECTED)
 
 func _unhandled_input(event):
 	# Not necessary when in the world
@@ -159,11 +165,11 @@ func handle_left_click(event):
 	
 	# We are selected in the backpack
 	elif interact_state == Interact_State.SELECTED_IN_BACKPACK: 
-		handle_backpack_selection()
+		handle_reentry_to_inventory()
 	
 	# Else, if it's a release and there are not enough free slots underneath / It is not droppable, fall
 	elif not are_all_slots_free() and interact_state != Interact_State.DROPPABLE: 
-		interact_state = Interact_State.SELECTABLE
+		set_interact_state(Interact_State.SELECTABLE)
 	
 	# Otherwise, if it's a release and the slots are free
 	elif are_all_slots_free(): 
@@ -171,26 +177,41 @@ func handle_left_click(event):
 	
 	# Otherwise, it is droppable, it's in the backpack now!
 	elif backpack_storable: 
-		handle_droppable()
+		handle_drop()
 	
 	#Otherwise fall
 	else:
-		interact_state = Interact_State.SELECTABLE
+		set_interact_state(Interact_State.SELECTABLE)
 
 # Separate function to handle actions when selected in the backpack
-func handle_backpack_selection():
-	reparent(loose_ref)
-	backpack_ref.remove_item(backpack_ref.get_parent().get_parent().index_of_selected_item)
-	backpack_ref.get_parent().get_parent().index_of_selected_item = null
-	collision_layer = 1
+func handle_reentry_to_inventory():
+	var item_index = backpack_item_list.find_item_index(string_name)
+	reparent(inventory_item_holder)
+	if backpack_item_holder.get_child(item_index).get_child_count() == 0:
+		backpack_item_holder.get_child(item_index).queue_free()
+		main_backpack_node.index_of_selected_item = null
+	else:
+		backpack_item_list.deselect(item_index)
+	backpack_item_list.cust_remove_item(self)
+	toggle_collision_layer()
 	start_drag()
 
 # Separate function to handle actions when it is droppable
-func handle_droppable():
-	backpack_ref.add_item(string_name, %ItemSprite.texture, true)
-	reparent(backpack_item_ref)
-	interact_state = Interact_State.IN_BACKPACK
-	collision_layer = 2
+func handle_drop():
+	var item_index = backpack_item_list.find_item_index(string_name)
+	if item_index == -1: 
+		var new_node = Node2D.new()
+		backpack_item_holder.add_child(new_node)
+	backpack_item_list.cust_add_item(self)
+	reparent(backpack_item_holder.get_child(item_index))
+	set_interact_state(Interact_State.IN_BACKPACK)
+	toggle_collision_layer()
+
+func toggle_collision_layer():
+	set_collision_layer(BACKPACK_COLLISION if get_collision_layer() == INV_COLLISION else INV_COLLISION)
+
+func set_interact_state(state):
+	interact_state = state
 
 # Separate function to handle rotating the selected item
 func rotate_selected_item():

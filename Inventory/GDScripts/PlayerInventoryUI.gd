@@ -53,8 +53,7 @@ func select_on_bar(new_slot: int):
 	#Highlight the selected box
 	var reference_rect = ReferenceRect.new() 
 	reference_rect.editor_only = false
-	reference_rect.size = Vector2(64, 55)
-	reference_rect.position = Vector2(5,0)
+	reference_rect.size = Vector2(64, 64)
 	%HotbarUI.get_node("%Hotbar").get_node(str("Equipped", new_slot)).add_child(reference_rect)
 	
 	current_slot = new_slot

@@ -19,13 +19,12 @@ func _unhandled_input(event):
 
 func interact():
 	if pos_in_cycle != plant_resource.Life_Cycle.GROWN: 
-		super()
 		return
 	var produce = plant_resource.produce_scene.instantiate()
 	produce.position = position
 	get_parent().add_child(produce)
+	call_dialogue_callback("end")
 	queue_free()
-	super()
 
 func grow():
 	planted_days += 1
@@ -54,8 +53,7 @@ func grow():
 			pos_in_cycle = plant_resource.Life_Cycle.THIRD_GROWTH
 			
 		plant_resource.Life_Cycle.THIRD_GROWTH:
-			
-			if float(plant_resource.max_planted_days) / float(planted_days) < 1: return
+			if float(planted_days) / float(plant_resource.max_planted_days) < 1: return
 			
 			%PlantSprite.next_sprite()
 			pos_in_cycle = plant_resource.Life_Cycle.GROWN

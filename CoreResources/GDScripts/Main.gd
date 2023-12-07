@@ -6,15 +6,19 @@ class_name Main
 ##
 ## Manages some day time elements but is the container for all non-UI game objects
 
-## Holds the UI for the end of the day
+## [DayOverUI] - Holds the UI for the end of the day
 var dayover_UI: DayoverUI
+
+## [DialogueManager] - Holds the UI for the end of the day
+var dialogue_UI: DialogueManager
 
 ## Holds the length of the day in seconds
 const DAYTIME_VALUE = 50
 
-## Sets up a Daytime timer and gets / connects the Dayover UI / button
+## Sets up a Daytime timer and gets / connects the Dialogue UI,  Dayover UI / button
 func _ready():
 	await get_tree().process_frame
+	dialogue_UI = get_tree().get_first_node_in_group("DialogueUI")
 	dayover_UI = get_tree().get_first_node_in_group("DayOverUI")
 	dayover_UI.next_day_UI_finished.connect(next_day)
 	
@@ -23,13 +27,15 @@ func _ready():
 	%Daytime.start()
 	
 ## Hides [InventoryUI], disables [Hannah], calls [method DayoverUI.day_timeout] and [method Main.reset_watering_and_grow]
-func on_daytime_timeout():
-	
+func _on_daytime_timeout():
+	if dialogue_UI.calling_object:
+		dialogue_UI._on_option_selected("end_dialogue")
 	dayover_UI.day_timeout()
+
+	if %Hannah.inventory.is_visible():
+		%Hannah.inventory.show_or_hide()
 	
-	%Hannah.inventory.show_or_hide()
-	
-	if %Hannah.is_processing_input():
+	if %Hannah.is_processing_unhandled_input():
 		%Hannah.toggle_processing()
 	
 	var timer = Timer.new()
@@ -45,8 +51,10 @@ func on_daytime_timeout():
 ## Re-enables [Hannah]'s processing. Restarts Daytime Timer
 func next_day():
 	
-	%Hannah.toggle_processing()
-	%Hannah.inventory.show_or_hide()
+	if !%Hannah.is_processing_unhandled_input():
+		%Hannah.toggle_processing() 
+	if !%Hannah.inventory.is_visible():
+		%Hannah.inventory.show_or_hide()
 	
 	%Daytime.wait_time = DAYTIME_VALUE
 	%Daytime.start()
@@ -61,11 +69,11 @@ func reset_watering_and_grow():
 		plant.grow()
 	
 	for cell_pos in %TileMap.get_used_cells(0):
-		if !is_wet_tile(%TileMap.map_to_local(cell_pos)): continue
+		if !is_wet_tile(cell_pos): continue
 		%TileMap.set_cell(0, cell_pos, 0, Vector2(0, 0), 0)
 
 ##Checks if a tile is wet based on it's position in the gameworld
 func is_wet_tile(local_position) -> bool:
 	
-	return %TileMap.get_cell_atlas_coords(0, %TileMap.local_to_map(local_position)) == Vector2i(0,0) \
-	and %TileMap.get_cell_alternative_tile(0, %TileMap.local_to_map(local_position)) == 1
+	return %TileMap.get_cell_atlas_coords(0, local_position) == Vector2i(0,0) \
+	and %TileMap.get_cell_alternative_tile(0, local_position) == 1

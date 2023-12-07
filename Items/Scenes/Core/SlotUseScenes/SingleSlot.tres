@@ -2,4 +2,4 @@
 
 [resource]
 resource_local_to_scene = true
-size = Vector2(40, 40)
+size = Vector2(64, 40)

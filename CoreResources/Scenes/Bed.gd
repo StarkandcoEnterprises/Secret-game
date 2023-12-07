@@ -1,0 +1,31 @@
+extends WorldObject
+
+class_name Bed
+## Beds for sleeping :)
+##
+## A [Bed] object inheriting [WorldObject] which has a dialogue tree allowing a player to choose or not to sleep after interacting 
+
+## Assigns the dialogue tree value. Retrieves [Main] so that it can use [method Main._on_daytime_timeout]
+func _ready():
+	super()
+	main = get_tree().get_first_node_in_group("Main")
+	dialogue_tree = {
+	"text": "Do you want to sleep?",
+	"options": [
+		{
+			"text": "Yes",
+			"callback": "on_day_over"
+		},
+		{
+			"text": "No",
+			"callback": "end_dialogue"
+		}
+	]
+}
+
+
+func call_dialogue_callback(callback_name):
+	match callback_name:
+		"on_day_over":
+			main._on_daytime_timeout()
+	super(callback_name)

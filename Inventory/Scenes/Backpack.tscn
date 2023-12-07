@@ -15,8 +15,7 @@ size = Vector2(64, 64)
 ItemList/colors/font_color = Color(1, 1, 1, 1)
 ItemList/styles/panel = SubResource("StyleBoxEmpty_pimes")
 
-[node name="Backpack" type="Sprite2D"]
-position = Vector2(899, 235)
+[node name="Backpack" type="Sprite2D" groups=["MainBackpackNode"]]
 texture = ExtResource("1_qhfc2")
 script = ExtResource("2_tu4lo")
 
@@ -36,17 +35,11 @@ offset_bottom = 32.0
 unique_name_in_owner = true
 visible = false
 layout_mode = 3
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -529.0
-offset_top = -154.0
-offset_right = -129.0
-offset_bottom = 246.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+offset_left = -175.0
+offset_top = 75.0
+offset_right = 175.0
+offset_bottom = 375.0
 mouse_filter = 1
 
 [node name="BackpackBackground" type="Panel" parent="BackpackUI"]
@@ -57,27 +50,27 @@ anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -200.0
-offset_top = -200.0
-offset_right = 200.0
-offset_bottom = 200.0
+offset_left = -175.0
+offset_top = -150.0
+offset_right = 175.0
+offset_bottom = 150.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("4_1njqv")
 
 [node name="ItemList" type="ItemList" parent="BackpackUI" groups=["Backpack"]]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(378, 378)
+custom_minimum_size = Vector2(330, 280)
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -190.0
-offset_top = -190.0
-offset_right = 188.0
-offset_bottom = 188.0
+offset_left = -165.0
+offset_top = -140.0
+offset_right = 165.0
+offset_bottom = 140.0
 grow_horizontal = 2
 grow_vertical = 2
 theme = SubResource("Theme_rp5yy")

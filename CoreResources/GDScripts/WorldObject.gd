@@ -4,65 +4,37 @@ class_name WorldObject
 
 ## A world object, which is to be extended by all kinds of things like beds, characters, crates for selling things etc.
 ## 
-## This object has an [method WorldObject.interact] function to be called by [Hannah].
-## Inheriting children should extend versions of [method WorldObject.interact].
-## NB: The object has an [method WorldObject.end_interaction] function to be called for each object when an interaction with it should end.  
+## Representing world objects such as crates and beds, these objects have an [method WorldObject.interact] function to be called by [Hannah].
+## Inheriting children should extend versions of [method WorldObject.interact] if any specific functionality is required.
+## [br][br]An empty [member WorldObject.dialogue_tree] exists, and more can be added to build out character interactions. [method WorldObject.interact] then passes these trees to [DialogueManager] as appropriate.
+## [br]This can be achieved using [method WorldObject.call_dialogue_callback]
 
-## Reference to the main scene
+## Reference to [Main]
 var main: Node
 
 ## Reference to [Hannah]
 var hannah: Hannah
 
-## Reference to the dialogue UI
-var dialogue_UI: DialogueUI 
+## Reference to the [DialogueManager]
+var dialogue_UI: DialogueManager 
 
-## Connects the dialogue UI buttons to the script and retrieves [member WorldObject.main],  [member WorldObject.hannah] and  [member WorldObject.dialogue_UI]
+## [Dictionary] which contains 
+var dialogue_tree: Dictionary = {}
+
+## Connects the [DialogueManager] buttons to the script and retrieves [member WorldObject.main],  [member WorldObject.hannah] and  [member WorldObject.dialogue_UI]
 func _ready():
 	await get_tree().process_frame
 	dialogue_UI = get_tree().get_first_node_in_group("DialogueUI")
-	hannah = get_tree().get_first_node_in_group("Hannah")
 	main = get_tree().get_first_node_in_group("Main")
-	dialogue_UI.get_node("%Yes").pressed.connect(_on_yes_pressed)
-	dialogue_UI.get_node("%No").pressed.connect(_on_no_pressed)
+	hannah = get_tree().get_first_node_in_group("Hannah")
 
-##Is called when [Hannah] interacts with the [WorldObject]
+## Is called when [Hannah] interacts with the [WorldObject] to send the [member WorldObject.dialogue_tree] to the manager. Also pauses the timer on [Main].
 func interact():
-	if name == "Bed":
-		sleep_prompt()
-	elif name == "Crate":
-		crate_interaction()
-	else:
-		end_interaction()
+	main.get_node("%Daytime").stop()
+	dialogue_UI.show_dialogue(self, dialogue_tree)
 
-## To be moved to a crate object
-func crate_interaction():
-	end_interaction()
-
-## Resumes [Hannah]'s processing
-func end_interaction():
-	hannah.toggle_processing()
-	pass
-
-## To be moved to a bed object
-func sleep_prompt():
-	dialogue_UI.toggle_UI_visibility()
-	dialogue_UI.toggle_option_visibility()
-	dialogue_UI.update_text("Would you like to go to sleep?")
-
-## When [Hannah] presses no on a dialogue prompt, this function handles the result as connected in _ready()
-## Current implementation to be moved to a bed object
-func _on_no_pressed():
-	if name == "Bed":
-		dialogue_UI.toggle_UI_visibility()
-		dialogue_UI.toggle_option_visibility()
-	end_interaction()
-
-## When [Hannah] presses yes on a dialogue prompt, this function handles the result as connected in _ready()
-## Current implementation to be moved to a bed object
-func _on_yes_pressed():
-	if name == "Bed":
-		main.on_daytime_timeout()
-		dialogue_UI.toggle_UI_visibility()
-		dialogue_UI.toggle_option_visibility()
-
+## Is called when a dialogue option is selected, allowing the [WorldObject] to respond by calling other functions. By default this resumes [Hannah]'s handling and restarts the timer on [Main]
+func call_dialogue_callback(_callback_name):
+	if !hannah.is_processing_unhandled_input():
+		hannah.toggle_processing()
+	main.get_node("%Daytime").start()

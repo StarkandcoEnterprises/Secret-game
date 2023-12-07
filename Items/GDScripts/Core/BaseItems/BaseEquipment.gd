@@ -10,7 +10,7 @@ var equipped_slot
 var bar_sprite
 var durability_bar
 
-@export var discarded_on_use: bool
+
 
 var in_use = false
 
@@ -20,15 +20,15 @@ func _ready():
 	equipped_bar = get_tree().get_first_node_in_group("EquippedBar")
 	bar_sprite = %EquipmentBarSprite
 	durability_bar = %DurabilityBar
-	
 
 func _process(delta):
 	super(delta)
 	if interact_state != Interact_State.SLOTTED: return
-	if equipment_properties.durability <= 0 and discarded_on_use:
+	if equipment_properties.durability <= 0 and equipment_properties.discarded_on_use:
 		
 		hannah.unequip_held()
-		equipped_bar.get_child(hannah.inventory.current_slot - 1).get_child(1).queue_free()
+		if hannah.inventory.current_slot != 0:
+			equipped_bar.get_child(hannah.inventory.current_slot - 1).get_child(1).queue_free()
 		
 		hannah.inventory.current_slot = 0
 		
@@ -78,7 +78,7 @@ func _unhandled_input(event):
 		durability_bar.visible = false
 		
 		#Tell the inventory? That the current slot is 0 lol
-		equipped_slot.get_parent().get_parent().get_parent().get_parent().current_slot = 0
+		hannah.inventory.current_slot = 0
 	
 		#Need to also possibly remove the reference rect....
 		if equipped_slot.get_child_count() > 0:

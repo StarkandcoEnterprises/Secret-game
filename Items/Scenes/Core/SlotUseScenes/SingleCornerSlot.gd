@@ -1,4 +1,4 @@
 extends CollisionPolygon2D
 
-var width = 90
-var height = 90
+var width = 80
+var height = 80

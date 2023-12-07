@@ -6,9 +6,11 @@
 
 [node name="PlayerInventoryUI" type="Control" groups=["Inventory"]]
 layout_mode = 3
-anchors_preset = 0
-offset_right = 1152.0
-offset_bottom = 648.0
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 script = ExtResource("1_40yka")
 
 [node name="HotbarUI" parent="." instance=ExtResource("2_geyxw")]
@@ -17,3 +19,11 @@ layout_mode = 1
 
 [node name="InvSprite" parent="." instance=ExtResource("3_8hmjt")]
 unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2

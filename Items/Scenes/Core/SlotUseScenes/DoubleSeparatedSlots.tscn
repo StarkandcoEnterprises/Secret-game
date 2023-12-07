@@ -4,5 +4,5 @@
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D"]
 position = Vector2(-40, -40)
-polygon = PackedVector2Array(40, 0, 0, 0, 0, 40, 40, 40, 40, 80, 80, 80, 80, 40, 40.001, 40)
+polygon = PackedVector2Array(40, 0, 0, 0, 0, 40, 20, 40, 40, 60, 40, 80, 80, 80, 80, 40, 60, 40, 40, 20)
 script = ExtResource("1_doiui")

@@ -47,13 +47,13 @@ func toggle_UI():
 
 func _on_item_list_item_selected(index):
 	if !index_of_selected_item == null:
-		%BackpackItems.get_child(index_of_selected_item).interact_state = %BackpackItems.get_child(index_of_selected_item).Interact_State.IN_BACKPACK
-	%BackpackItems.get_child(index).interact_state = %BackpackItems.get_child(index).Interact_State.SELECTED_IN_BACKPACK
+		%BackpackItems.get_child(index_of_selected_item).get_child(0).interact_state = %BackpackItems.get_child(index_of_selected_item).get_child(0).Interact_State.IN_BACKPACK
+	%BackpackItems.get_child(index).get_child(0).interact_state = %BackpackItems.get_child(0).get_child(index).Interact_State.SELECTED_IN_BACKPACK
 	index_of_selected_item = index
 
 
 func _on_item_list_empty_clicked(_at_position, _mouse_button_index):
 	if !index_of_selected_item == null:
-		%BackpackItems.get_child(index_of_selected_item).interact_state = %BackpackItems.get_child(index_of_selected_item).Interact_State.IN_BACKPACK
+		%BackpackItems.get_child(index_of_selected_item).get_child(0).interact_state = %BackpackItems.get_child(index_of_selected_item).get_child(0).Interact_State.IN_BACKPACK
 		%ItemList.deselect(index_of_selected_item)
 		index_of_selected_item = null
