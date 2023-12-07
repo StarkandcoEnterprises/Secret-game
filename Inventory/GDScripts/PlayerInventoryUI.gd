@@ -63,5 +63,3 @@ func select_on_bar(new_slot: int):
 		hannah.equip_item(%HotbarUI.get_node("%Hotbar").get_node(str("Equipped", new_slot)).get_child(0).parent.duplicate())
 		hannah.equipped.rotation_degrees = 0
 
-func show_or_hide():
-	visible = !visible

@@ -33,9 +33,9 @@ func _on_daytime_timeout():
 		
 	dayover_UI.day_timeout()
 
-	if %Hannah.inventory.is_visible():
-		%Hannah.inventory.show_or_hide()
-	
+	%Hannah.inventory.visible = false
+	if !%Hannah.inventory.get_node("%HotbarUI").visible:
+		%Hannah.inventory.invert_inventory_and_bar()
 	if %Hannah.is_processing_unhandled_input():
 		%Hannah.toggle_processing()
 	
@@ -52,10 +52,9 @@ func _on_daytime_timeout():
 ## Re-enables [Hannah]'s processing. Restarts Daytime Timer
 func next_day():
 	
+	%Hannah.inventory.visible = true
 	if !%Hannah.is_processing_unhandled_input():
 		%Hannah.toggle_processing() 
-	if !%Hannah.inventory.is_visible():
-		%Hannah.inventory.show_or_hide()
 	
 	%Daytime.wait_time = DAYTIME_VALUE
 	%Daytime.start()
