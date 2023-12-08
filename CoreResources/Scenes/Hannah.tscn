@@ -1,7 +1,8 @@
-[gd_scene load_steps=9 format=3 uid="uid://dqxfciw668dqi"]
+[gd_scene load_steps=12 format=3 uid="uid://dqxfciw668dqi"]
 
 [ext_resource type="Script" path="res://CoreResources/GDScripts/Hannah.gd" id="1_jbrk5"]
 [ext_resource type="Texture2D" uid="uid://cgiknppirw3av" path="res://Art/Images/Character/godot_guy.png" id="2_6fdrp"]
+[ext_resource type="Texture2D" uid="uid://die0ho437c2kg" path="res://Art/Images/Items/Weapons/Sword.png" id="3_n25b1"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_cb7lw"]
 atlas = ExtResource("2_6fdrp")
@@ -42,6 +43,41 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_ykaa3"]
 size = Vector2(64, 80)
 
+[sub_resource type="Animation" id="Animation_oe7tn"]
+resource_name = "swing"
+length = 0.7
+loop_mode = 1
+step = 0.01
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("ArmBase/Hand:rotation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.33, 0.5, 0.68),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [-0.261799, 1.309, 2.00713, 2.35619]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("ArmBase/Hand:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.34, 0.51, 0.69),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(77, 25), Vector2(58, 30), Vector2(53, 47), Vector2(29, 69)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_xvlih"]
+_data = {
+"swing": SubResource("Animation_oe7tn")
+}
+
 [node name="Hannah" type="CharacterBody2D" groups=["Hannah"]]
 z_index = 1
 motion_mode = 1
@@ -72,16 +108,26 @@ drag_top_margin = 0.4
 drag_right_margin = 0.4
 drag_bottom_margin = 0.4
 
-[node name="LeftArm" type="Marker2D" parent="."]
-position = Vector2(-93, 9)
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_xvlih")
+}
 
-[node name="LeftHand" type="Marker2D" parent="LeftArm"]
+[node name="AnimationTree" type="AnimationTree" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_xvlih")
+}
+anim_player = NodePath("../AnimationPlayer")
+
+[node name="ArmBase" type="Marker2D" parent="."]
 unique_name_in_owner = true
-position = Vector2(-14, 11)
 
-[node name="RightArm" type="Marker2D" parent="."]
-position = Vector2(93, 9)
-
-[node name="RightHand" type="Marker2D" parent="RightArm"]
+[node name="Hand" type="Marker2D" parent="ArmBase"]
 unique_name_in_owner = true
-position = Vector2(14, 11)
+position = Vector2(100, 0)
+
+[node name="Effects" type="Marker2D" parent="ArmBase/Hand"]
+position = Vector2(50, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="ArmBase/Hand/Effects"]
+texture = ExtResource("3_n25b1")

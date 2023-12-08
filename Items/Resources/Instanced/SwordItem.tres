@@ -6,3 +6,4 @@
 script = ExtResource("1_ke2qt")
 price = 5000
 slots_needed = 2
+backpack_storable = false

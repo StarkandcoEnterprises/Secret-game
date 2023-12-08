@@ -26,11 +26,7 @@ func equip_item(equipment: BaseEquipment):
 	var new_version = equipment.duplicate()
 	new_version.position = Vector2.ZERO
 	new_version.interact_state = new_version.Interact_State.EQUIPPED
-	if !%AnimatedSprite2D.flip_h:
-		%RightHand.add_child(new_version)
-	else:
-		new_version.get_node("%ItemSprite").flip_h = true
-		%LeftHand.add_child(new_version)
+	%Hand.add_child(new_version)
 	equipped = new_version
 
 ## Unequips any held [BaseEquipment]
@@ -45,22 +41,17 @@ func unequip_held():
 func face_direction():
 	%RayCast2D.rotation_degrees = 90*[Vector2.DOWN,Vector2.LEFT,Vector2.UP,Vector2.RIGHT].find(direction)
 	if direction == Vector2.LEFT:
-		flip_and_adjust_hand(%RightHand, %LeftHand, true)
+		%AnimatedSprite2D.flip_h = true
 	else:
-		flip_and_adjust_hand(%LeftHand, %RightHand, false)
+		%AnimatedSprite2D.flip_h = false
 
-func flip_and_adjust_hand(source_hand, target_hand, flip_sprite):
-	%AnimatedSprite2D.flip_h = flip_sprite
-	if source_hand.get_child_count() > 0:
-		equipped = source_hand.get_child(0)
-		equipped.reparent(target_hand)
-		equipped.position = Vector2.ZERO
-		equipped.rotation = 0
-		equipped.get_child(0).flip_h = flip_sprite
 
 ## Move based on [member Hannah.direction] * [member Hannah.speed], and handle any collisions by checking they are items and if so adding to inventory
 func _physics_process(delta):
 	
+	if equipped:
+		%ArmBase.look_at(get_global_mouse_position())
+		%Hand.look_at(get_global_mouse_position())
 	#Prepare
 	velocity = direction * speed
 	

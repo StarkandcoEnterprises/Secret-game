@@ -6,3 +6,4 @@
 script = ExtResource("1_xdbxp")
 price = 100
 slots_needed = 1
+backpack_storable = false

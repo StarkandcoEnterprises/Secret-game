@@ -18,6 +18,7 @@ discarded_on_use = true
 script = ExtResource("5_b64ip")
 price = 100
 slots_needed = 1
+backpack_storable = false
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i0w5d"]
 resource_local_to_scene = true

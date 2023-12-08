@@ -22,8 +22,6 @@ size = Vector2(40, 40)
 [node name="BaseWeapon" instance=ExtResource("1_8byfw")]
 script = ExtResource("2_hpx8s")
 abstract_properties = SubResource("Resource_3kk2y")
-equipment_properties = null
-item_properties = null
 
 [node name="ItemCharShape" parent="." index="1"]
 shape = SubResource("RectangleShape2D_e61gm")
