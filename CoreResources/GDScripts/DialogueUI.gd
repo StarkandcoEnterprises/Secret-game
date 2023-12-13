@@ -11,7 +11,7 @@ class_name DialogueManager
 ## Empty [Dictionary] to store the provided data for an interaction
 var dialogueTree : Dictionary
 ## Empty ref for the calling object to callback to
-var calling_object
+var calling_object: WorldObject
 
 ## Calls the base panel stuff for the gradient shader and hides the panel
 func _ready(): 

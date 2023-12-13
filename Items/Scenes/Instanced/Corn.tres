@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemPropertiesResource" load_steps=2 format=3 uid="uid://cio58nvlma4e5"]
+
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/ItemPropertiesResource.gd" id="1_1vofh"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_1vofh")
+price = 100
+slots_needed = 1
+backpack_storable = true
+string_name = "Corn"

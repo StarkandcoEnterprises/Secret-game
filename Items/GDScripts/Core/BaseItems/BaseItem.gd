@@ -4,8 +4,6 @@ class_name BaseItem
 
 @export var item_properties: ItemPropertiesResource
 
-
-
 enum Interact_State {
 	IN_WORLD,
 	IN_INVENTORY,
@@ -36,8 +34,6 @@ var backpack_item_list
 var backpack_item_holder: Node2D
 var main_backpack_node: Sprite2D
 
-@onready var regex = RegEx.new()
-var string_name: String = ""
 
 func _ready():
 	await get_tree().process_frame
@@ -45,11 +41,6 @@ func _ready():
 	backpack_item_list = get_tree().get_first_node_in_group("Backpack")
 	backpack_item_holder = get_tree().get_first_node_in_group("BackpackItems")
 	main_backpack_node = get_tree().get_first_node_in_group("MainBackpackNode")
-
-	regex.compile("[A-Z][a-z]+")
-	var matches = regex.search_all(name)
-	for case in matches:
-		string_name += case.get_string() + " "
 
 func _process(delta):
 	if should_skip_processing(): return
@@ -187,7 +178,7 @@ func handle_left_click(event):
 
 # Separate function to handle actions when selected in the backpack
 func handle_reentry_to_inventory():
-	var item_index = backpack_item_list.find_item_index(string_name)
+	var item_index = backpack_item_list.find_item_index(item_properties.string_name)
 	reparent(inventory_item_holder)
 	if backpack_item_holder.get_child(item_index).get_child_count() == 0:
 		backpack_item_holder.get_child(item_index).queue_free()
@@ -200,7 +191,7 @@ func handle_reentry_to_inventory():
 
 # Separate function to handle actions when it is droppable
 func handle_drop():
-	var item_index = backpack_item_list.find_item_index(string_name)
+	var item_index = backpack_item_list.find_item_index(item_properties.string_name)
 	if item_index == -1: 
 		var new_node = Node2D.new()
 		backpack_item_holder.add_child(new_node)

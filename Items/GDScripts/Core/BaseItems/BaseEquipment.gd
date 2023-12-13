@@ -23,6 +23,10 @@ func _ready():
 
 func _process(delta):
 	super(delta)
+	if interact_state == Interact_State.EQUIPPED:
+		if !%ItemCharShape.disabled: 
+			%ItemCharShape.disabled = true
+		
 	if interact_state != Interact_State.SLOTTED: return
 	if equipment_properties.durability <= 0 and equipment_properties.discarded_on_use:
 		
@@ -38,23 +42,6 @@ func _process(delta):
 func use():
 	if in_use or equipment_properties.durability <= 0: return
 	equipment_properties.use()
-	var tween_rotation
-	tween_rotation = 90 if get_parent().name == "RightHand" else -90 if get_parent().name == "LeftHand" else 0
-	in_use = true
-	var tween = get_tree().create_tween()
-	tween.tween_property(get_parent().get_parent(), "rotation_degrees", tween_rotation, 0.3)
-	tween.tween_property(get_parent().get_parent(), "rotation_degrees", 0, 0)
-	tween.tween_property(self, "in_use", false, 0)
-	tween.play()
-		
-	var timer = Timer.new()
-	timer.one_shot = true
-	add_child(timer)
-	timer.start()
-	
-	await timer.timeout
-	remove_child(timer)
-	
 
 func _unhandled_input(event):
 	

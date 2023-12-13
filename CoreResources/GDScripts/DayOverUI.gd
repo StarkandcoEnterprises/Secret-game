@@ -27,7 +27,7 @@ func _on_next_day_pressed():
 	timer.start(1)
 
 func _on_timer_timeout():
-	if background.modulate.a < 1:
+	if background.modulate.a < 0.7:
 		nextDay.visible = false
 		visible = false
 		emit_signal("next_day_UI_finished")

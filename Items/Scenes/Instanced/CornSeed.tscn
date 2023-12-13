@@ -13,12 +13,15 @@ script = ExtResource("4_7pi2w")
 durability = 1
 max_durability = 100
 discarded_on_use = true
+highlight_area = true
 
 [sub_resource type="Resource" id="Resource_opqgc"]
+resource_local_to_scene = true
 script = ExtResource("5_b64ip")
 price = 100
 slots_needed = 1
 backpack_storable = false
+string_name = ""
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i0w5d"]
 resource_local_to_scene = true

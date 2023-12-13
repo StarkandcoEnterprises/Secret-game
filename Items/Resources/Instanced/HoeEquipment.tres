@@ -7,3 +7,5 @@ resource_local_to_scene = true
 script = ExtResource("1_sainl")
 durability = 20
 max_durability = 20
+discarded_on_use = false
+highlight_area = true
