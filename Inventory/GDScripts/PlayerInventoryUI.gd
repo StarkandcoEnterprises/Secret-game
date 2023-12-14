@@ -1,6 +1,6 @@
 extends Control
 
-class_name InventoryUI
+class_name PlayerUI
 
 ##Class for managing the inventory UI for [Hannah]
 ##

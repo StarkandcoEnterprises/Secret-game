@@ -47,3 +47,7 @@ func _on_spawn_seed_pressed():
 
 func _on_toggle_hannah_pressed():
 	hannah.toggle_processing()
+
+
+func _on_get_max_slots_pressed():
+	hannah.inventory.get_node("%InvSprite/%EquipGrid").get_max()

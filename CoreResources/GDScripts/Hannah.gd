@@ -9,7 +9,7 @@ class_name Hannah
 var speed = 300.0
 
 ## [Hannah]'s inventory
-var inventory: Control
+var inventory: PlayerUI
 
 ## Current [BaseEquipment] in hands
 var equipped: BaseEquipment
@@ -39,7 +39,7 @@ var end_rotation = 90
 
 ## _ready initialises [Hannah]'s [member Hannah.inventory] by using [method Node.get_first_node_in_group]
 func _ready():
-	inventory = get_tree().get_first_node_in_group("Inventory")
+	inventory = get_tree().get_first_node_in_group("PlayerUI")
 	map = get_tree().get_first_node_in_group("Map")
 
 ## Toggles [Hannah]'s [member Hannah.is_physics_processing] and [method Hannah.is_processing_unhandled_input] 
@@ -77,6 +77,7 @@ func _unhandled_input(_event):
 		if !body is WorldObject: continue
 		toggle_processing()
 		body.interact()
+		direction = Vector2.ZERO
 		break
 
 func _easeInOutElastic(x: float) -> float:
@@ -91,8 +92,8 @@ func _easeInOutElastic(x: float) -> float:
 
 ## Manages swinging animation for equipment
 func _process(delta):
-	if !equipped: return
-	if equipped.equipment_properties.highlight_area:
+	if !equipped and !playing_anim: return
+	if equipped and equipped.equipment_properties.highlight_area:
 		var tile_pos = map.local_to_map(%UseArea.global_position)
 		%HighlightSprite.global_position = map.map_to_local(tile_pos)
 		%HighlightSprite.visible = true

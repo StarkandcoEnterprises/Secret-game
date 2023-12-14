@@ -4,7 +4,7 @@
 [ext_resource type="PackedScene" uid="uid://bsvkfnywpkchn" path="res://Inventory/Scenes/HotbarUI.tscn" id="2_geyxw"]
 [ext_resource type="PackedScene" uid="uid://cx5nrct0a17qy" path="res://Inventory/Scenes/InvSprite.tscn" id="3_8hmjt"]
 
-[node name="PlayerInventoryUI" type="Control" groups=["Inventory"]]
+[node name="PlayerInventoryUI" type="Control" groups=["PlayerUI"]]
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0

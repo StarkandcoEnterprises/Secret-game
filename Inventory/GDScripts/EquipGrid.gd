@@ -1,6 +1,7 @@
 extends GridContainer
 
 var grid_start_size = 16
+var grid_curr_size = 16
 
 @export var grid_slot: PackedScene
 
@@ -9,7 +10,9 @@ func _ready():
 	for i in grid_start_size:
 		var new_block = grid_slot.instantiate()
 		add_child(new_block)
-	for j in range(grid_start_size, 64):
+
+func get_max():
+	for i in range(grid_curr_size, 64):
 		var new_block = grid_slot.instantiate()
-		new_block.get_child(0).get_child(0).disabled = true
 		add_child(new_block)
+	grid_curr_size = 64
