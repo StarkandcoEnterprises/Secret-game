@@ -12,8 +12,10 @@ var drop_ref
 var index_of_selected_item
 
 var current_state = State.SELECTABLE
+var loose_items
 
 func _ready():
+	loose_items = get_parent().get_node("%LooseItems")
 	%BackpackItems.set_physics_process(false)
 
 func _on_interact_area_entered(area):
@@ -47,13 +49,34 @@ func toggle_UI():
 
 func _on_item_list_item_selected(index):
 	if !index_of_selected_item == null:
-		%BackpackItems.get_child(index_of_selected_item).get_child(0).interact_state = %BackpackItems.get_child(index_of_selected_item).get_child(0).Interact_State.IN_BACKPACK
-	%BackpackItems.get_child(index).get_child(0).interact_state = %BackpackItems.get_child(index).get_child(0).Interact_State.SELECTED_IN_BACKPACK
+		%BackpackItems.get_child(index_of_selected_item).get_child(0).interact_state = BaseItem.Interact_State.IN_BACKPACK
+	%BackpackItems.get_child(index).get_child(0).interact_state = BaseItem.Interact_State.SELECTED_IN_BACKPACK
 	index_of_selected_item = index
 
 
 func _on_item_list_empty_clicked(_at_position, _mouse_button_index):
 	if !index_of_selected_item == null:
-		%BackpackItems.get_child(index_of_selected_item).get_child(0).interact_state = %BackpackItems.get_child(index_of_selected_item).get_child(0).Interact_State.IN_BACKPACK
+		%BackpackItems.get_child(index_of_selected_item).get_child(0).interact_state = BaseItem.Interact_State.IN_BACKPACK
 		%ItemList.deselect(index_of_selected_item)
 		index_of_selected_item = null
+
+
+func on_drop_all_pressed(index):
+	var backpack_container_ref = %BackpackItems.get_child(index)
+	if !backpack_container_ref.get_child(0): return
+	for child in backpack_container_ref.get_children():
+		child.reparent(loose_items)
+		child.toggle_collision_layer()
+		child.interact_state = BaseItem.Interact_State.IN_INVENTORY
+		child.global_position = loose_items.global_position
+		child.global_position.x += randi_range(-250,250)
+	backpack_container_ref.queue_free()
+
+
+func on_pickup_all_pressed(index):
+	for child in loose_items.get_children():
+		if child.item_properties.string_name == %BackpackItems.get_child(index).get_child(0).item_properties.string_name:
+			child.reparent(loose_items.get_child(index))
+			child.toggle_collision_layer()
+			child.interact_state = BaseItem.Interact_State.IN_BACKPACK
+			%ItemList.cust_add_item(child)

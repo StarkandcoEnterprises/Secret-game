@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://ho5ewtbo6mdn"]
+[gd_scene load_steps=11 format=3 uid="uid://ho5ewtbo6mdn"]
 
 [ext_resource type="TileSet" uid="uid://dfphrrdav6xyo" path="res://CoreResources/Resources/MainTileset.tres" id="1_mwilu"]
 [ext_resource type="Script" path="res://CoreResources/GDScripts/Main.gd" id="1_u1m27"]
@@ -6,11 +6,9 @@
 [ext_resource type="PackedScene" uid="uid://d1jsmi6uh27f4" path="res://Items/Scenes/Instanced/Sword.tscn" id="3_h8gdf"]
 [ext_resource type="PackedScene" uid="uid://bwrim1h5p3u0" path="res://CoreResources/Scenes/Bed.tscn" id="4_rw58y"]
 [ext_resource type="PackedScene" uid="uid://csq5revg6j7nt" path="res://Items/Scenes/Instanced/Hoe.tscn" id="6_fs26w"]
-[ext_resource type="PackedScene" uid="uid://cx85qdydat8pe" path="res://Items/Scenes/Instanced/Stone.tscn" id="6_rthgg"]
 [ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/EquipmentPropertiesResource.gd" id="7_u2p5u"]
-[ext_resource type="PackedScene" uid="uid://ncboup6o1765" path="res://Items/Scenes/Instanced/CornSeed.tscn" id="10_aery0"]
+[ext_resource type="PackedScene" uid="uid://c00ducppeyj48" path="res://Debug/Scenes/debug_parent.tscn" id="9_n1n8p"]
 [ext_resource type="PackedScene" uid="uid://bmcq3jsxe7x1x" path="res://CoreResources/Scenes/UI.tscn" id="11_jcwwp"]
-[ext_resource type="PackedScene" uid="uid://6wfbysp7xism" path="res://Debug/Scenes/DebugWindow.tscn" id="18_fpf16"]
 
 [sub_resource type="Resource" id="Resource_0r1mn"]
 resource_local_to_scene = true
@@ -56,14 +54,6 @@ unique_name_in_owner = true
 
 [node name="Objects" type="Node2D" parent="SubViewportContainer/SubViewport/World" groups=["ObjectHolder"]]
 
-[node name="Stone" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("6_rthgg")]
-
-[node name="Stone2" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("6_rthgg")]
-
-[node name="Stone3" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("6_rthgg")]
-
-[node name="Stone4" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("6_rthgg")]
-
 [node name="Sword" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("3_h8gdf")]
 
 [node name="Hoe" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("6_fs26w")]
@@ -75,17 +65,12 @@ position = Vector2(200, 200)
 
 [node name="UI" parent="." instance=ExtResource("11_jcwwp")]
 
-[node name="Debug" parent="." instance=ExtResource("18_fpf16")]
-title = "DebugOutput"
-position = Vector2i(500, 36)
-corn_seed = ExtResource("10_aery0")
-
 [node name="Daytime" type="Timer" parent="." groups=["DayTimer"]]
 unique_name_in_owner = true
 wait_time = 5.0
 one_shot = true
 autostart = true
 
-[node name="RigidBody2D" type="RigidBody2D" parent="."]
+[node name="DebugParent" parent="." instance=ExtResource("9_n1n8p")]
 
 [connection signal="timeout" from="Daytime" to="." method="_on_daytime_timeout"]

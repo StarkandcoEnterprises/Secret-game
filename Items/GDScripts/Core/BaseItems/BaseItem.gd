@@ -92,11 +92,13 @@ func _on_mouse_exited():
 	elif interact_state != Interact_State.SELECTED:  set_interact_state(Interact_State.IN_INVENTORY)
 
 func should_skip_mouse_events() -> bool:
-	return interact_state in [Interact_State.IN_WORLD, Interact_State.IN_BACKPACK, Interact_State.SELECTED_IN_BACKPACK]
+	return interact_state in [Interact_State.IN_WORLD, Interact_State.IN_BACKPACK, \
+								Interact_State.SELECTED_IN_BACKPACK]
 
 #We are in an area... is it a grid block? Is it full?
 func _on_slots_area_entered(area):
-	if interact_state in [Interact_State.IN_WORLD,Interact_State.IN_BACKPACK,Interact_State.SELECTED_IN_BACKPACK]: return
+	if interact_state in [Interact_State.IN_WORLD,Interact_State.IN_BACKPACK,Interact_State.SELECTED_IN_BACKPACK]: 
+		return
 	if area.is_in_group("GridBlock"):
 		if area.full: return
 		
@@ -111,7 +113,8 @@ func _on_slots_area_entered(area):
 
 #We are leaving an area. If we were slotted or considering being here, we don't want to be anymore
 func _on_slots_area_exited(area):
-	if interact_state in [Interact_State.IN_WORLD,Interact_State.IN_BACKPACK,Interact_State.SELECTED_IN_BACKPACK]: return
+	if interact_state in [Interact_State.IN_WORLD,Interact_State.IN_BACKPACK,Interact_State.SELECTED_IN_BACKPACK]: 
+		return
 	if area.is_in_group("GridBlock"):
 		
 		#If it's not full, then we were considering entering it
@@ -139,15 +142,17 @@ func _unhandled_input(event):
 		return 
 	
 	# If we're not selectable or selected
-	if interact_state not in [Interact_State.SELECTABLE, Interact_State.SELECTED, Interact_State.SLOTTED_SELECTABLE, \
-								Interact_State.DROPPABLE, Interact_State.SELECTED_IN_BACKPACK]:
+	if interact_state not in [Interact_State.SELECTABLE, Interact_State.SELECTED, \
+							Interact_State.SLOTTED_SELECTABLE, Interact_State.DROPPABLE,\
+							 Interact_State.SELECTED_IN_BACKPACK]:
 		return
 	
 	if event.button_index == MOUSE_BUTTON_LEFT:
 		handle_left_click(event)
 	
 	# If we get a right click and item selected, rotate
-	elif interact_state == Interact_State.SELECTED and event.is_pressed() and event.button_index == MOUSE_BUTTON_RIGHT:
+	elif interact_state == Interact_State.SELECTED and event.is_pressed() and \
+							event.button_index == MOUSE_BUTTON_RIGHT:
 		rotate_selected_item()
 
 # Separate function to handle left click actions
@@ -259,14 +264,12 @@ func find_slotted_center():
 		
 	for a in overlapping_areas:
 		
-		#If we're not yet holding a x value (we were over no slots) or our position is more to the left, store our x
 		if center == Vector2.ZERO or a.global_position.x +  (temp_width / 2) <= center.x:
 			center.x = a.global_position.x +  (temp_width / 2) + (3 * temp_width / SINGLE_BLOCK_SIZE)
 		
-		#If we're not yet holding a y value (we were in over slots) or our position is more upwards, store our y
 			if center.y != 0 and a.global_position.y + (temp_height / 2) > center.y: continue
 			center.y = a.global_position.y + (temp_height / 2) + (3 * temp_height / SINGLE_BLOCK_SIZE)
 		
-		#If we weren't holding 0 and we're not more left, we might need to be more upwards
+
 		elif a.global_position.y > center.y: continue
 		center.y = a.global_position.y + (temp_height / 2) + (3 * temp_height / SINGLE_BLOCK_SIZE)
