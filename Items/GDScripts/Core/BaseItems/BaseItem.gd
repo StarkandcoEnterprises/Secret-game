@@ -47,9 +47,8 @@ func _process(delta):
 	handle_movement(delta)
 
 func should_skip_processing() -> bool:
-	return interact_state in [Interact_State.SLOTTED, Interact_State.SLOTTED_SELECTABLE, \
-								Interact_State.IN_WORLD, Interact_State.IN_BACKPACK, \
-								Interact_State.SELECTED_IN_BACKPACK, Interact_State.EQUIPPED]
+	return !interact_state in \
+	[Interact_State.IN_INVENTORY, Interact_State.DROPPABLE, Interact_State.SELECTED, Interact_State.SELECTABLE]
 
 func handle_movement(delta):
 	if interact_state in [Interact_State.SELECTED, Interact_State.DROPPABLE]:

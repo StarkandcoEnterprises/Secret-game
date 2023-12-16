@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Secret game"
-run/main_scene="res://CoreResources/Scenes/Main.tscn"
+run/main_scene="res://CoreResources/Scenes/BuiltMain.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://Art/Images/icon.svg"
 
@@ -21,7 +21,11 @@ PanelColourManager="*res://Art/UI/PanelColourManager.gd"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/behaviour_toolkit/plugin.cfg")
+enabled=PackedStringArray("res://addons/behaviour_toolkit/plugin.cfg", "res://addons/gdUnit4/plugin.cfg")
+
+[gdunit4]
+
+ui/toolbar/run_overall=true
 
 [input]
 

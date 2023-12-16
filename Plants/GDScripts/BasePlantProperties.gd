@@ -1,6 +1,6 @@
 extends Resource
 
-class_name BasePlant 
+class_name BasePlantProperties 
 
 @export var min_sprout: int = 8
 @export var max_sprout: int = 21

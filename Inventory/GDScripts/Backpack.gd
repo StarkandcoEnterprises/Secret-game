@@ -1,5 +1,7 @@
 extends Sprite2D
 
+class_name Backpack
+
 enum State {
 	SELECTABLE,
 	OPEN,

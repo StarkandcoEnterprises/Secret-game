@@ -1,6 +1,8 @@
 extends WorldObject
 
-@export var plant_resource: BasePlant
+class_name BasePlant
+
+@export var plant_resource: BasePlantProperties
 
 var sprout_needed_days = randi_range(8, 21)
 

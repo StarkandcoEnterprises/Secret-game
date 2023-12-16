@@ -61,7 +61,7 @@ func _physics_process(delta):
 	if !collision: return
 	
 	if !collision.get_collider() is BaseItem: return
-	if collision.get_collider().interact_state not in [collision.get_collider().Interact_State.IN_WORLD]: return
+	if collision.get_collider().interact_state not in [BaseItem.Interact_State.IN_WORLD]: return
 	
 	#If it's an item, add it to the inventory
 	inventory.first_add_item(collision.get_collider())
@@ -80,7 +80,7 @@ func _unhandled_input(_event):
 		direction = Vector2.ZERO
 		break
 
-func _easeInOutElastic(x: float) -> float:
+func _ease_in_out_elastic(x: float) -> float:
 	if x == 0.0:
 		return 0.0
 	if x == 1.0:
@@ -127,7 +127,7 @@ func update_rotation():
 	if !playing_anim:
 		%Equipped.rotation = 0
 	else:
-		%Equipped.rotation = start_rotation + _easeInOutElastic(anim_state) * (end_rotation - start_rotation)
+		%Equipped.rotation = start_rotation + _ease_in_out_elastic(anim_state) * (end_rotation - start_rotation)
 
 ## Disabled and reset vars for the animation
 func end_animation():
@@ -142,7 +142,7 @@ func end_animation():
 ## Equips a [BaseEquipment]
 func equip_item(equipment: BaseEquipment):
 	var new_version = equipment.duplicate()
-	new_version.interact_state = new_version.Interact_State.EQUIPPED
+	new_version.interact_state = BaseItem.Interact_State.EQUIPPED
 	%Equipped.add_child(new_version)
 	new_version.position = Vector2.ZERO
 	equipped = new_version
