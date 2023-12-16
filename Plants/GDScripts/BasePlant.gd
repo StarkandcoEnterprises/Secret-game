@@ -8,14 +8,13 @@ var planted_days = 0
 
 var pos_in_cycle = plant_resource.Life_Cycle.PLANTED 
 
+func cheat():
+	planted_days += 20
+	grow()
+
 func _ready():
 	super()
 	$CollisionShape2D.set_deferred("disabled", true)
-
-func _unhandled_input(event):
-	if event.is_action_pressed("debug"):
-		planted_days += 20
-		grow()
 
 func interact():
 	if pos_in_cycle != plant_resource.Life_Cycle.GROWN: 

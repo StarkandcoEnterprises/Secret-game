@@ -69,14 +69,19 @@ func on_drop_all_pressed(index):
 		child.toggle_collision_layer()
 		child.interact_state = BaseItem.Interact_State.IN_INVENTORY
 		child.global_position = loose_items.global_position
-		child.global_position.x += randi_range(-250,250)
+		child.global_position.x += randi_range(-110,110)
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
+		await get_tree().process_frame
 	backpack_container_ref.queue_free()
 
 
 func on_pickup_all_pressed(index):
 	for child in loose_items.get_children():
 		if child.item_properties.string_name == %BackpackItems.get_child(index).get_child(0).item_properties.string_name:
-			child.reparent(loose_items.get_child(index))
+			child.reparent(%BackpackItems.get_child(index))
 			child.toggle_collision_layer()
 			child.interact_state = BaseItem.Interact_State.IN_BACKPACK
 			%ItemList.cust_add_item(child)

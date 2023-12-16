@@ -21,18 +21,18 @@ layout_mode = 2
 [node name="FPSCount" type="Label" parent="VBoxContainer/HBoxContainer" groups=["FPSOut"]]
 unique_name_in_owner = true
 layout_mode = 2
-text = "FPS: 145"
+text = "FPS: 137"
 
 [node name="ObjectCount" type="Label" parent="VBoxContainer/HBoxContainer" groups=["ObjectCountOut"]]
 unique_name_in_owner = true
 layout_mode = 2
-text = "#Objects: 69456"
+text = "#Objects: 67412"
 
-[node name="Spawn Seed" type="Button" parent="VBoxContainer"]
+[node name="SpawnSeed" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Spawn seed"
 
-[node name="Spawn Stone" type="Button" parent="VBoxContainer"]
+[node name="SpawnStone" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Spawn stone"
 
@@ -40,7 +40,11 @@ text = "Spawn stone"
 layout_mode = 2
 text = "Toggle Hannah"
 
-[node name="Get max slots" type="Button" parent="VBoxContainer"]
+[node name="GrowPlants" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Grow plants"
+
+[node name="GetMaxSlots" type="Button" parent="VBoxContainer"]
 layout_mode = 2
 text = "Get max slots"
 
@@ -54,7 +58,8 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "null"
 
-[connection signal="pressed" from="VBoxContainer/Spawn Seed" to="." method="_on_spawn_seed_pressed"]
-[connection signal="pressed" from="VBoxContainer/Spawn Stone" to="." method="_on_spawn_stone_pressed"]
+[connection signal="pressed" from="VBoxContainer/SpawnSeed" to="." method="_on_spawn_seed_pressed"]
+[connection signal="pressed" from="VBoxContainer/SpawnStone" to="." method="_on_spawn_stone_pressed"]
 [connection signal="pressed" from="VBoxContainer/ToggleHannah" to="." method="_on_toggle_hannah_pressed"]
-[connection signal="pressed" from="VBoxContainer/Get max slots" to="." method="_on_get_max_slots_pressed"]
+[connection signal="pressed" from="VBoxContainer/GrowPlants" to="." method="_on_grow_plants_pressed"]
+[connection signal="pressed" from="VBoxContainer/GetMaxSlots" to="." method="_on_get_max_slots_pressed"]

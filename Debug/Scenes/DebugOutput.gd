@@ -6,11 +6,13 @@ class_name DebugOutput
 @export var corn_seed: PackedScene
 @export var stone_scene: PackedScene
 var hannah: Hannah
+var plants
 
 func _process(_delta):
 	%FPSCount.text = "FPS: " + str(Performance.get_monitor(Performance.TIME_FPS))
 	%ObjectCount.text = "#Objects: " + str(Performance.get_monitor(Performance.OBJECT_COUNT))
 	hannah = get_tree().get_first_node_in_group("Hannah")
+	plants = get_tree().get_first_node_in_group("PlantsNode")
 
 func stack_and_text(string):
 	stack_trace()
@@ -55,3 +57,7 @@ func _on_toggle_hannah_pressed():
 
 func _on_get_max_slots_pressed():
 	hannah.inventory.get_node("%InvSprite/%EquipGrid").get_max()
+
+func _on_grow_plants_pressed():
+	for child in plants.get_children():
+		child.cheat()

@@ -19,6 +19,10 @@ config/icon="res://Art/Images/icon.svg"
 
 PanelColourManager="*res://Art/UI/PanelColourManager.gd"
 
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/behaviour_toolkit/plugin.cfg")
+
 [input]
 
 left={

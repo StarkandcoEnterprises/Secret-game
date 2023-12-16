@@ -47,35 +47,33 @@ func invert_inventory_and_bar():
 
 ##This function is used to select a slot on the hotbar. It takes a new slot number as a parameter. Needs refactoring :)
 func select_on_bar(new_slot: int):
-	var equip_slot = %HotbarUI.get_node(str("%Hotbar/Equipped", new_slot))
-	var current_slot_node = %HotbarUI.get_node(str("%Hotbar/Equipped", current_slot))
 	#If we're passing 0, the same slot, or an empty slot - just unequip things.
-	if new_slot == 0 or new_slot == current_slot or equip_slot.get_child_count() == 0:
+	if new_slot == 0 or new_slot == current_slot or %HotbarUI.get_node(str("%Hotbar/Equipped", new_slot)).get_child_count() == 0:
 
 		if hannah:
 			hannah.unequip_held()
 			
 		#Clear our old ref rect
 		if current_slot != 0:
-			current_slot_node.get_child(1).queue_free()
+			%HotbarUI.get_node(str("%Hotbar/Equipped", current_slot)).get_child(1).queue_free()
 			current_slot = 0
 		return
 	
 	#If we're not unequipping, but we were holding something, unequip it before moving on
 	if current_slot != 0: 
-		current_slot_node.get_child(1).queue_free()
+		%HotbarUI.get_node(str("%Hotbar/Equipped", current_slot)).get_child(1).queue_free()
 		hannah.unequip_held()
 		
 	#Highlight the selected box
 	var highlight = Sprite2D.new()
 	highlight.texture = preload("res://Art/Images/Inventory/Highlight.png") 
 	highlight.position = Vector2(32, 32) 
-	equip_slot.add_child(highlight)
+	%HotbarUI.get_node(str("%Hotbar/Equipped", new_slot)).add_child(highlight)
 	
 	current_slot = new_slot
 	
 	#Equip
 	if hannah: 
-		hannah.equip_item(equip_slot.get_child(0).parent.duplicate())
+		hannah.equip_item(%HotbarUI.get_node(str("%Hotbar/Equipped", new_slot)).get_child(0).parent.duplicate())
 		hannah.equipped.rotation_degrees = 0
 

@@ -194,7 +194,7 @@ func handle_reentry_to_inventory():
 	toggle_collision_layer()
 	start_drag()
 
-# Separate function to handle actions when it is droppable
+# Separate function to handle when it is dropped
 func handle_drop():
 	var item_index = backpack_item_list.find_item_index(item_properties.string_name)
 	if item_index == -1: 
