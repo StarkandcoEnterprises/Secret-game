@@ -26,14 +26,8 @@ func test_ready(timeout=50):
 	# Assert that inventory_item_holder has been set
 	assert_object(item.inventory_item_holder).is_not_null()
 
-   if is_failure():
-	  return
-	
 	# Assert that inventory_item_holder is in the "LooseItems" group
 	assert_bool(item.inventory_item_holder.is_in_group("LooseItems")).is_true()
-
-   if is_failure():
-	  return
 
 @warning_ignore("unused_parameter")
 # Test toggle_collision_layer function

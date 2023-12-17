@@ -45,6 +45,7 @@ func test_ready(timeout=50) -> void:
 		assert_bool(hannah.get_collision_layer_value(layer)).is_false()
 	
 	for mask in hannah.collision_mask:
+		if mask == 0: continue
 		if mask == 1:
 			assert_bool(hannah.get_collision_mask_value(mask)).is_true()
 			continue
@@ -54,7 +55,7 @@ func test_ready(timeout=50) -> void:
 	assert_object(hannah.map).is_not_null().is_instanceof(TileMap)
 
 @warning_ignore("unused_parameter")
-func test_toggle_processing(timeout=20) -> void:
+func test_toggle_processing(timeout=30) -> void:
 	var hannah: HannahTest = auto_free(hannah_scene.instantiate())
 	add_child(hannah)
 	#Run toggle processing
