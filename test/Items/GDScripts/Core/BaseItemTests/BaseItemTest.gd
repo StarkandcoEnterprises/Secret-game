@@ -11,7 +11,8 @@ var sample_item_scene: PackedScene = preload("res://Items/Resources/Stone.tscn")
 var complex_item_scene: PackedScene = preload("res://Items/Resources/Stone.tscn")
 var main_scene: PackedScene = preload("res://CoreResources/Scenes/Main.tscn")
 
-func test_ready():
+@warning_ignore("unused_parameter")
+func test_ready(timeout=50):
 	var main: Main = auto_free(main_scene.instantiate())
 	add_child(main)
 	
@@ -25,11 +26,18 @@ func test_ready():
 	# Assert that inventory_item_holder has been set
 	assert_object(item.inventory_item_holder).is_not_null()
 
+   if is_failure():
+	  return
+	
 	# Assert that inventory_item_holder is in the "LooseItems" group
 	assert_bool(item.inventory_item_holder.is_in_group("LooseItems")).is_true()
 
+   if is_failure():
+	  return
+
+@warning_ignore("unused_parameter")
 # Test toggle_collision_layer function
-func test_toggle_collision_layer():
+func test_toggle_collision_layer(timeout=20):
 	var item: BaseItem = auto_free(sample_item_scene.instantiate())
 	add_child(item)
 
@@ -43,8 +51,10 @@ func test_toggle_collision_layer():
 	# Assert that the collision layer has been toggled back to INV_COLLISION
 	assert_int(item.get_collision_layer()).is_equal(BaseItem.INV_COLLISION)
 
+
+@warning_ignore("unused_parameter")
 # Test set_interact_state function
-func test_set_interact_state():
+func test_set_interact_state(timeout=20):
 	var item: BaseItem = auto_free(sample_item_scene.instantiate())
 	add_child(item)
 
@@ -53,8 +63,9 @@ func test_set_interact_state():
 	# Assert that the interact state has been set to IN_BACKPACK
 	assert_int(item.interact_state).is_equal(BaseItem.Interact_State.IN_BACKPACK)
 
+@warning_ignore("unused_parameter")
 # Test rotate_selected_item function
-func test_rotate_selected_item():
+func test_rotate_selected_item(timeout=20):
 	var item: BaseItem = auto_free(sample_item_scene.instantiate())
 	add_child(item)
 
@@ -65,7 +76,8 @@ func test_rotate_selected_item():
 	# Assert that the item has been rotated by 90 degrees
 	assert_float(item.rotation_degrees).is_equal(initial_rotation + 90)
 	
-func test_handle_reentry_to_inventory():
+@warning_ignore("unused_parameter")
+func test_handle_reentry_to_inventory(timeout=40):
 	var main: Main = auto_free(main_scene.instantiate())
 	add_child(main)
 	
@@ -91,7 +103,8 @@ func test_handle_reentry_to_inventory():
 	# Assert that the item's collision layer has been toggled to BACKPACK_COLLISION
 	assert_int(item.get_collision_layer()).is_equal(BaseItem.INV_COLLISION)
 
-func test_handle_drop():
+@warning_ignore("unused_parameter")
+func test_handle_drop(timeout=40):
 	var main: Main = auto_free(main_scene.instantiate())
 	add_child(main)
 	
@@ -117,7 +130,8 @@ func test_handle_drop():
 	# Assert that the item's collision layer has been toggled to BACKPACK_COLLISION
 	assert_int(item.get_collision_layer()).is_equal(BaseItem.BACKPACK_COLLISION)
 
-func test_handle_left_click_drag():
+@warning_ignore("unused_parameter")
+func test_handle_left_click_drag(timeout=40):
 	var item: BaseItem = auto_free(sample_item_scene.instantiate())
 	add_child(item)
 	
@@ -135,7 +149,8 @@ func test_handle_left_click_drag():
 	# Assert that the interact_state is now SELECTED
 	assert_int(item.interact_state).is_equal(BaseItem.Interact_State.SELECTED)
 
-func test_handle_left_click_reentry():
+@warning_ignore("unused_parameter")
+func test_handle_left_click_reentry(timeout=50):
 	var main: Main = auto_free(main_scene.instantiate())
 	add_child(main)
 	
@@ -160,7 +175,8 @@ func test_handle_left_click_reentry():
 	# Assert that the interact_state is now IN_BACKPACK
 	assert_int(item.interact_state).is_equal(BaseItem.Interact_State.SELECTED)
 
-func test_handle_left_click_fall():
+@warning_ignore("unused_parameter")
+func test_handle_left_click_fall(timeout=20):
 	var item: BaseItem = auto_free(sample_item_scene.instantiate())
 	add_child(item)
 	# Set the interact_state to SELECTED
@@ -177,7 +193,8 @@ func test_handle_left_click_fall():
 	assert_int(item.interact_state).is_equal(BaseItem.Interact_State.SELECTABLE)
 
 
-func test_handle_left_click_slot():
+@warning_ignore("unused_parameter")
+func test_handle_left_click_slot(timeout=20):
 	var main: Main = auto_free(main_scene.instantiate())
 	add_child(main)
 	
@@ -199,7 +216,8 @@ func test_handle_left_click_slot():
 	# Assert that the interact_state is now SLOTTED
 	assert_int(item.interact_state).is_equal(BaseItem.Interact_State.SLOTTED_SELECTABLE)
 
-func test_handle_left_click_handle_drop():
+@warning_ignore("unused_parameter")
+func test_handle_left_click_handle_drop(timeout=40):
 	var main: Main = auto_free(main_scene.instantiate())
 	add_child(main)
 	
@@ -224,7 +242,8 @@ func test_handle_left_click_handle_drop():
 	# Assert that the interact_state is now IN_BACKPACK
 	assert_int(item.interact_state).is_equal(BaseItem.Interact_State.IN_BACKPACK)
 
-func test_handle_left_click_else():
+@warning_ignore("unused_parameter")
+func test_handle_left_click_else(timeout=30):
 	var item: BaseItem = auto_free(sample_item_scene.instantiate())
 	add_child(item)
 	
@@ -246,7 +265,8 @@ func test_handle_left_click_else():
 	# Assert that the interact_state is now SELECTABLE
 	assert_int(item.interact_state).is_equal(BaseItem.Interact_State.SELECTABLE)
 	
-func test_find_slotted_center():
+@warning_ignore("unused_parameter")
+func test_find_slotted_center(timeout=40):
 	var main: Main = auto_free(main_scene.instantiate())
 	add_child(main)
 	
@@ -281,7 +301,8 @@ func test_find_slotted_center():
 	# Assert that the center has been updated
 	assert_vector(item.center).is_equal(Vector2(44, 41))
 
-func test_should_skip_processing():
+@warning_ignore("unused_parameter")
+func test_should_skip_processing(timeout=20):
 	var item: BaseItem = auto_free(sample_item_scene.instantiate())
 	add_child(item)
 
@@ -325,7 +346,8 @@ func test_should_skip_processing():
 	item.set_interact_state(BaseItem.Interact_State.SELECTED_IN_BACKPACK)
 	assert_bool(item.should_skip_processing()).is_true()
 
-func test_handle_movement():
+@warning_ignore("unused_parameter")
+func test_handle_movement(timeout=50):
 	var main: Main = auto_free(main_scene.instantiate())
 	add_child(main)
 	
@@ -371,13 +393,15 @@ func test_handle_movement():
 	assert_vector(item.position).is_not_equal(initial_position)  # Expect position to change due to gravity
 	assert_vector(item.velocity).is_not_equal(initial_velocity)  # Expect velocity to change due to gravity
 
-func test_added_to_inventory():
+@warning_ignore("unused_parameter")
+func test_added_to_inventory(timeout=20):
 	var item: BaseItem = auto_free(sample_item_scene.instantiate())
 	add_child(item)
 	item.added_to_inventory()
 	assert_int(item.interact_state).is_equal(BaseItem.Interact_State.IN_INVENTORY)
 
-func test_on_mouse_entered():
+@warning_ignore("unused_parameter")
+func test_on_mouse_entered(timeout=20):
 	var item: BaseItem = auto_free(sample_item_scene.instantiate())
 	add_child(item)
 	# Test when interact_state is SLOTTED
@@ -390,7 +414,8 @@ func test_on_mouse_entered():
 	item._on_mouse_entered()
 	assert_int(item.interact_state).is_equal(BaseItem.Interact_State.SELECTABLE)
 
-func test_on_mouse_exited():
+@warning_ignore("unused_parameter")
+func test_on_mouse_exited(timeout=20):
 	var item: BaseItem = auto_free(sample_item_scene.instantiate())
 	add_child(item)
 
@@ -404,7 +429,8 @@ func test_on_mouse_exited():
 	item._on_mouse_exited()
 	assert_int(item.interact_state).is_equal(BaseItem.Interact_State.IN_INVENTORY)
 
-func test_should_skip_mouse_events():
+@warning_ignore("unused_parameter")
+func test_should_skip_mouse_events(timeout=20):
 	var item: BaseItem = auto_free(sample_item_scene.instantiate())
 	add_child(item)
 
@@ -442,7 +468,8 @@ func test_should_skip_mouse_events():
 	item.interact_state = BaseItem.Interact_State.DROPPABLE
 	assert_bool(item.should_skip_mouse_events()).is_false()
 
-func test_on_slots_area_entered():
+@warning_ignore("unused_parameter")
+func test_on_slots_area_entered(timeout=50):
 	var main: Main = auto_free(main_scene.instantiate())
 	add_child(main)
 	
@@ -471,7 +498,8 @@ func test_on_slots_area_entered():
 	await item._on_slots_area_entered(get_tree().get_nodes_in_group("BackpackArea")[0])
 	assert_int(item.interact_state).is_equal(BaseItem.Interact_State.DROPPABLE)
 
-func test_on_slots_area_exited():
+@warning_ignore("unused_parameter")
+func test_on_slots_area_exited(timeout=30):
 	var main: Main = auto_free(main_scene.instantiate())
 	add_child(main)
 	

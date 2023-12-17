@@ -10,8 +10,9 @@ const __source = 'res://CoreResources/GDScripts/Main.gd'
 var main_scene: PackedScene = preload("res://CoreResources/Scenes/Main.tscn")
 var base_plant_scene: PackedScene = preload("res://Plants/Scenes/Instanced/CornPlant.tscn")
 
+@warning_ignore("unused_parameter")
 # Test _ready function
-func test__ready():
+func test__ready(timeout=30):
 	var main: Main = auto_free(main_scene.instantiate())
 	add_child(main)
 
@@ -24,8 +25,9 @@ func test__ready():
 	assert_bool(main.get_node("%Daytime").is_stopped()).is_false()
 	assert_float(main.get_node("%Daytime").wait_time).is_equal(Main.DAYTIME_VALUE)
 
+@warning_ignore("unused_parameter")
 # Test _on_daytime_timeout function
-func test__on_daytime_timeout():
+func test__on_daytime_timeout(timeout=30):
 	var main: Main = auto_free(main_scene.instantiate())
 	add_child(main)
 
@@ -40,8 +42,9 @@ func test__on_daytime_timeout():
 	assert_bool(main.get_node("%Hannah").inventory.get_node("%HotbarUI").visible).is_true()
 	assert_bool(main.get_node("%Hannah").is_processing_unhandled_input()).is_false()
 
+@warning_ignore("unused_parameter")
 # Test next_day function
-func test_next_day():
+func test_next_day(timeout=30):
 	var main: Main = auto_free(main_scene.instantiate())
 	add_child(main)
 
@@ -54,8 +57,9 @@ func test_next_day():
 	assert_bool(main.get_node("%Hannah").inventory.visible).is_true()
 	assert_bool(main.get_node("%Hannah").is_processing_unhandled_input()).is_true()
 
+@warning_ignore("unused_parameter")
 # Test reset_watering_and_grow function
-func test_reset_watering_and_grow():
+func test_reset_watering_and_grow(timeout=30):
 	var main: Main = auto_free(main_scene.instantiate())
 	add_child(main)
 
@@ -78,8 +82,9 @@ func test_reset_watering_and_grow():
 	# Assert that the tile in the TileMap is no longer wet soil
 	assert_bool(main.is_wet_tile(Vector2i(0, 0))).is_false()
 
+@warning_ignore("unused_parameter")
 # Test is_wet_tile function
-func test_is_wet_tile():
+func test_is_wet_tile(timeout=30):
 	var main: Main = auto_free(main_scene.instantiate())
 	add_child(main)
 
