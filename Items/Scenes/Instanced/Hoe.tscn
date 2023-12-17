@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://Items/GDScripts/Instanced/Hoe.gd" id="2_khl42"]
 [ext_resource type="Resource" uid="uid://7hh4tvaoxbq6" path="res://Items/Resources/Instanced/HoeEquipment.tres" id="2_lndfa"]
 [ext_resource type="Resource" uid="uid://dwbmwdotlnmn8" path="res://Items/Resources/Instanced/HoeItem.tres" id="3_f0pm3"]
-[ext_resource type="Shape2D" uid="uid://bnxj8owogslgt" path="res://Items/Scenes/Core/SlotUseScenes/DoubleSlot.tres" id="4_6giqe"]
+[ext_resource type="Shape2D" uid="uid://bnxj8owogslgt" path="res://Items/Scenes/Core/ItemSlotsUse/DoubleSlot.tres" id="4_6giqe"]
 [ext_resource type="Texture2D" uid="uid://bmd3innxkuqvi" path="res://Art/Images/Items/Tools/Hoe2.png" id="4_jdlor"]
 
 [node name="Hoe" instance=ExtResource("1_y5kod")]

@@ -1,7 +1,7 @@
 [gd_scene load_steps=4 format=3 uid="uid://unaoh2lply4h"]
 
 [ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/BaseItem.gd" id="1_em6ot"]
-[ext_resource type="Shape2D" uid="uid://cvi0u5xmsuyhp" path="res://Items/Scenes/Core/SlotUseScenes/SingleSlot.tres" id="2_6u8bw"]
+[ext_resource type="Shape2D" uid="uid://cvi0u5xmsuyhp" path="res://Items/Scenes/Core/ItemSlotsUse/SingleSlot.tres" id="2_6u8bw"]
 [ext_resource type="Texture2D" uid="uid://cn0j6m8x6njyo" path="res://Art/Images/icon.svg" id="3_hrx7p"]
 
 [node name="BaseItem" type="CharacterBody2D"]

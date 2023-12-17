@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bwrim1h5p3u0"]
 
-[ext_resource type="Script" path="res://CoreResources/Scenes/Bed.gd" id="1_5aqc1"]
+[ext_resource type="Script" path="res://CoreResources/Bed.gd" id="1_5aqc1"]
 [ext_resource type="Texture2D" uid="uid://b8sxywscmeyf4" path="res://Art/Images/BuildingScenes/Bed.png" id="2_4g466"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nk1bm"]

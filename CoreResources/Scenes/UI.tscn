@@ -1,12 +1,12 @@
 [gd_scene load_steps=4 format=3 uid="uid://bmcq3jsxe7x1x"]
 
-[ext_resource type="PackedScene" uid="uid://cp1lycwjvfvbu" path="res://Inventory/Scenes/PlayerInventoryUI.tscn" id="1_1ybq5"]
+[ext_resource type="PackedScene" uid="uid://cp1lycwjvfvbu" path="res://Inventory/Scenes/PlayerUI.tscn" id="1_je444"]
 [ext_resource type="PackedScene" uid="uid://ccthdeb3aigs8" path="res://CoreResources/Scenes/DayOverUI.tscn" id="2_oc6ee"]
 [ext_resource type="PackedScene" uid="uid://c6mqdm5lea244" path="res://CoreResources/Scenes/DialogueUI.tscn" id="3_g22w1"]
 
 [node name="UI" type="CanvasLayer"]
 
-[node name="PlayerUI" parent="." instance=ExtResource("1_1ybq5")]
+[node name="PlayerUI" parent="." instance=ExtResource("1_je444")]
 unique_name_in_owner = true
 
 [node name="DayOverUI" parent="." instance=ExtResource("2_oc6ee")]

@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://Debug/Scenes/DebugOutput.gd" id="1_pfcr7"]
 [ext_resource type="PackedScene" uid="uid://ncboup6o1765" path="res://Items/Scenes/Instanced/CornSeed.tscn" id="2_d746o"]
-[ext_resource type="PackedScene" uid="uid://cx85qdydat8pe" path="res://Items/Resources/Stone.tscn" id="3_5py0v"]
+[ext_resource type="PackedScene" uid="uid://cx85qdydat8pe" path="res://Items/Scenes/Instanced/Stone.tscn" id="3_5py0v"]
 
 [node name="Window" type="Window" groups=["DebugOutput"]]
 position = Vector2i(0, 36)

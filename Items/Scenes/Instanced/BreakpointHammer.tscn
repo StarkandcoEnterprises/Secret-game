@@ -3,7 +3,7 @@
 [ext_resource type="PackedScene" uid="uid://hxpjbiqmim05" path="res://Items/Scenes/Core/BaseWeapon.tscn" id="1_xc30d"]
 [ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/WeaponPropertiesResource.gd" id="3_dpl2o"]
 [ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/EquipmentPropertiesResource.gd" id="4_fa5qg"]
-[ext_resource type="PackedScene" uid="uid://b6qg1yg3x43xn" path="res://Items/Scenes/Core/SlotUseScenes/DoubleSeparatedSlots.tscn" id="4_gi618"]
+[ext_resource type="PackedScene" uid="uid://b6qg1yg3x43xn" path="res://Items/Scenes/Core/ItemSlotsUse/DoubleSeparatedSlots.tscn" id="4_gi618"]
 [ext_resource type="Texture2D" uid="uid://gwo21kbtljud" path="res://Art/Images/Items/Weapons/BreakpointHammerFromHTS.png" id="4_wt88y"]
 [ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/ItemPropertiesResource.gd" id="5_qydiv"]
 [ext_resource type="Texture2D" uid="uid://ckkm84ffyvv2b" path="res://Art/Images/Items/Weapons/BreakpointHammer3.png" id="8_0dkvi"]

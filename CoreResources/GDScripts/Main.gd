@@ -48,6 +48,7 @@ func _on_daytime_timeout():
 	remove_child(timer)
 	
 	reset_watering_and_grow()
+	%Hannah.sleep()
 
 ## Re-enables [Hannah]'s processing. Restarts Daytime Timer
 func next_day():

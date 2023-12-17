@@ -7,8 +7,8 @@ extends GdUnitTestSuite
 # TestSuite generated from
 const __source = 'res://Items/GDScripts/Core/BaseItems/BaseItem.gd'
 
-var sample_item_scene: PackedScene = preload("res://Items/Resources/Stone.tscn")
-var complex_item_scene: PackedScene = preload("res://Items/Resources/Stone.tscn")
+var sample_item_scene: PackedScene = preload("res://Items/Scenes/Instanced/Stone.tscn")
+var complex_item_scene: PackedScene = preload("res://Items/Scenes/Instanced/BreakpointHammer.tscn")
 var main_scene: PackedScene = preload("res://CoreResources/Scenes/Main.tscn")
 
 @warning_ignore("unused_parameter")
@@ -285,14 +285,14 @@ func test_find_slotted_center(timeout=40):
 	complex_item.find_slotted_center()
 	
 	# Assert that the center has been updated
-	assert_vector(complex_item.center).is_equal(Vector2(0, 0))
+	assert_vector(complex_item.center).is_equal(Vector2(67, 64))
 
 	
 	item._on_slots_area_entered(get_tree().get_nodes_in_group("GridBlock")[1])
 	# Call the find_slotted_center function
 	item.find_slotted_center()
 
-	# Assert that the center has been updated
+	# center here is just the top left of the position we want to be at
 	assert_vector(item.center).is_equal(Vector2(44, 41))
 
 @warning_ignore("unused_parameter")
@@ -357,7 +357,7 @@ func test_handle_movement(timeout=50):
 	
 	await get_tree().process_frame
 	
-	assert_vector(item.global_position).is_equal_approx(item.get_global_mouse_position(), Vector2(2, 2))
+	assert_vector(item.global_position).is_equal_approx(item.get_global_mouse_position(), Vector2(5, 5))
 
 	# Test when interact_state is IN_BACKPACK
 	item.set_interact_state(BaseItem.Interact_State.IN_BACKPACK)

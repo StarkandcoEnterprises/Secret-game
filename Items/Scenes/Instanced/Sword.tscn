@@ -5,7 +5,7 @@
 [ext_resource type="Resource" uid="uid://d31j5jqhgs7fj" path="res://Items/Resources/Instanced/SwordEquipment.tres" id="3_jn8fq"]
 [ext_resource type="Resource" uid="uid://ckejrkx81j13q" path="res://Items/Resources/Instanced/SwordItem.tres" id="4_7xkpp"]
 [ext_resource type="Texture2D" uid="uid://j7iuvrxmvliu" path="res://Art/Images/Items/Weapons/Sword2.png" id="5_m2kpl"]
-[ext_resource type="Shape2D" uid="uid://bnxj8owogslgt" path="res://Items/Scenes/Core/SlotUseScenes/DoubleSlot.tres" id="6_er02q"]
+[ext_resource type="Shape2D" uid="uid://bnxj8owogslgt" path="res://Items/Scenes/Core/ItemSlotsUse/DoubleSlot.tres" id="6_er02q"]
 [ext_resource type="Texture2D" uid="uid://die0ho437c2kg" path="res://Art/Images/Items/Weapons/Sword.png" id="7_wk45k"]
 
 [node name="Sword" instance=ExtResource("1_vslw3")]

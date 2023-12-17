@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://b6qg1yg3x43xn"]
 
-[ext_resource type="Script" path="res://Items/Scenes/Core/SlotUseScenes/SingleCornerSlot.gd" id="1_doiui"]
+[ext_resource type="Script" path="res://Items/Scenes/Core/ItemSlotsUse/SingleCornerSlot.gd" id="1_doiui"]
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D"]
 position = Vector2(-40, -40)

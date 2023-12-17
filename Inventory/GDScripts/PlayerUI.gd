@@ -42,6 +42,7 @@ func _unhandled_input(event):
 func invert_inventory_and_bar():
 	%HotbarUI.visible = !%HotbarUI.visible
 	%InvSprite.visible = !%InvSprite.visible
+	%StatPanel.visible = !%StatPanel.visible
 	mouse_filter = MOUSE_FILTER_PASS if mouse_filter == MOUSE_FILTER_STOP else MOUSE_FILTER_STOP
 	if hannah: hannah.toggle_processing()
 

@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://unaoh2lply4h" path="res://Items/Scenes/Core/BaseItem.tscn" id="1_8bmu7"]
 [ext_resource type="Texture2D" uid="uid://bcqtfsraus73j" path="res://Art/Images/Crops/Corn/Corn.png" id="2_q2b1p"]
-[ext_resource type="Resource" uid="uid://cio58nvlma4e5" path="res://Items/Scenes/Instanced/Corn.tres" id="2_qsm76"]
+[ext_resource type="Resource" uid="uid://cio58nvlma4e5" path="res://Items/Resources/Instanced/Corn.tres" id="2_qsm76"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bp8vv"]
 resource_local_to_scene = true

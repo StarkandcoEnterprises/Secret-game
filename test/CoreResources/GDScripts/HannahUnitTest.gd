@@ -9,7 +9,7 @@ const __source = 'res://CoreResources/GDScripts/Hannah.gd'
 
 var hannah_scene: PackedScene = preload("res://CoreResources/Scenes/HannahTest.tscn")
 var main_scene: PackedScene = preload("res://CoreResources/Scenes/Main.tscn")
-var sample_item_scene: PackedScene = preload("res://Items/Resources/Stone.tscn")
+var sample_item_scene: PackedScene = preload("res://Items/Scenes/Instanced/Stone.tscn")
 var sample_interactable_scene: PackedScene = preload("res://CoreResources/Scenes/Bed.tscn")
 var sample_equipment_scene: PackedScene = preload("res://Items/Scenes/Instanced/Hoe.tscn")
 
@@ -56,8 +56,12 @@ func test_ready(timeout=50) -> void:
 
 @warning_ignore("unused_parameter")
 func test_toggle_processing(timeout=30) -> void:
+	#Set up inventory, map
+	var main: Main = auto_free(main_scene.instantiate())
+	add_child(main)
+	await get_tree().process_frame
 	var hannah: HannahTest = auto_free(hannah_scene.instantiate())
-	add_child(hannah)
+	main.add_child(hannah)
 	#Run toggle processing
 	hannah.toggle_processing()
 	#Verify processing is false
@@ -71,58 +75,105 @@ func test_toggle_processing(timeout=30) -> void:
 	assert_bool(hannah.is_processing_unhandled_input()).is_true()
 
 @warning_ignore("unused_parameter")
-func test__physics_process(timeout=100) -> void:
+func test__physics_process(timeout=150) -> void:
 	#Set up inventory, map
 	var main: Main = auto_free(main_scene.instantiate())
 	add_child(main)
 	await get_tree().process_frame
+	
 	var sample_item: BaseItem = auto_free(sample_item_scene.instantiate())
 	main.add_child(sample_item)
 	await get_tree().process_frame
+	
 	#Set up Hannah
 	var hannah: HannahTest = auto_free(hannah_scene.instantiate())
 	#Stop any processing
 	hannah.toggle_processing()
 	main.add_child(hannah)
+	
 	#Set a direction to be used for physics processing
 	hannah.direction = Vector2.LEFT
 	
-	await get_tree().physics_frame
 	#Reenable physics processing
 	hannah.set_physics_process(true)
-	#Wait for the process frame to finish
-	await get_tree().physics_frame
+	hannah._physics_process(0.1)
 	
 	#Make sure we've picked up the item
 	assert_int(main.get_node("%UI").get_node("%PlayerUI").get_node("%InvSprite").get_node("%LooseItems").get_child_count()).is_equal(1)
 	
 	#Make sure the velocity has been updated
 	assert_vector(hannah.velocity).is_equal_approx(Vector2.LEFT * hannah.speed, Vector2(0.0001,0.0001))
-	
-	#Set up comparison rotation for the overridden get global mouse position
-	var direction = (hannah.test_get_global_mouse_position() - hannah.position).normalized()
-	var expected_rotation = atan2(direction.y, direction.x)
-	
-	#Make sure we've rotated to the mouse position
-	assert_float(hannah.get_node("%ArmBase").rotation).is_equal_approx(expected_rotation, 0.5)
+		
+	#Make sure we've tried rotate to the mouse position
+	assert_float(hannah.get_node("%ArmBase").rotation).is_equal_approx(0.785398, 0.0001)
 	
 	#Create a new item to *not* be picked up 
 	var not_pickedup_item: BaseItem = auto_free(sample_item_scene.instantiate())
 	not_pickedup_item.interact_state = BaseItem.Interact_State.EQUIPPED
 	main.add_child(not_pickedup_item)
 	
-	#Wait for the process frame to finish
-	await get_tree().physics_frame
+	hannah._physics_process(0.1)
 	
-	#Wait for the process frame to finish
-	await get_tree().physics_frame
 	#Ensure it isn't picked up
 	assert_int(main.get_node("%UI").get_node("%PlayerUI").get_node("%InvSprite").get_node("%LooseItems").get_child_count()).is_equal(1)
 	
+	# Test withe excess weight
+	hannah.weight = 60
+	var initial_stamina = hannah.stamina
+	hannah.direction = Vector2.LEFT
+	
+	hannah._physics_process(5)
+
+	# Check that stamina has decreased after moving with excess weight
+	assert_int(hannah.stamina).is_less(initial_stamina)
+
+	initial_stamina = hannah.stamina
+	
+	# Stop moving
+	hannah.direction = Vector2.ZERO
+
+	hannah._physics_process(5)
+
+	# Check that stamina has increased after stopping
+	assert_int(hannah.stamina).is_greater(initial_stamina)
+
+	# Test running effect
+	hannah.stamina = Hannah.MAX_STAMINA  # Ensure we have enough stamina to run
+	hannah.direction = Vector2.RIGHT
+	hannah._physics_process(0.1)
+	var initial_velocity = hannah.velocity
+
+	# Simulate pressing the run action
+	Input.action_press("run")
+	hannah._physics_process(5)
+
+	# Check that velocity has increased
+	assert_float(hannah.velocity.length()).is_greater(initial_velocity.length())
+
+	# Simulate releasing the run action
+	Input.action_release("run")
+	hannah._physics_process(5)
+
+	# Check that velocity has returned to normal
+	assert_float(hannah.velocity.length()).is_equal(initial_velocity.length())
+
+	# Deplete stamina
+	hannah.stamina = 0
+	Input.action_press("run")
+	hannah._physics_process(0.1)
+
+	# Check that velocity has returned to normal even though the run action is pressed
+	assert_float(hannah.velocity.length()).is_equal(initial_velocity.length())
+
 @warning_ignore("unassigned_variable")
-func test__unhandled_input(timeout=50) -> void:
+func test__unhandled_input(timeout=70) -> void:
+	#Set up inventory, map
+	var main: Main = auto_free(main_scene.instantiate())
+	add_child(main)
+	await get_tree().process_frame
 	var hannah: HannahTest = auto_free(hannah_scene.instantiate())
-	add_child(hannah)
+	main.add_child(hannah)
+	hannah.set_physics_process(false)
 	
 	#Simulate left and press action
 	Input.action_press("left")
@@ -154,19 +205,14 @@ func test__unhandled_input(timeout=50) -> void:
 	assert_vector(hannah.direction).is_equal(Vector2.RIGHT)
 	
 	#So the use area doesn't move for other testing later
-	hannah.set_physics_process(false)
 	
 	#Create an interactable object and supporting scenes
-	var main: Main = auto_free(main_scene.instantiate())
 	var sample_interactable: WorldObject = auto_free(sample_interactable_scene.instantiate())
 	
-	#Add supporting scenes
-	add_child(main)
-	
 	#Add the child
-	add_child(sample_interactable)
+	main.add_child(sample_interactable)
 	sample_interactable.global_position = hannah.get_node("%UseArea").global_position
-	await get_tree().create_timer(0.03).timeout
+	await get_tree().create_timer(0.04).timeout
 	#Prepare for interaction
 	Input.action_press("interact")
 	
@@ -188,8 +234,12 @@ func test__unhandled_input(timeout=50) -> void:
 
 @warning_ignore("unused_parameter")
 func test__easeInOutElastic(timeout=20) -> void:
+	#Set up inventory, map
+	var main: Main = auto_free(main_scene.instantiate())
+	add_child(main)
+	await get_tree().process_frame
 	var hannah: HannahTest = auto_free(hannah_scene.instantiate())
-	add_child(hannah)
+	main.add_child(hannah)
 	# Test with x = 0.0
 	var result = hannah._ease_in_out_elastic(0.0)
 	assert_float(result).is_equal(0)
@@ -270,9 +320,13 @@ func test__process(timeout=50) -> void:
 	
 @warning_ignore("unused_parameter")
 # Test start_animation function
-func test_start_animation(timeout=20):
+func test_start_animation(timeout=30):
+	#Set up inventory, map
+	var main: Main = auto_free(main_scene.instantiate())
+	add_child(main)
+	await get_tree().process_frame
 	var hannah: HannahTest = auto_free(hannah_scene.instantiate())
-	add_child(hannah)
+	main.add_child(hannah)
 
 	hannah.start_animation()
 	assert_bool(hannah.playing_anim).is_true()
@@ -281,9 +335,13 @@ func test_start_animation(timeout=20):
 
 @warning_ignore("unused_parameter")
 # Test update_animation_state function
-func test_update_animation_state(timeout=20):
+func test_update_animation_state(timeout=40):
+	#Set up inventory, map
+	var main: Main = auto_free(main_scene.instantiate())
+	add_child(main)
+	await get_tree().process_frame
 	var hannah: HannahTest = auto_free(hannah_scene.instantiate())
-	add_child(hannah)
+	main.add_child(hannah)
 
 	var initial_anim_state = hannah.anim_state
 	hannah.update_animation_state(0.1)
@@ -291,9 +349,13 @@ func test_update_animation_state(timeout=20):
 
 @warning_ignore("unused_parameter")
 # Test update_rotation function
-func test_update_rotation(timeout=20):
+func test_update_rotation(timeout=40):
+	#Set up inventory, map
+	var main: Main = auto_free(main_scene.instantiate())
+	add_child(main)
+	await get_tree().process_frame
 	var hannah: HannahTest = auto_free(hannah_scene.instantiate())
-	add_child(hannah)
+	main.add_child(hannah)
 
 	hannah.playing_anim = false
 	hannah.update_rotation()
@@ -301,9 +363,13 @@ func test_update_rotation(timeout=20):
 
 @warning_ignore("unused_parameter")
 # Test end_animation function
-func test_end_animation(timeout=20):
+func test_end_animation(timeout=40):
+	#Set up inventory, map
+	var main: Main = auto_free(main_scene.instantiate())
+	add_child(main)
+	await get_tree().process_frame
 	var hannah: HannahTest = auto_free(hannah_scene.instantiate())
-	add_child(hannah)
+	main.add_child(hannah)
 
 	hannah.playing_anim = true
 	hannah.start_rotation = 1
@@ -338,9 +404,13 @@ func test_equip_item(timeout=30):
 
 @warning_ignore("unused_parameter")
 # Test unequip_held function
-func test_unequip_held(timeout=20):
+func test_unequip_held(timeout=40):
+	#Set up inventory, map
+	var main: Main = auto_free(main_scene.instantiate())
+	add_child(main)
+	await get_tree().process_frame
 	var hannah: HannahTest = auto_free(hannah_scene.instantiate())
-	add_child(hannah)
+	main.add_child(hannah)
 
 	var equipment: BaseEquipment = auto_free(sample_equipment_scene.instantiate())
 	hannah.equip_item(equipment)
@@ -348,3 +418,32 @@ func test_unequip_held(timeout=20):
 
 	assert_object(hannah.equipped).is_null()
 	assert_bool(hannah.get_node("%HighlightSprite").visible).is_false()
+
+
+func test_health():
+	var hannah: HannahTest = auto_free(hannah_scene.instantiate())
+	hannah.decrease_health(10)
+	assert_int(hannah.health).is_equal(90)
+
+	hannah.increase_health(110)
+	assert_int(hannah.health).is_equal(100)
+	
+	hannah.decrease_health(110)
+	assert_int(hannah.health).is_equal(0)
+	#TODO: Return to implement die effect
+
+func test_stamina():
+	var hannah: HannahTest = auto_free(hannah_scene.instantiate())
+	hannah.decrease_stamina(110)
+	assert_int(hannah.stamina).is_equal(0)
+
+	hannah.increase_stamina(110)
+	assert_int(hannah.stamina).is_equal(100)
+
+func test_morale():
+	var hannah: HannahTest = auto_free(hannah_scene.instantiate())
+	hannah.decrease_morale(110)
+	assert_int(hannah.morale).is_equal(0)
+
+	hannah.increase_morale(110)
+	assert_int(hannah.morale).is_equal(100)

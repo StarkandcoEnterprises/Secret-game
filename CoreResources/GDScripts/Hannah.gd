@@ -8,12 +8,19 @@ class_name Hannah
 ## [Hannah]'s base speed
 var speed = 300.0
 
-## [Hannah]'s inventory
+## [Hannah]'s inventory, really now represents player UI
 var inventory: PlayerUI
 
 ## Current [BaseEquipment] in hands
 var equipped: BaseEquipment
 
+## Progress bar representing stamina on player UI
+var stamina_bar 
+
+## Progress bar representing health on player UI
+var health_bar
+
+## Tilemap
 var map: TileMap
 
 ## The direction being faced and moved
@@ -37,10 +44,115 @@ var start_rotation = 0
 ## Ending rotation for animation
 var end_rotation = 90
 
+## The maximum health of the character
+const MAX_HEALTH = 100
+
+## The maximum stamina of the character
+const MAX_STAMINA = 100
+
+## The maximum morale of the character
+const MAX_MORALE = 100
+
+## The health of the character, when it reaches 0, the character dies
+var health = MAX_HEALTH
+
+## The stamina of the character, used for actions that require physical effort
+var stamina = MAX_STAMINA
+
+## The morale of the character, can affect the character's performance and actions
+var morale = MAX_MORALE
+
+## The weight the character is currently carrying
+var weight = 0
+
+## The maximum weight the character can carry without penalty
+var max_weight = 50
+
+## The rate at which stamina regenerates
+const STAMINA_REGEN_RATE = 1
+
+## The rate at which stamina decreases when running
+const RUNNING_STAMINA_DECREASE = 2
+
+## The rate at which stamina decreases when using items
+const ITEM_USE_STAMINA_DECREASE = 5
+
+## Update the values of the health and stamina bars
+func update_progress_bars():
+	stamina_bar.value = stamina
+	health_bar.value = health
+	
+## Decreases the health by a specified amount
+func decrease_health(amount):
+	health -= amount
+	if health < 0:
+		health = 0
+		die()
+
+## Increases the health by a specified amount
+func increase_health(amount):
+	health += amount
+	if health > MAX_HEALTH:
+		health = MAX_HEALTH
+
+## Decreases the stamina by a specified amount
+func decrease_stamina(amount):
+	stamina -= amount
+	if stamina < 0:
+		stamina = 0
+
+## Increases the stamina by a specified amount
+func increase_stamina(amount):
+	stamina += amount
+	if stamina > MAX_STAMINA:
+		stamina = MAX_STAMINA
+
+## Decreases the morale by a specified amount
+func decrease_morale(amount):
+	morale -= amount
+	if morale < 0:
+		morale = 0
+
+## Increases the morale by a specified amount
+func increase_morale(amount):
+	morale += amount
+	if morale > MAX_MORALE:
+		morale = MAX_MORALE
+
+## Handles the death of the character
+func die():
+	print("Hannah has died")
+
+## Decreases the stamina based on the current weight
+func decrease_stamina_based_on_weight(delta):
+	if weight > max_weight:
+		decrease_stamina((weight - max_weight) * delta)
+
+## Regenerates stamina over time
+func regenerate_stamina(delta):
+	increase_stamina(STAMINA_REGEN_RATE * delta)
+
+## Decreases stamina when running
+func decrease_stamina_when_running(delta):
+	if Input.is_action_pressed("run"):
+		decrease_stamina(RUNNING_STAMINA_DECREASE * (weight - max_weight) if (weight - max_weight) > 1 else 1 * delta)
+
+## Decreases stamina when using an item
+func decrease_stamina_when_using_item():
+	decrease_stamina(ITEM_USE_STAMINA_DECREASE)
+
+## Updates the weight based on the current inventory
+func update_weight():
+	weight = 0
+	for item in inventory.items:
+		weight += item.weight
+
 ## _ready initialises [Hannah]'s [member Hannah.inventory] by using [method Node.get_first_node_in_group]
 func _ready():
 	inventory = get_tree().get_first_node_in_group("PlayerUI")
 	map = get_tree().get_first_node_in_group("Map")
+	stamina_bar = inventory.get_node("%StaminaBar")
+	health_bar = inventory.get_node("%HealthBar")
 
 ## Toggles [Hannah]'s [member Hannah.is_physics_processing] and [method Hannah.is_processing_unhandled_input] 
 func toggle_processing():
@@ -52,11 +164,24 @@ func toggle_processing():
 func _physics_process(delta):
 	
 	%ArmBase.look_at(get_global_mouse_position())
+	
 	#Prepare
-	velocity = direction * speed
+	var current_speed = speed
+	if Input.is_action_pressed("run") and stamina > 5:
+		current_speed = current_speed * 2
+		
+	velocity = direction * current_speed
 	
 	#Move and check for collision 
 	var collision = move_and_collide(velocity * delta)
+	
+	if current_speed == speed * 2:
+		decrease_stamina_when_running(delta)
+	elif velocity != Vector2.ZERO:
+		decrease_stamina_based_on_weight(delta)
+	regenerate_stamina(delta)
+	
+	update_progress_bars()
 	
 	if !collision: return
 	
@@ -90,7 +215,7 @@ func _ease_in_out_elastic(x: float) -> float:
 		return -0.5 * pow(2.0, 10.0 * (x - 1)) * sin((x - 1.1) * c4)
 	return 0.5 * pow(2.0, -10.0 * (x - 1)) * sin((x - 1.1) * c4) + 1
 
-## Manages swinging animation for equipment
+## Manages input/swinging animation for equipment and the highlight tile if required
 func _process(delta):
 	if !equipped and !playing_anim: return
 	if equipped and equipped.equipment_properties.highlight_area:
@@ -99,10 +224,11 @@ func _process(delta):
 		%HighlightSprite.visible = true
 	else:
 		%HighlightSprite.visible = false
-	if Input.is_action_just_pressed("left_click") and !playing_anim:
+	if Input.is_action_just_pressed("left_click") and !playing_anim and stamina > ITEM_USE_STAMINA_DECREASE:
 		%SlashSprite.visible = true
 		start_animation()
 		equipped.use()
+		decrease_stamina_when_using_item()
 	if playing_anim:
 		update_animation_state(delta)
 		update_rotation()
@@ -153,3 +279,6 @@ func unequip_held():
 	equipped = null
 	if %HighlightSprite.visible:
 		%HighlightSprite.visible = false
+
+func sleep():
+	increase_stamina(100)
