@@ -24,3 +24,6 @@ shape = ExtResource("6_er02q")
 
 [node name="EquipmentBarSprite" parent="." index="3"]
 texture = ExtResource("7_wk45k")
+
+[node name="InWorldSprite" parent="." index="5"]
+texture = ExtResource("5_m2kpl")

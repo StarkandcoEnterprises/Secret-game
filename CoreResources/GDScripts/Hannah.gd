@@ -20,6 +20,8 @@ var stamina_bar
 ## Progress bar representing health on player UI
 var health_bar
 
+var in_building = false
+
 ## Tilemap
 var map: TileMap
 
@@ -66,7 +68,7 @@ var morale = MAX_MORALE
 var weight = 0
 
 ## The maximum weight the character can carry without penalty
-var max_weight = 50
+const MAX_WEIGHT = 50
 
 ## The rate at which stamina regenerates
 const STAMINA_REGEN_RATE = 1
@@ -125,8 +127,8 @@ func die():
 
 ## Decreases the stamina based on the current weight
 func decrease_stamina_based_on_weight(delta):
-	if weight > max_weight:
-		decrease_stamina((weight - max_weight) * delta)
+	if weight > MAX_WEIGHT:
+		decrease_stamina((weight - MAX_WEIGHT) * delta)
 
 ## Regenerates stamina over time
 func regenerate_stamina(delta):
@@ -135,17 +137,15 @@ func regenerate_stamina(delta):
 ## Decreases stamina when running
 func decrease_stamina_when_running(delta):
 	if Input.is_action_pressed("run"):
-		decrease_stamina(RUNNING_STAMINA_DECREASE * (weight - max_weight) if (weight - max_weight) > 1 else 1 * delta)
+		decrease_stamina(RUNNING_STAMINA_DECREASE * ((weight - MAX_WEIGHT) if (weight - MAX_WEIGHT) > 1 else 1 * delta))
 
 ## Decreases stamina when using an item
 func decrease_stamina_when_using_item():
 	decrease_stamina(ITEM_USE_STAMINA_DECREASE)
 
-## Updates the weight based on the current inventory
-func update_weight():
-	weight = 0
-	for item in inventory.items:
-		weight += item.weight
+## Updates the weight
+func update_weight(item_weight):
+	weight += item_weight
 
 ## _ready initialises [Hannah]'s [member Hannah.inventory] by using [method Node.get_first_node_in_group]
 func _ready():
@@ -169,7 +169,8 @@ func _physics_process(delta):
 	var current_speed = speed
 	if Input.is_action_pressed("run") and stamina > 5:
 		current_speed = current_speed * 2
-		
+	elif stamina <= 5:
+		current_speed = current_speed / 2
 	velocity = direction * current_speed
 	
 	#Move and check for collision 
@@ -197,11 +198,11 @@ func _unhandled_input(_event):
 	%AnimatedSprite2D.flip_h = direction.x < 0 if direction.x != 0 else %AnimatedSprite2D.flip_h
 	#Here is inventory handling and interacting with world objects
 	if !Input.is_action_just_pressed("interact"): return
-	var overlapping_bodies = %UseArea.get_overlapping_bodies()
-	for body in overlapping_bodies:
-		if !body is WorldObject: continue
+	var overlapping_objects = %UseArea.get_overlapping_bodies() + %UseArea.get_overlapping_areas()
+	for object in overlapping_objects:
+		if !object is WorldObject: continue
 		toggle_processing()
-		body.interact()
+		object.interact()
 		direction = Vector2.ZERO
 		break
 
@@ -217,14 +218,16 @@ func _ease_in_out_elastic(x: float) -> float:
 
 ## Manages input/swinging animation for equipment and the highlight tile if required
 func _process(delta):
-	if !equipped and !playing_anim: return
-	if equipped and equipped.equipment_properties.highlight_area:
-		var tile_pos = map.local_to_map(%UseArea.global_position)
-		%HighlightSprite.global_position = map.map_to_local(tile_pos)
-		%HighlightSprite.visible = true
+	if equipped != null:
+		if equipped.equipment_properties.highlight_area:
+			var tile_pos = map.local_to_map(%UseArea.global_position)
+			%HighlightSprite.global_position = map.map_to_local(tile_pos)
+			%HighlightSprite.visible = true
+		else:
+			%HighlightSprite.visible = false
 	else:
 		%HighlightSprite.visible = false
-	if Input.is_action_just_pressed("left_click") and !playing_anim and stamina > ITEM_USE_STAMINA_DECREASE:
+	if equipped and Input.is_action_just_pressed("left_click") and !playing_anim and stamina > ITEM_USE_STAMINA_DECREASE:
 		%SlashSprite.visible = true
 		start_animation()
 		equipped.use()
@@ -267,15 +270,19 @@ func end_animation():
 
 ## Equips a [BaseEquipment]
 func equip_item(equipment: BaseEquipment):
-	var new_version = equipment.duplicate()
-	new_version.interact_state = BaseItem.Interact_State.EQUIPPED
-	%Equipped.add_child(new_version)
-	new_version.position = Vector2.ZERO
-	equipped = new_version
+	var sprite = equipment.get_node("InWorldSprite")
+	equipment.interact_state = BaseItem.Interact_State.EQUIPPED
+	sprite.reparent(%Equipped)
+	sprite.position = Vector2.ZERO
+	sprite.visible = true
+	equipped = equipment
 
 ## Unequips any held [BaseEquipment]
 func unequip_held():
-	%Equipped.get_child(0).queue_free() if %Equipped.get_child_count() > 0 else null
+	if %Equipped.get_child_count() == 0: return
+	%Equipped.get_child(0).visible = false
+	%Equipped.get_child(0).reparent(equipped)
+	equipped.interact_state = BaseItem.Interact_State.SLOTTED
 	equipped = null
 	if %HighlightSprite.visible:
 		%HighlightSprite.visible = false

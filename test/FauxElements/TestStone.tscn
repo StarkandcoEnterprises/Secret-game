@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=3 uid="uid://b8hkjd0770tgl"]
+
+[ext_resource type="PackedScene" uid="uid://unaoh2lply4h" path="res://Items/Scenes/Core/BaseItem.tscn" id="1_ogepp"]
+[ext_resource type="Script" path="res://test/FauxElements/BaseItemTest.gd" id="2_muluv"]
+[ext_resource type="Resource" uid="uid://cctka64f6vsyn" path="res://Items/Resources/Instanced/Stone.tres" id="3_k7q85"]
+[ext_resource type="Texture2D" uid="uid://ds5oct7yvemlv" path="res://Art/Images/Items/Crafting/Stone.png" id="3_msmbb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_tk85q"]
+resource_local_to_scene = true
+size = Vector2(64, 40)
+
+[node name="TestStone" instance=ExtResource("1_ogepp")]
+script = ExtResource("2_muluv")
+item_properties = ExtResource("3_k7q85")
+
+[node name="ItemSprite" parent="." index="0"]
+texture = ExtResource("3_msmbb")
+
+[node name="ItemCharShape" parent="." index="1"]
+shape = SubResource("RectangleShape2D_tk85q")
+
+[node name="ItemSlotsShape" parent="ItemUsedSlots" index="0"]
+shape = SubResource("RectangleShape2D_tk85q")

@@ -9,15 +9,17 @@ const __source = 'res://CoreResources/GDScripts/Main.gd'
 
 var main_scene: PackedScene = preload("res://CoreResources/Scenes/Main.tscn")
 var base_plant_scene: PackedScene = preload("res://Plants/Scenes/Instanced/CornPlant.tscn")
+var main: Main
+
+func before():
+	main = auto_free(main_scene.instantiate())
+	add_child(main)
+	await get_tree().process_frame
 
 @warning_ignore("unused_parameter")
 # Test _ready function
-func test__ready(timeout=30):
-	var main: Main = auto_free(main_scene.instantiate())
-	add_child(main)
-
-	await get_tree().process_frame
-
+func test__ready(timeout=10):
+	
 	assert_object(main.dialogue_UI).is_instanceof(DialogueManager)
 	assert_object(main.dayover_UI).is_instanceof(DayoverUI)
 	assert_bool(main.dayover_UI.next_day_UI_finished.is_connected(main.next_day)).is_true()
@@ -27,11 +29,7 @@ func test__ready(timeout=30):
 
 @warning_ignore("unused_parameter")
 # Test _on_daytime_timeout function
-func test__on_daytime_timeout(timeout=30):
-	var main: Main = auto_free(main_scene.instantiate())
-	add_child(main)
-
-	await get_tree().process_frame
+func test__on_daytime_timeout(timeout=20):
 	
 	assert_object(main.get_node("%Hannah")).is_not_null()
 	assert_object(main.get_node("%Hannah").inventory).is_not_null()
@@ -44,11 +42,7 @@ func test__on_daytime_timeout(timeout=30):
 
 @warning_ignore("unused_parameter")
 # Test next_day function
-func test_next_day(timeout=30):
-	var main: Main = auto_free(main_scene.instantiate())
-	add_child(main)
-
-	await get_tree().process_frame
+func test_next_day(timeout=20):
 
 	assert_object(main.get_node("%Hannah")).is_not_null()
 
@@ -60,10 +54,6 @@ func test_next_day(timeout=30):
 @warning_ignore("unused_parameter")
 # Test reset_watering_and_grow function
 func test_reset_watering_and_grow(timeout=30):
-	var main: Main = auto_free(main_scene.instantiate())
-	add_child(main)
-
-	await get_tree().process_frame
 
 	# Set a tile in the TileMap to be wet soil
 	main.get_node("%TileMap").set_cell(0, Vector2(0, 0), 0, Vector2(0, 0), 1)
@@ -84,11 +74,7 @@ func test_reset_watering_and_grow(timeout=30):
 
 @warning_ignore("unused_parameter")
 # Test is_wet_tile function
-func test_is_wet_tile(timeout=30):
-	var main: Main = auto_free(main_scene.instantiate())
-	add_child(main)
-
-	await get_tree().process_frame
+func test_is_wet_tile(timeout=10):
 
 	# Set a tile in the TileMap to be wet soil
 	main.get_node("%TileMap").set_cell(0, Vector2i(0, 0), 0, Vector2(0, 0), 1)

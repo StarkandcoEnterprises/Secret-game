@@ -10,18 +10,19 @@
 [sub_resource type="Resource" id="Resource_ls1gl"]
 resource_local_to_scene = true
 script = ExtResource("4_7pi2w")
-durability = 1
-max_durability = 100
+durability = 1000
+max_durability = 1000
 discarded_on_use = true
 highlight_area = true
 
 [sub_resource type="Resource" id="Resource_opqgc"]
 resource_local_to_scene = true
 script = ExtResource("5_b64ip")
+string_name = "CornSeed"
 price = 100
 slots_needed = 1
-backpack_storable = false
-string_name = ""
+backpack_storable = true
+weight = 1.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_i0w5d"]
 resource_local_to_scene = true
@@ -47,4 +48,7 @@ shape = SubResource("RectangleShape2D_i0w5d")
 shape = SubResource("RectangleShape2D_fua2s")
 
 [node name="EquipmentBarSprite" parent="." index="3"]
+texture = ExtResource("2_2tkgf")
+
+[node name="InWorldSprite" parent="." index="5"]
 texture = ExtResource("2_2tkgf")

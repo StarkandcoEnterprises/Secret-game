@@ -4,6 +4,8 @@
 
 [resource]
 script = ExtResource("1_xdbxp")
+string_name = "Watering Can"
 price = 100
 slots_needed = 1
 backpack_storable = false
+weight = 3.0

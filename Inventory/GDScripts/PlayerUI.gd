@@ -17,6 +17,12 @@ func first_add_item(item: BaseItem):
 	item.reparent(%InvSprite.get_node("%LooseItems"))
 	item.position = %InvSprite.get_node("%PickupSpawn").position
 	item.added_to_inventory()
+	hannah.update_weight(item.item_properties.weight)
+
+##Update weight for the inventory text
+func _process(_delta):
+	if !visible: return
+	%InvSprite.get_node("%CarriedWeight").text = "Weight: " + str(hannah.weight) + " (Max:" + str(Hannah.MAX_WEIGHT) + ")"
 
 ##Checks if the event is a key press, and if so, it handles the "inventory" and "unequip" actions and the number keys.
 func _unhandled_input(event):
@@ -75,6 +81,6 @@ func select_on_bar(new_slot: int):
 	
 	#Equip
 	if hannah: 
-		hannah.equip_item(%HotbarUI.get_node(str("%Hotbar/Equipped", new_slot)).get_child(0).parent.duplicate())
+		hannah.equip_item(%HotbarUI.get_node(str("%Hotbar/Equipped", new_slot)).get_child(0).parent)
 		hannah.equipped.rotation_degrees = 0
 

@@ -4,7 +4,8 @@
 
 [resource]
 script = ExtResource("1_spkfa")
+string_name = "Stone"
 price = 5
 slots_needed = 1
 backpack_storable = true
-string_name = "Stone"
+weight = 5.0

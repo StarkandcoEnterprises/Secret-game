@@ -1,0 +1,55 @@
+[gd_scene load_steps=14 format=3 uid="uid://dkwxjnhu7o8jt"]
+
+[ext_resource type="PackedScene" uid="uid://cfkgfq3yopgbq" path="res://Items/Scenes/Core/BaseEquipment.tscn" id="1_c3atn"]
+[ext_resource type="Script" path="res://Items/GDScripts/Instanced/TentBag.gd" id="2_ugf3s"]
+[ext_resource type="PackedScene" uid="uid://cx85qdydat8pe" path="res://Items/Scenes/Instanced/Stone.tscn" id="3_0smcm"]
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/EquipmentPropertiesResource.gd" id="3_6huw1"]
+[ext_resource type="PackedScene" uid="uid://dlx48makdwg0" path="res://Buildings/Scenes/Tent.tscn" id="3_t41je"]
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/ItemPropertiesResource.gd" id="4_0ljkm"]
+[ext_resource type="Texture2D" uid="uid://c5fsiftjfudxa" path="res://Art/Images/Items/Tools/TentBag2.png" id="5_01s5t"]
+[ext_resource type="Texture2D" uid="uid://cj8qrb12spbjw" path="res://Art/Images/Items/Tools/TentBag.png" id="5_3onoj"]
+[ext_resource type="Texture2D" uid="uid://cngvmgo1qnw0c" path="res://Art/Images/Items/Tools/TentBag3.png" id="7_gcjse"]
+
+[sub_resource type="Resource" id="Resource_784mx"]
+script = ExtResource("3_6huw1")
+durability = 1
+max_durability = 1
+discarded_on_use = true
+highlight_area = true
+
+[sub_resource type="Resource" id="Resource_n2wmv"]
+script = ExtResource("4_0ljkm")
+string_name = "Tent Bag"
+price = 100
+slots_needed = 4
+backpack_storable = false
+weight = 20.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_45oqu"]
+size = Vector2(80, 80)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fmeup"]
+size = Vector2(80, 80)
+
+[node name="TentBag" instance=ExtResource("1_c3atn")]
+script = ExtResource("2_ugf3s")
+tent_scene = ExtResource("3_t41je")
+peg_scene = ExtResource("3_0smcm")
+mallet_scene = ExtResource("3_0smcm")
+equipment_properties = SubResource("Resource_784mx")
+item_properties = SubResource("Resource_n2wmv")
+
+[node name="ItemSprite" parent="." index="0"]
+texture = ExtResource("7_gcjse")
+
+[node name="ItemCharShape" parent="." index="1"]
+shape = SubResource("RectangleShape2D_45oqu")
+
+[node name="ItemSlotsShape" parent="ItemUsedSlots" index="0"]
+shape = SubResource("RectangleShape2D_fmeup")
+
+[node name="EquipmentBarSprite" parent="." index="3"]
+texture = ExtResource("5_01s5t")
+
+[node name="InWorldSprite" parent="." index="5"]
+texture = ExtResource("5_3onoj")

@@ -1,0 +1,78 @@
+[gd_scene load_steps=8 format=3 uid="uid://dlx48makdwg0"]
+
+[ext_resource type="Script" path="res://Buildings/Scenes/Tent.gd" id="1_khtor"]
+[ext_resource type="Texture2D" uid="uid://5s5cxt1nd00f" path="res://Art/Images/BuildingScenes/Tent.png" id="2_ukn78"]
+[ext_resource type="Texture2D" uid="uid://cvoffy3uvmpqw" path="res://Art/Images/BuildingScenes/TentInside.png" id="3_itdug"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c63uk"]
+size = Vector2(256, 256)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ok6gi"]
+size = Vector2(256, 20)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_r36n1"]
+size = Vector2(20, 256)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bhjn5"]
+size = Vector2(20, 256)
+
+[node name="Tent" type="StaticBody2D"]
+script = ExtResource("1_khtor")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_ukn78")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_c63uk")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+unique_name_in_owner = true
+visible = false
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -128.0
+offset_top = -128.0
+offset_right = 128.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+metadata/_edit_use_anchors_ = true
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer"]
+unique_name_in_owner = true
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(256, 256)
+render_target_update_mode = 0
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport"]
+texture = ExtResource("3_itdug")
+centered = false
+
+[node name="StaticBody2D" type="StaticBody2D" parent="SubViewportContainer/SubViewport/Sprite2D"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/Sprite2D/StaticBody2D"]
+position = Vector2(128, 45)
+shape = SubResource("RectangleShape2D_ok6gi")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/Sprite2D/StaticBody2D"]
+position = Vector2(30, 128)
+shape = SubResource("RectangleShape2D_r36n1")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/Sprite2D/StaticBody2D"]
+position = Vector2(226, 128)
+shape = SubResource("RectangleShape2D_bhjn5")
+
+[node name="EntryPoint" type="Marker2D" parent="SubViewportContainer/SubViewport"]
+unique_name_in_owner = true
+position = Vector2(128, 192)
+
+[node name="ExitPoint" type="Marker2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(0, 159)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+unique_name_in_owner = true

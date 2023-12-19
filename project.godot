@@ -23,6 +23,12 @@ PanelColourManager="*res://Art/UI/PanelColourManager.gd"
 
 enabled=PackedStringArray("res://addons/behaviour_toolkit/plugin.cfg", "res://addons/gdUnit4/plugin.cfg")
 
+[file_customization]
+
+folder_colors={
+"res://addons/": "red"
+}
+
 [gdunit4]
 
 ui/toolbar/run_overall=true

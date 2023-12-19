@@ -15,11 +15,15 @@ var dialogue_UI: DialogueManager
 ## Holds the length of the day in seconds
 const DAYTIME_VALUE = 50
 
-## Sets up a Daytime timer and gets / connects the Dialogue UI,  Dayover UI / button
+##Holds the player
+var hannah: Hannah
+
+## Sets up a Daytime timer and gets / connects the Dialogue UI,  Dayover UI / button, player
 func _ready():
 	await get_tree().process_frame
 	dialogue_UI = get_tree().get_first_node_in_group("DialogueUI")
 	dayover_UI = get_tree().get_first_node_in_group("DayOverUI")
+	hannah = get_tree().get_first_node_in_group("Hannah")
 	dayover_UI.next_day_UI_finished.connect(next_day)
 	
 	%Daytime.stop()
@@ -33,11 +37,11 @@ func _on_daytime_timeout():
 		
 	dayover_UI.day_timeout()
 
-	%Hannah.inventory.visible = false
-	if !%Hannah.inventory.get_node("%HotbarUI").visible:
-		%Hannah.inventory.invert_inventory_and_bar()
-	if %Hannah.is_processing_unhandled_input():
-		%Hannah.toggle_processing()
+	hannah.inventory.visible = false
+	if !hannah.inventory.get_node("%HotbarUI").visible:
+		hannah.inventory.invert_inventory_and_bar()
+	if hannah.is_processing_unhandled_input():
+		hannah.toggle_processing()
 	
 	var timer = Timer.new()
 	timer.one_shot = true
@@ -48,14 +52,14 @@ func _on_daytime_timeout():
 	remove_child(timer)
 	
 	reset_watering_and_grow()
-	%Hannah.sleep()
+	hannah.sleep()
 
 ## Re-enables [Hannah]'s processing. Restarts Daytime Timer
 func next_day():
 	
-	%Hannah.inventory.visible = true
-	if !%Hannah.is_processing_unhandled_input():
-		%Hannah.toggle_processing() 
+	hannah.inventory.visible = true
+	if !hannah.is_processing_unhandled_input():
+		hannah.toggle_processing() 
 	
 	%Daytime.wait_time = DAYTIME_VALUE
 	%Daytime.start()

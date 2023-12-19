@@ -10,8 +10,6 @@ var equipped_slot
 var bar_sprite
 var durability_bar
 
-
-
 var in_use = false
 
 #This stuff could happen when added to inventory but I added it here so it's definitely already available
@@ -23,11 +21,9 @@ func _ready():
 
 func _process(delta):
 	super(delta)
-	if interact_state == Interact_State.EQUIPPED:
-		if !%ItemCharShape.disabled: 
-			%ItemCharShape.disabled = true
+	durability_bar.value = equipment_properties.durability
+	if interact_state != Interact_State.EQUIPPED: return
 		
-	if interact_state != Interact_State.SLOTTED: return
 	if equipment_properties.durability <= 0 and equipment_properties.discarded_on_use:
 		
 		hannah.unequip_held()

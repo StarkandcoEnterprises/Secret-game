@@ -4,5 +4,7 @@
 
 [resource]
 script = ExtResource("1_3r4qe")
-durability = 10
-max_durability = 10
+durability = 20
+max_durability = 20
+discarded_on_use = false
+highlight_area = true

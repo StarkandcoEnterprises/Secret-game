@@ -4,6 +4,8 @@
 
 [resource]
 script = ExtResource("1_ke2qt")
+string_name = "Sword"
 price = 5000
 slots_needed = 2
 backpack_storable = false
+weight = 5.0

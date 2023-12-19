@@ -30,3 +30,6 @@ shape = SubResource("RectangleShape2D_esb3n")
 
 [node name="EquipmentBarSprite" parent="." index="3"]
 texture = ExtResource("2_piv82")
+
+[node name="InWorldSprite" parent="." index="5"]
+texture = ExtResource("2_piv82")

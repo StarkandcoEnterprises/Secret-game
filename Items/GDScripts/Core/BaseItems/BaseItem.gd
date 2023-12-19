@@ -91,8 +91,9 @@ func _on_mouse_exited():
 	elif interact_state != Interact_State.SELECTED:  set_interact_state(Interact_State.IN_INVENTORY)
 
 func should_skip_mouse_events() -> bool:
-	return interact_state in [Interact_State.IN_WORLD, Interact_State.IN_BACKPACK, \
-								Interact_State.SELECTED_IN_BACKPACK]
+	return interact_state in \
+	[Interact_State.IN_WORLD, Interact_State.IN_BACKPACK, Interact_State.SELECTED_IN_BACKPACK, \
+	Interact_State.EQUIPPED]
 
 #We are in an area... is it a grid block? Is it full?
 func _on_slots_area_entered(area):
@@ -200,7 +201,7 @@ func handle_drop():
 		var new_node = Node2D.new()
 		backpack_item_holder.add_child(new_node)
 	backpack_item_list.cust_add_item(self)
-	reparent(backpack_item_holder.get_child(item_index))
+	reparent(backpack_item_holder.get_child(backpack_item_list.find_item_index(item_properties.string_name)))
 	set_interact_state(Interact_State.IN_BACKPACK)
 	toggle_collision_layer()
 
