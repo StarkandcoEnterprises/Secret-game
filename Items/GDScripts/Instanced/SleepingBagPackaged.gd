@@ -27,7 +27,7 @@ func use():
 	var tile_pos = hannah.map.local_to_map(use_area_pos + offset)
 
 	# Instantiate the sleeping bag
-	var sleeping_bag: SleepingBag = sleeping_bag_scene.instantiate()
+	var sleeping_bag: SleepingBag2 = sleeping_bag_scene.instantiate()
 	if !hannah.in_building:
 		get_tree().get_first_node_in_group("WorldPlacements").add_child(sleeping_bag)
 	else:

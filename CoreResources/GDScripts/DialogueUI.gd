@@ -39,9 +39,11 @@ func set_dialogue_text(text : String):
 func _on_option_selected(callback_name : String): 
 	# Hide the dialogue panel 
 	hide()
-	# Assuming the parent is the interactable object 
-	calling_object.call_dialogue_callback(callback_name) 
+	#Store the calling object and set it to null, so it can readd itself in call dialogue callback if necessary
+	var temp = calling_object
 	calling_object = null
+	# Assuming the parent is the interactable object 
+	temp.call_dialogue_callback(callback_name) 
 	%Cursor.global_position.x = -61
 
 ## Hovers the cursor over the option entered by mouse

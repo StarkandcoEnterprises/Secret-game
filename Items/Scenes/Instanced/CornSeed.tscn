@@ -18,7 +18,7 @@ highlight_area = true
 [sub_resource type="Resource" id="Resource_opqgc"]
 resource_local_to_scene = true
 script = ExtResource("5_b64ip")
-string_name = "CornSeed"
+string_name = "Corn Seed"
 price = 100
 slots_needed = 1
 backpack_storable = true

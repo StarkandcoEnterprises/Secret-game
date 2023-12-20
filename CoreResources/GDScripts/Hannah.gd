@@ -274,6 +274,7 @@ func equip_item(equipment: BaseEquipment):
 	equipment.interact_state = BaseItem.Interact_State.EQUIPPED
 	sprite.reparent(%Equipped)
 	sprite.position = Vector2.ZERO
+	sprite.rotation = 0
 	sprite.visible = true
 	equipped = equipment
 

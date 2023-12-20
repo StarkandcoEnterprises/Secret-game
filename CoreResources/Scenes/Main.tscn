@@ -29,6 +29,8 @@ layer_0/tile_data = PackedInt32Array(0, 1048576, 5, 1, 1048576, 5, 2, 1048576, 5
 [node name="Plants" type="Node2D" parent="SubViewportContainer/SubViewport/World/WorldPlacements" groups=["PlantsNode"]]
 unique_name_in_owner = true
 
+[node name="LooseWalls" type="Node2D" parent="SubViewportContainer/SubViewport/World/WorldPlacements" groups=["LooseWalls"]]
+
 [node name="Objects" type="Node2D" parent="SubViewportContainer/SubViewport/World" groups=["ObjectHolder"]]
 
 [node name="Hannah" parent="SubViewportContainer/SubViewport/World" instance=ExtResource("2_xi62l")]

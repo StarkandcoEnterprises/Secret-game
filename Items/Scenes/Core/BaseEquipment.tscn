@@ -57,4 +57,5 @@ script = ExtResource("6_laodb")
 
 [node name="InWorldSprite" type="Sprite2D" parent="." index="5"]
 visible = false
+rotation = -1.5708
 texture = ExtResource("4_j7sjq")

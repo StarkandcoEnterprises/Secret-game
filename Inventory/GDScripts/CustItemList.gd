@@ -3,6 +3,14 @@ extends ItemList
 var items = []
 var buttons = []
 
+@onready var button_scroll = get_parent().get_node("ScrollContainer")
+
+func _ready():
+	get_v_scroll_bar().value_changed.connect(on_scroll_changed)
+
+func on_scroll_changed(value):
+	button_scroll.get_v_scroll_bar().value = value
+
 func cust_add_item(item: BaseItem) -> void:
 	var index = find_item_index(item.item_properties.string_name)
 	

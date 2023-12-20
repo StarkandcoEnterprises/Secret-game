@@ -82,5 +82,4 @@ func select_on_bar(new_slot: int):
 	#Equip
 	if hannah: 
 		hannah.equip_item(%HotbarUI.get_node(str("%Hotbar/Equipped", new_slot)).get_child(0).parent)
-		hannah.equipped.rotation_degrees = 0
 
