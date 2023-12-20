@@ -1,0 +1,100 @@
+[gd_scene load_steps=16 format=3 uid="uid://ho5ewtbo6mdn"]
+
+[ext_resource type="TileSet" uid="uid://dfphrrdav6xyo" path="res://CoreResources/Resources/MainTileset.tres" id="1_mwilu"]
+[ext_resource type="Script" path="res://CoreResources/GDScripts/Main.gd" id="1_u1m27"]
+[ext_resource type="PackedScene" uid="uid://dqxfciw668dqi" path="res://CoreResources/Scenes/Hannah.tscn" id="2_xi62l"]
+[ext_resource type="PackedScene" uid="uid://d1jsmi6uh27f4" path="res://Items/Scenes/Instanced/Sword.tscn" id="3_h8gdf"]
+[ext_resource type="Script" path="res://CoreResources/GDScripts/WorldObject.gd" id="5_4wxi4"]
+[ext_resource type="PackedScene" uid="uid://6n8xmup3jvqw" path="res://CoreResources/Scenes/Crate.tscn" id="5_kpkir"]
+[ext_resource type="PackedScene" uid="uid://cx85qdydat8pe" path="res://Items/Scenes/Instanced/Stone.tscn" id="6_rthgg"]
+[ext_resource type="PackedScene" uid="uid://csq5revg6j7nt" path="res://Items/Scenes/Instanced/Hoe.tscn" id="7_1bdow"]
+[ext_resource type="PackedScene" uid="uid://vrklgttf0tdi" path="res://Items/Scenes/Instanced/WateringCan.tscn" id="7_77n01"]
+[ext_resource type="Texture2D" uid="uid://b8sxywscmeyf4" path="res://Art/Images/BuildingScenes/Bed.png" id="8_qbdht"]
+[ext_resource type="PackedScene" uid="uid://ncboup6o1765" path="res://Items/Scenes/Instanced/CornSeed.tscn" id="10_aery0"]
+[ext_resource type="PackedScene" uid="uid://bym5v07woqsml" path="res://Items/Scenes/Instanced/BreakpointHammer.tscn" id="11_2ul3w"]
+[ext_resource type="PackedScene" uid="uid://bmcq3jsxe7x1x" path="res://CoreResources/Scenes/UI.tscn" id="11_jcwwp"]
+[ext_resource type="PackedScene" uid="uid://6wfbysp7xism" path="res://Debug/Scenes/DebugWindow.tscn" id="18_fpf16"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nk1bm"]
+size = Vector2(64, 128)
+
+[node name="Main" type="Node2D" groups=["Main"]]
+script = ExtResource("1_u1m27")
+
+[node name="SubViewportContainer" type="SubViewportContainer" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+
+[node name="SubViewport" type="SubViewport" parent="SubViewportContainer" groups=["MainWorld"]]
+handle_input_locally = false
+size = Vector2i(1152, 648)
+render_target_update_mode = 4
+
+[node name="World" type="Node2D" parent="SubViewportContainer/SubViewport"]
+
+[node name="TileMap" type="TileMap" parent="SubViewportContainer/SubViewport/World" groups=["Map"]]
+unique_name_in_owner = true
+tile_set = ExtResource("1_mwilu")
+format = 2
+layer_0/name = "Ground"
+layer_0/z_index = -1
+layer_0/tile_data = PackedInt32Array(0, 1048576, 5, 1, 1048576, 5, 2, 1048576, 5, 3, 1048576, 5, 4, 1048576, 5, 5, 1048576, 5, 6, 1048576, 5, 7, 1048576, 5, 8, 1048576, 5, 9, 1048576, 5, 10, 1048576, 5, 11, 1048576, 5, 12, 1048576, 5, 13, 1048576, 5, 14, 1048576, 5, 15, 1048576, 5, 16, 1048576, 5, 17, 1048576, 5, 65553, 1048576, 5, 131089, 1048576, 5, 196625, 1048576, 5, 262161, 1048576, 5, 327697, 1048576, 5, 393233, 1048576, 5, 458769, 1048576, 5, 524305, 1048576, 5, 589841, 1048576, 5, 589840, 1048576, 5, 589839, 1048576, 5, 589838, 1048576, 5, 589837, 1048576, 5, 589836, 1048576, 5, 589835, 1048576, 5, 589834, 1048576, 5, 589833, 1048576, 5, 589832, 1048576, 5, 589831, 1048576, 5, 589830, 1048576, 5, 589829, 1048576, 5, 589828, 1048576, 5, 589827, 1048576, 5, 589826, 1048576, 5, 589825, 1048576, 5, 589824, 1048576, 5, 524288, 1048576, 5, 458752, 1048576, 5, 393216, 1048576, 5, 327680, 1048576, 5, 262144, 1048576, 5, 196608, 1048576, 5, 131072, 1048576, 5, 65536, 1048576, 5, 65537, 1048576, 5, 65538, 1048576, 5, 65539, 1048576, 5, 65540, 1048576, 5, 65541, 1048576, 5, 65542, 1048576, 5, 65543, 1048576, 5, 65544, 1048576, 5, 65545, 1048576, 5, 65546, 1048576, 5, 65547, 1048576, 5, 65548, 1048576, 5, 65549, 1048576, 5, 65550, 1048576, 5, 65551, 1048576, 5, 65552, 1048576, 5, 131088, 1048576, 5, 131087, 1048576, 5, 131086, 1048576, 5, 131085, 1048576, 5, 131084, 1048576, 5, 131083, 1048576, 5, 131082, 1048576, 5, 131081, 1048576, 5, 131080, 1048576, 5, 131079, 1048576, 5, 131078, 1048576, 5, 131077, 1048576, 5, 131076, 1048576, 5, 131075, 1048576, 5, 196611, 1048576, 5, 196610, 1048576, 5, 196609, 1048576, 5, 131073, 1048576, 5, 131074, 1048576, 5, 262145, 1048576, 5, 327681, 1048576, 5, 327682, 1048576, 5, 327683, 1048576, 5, 327684, 1048576, 5, 262148, 1048576, 5, 262147, 1048576, 5, 262146, 1048576, 5, 393217, 1048576, 5, 458753, 1048576, 5, 524289, 1048576, 5, 524290, 1048576, 5, 458754, 1048576, 5, 393218, 1048576, 5, 458755, 1048576, 5, 393219, 1048576, 5, 524291, 1048576, 5, 458756, 1048576, 5, 393220, 1048576, 5, 196612, 1048576, 5, 524293, 1048576, 5, 458757, 1048576, 5, 393221, 1048576, 5, 327685, 1048576, 5, 262149, 1048576, 5, 196613, 1048576, 5, 524292, 1048576, 5, 458758, 1048576, 5, 393222, 1048576, 5, 327686, 1048576, 5, 327687, 1048576, 5, 262151, 1048576, 5, 196615, 1048576, 5, 196614, 1048576, 5, 262150, 1048576, 5, 524294, 1048576, 5, 524295, 1048576, 5, 458759, 1048576, 5, 458760, 1048576, 5, 458761, 1048576, 5, 458762, 1048576, 5, 524298, 1048576, 5, 524299, 1048576, 5, 524300, 1048576, 5, 524301, 1048576, 5, 524302, 1048576, 5, 524303, 1048576, 5, 524304, 1048576, 5, 524296, 1048576, 5, 458763, 1048576, 5, 524297, 1048576, 5, 458765, 1048576, 5, 458766, 1048576, 5, 458767, 1048576, 5, 458768, 1048576, 5, 458764, 1048576, 5, 393227, 1048576, 5, 393228, 1048576, 5, 393226, 1048576, 5, 393225, 1048576, 5, 393224, 1048576, 5, 393223, 1048576, 5, 327688, 1048576, 5, 327689, 1048576, 5, 262153, 1048576, 5, 262152, 1048576, 5, 327691, 1048576, 5, 262155, 1048576, 5, 196618, 1048576, 5, 196617, 1048576, 5, 327690, 1048576, 5, 327692, 1048576, 5, 262156, 1048576, 5, 196620, 1048576, 5, 196619, 1048576, 5, 196616, 1048576, 5, 393229, 1048576, 5, 327693, 1048576, 5, 262157, 1048576, 5, 196622, 1048576, 5, 196621, 1048576, 5, 262154, 1048576, 5, 196623, 1048576, 5, 262158, 1048576, 5, 327694, 1048576, 5, 393230, 1048576, 5, 327695, 1048576, 5, 262159, 1048576, 5, 196624, 1048576, 5, 262160, 1048576, 5, 393231, 1048576, 5, 393232, 1048576, 5, 327696, 1048576, 5)
+layer_1/name = "Air"
+layer_1/z_index = 10
+layer_1/tile_data = PackedInt32Array()
+layer_2/name = "On ground"
+layer_2/tile_data = PackedInt32Array(393218, 655360, 3, 524295, 655360, 3, 131087, 655360, 3, 131081, 589824, 3, 458756, 589824, 3, 524303, 589824, 3, 262155, 720896, 3, 393223, 720896, 3, 393231, 589824, 1, 131089, 589824, 1)
+
+[node name="WorldPlacements" type="Node2D" parent="SubViewportContainer/SubViewport/World"]
+
+[node name="Bed" type="StaticBody2D" parent="SubViewportContainer/SubViewport/World/WorldPlacements"]
+position = Vector2(900, 100)
+script = ExtResource("5_4wxi4")
+
+[node name="Sprite2D" type="Sprite2D" parent="SubViewportContainer/SubViewport/World/WorldPlacements/Bed"]
+texture = ExtResource("8_qbdht")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="SubViewportContainer/SubViewport/World/WorldPlacements/Bed"]
+shape = SubResource("RectangleShape2D_nk1bm")
+
+[node name="Plants" type="Node2D" parent="SubViewportContainer/SubViewport/World/WorldPlacements" groups=["PlantsNode"]]
+unique_name_in_owner = true
+
+[node name="Crate" parent="SubViewportContainer/SubViewport/World/WorldPlacements" instance=ExtResource("5_kpkir")]
+
+[node name="Objects" type="Node2D" parent="SubViewportContainer/SubViewport/World"]
+
+[node name="Sword" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("3_h8gdf")]
+
+[node name="Stone" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("6_rthgg")]
+
+[node name="Stone2" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("6_rthgg")]
+
+[node name="Stone3" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("6_rthgg")]
+
+[node name="Stone4" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("6_rthgg")]
+
+[node name="Hoe" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("7_1bdow")]
+
+[node name="WateringCan" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("7_77n01")]
+
+[node name="CornSeed" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("10_aery0")]
+
+[node name="BreakpointHammer" parent="SubViewportContainer/SubViewport/World/Objects" instance=ExtResource("11_2ul3w")]
+
+[node name="Hannah" parent="SubViewportContainer/SubViewport/World" instance=ExtResource("2_xi62l")]
+unique_name_in_owner = true
+
+[node name="UI" parent="." instance=ExtResource("11_jcwwp")]
+
+[node name="Debug" parent="." instance=ExtResource("18_fpf16")]
+title = "DebugOutput"
+position = Vector2i(500, 36)
+
+[node name="Daytime" type="Timer" parent="." groups=["DayTimer"]]
+unique_name_in_owner = true
+wait_time = 5.0
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Daytime" to="." method="_on_daytime_timeout"]

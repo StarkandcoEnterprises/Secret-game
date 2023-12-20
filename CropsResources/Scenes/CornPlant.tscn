@@ -1,7 +1,0 @@
-[gd_scene load_steps=3 format=3 uid="uid://c4ah0j8wvv755"]
-
-[ext_resource type="PackedScene" uid="uid://c5siac6rsa28v" path="res://CropsResources/CoreScenes/BasePlant.tscn" id="1_3cr24"]
-[ext_resource type="Resource" uid="uid://b18bubx4t83rx" path="res://CropsResources/Resources/CornResource.tres" id="2_qo8g2"]
-
-[node name="CornPlant" instance=ExtResource("1_3cr24")]
-plant_resource = ExtResource("2_qo8g2")

@@ -1,46 +1,65 @@
-[gd_scene load_steps=2 format=3 uid="uid://6wfbysp7xism"]
+[gd_scene load_steps=4 format=3 uid="uid://v23vjeebsqdt"]
 
-[ext_resource type="Script" path="res://Debug/GDScripts/DebugOutput.gd" id="1_nrxht"]
+[ext_resource type="Script" path="res://Debug/DebugOutput.gd" id="1_pfcr7"]
+[ext_resource type="PackedScene" uid="uid://ncboup6o1765" path="res://Items/Scenes/Instanced/CornSeed.tscn" id="2_d746o"]
+[ext_resource type="PackedScene" uid="uid://cx85qdydat8pe" path="res://Items/Scenes/Instanced/Stone.tscn" id="3_5py0v"]
 
 [node name="Window" type="Window" groups=["DebugOutput"]]
 position = Vector2i(0, 36)
 size = Vector2i(500, 600)
-script = ExtResource("1_nrxht")
+script = ExtResource("1_pfcr7")
+corn_seed = ExtResource("2_d746o")
+stone_scene = ExtResource("3_5py0v")
 
-[node name="Spawn Seed" type="Button" parent="."]
-offset_right = 8.0
-offset_bottom = 8.0
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="FPSCount" type="Label" parent="VBoxContainer/HBoxContainer" groups=["FPSOut"]]
+unique_name_in_owner = true
+layout_mode = 2
+text = "FPS: 137"
+
+[node name="ObjectCount" type="Label" parent="VBoxContainer/HBoxContainer" groups=["ObjectCountOut"]]
+unique_name_in_owner = true
+layout_mode = 2
+text = "#Objects: 67412"
+
+[node name="SpawnSeed" type="Button" parent="VBoxContainer"]
+layout_mode = 2
 text = "Spawn seed"
 
-[node name="DebugText" type="Label" parent="." groups=["TextOut"]]
+[node name="SpawnStone" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Spawn stone"
+
+[node name="ToggleHannah" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Toggle Hannah"
+
+[node name="GrowPlants" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Grow plants"
+
+[node name="GetMaxSlots" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Get max slots"
+
+[node name="DebugText" type="Label" parent="VBoxContainer" groups=["TextOut"]]
 unique_name_in_owner = true
-offset_left = 5.0
-offset_top = 40.0
-offset_right = 505.0
-offset_bottom = 440.0
+layout_mode = 2
 text = "null"
 
-[node name="StackTraceAt" type="Label" parent="." groups=["StackOut"]]
+[node name="StackTraceAt" type="Label" parent="VBoxContainer" groups=["StackOut"]]
 unique_name_in_owner = true
-offset_left = 5.0
-offset_top = 400.0
-offset_right = 45.0
-offset_bottom = 426.0
+layout_mode = 2
 text = "null"
 
-[node name="FPSCount" type="Label" parent="." groups=["FPSOut"]]
-unique_name_in_owner = true
-offset_left = 400.0
-offset_right = 440.0
-offset_bottom = 26.0
-text = "null"
-
-[node name="ObjectCount" type="Label" parent="." groups=["ObjectCountOut"]]
-unique_name_in_owner = true
-offset_left = 350.0
-offset_top = 25.0
-offset_right = 390.0
-offset_bottom = 51.0
-text = "null"
-
-[connection signal="pressed" from="Spawn Seed" to="." method="_on_spawn_seed_pressed"]
+[connection signal="pressed" from="VBoxContainer/SpawnSeed" to="." method="_on_spawn_seed_pressed"]
+[connection signal="pressed" from="VBoxContainer/SpawnStone" to="." method="_on_spawn_stone_pressed"]
+[connection signal="pressed" from="VBoxContainer/ToggleHannah" to="." method="_on_toggle_hannah_pressed"]
+[connection signal="pressed" from="VBoxContainer/GrowPlants" to="." method="_on_grow_plants_pressed"]
+[connection signal="pressed" from="VBoxContainer/GetMaxSlots" to="." method="_on_get_max_slots_pressed"]

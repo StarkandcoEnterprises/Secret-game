@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=3 uid="uid://dxwcslf2sife4"]
+
+[ext_resource type="Script" path="res://Inventory/GDScripts/GridBlock.gd" id="1_g2t1c"]
+[ext_resource type="Shader" path="res://Art/UI/UIBackground.gdshader" id="1_ns7sn"]
+[ext_resource type="Script" path="res://Inventory/GDScripts/BasePanel.gd" id="2_5gg1e"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0lhvw"]
+shader = ExtResource("1_ns7sn")
+shader_parameter/top_left = null
+shader_parameter/top_right = null
+shader_parameter/bottom_left = null
+shader_parameter/bottom_right = null
+shader_parameter/border_outer_hori_threshold = null
+shader_parameter/border_outer_vert_threshold = null
+shader_parameter/border_middle_hori_threshold = null
+shader_parameter/border_middle_vert_threshold = null
+shader_parameter/border_inner_hori_threshold = null
+shader_parameter/border_inner_vert_threshold = null
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rqafy"]
+size = Vector2(6, 6)
+
+[node name="GridBlock" type="Panel"]
+material = SubResource("ShaderMaterial_0lhvw")
+custom_minimum_size = Vector2(47.5, 48)
+mouse_filter = 1
+script = ExtResource("2_5gg1e")
+
+[node name="Area2D" type="Area2D" parent="." groups=["GridBlock"]]
+script = ExtResource("1_g2t1c")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2(24, 24)
+shape = SubResource("RectangleShape2D_rqafy")

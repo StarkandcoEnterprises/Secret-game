@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EquipmentPropertiesResource" load_steps=2 format=3 uid="uid://7hh4tvaoxbq6"]
+
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/EquipmentPropertiesResource.gd" id="1_sainl"]
+
+[resource]
+resource_local_to_scene = true
+script = ExtResource("1_sainl")
+durability = 20
+max_durability = 20
+discarded_on_use = false
+highlight_area = true

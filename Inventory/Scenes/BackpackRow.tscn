@@ -1,0 +1,19 @@
+[gd_scene format=3 uid="uid://bwi40coyj0tx2"]
+
+[node name="BackpackRow" type="HBoxContainer"]
+custom_minimum_size = Vector2(700, 40)
+
+[node name="Image" type="Control" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="NameAndCount" type="Control" parent="."]
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+
+[node name="Label" type="Label" parent="NameAndCount"]
+layout_mode = 1
+offset_right = 47.0
+offset_bottom = 23.0
+text = "Name
+Count"

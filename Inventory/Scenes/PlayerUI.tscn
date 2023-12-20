@@ -1,0 +1,117 @@
+[gd_scene load_steps=10 format=3 uid="uid://cp1lycwjvfvbu"]
+
+[ext_resource type="Script" path="res://Inventory/GDScripts/PlayerUI.gd" id="1_wf6ho"]
+[ext_resource type="PackedScene" uid="uid://bsvkfnywpkchn" path="res://Inventory/Scenes/HotbarUI.tscn" id="2_rybdc"]
+[ext_resource type="PackedScene" uid="uid://cx5nrct0a17qy" path="res://Inventory/Scenes/InvSprite.tscn" id="3_6cb6y"]
+[ext_resource type="Script" path="res://Inventory/GDScripts/BasePanel.gd" id="4_115fq"]
+[ext_resource type="Shader" path="res://Art/UI/UIBackground.gdshader" id="4_asdx3"]
+[ext_resource type="StyleBox" uid="uid://b6u3wvsq3hp6c" path="res://Inventory/Scenes/HealthAndStamina.tres" id="6_8cfqm"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_doi3q"]
+shader = ExtResource("4_asdx3")
+shader_parameter/top_left = null
+shader_parameter/top_right = null
+shader_parameter/bottom_left = null
+shader_parameter/bottom_right = null
+shader_parameter/border_outer_hori_threshold = null
+shader_parameter/border_outer_vert_threshold = null
+shader_parameter/border_middle_hori_threshold = null
+shader_parameter/border_middle_vert_threshold = null
+shader_parameter/border_inner_hori_threshold = null
+shader_parameter/border_inner_vert_threshold = null
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iufwk"]
+bg_color = Color(0.972549, 0, 0.145098, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_bii31"]
+bg_color = Color(0.00392157, 0.470588, 0.737255, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(1, 1, 1, 1)
+border_blend = true
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[node name="PlayerUI" type="Control" groups=["PlayerUI"]]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_wf6ho")
+
+[node name="HotbarUI" parent="." instance=ExtResource("2_rybdc")]
+unique_name_in_owner = true
+layout_mode = 1
+mouse_filter = 2
+
+[node name="InvSprite" parent="." instance=ExtResource("3_6cb6y")]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 0.0
+offset_bottom = 0.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="StatPanel" type="Panel" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_doi3q")
+layout_mode = 0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = 56.0
+offset_bottom = 76.0
+script = ExtResource("4_115fq")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="StatPanel"]
+layout_mode = 0
+offset_left = 7.0
+offset_top = 8.0
+offset_right = 41.0
+offset_bottom = 60.0
+theme_override_constants/separation = 5
+
+[node name="HealthBar" type="ProgressBar" parent="StatPanel/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(8, 52)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_iufwk")
+value = 100.0
+fill_mode = 3
+show_percentage = false
+
+[node name="StaminaBar" type="ProgressBar" parent="StatPanel/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(8, 52)
+layout_mode = 2
+theme_override_styles/fill = ExtResource("6_8cfqm")
+value = 100.0
+fill_mode = 3
+show_percentage = false
+
+[node name="ManaBar" type="ProgressBar" parent="StatPanel/HBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(8, 52)
+layout_mode = 2
+theme_override_styles/fill = SubResource("StyleBoxFlat_bii31")
+value = 100.0
+fill_mode = 3
+show_percentage = false

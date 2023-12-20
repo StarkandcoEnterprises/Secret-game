@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemPropertiesResource" load_steps=2 format=3 uid="uid://dwbmwdotlnmn8"]
+
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/ItemPropertiesResource.gd" id="1_xyv1f"]
+
+[resource]
+script = ExtResource("1_xyv1f")
+string_name = "Hoe"
+price = 5000
+slots_needed = 2
+backpack_storable = false
+weight = 3.0

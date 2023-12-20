@@ -1,0 +1,46 @@
+[gd_scene load_steps=11 format=3 uid="uid://danx6thqagsu"]
+
+[ext_resource type="PackedScene" uid="uid://cfkgfq3yopgbq" path="res://Items/Scenes/Core/BaseEquipment.tscn" id="1_67ua5"]
+[ext_resource type="Script" path="res://Items/GDScripts/Instanced/SleepingBagPackaged.gd" id="2_vsu4x"]
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/EquipmentPropertiesResource.gd" id="3_dmkn7"]
+[ext_resource type="PackedScene" uid="uid://e7ia11nxdohs" path="res://Buildings/Scenes/SleepingBag.tscn" id="3_txkod"]
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/ItemPropertiesResource.gd" id="4_x4upq"]
+[ext_resource type="Texture2D" uid="uid://ddof7ssproafr" path="res://Art/Images/Items/Tools/SleepingBagPackaged.png" id="6_0lvv1"]
+[ext_resource type="Shape2D" uid="uid://bnxj8owogslgt" path="res://Items/Scenes/Core/ItemSlotsUse/DoubleSlot.tres" id="6_vdy7o"]
+[ext_resource type="Texture2D" uid="uid://cj4dnawlfgkxe" path="res://Art/Images/Items/Tools/SleepingBagPackaged2.png" id="8_uyc6f"]
+
+[sub_resource type="Resource" id="Resource_w5ov4"]
+script = ExtResource("3_dmkn7")
+durability = 1
+max_durability = 1
+discarded_on_use = true
+highlight_area = true
+
+[sub_resource type="Resource" id="Resource_2uem3"]
+script = ExtResource("4_x4upq")
+string_name = "Sleeping Bag"
+price = 100
+slots_needed = 2
+backpack_storable = true
+weight = 5.0
+
+[node name="SleepingBagPackaged" instance=ExtResource("1_67ua5")]
+script = ExtResource("2_vsu4x")
+sleeping_bag_scene = ExtResource("3_txkod")
+equipment_properties = SubResource("Resource_w5ov4")
+item_properties = SubResource("Resource_2uem3")
+
+[node name="ItemSprite" parent="." index="0"]
+texture = ExtResource("6_0lvv1")
+
+[node name="ItemCharShape" parent="." index="1"]
+shape = ExtResource("6_vdy7o")
+
+[node name="ItemSlotsShape" parent="ItemUsedSlots" index="0"]
+shape = ExtResource("6_vdy7o")
+
+[node name="EquipmentBarSprite" parent="." index="3"]
+texture = ExtResource("8_uyc6f")
+
+[node name="InWorldSprite" parent="." index="5"]
+texture = ExtResource("6_0lvv1")

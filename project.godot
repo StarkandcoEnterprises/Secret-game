@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="Secret game"
-run/main_scene="res://CoreResources/Scenes/Main.tscn"
+run/main_scene="res://CoreResources/Scenes/BuiltMain.tscn"
 config/features=PackedStringArray("4.2", "Mobile")
 config/icon="res://Art/Images/icon.svg"
 
@@ -19,9 +19,19 @@ config/icon="res://Art/Images/icon.svg"
 
 PanelColourManager="*res://Art/UI/PanelColourManager.gd"
 
-[display]
+[editor_plugins]
 
-window/subwindows/embed_subwindows=false
+enabled=PackedStringArray("res://addons/behaviour_toolkit/plugin.cfg", "res://addons/gdUnit4/plugin.cfg")
+
+[file_customization]
+
+folder_colors={
+"res://addons/": "red"
+}
+
+[gdunit4]
+
+ui/toolbar/run_overall=true
 
 [input]
 
@@ -110,7 +120,23 @@ slot9={
 "events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":57,"key_label":0,"unicode":57,"echo":false,"script":null)
 ]
 }
+left_click={
+"deadzone": 0.5,
+"events": [Object(InputEventMouseButton,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"button_mask":0,"position":Vector2(0, 0),"global_position":Vector2(0, 0),"factor":1.0,"button_index":1,"canceled":false,"pressed":false,"double_click":false,"script":null)
+]
+}
+debug_2={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":90,"key_label":0,"unicode":122,"echo":false,"script":null)
+]
+}
+run={
+"deadzone": 0.5,
+"events": [Object(InputEventKey,"resource_local_to_scene":false,"resource_name":"","device":-1,"window_id":0,"alt_pressed":false,"shift_pressed":false,"ctrl_pressed":false,"meta_pressed":false,"pressed":false,"keycode":0,"physical_keycode":4194325,"key_label":0,"unicode":0,"echo":false,"script":null)
+]
+}
 
 [rendering]
 
+textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="mobile"

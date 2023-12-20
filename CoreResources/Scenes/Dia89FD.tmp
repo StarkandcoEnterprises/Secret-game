@@ -1,0 +1,83 @@
+[gd_scene load_steps=7 format=3 uid="uid://c6mqdm5lea244"]
+
+[ext_resource type="Script" path="res://CoreResources/GDScripts/DialogueUI.gd" id="1_m61a3"]
+[ext_resource type="Shader" path="res://Art/UI/UIBackground.gdshader" id="2_nlffg"]
+[ext_resource type="Texture2D" uid="uid://c1dl1rah77250" path="res://Art/UI/Dialogue/DialogueMarker.png" id="3_3kfw0"]
+[ext_resource type="Script" path="res://Inventory/GDScripts/BasePanel.gd" id="4_nkayh"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nf3sq"]
+shader = ExtResource("2_nlffg")
+shader_parameter/top_left = null
+shader_parameter/top_right = null
+shader_parameter/bottom_left = null
+shader_parameter/bottom_right = null
+shader_parameter/border_outer_hori_threshold = null
+shader_parameter/border_outer_vert_threshold = null
+shader_parameter/border_middle_hori_threshold = null
+shader_parameter/border_middle_vert_threshold = null
+shader_parameter/border_inner_hori_threshold = null
+shader_parameter/border_inner_vert_threshold = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iomfo"]
+shader = ExtResource("2_nlffg")
+shader_parameter/top_left = null
+shader_parameter/top_right = null
+shader_parameter/bottom_left = null
+shader_parameter/bottom_right = null
+shader_parameter/border_outer_hori_threshold = null
+shader_parameter/border_outer_vert_threshold = null
+shader_parameter/border_middle_hori_threshold = null
+shader_parameter/border_middle_vert_threshold = null
+shader_parameter/border_inner_hori_threshold = null
+shader_parameter/border_inner_vert_threshold = null
+
+[node name="DialoguePanel" type="Panel" groups=["DialogueUI"]]
+material = SubResource("ShaderMaterial_nf3sq")
+custom_minimum_size = Vector2(1152, 150)
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_top = -150.0
+offset_right = 1152.0
+grow_vertical = 0
+script = ExtResource("1_m61a3")
+
+[node name="Cursor" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+texture = ExtResource("3_3kfw0")
+
+[node name="DialogueText" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 40.0
+offset_top = 20.0
+offset_right = 80.0
+offset_bottom = 43.0
+
+[node name="OptionPanel" type="Panel" parent="."]
+unique_name_in_owner = true
+material = SubResource("ShaderMaterial_iomfo")
+layout_mode = 0
+offset_left = 526.0
+offset_top = -224.0
+offset_right = 626.0
+offset_bottom = -184.0
+script = ExtResource("4_nkayh")
+
+[node name="MarginContainer" type="MarginContainer" parent="OptionPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="OptionHolder" type="GridContainer" parent="OptionPanel/MarginContainer"]
+unique_name_in_owner = true
+layout_mode = 2
+
+[connection signal="resized" from="OptionPanel" to="OptionPanel" method="_on_resized"]

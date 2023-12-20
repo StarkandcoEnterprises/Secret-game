@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemPropertiesResource" load_steps=2 format=3 uid="uid://cctka64f6vsyn"]
+
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/ItemPropertiesResource.gd" id="1_spkfa"]
+
+[resource]
+script = ExtResource("1_spkfa")
+string_name = "Stone"
+price = 5
+slots_needed = 1
+backpack_storable = true
+weight = 5.0

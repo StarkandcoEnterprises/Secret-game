@@ -1,8 +1,0 @@
-[gd_resource type="Resource" script_class="ItemPropertiesResource" load_steps=2 format=3 uid="uid://olrsktt4okj4"]
-
-[ext_resource type="Script" path="res://ItemResources/CustomResourceScripts/ItemPropertiesResource.gd" id="1_0wvpn"]
-
-[resource]
-script = ExtResource("1_0wvpn")
-price = 900000
-slots_needed = 2

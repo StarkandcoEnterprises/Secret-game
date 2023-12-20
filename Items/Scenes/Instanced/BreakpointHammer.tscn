@@ -1,0 +1,73 @@
+[gd_scene load_steps=14 format=3 uid="uid://bym5v07woqsml"]
+
+[ext_resource type="PackedScene" uid="uid://hxpjbiqmim05" path="res://Items/Scenes/Core/BaseWeapon.tscn" id="1_xc30d"]
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/WeaponPropertiesResource.gd" id="3_dpl2o"]
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/EquipmentPropertiesResource.gd" id="4_fa5qg"]
+[ext_resource type="PackedScene" uid="uid://b6qg1yg3x43xn" path="res://Items/Scenes/Core/ItemSlotsUse/DoubleSeparatedSlots.tscn" id="4_gi618"]
+[ext_resource type="Texture2D" uid="uid://gwo21kbtljud" path="res://Art/Images/Items/Weapons/BreakpointHammerFromHTS.png" id="4_wt88y"]
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/ItemPropertiesResource.gd" id="5_qydiv"]
+[ext_resource type="Texture2D" uid="uid://ckkm84ffyvv2b" path="res://Art/Images/Items/Weapons/BreakpointHammer3.png" id="8_0dkvi"]
+[ext_resource type="Texture2D" uid="uid://blwerj4ojdhyi" path="res://Art/Images/Items/Weapons/BreakpointHammer2FromHTS.png" id="8_t7fcq"]
+
+[sub_resource type="Resource" id="Resource_b4ed2"]
+script = ExtResource("3_dpl2o")
+damage = 10
+speed = 1
+reach = 10
+poison = 0
+
+[sub_resource type="Resource" id="Resource_dg8qf"]
+script = ExtResource("4_fa5qg")
+durability = 100
+max_durability = 100
+discarded_on_use = false
+highlight_area = false
+
+[sub_resource type="Resource" id="Resource_3thn0"]
+script = ExtResource("5_qydiv")
+string_name = "Breakpoint Hammer"
+price = 100
+slots_needed = 2
+backpack_storable = false
+weight = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gqysw"]
+resource_local_to_scene = true
+size = Vector2(40, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_vwb5v"]
+resource_local_to_scene = true
+size = Vector2(40, 40)
+
+[node name="BreakpointHammer" instance=ExtResource("1_xc30d")]
+abstract_properties = SubResource("Resource_b4ed2")
+equipment_properties = SubResource("Resource_dg8qf")
+item_properties = SubResource("Resource_3thn0")
+
+[node name="ItemSprite" parent="." index="0"]
+position = Vector2(-1, -10)
+texture = ExtResource("4_wt88y")
+
+[node name="ItemCharShape" parent="." index="1"]
+visible = false
+shape = SubResource("RectangleShape2D_gqysw")
+disabled = true
+
+[node name="CollisionPolygon2D" parent="." index="2" instance=ExtResource("4_gi618")]
+position = Vector2(40, -40)
+rotation = 1.5708
+
+[node name="CollisionPolygon2D" parent="ItemUsedSlots" index="0" instance=ExtResource("4_gi618")]
+position = Vector2(40, -40)
+rotation = 1.5708
+
+[node name="ItemSlotsShape" parent="ItemUsedSlots" index="1"]
+visible = false
+shape = SubResource("RectangleShape2D_vwb5v")
+disabled = true
+
+[node name="EquipmentBarSprite" parent="." index="4"]
+texture = ExtResource("8_0dkvi")
+
+[node name="InWorldSprite" parent="." index="6"]
+texture = ExtResource("8_t7fcq")

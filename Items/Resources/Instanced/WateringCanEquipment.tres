@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EquipmentPropertiesResource" load_steps=2 format=3 uid="uid://cfvavcwjtjnol"]
+
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/EquipmentPropertiesResource.gd" id="1_3r4qe"]
+
+[resource]
+script = ExtResource("1_3r4qe")
+durability = 20
+max_durability = 20
+discarded_on_use = false
+highlight_area = true

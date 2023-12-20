@@ -1,0 +1,180 @@
+[gd_scene load_steps=16 format=3 uid="uid://cx5nrct0a17qy"]
+
+[ext_resource type="PackedScene" uid="uid://clhvm8eww1y6f" path="res://Inventory/Scenes/InvCam.tscn" id="2_oykpp"]
+[ext_resource type="PackedScene" uid="uid://dxwcslf2sife4" path="res://Inventory/Scenes/GridBlock.tscn" id="3_aihkd"]
+[ext_resource type="Script" path="res://Inventory/GDScripts/EquipGrid.gd" id="3_uoghs"]
+[ext_resource type="PackedScene" uid="uid://cy5qbhuf8pqdl" path="res://Inventory/Scenes/Backpack.tscn" id="5_yek8w"]
+[ext_resource type="Shader" path="res://Art/UI/UIBackground.gdshader" id="6_fmv41"]
+[ext_resource type="Script" path="res://Inventory/GDScripts/BasePanel.gd" id="7_1d3dt"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rg23j"]
+shader = ExtResource("6_fmv41")
+shader_parameter/top_left = null
+shader_parameter/top_right = null
+shader_parameter/bottom_left = null
+shader_parameter/bottom_right = null
+shader_parameter/border_outer_hori_threshold = null
+shader_parameter/border_outer_vert_threshold = null
+shader_parameter/border_middle_hori_threshold = null
+shader_parameter/border_middle_vert_threshold = null
+shader_parameter/border_inner_hori_threshold = null
+shader_parameter/border_inner_vert_threshold = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jf5f8"]
+shader = ExtResource("6_fmv41")
+shader_parameter/top_left = null
+shader_parameter/top_right = null
+shader_parameter/bottom_left = null
+shader_parameter/bottom_right = null
+shader_parameter/border_outer_hori_threshold = null
+shader_parameter/border_outer_vert_threshold = null
+shader_parameter/border_middle_hori_threshold = null
+shader_parameter/border_middle_vert_threshold = null
+shader_parameter/border_inner_hori_threshold = null
+shader_parameter/border_inner_vert_threshold = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o25uc"]
+shader = ExtResource("6_fmv41")
+shader_parameter/top_left = null
+shader_parameter/top_right = null
+shader_parameter/bottom_left = null
+shader_parameter/bottom_right = null
+shader_parameter/border_outer_hori_threshold = null
+shader_parameter/border_outer_vert_threshold = null
+shader_parameter/border_middle_hori_threshold = null
+shader_parameter/border_middle_vert_threshold = null
+shader_parameter/border_inner_hori_threshold = null
+shader_parameter/border_inner_vert_threshold = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0ouk8"]
+shader = ExtResource("6_fmv41")
+shader_parameter/top_left = null
+shader_parameter/top_right = null
+shader_parameter/bottom_left = null
+shader_parameter/bottom_right = null
+shader_parameter/border_outer_hori_threshold = null
+shader_parameter/border_outer_vert_threshold = null
+shader_parameter/border_middle_hori_threshold = null
+shader_parameter/border_middle_vert_threshold = null
+shader_parameter/border_inner_hori_threshold = null
+shader_parameter/border_inner_vert_threshold = null
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_io6g0"]
+shader = ExtResource("6_fmv41")
+shader_parameter/top_left = null
+shader_parameter/top_right = null
+shader_parameter/bottom_left = null
+shader_parameter/bottom_right = null
+shader_parameter/border_outer_hori_threshold = null
+shader_parameter/border_outer_vert_threshold = null
+shader_parameter/border_middle_hori_threshold = null
+shader_parameter/border_middle_vert_threshold = null
+shader_parameter/border_inner_hori_threshold = null
+shader_parameter/border_inner_vert_threshold = null
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2c26w"]
+size = Vector2(36, 594)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8nkpb"]
+size = Vector2(880, 1082.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_l04lm"]
+size = Vector2(449, 47.5)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ifhhy"]
+size = Vector2(1120, 428.75)
+
+[node name="InvPanel" type="Panel"]
+material = SubResource("ShaderMaterial_rg23j")
+offset_left = 20.0
+offset_top = 12.0
+offset_right = 1120.0
+offset_bottom = 605.0
+mouse_filter = 1
+script = ExtResource("7_1d3dt")
+
+[node name="InvItemsPanel" type="Panel" parent="."]
+material = SubResource("ShaderMaterial_jf5f8")
+layout_mode = 0
+offset_left = 690.0
+offset_top = 19.0
+offset_right = 1100.0
+offset_bottom = 593.0
+mouse_filter = 1
+script = ExtResource("7_1d3dt")
+
+[node name="PlayerPanel" type="Panel" parent="."]
+material = SubResource("ShaderMaterial_o25uc")
+layout_mode = 0
+offset_left = 690.0
+offset_right = 1100.0
+offset_bottom = 290.0
+mouse_filter = 1
+script = ExtResource("7_1d3dt")
+
+[node name="BackpackSpritePanel" type="Panel" parent="PlayerPanel"]
+material = SubResource("ShaderMaterial_0ouk8")
+layout_mode = 0
+offset_left = 160.0
+offset_top = 200.0
+offset_right = 250.0
+offset_bottom = 290.0
+mouse_filter = 1
+script = ExtResource("7_1d3dt")
+
+[node name="Backpack" parent="PlayerPanel/BackpackSpritePanel" instance=ExtResource("5_yek8w")]
+position = Vector2(45, 45)
+
+[node name="ViewportPanel" type="Panel" parent="PlayerPanel"]
+material = SubResource("ShaderMaterial_io6g0")
+layout_mode = 0
+offset_left = 131.0
+offset_top = 43.0
+offset_right = 281.0
+offset_bottom = 193.0
+mouse_filter = 1
+script = ExtResource("7_1d3dt")
+
+[node name="SubViewportContainer" parent="PlayerPanel/ViewportPanel" instance=ExtResource("2_oykpp")]
+layout_mode = 0
+offset_left = 11.0
+offset_top = 11.0
+offset_right = 139.0
+offset_bottom = 139.0
+
+[node name="EquipGrid" type="GridContainer" parent="."]
+layout_mode = 0
+offset_left = 21.0
+offset_top = 18.0
+offset_right = 633.0
+offset_bottom = 593.0
+columns = 12
+script = ExtResource("3_uoghs")
+grid_slot = ExtResource("3_aihkd")
+
+[node name="LooseContainer" type="StaticBody2D" parent="."]
+position = Vector2(-1, -5)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="LooseContainer"]
+position = Vector2(669, 298)
+shape = SubResource("RectangleShape2D_2c26w")
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="LooseContainer"]
+position = Vector2(1541, 104.25)
+shape = SubResource("RectangleShape2D_8nkpb")
+
+[node name="CollisionShape2D3" type="CollisionShape2D" parent="LooseContainer"]
+position = Vector2(875.5, 621.75)
+shape = SubResource("RectangleShape2D_l04lm")
+
+[node name="CollisionShape2D4" type="CollisionShape2D" parent="LooseContainer"]
+position = Vector2(539, -217.625)
+shape = SubResource("RectangleShape2D_ifhhy")
+
+[node name="PickupSpawn" type="Marker2D" parent="LooseContainer"]
+unique_name_in_owner = true
+position = Vector2(896, 225)
+
+[node name="LooseItems" type="Node2D" parent="." groups=["LooseItems"]]
+unique_name_in_owner = true
+position = Vector2(894, 64)

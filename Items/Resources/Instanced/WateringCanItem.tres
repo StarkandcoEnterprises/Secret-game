@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="ItemPropertiesResource" load_steps=2 format=3 uid="uid://cji4grq5vmcov"]
+
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/ItemPropertiesResource.gd" id="1_xdbxp"]
+
+[resource]
+script = ExtResource("1_xdbxp")
+string_name = "Watering Can"
+price = 100
+slots_needed = 1
+backpack_storable = false
+weight = 3.0

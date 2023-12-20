@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://bwrim1h5p3u0"]
 
-[ext_resource type="Script" path="res://CoreResources/GDScripts/WorldObject.gd" id="1_q7gxg"]
+[ext_resource type="Script" path="res://Buildings/Scripts/StaticBed.gd" id="1_01gvj"]
 [ext_resource type="Texture2D" uid="uid://b8sxywscmeyf4" path="res://Art/Images/BuildingScenes/Bed.png" id="2_4g466"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_nk1bm"]
@@ -8,7 +8,7 @@ size = Vector2(64, 128)
 
 [node name="Bed" type="StaticBody2D"]
 position = Vector2(900, 100)
-script = ExtResource("1_q7gxg")
+script = ExtResource("1_01gvj")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_4g466")
