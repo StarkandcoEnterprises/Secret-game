@@ -8,7 +8,7 @@ func _ready():
 	limit_top =cell_size.position.y * cell_count.y
 	limit_bottom = cell_size.end.y * cell_count.y
 
-func _process(delta):
+func _process(_delta):
 	var viewport_rect = get_viewport_rect()
 	if viewport_rect != get_tree().root.get_viewport().get_visible_rect():
 		limit_left = 0

@@ -1,4 +1,4 @@
-extends WorldObject
+extends WorldObjectArea
 
 class_name SleepingBag2
 

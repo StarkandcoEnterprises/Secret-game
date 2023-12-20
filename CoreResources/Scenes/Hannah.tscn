@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://CoreResources/GDScripts/Hannah.gd" id="1_jbrk5"]
 [ext_resource type="Texture2D" uid="uid://cgiknppirw3av" path="res://Art/Images/Character/godot_guy.png" id="2_6fdrp"]
-[ext_resource type="Script" path="res://CoreResources/Scenes/CustCamera.gd" id="3_6i5gx"]
+[ext_resource type="Script" path="res://CoreResources/GDScripts/CustCamera.gd" id="3_6i5gx"]
 [ext_resource type="Texture2D" uid="uid://cuy3hi6vlvwev" path="res://Art/Images/Inventory/Highlight.png" id="3_8ieu1"]
 [ext_resource type="Texture2D" uid="uid://dwvn5m6amux0j" path="res://Art/Images/Character/Slash.png" id="3_17841"]
 

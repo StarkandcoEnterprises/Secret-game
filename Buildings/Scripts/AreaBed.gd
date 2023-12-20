@@ -1,9 +1,9 @@
-extends WorldObject
+extends WorldObjectArea
 
-class_name Bed
-## Beds for sleeping :)
+class_name AreaBed
+## Area body beds for sleeping :)
 ##
-## A [Bed] object inheriting [WorldObject] which has a dialogue tree allowing a player to choose or not to sleep after interacting 
+## A [Bed] object inheriting [WorldObjectArea] which has a dialogue tree allowing a player to choose or not to sleep after interacting 
 
 ## Assigns the dialogue tree value. Retrieves [Main] so that it can use [method Main._on_daytime_timeout]
 func _ready():

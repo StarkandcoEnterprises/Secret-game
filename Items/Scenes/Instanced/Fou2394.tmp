@@ -1,0 +1,42 @@
+[gd_scene load_steps=10 format=3 uid="uid://4rkc3ap7c0yk"]
+
+[ext_resource type="PackedScene" uid="uid://cfkgfq3yopgbq" path="res://Items/Scenes/Core/BaseEquipment.tscn" id="1_g0d2w"]
+[ext_resource type="Script" path="res://FoundationPlacer.gd" id="2_kmui2"]
+[ext_resource type="PackedScene" uid="uid://cf03wlebw3rbl" path="res://Buildings/Scenes/Foundation.tscn" id="3_igr7u"]
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/EquipmentPropertiesResource.gd" id="4_vom1g"]
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/ItemPropertiesResource.gd" id="5_atu0t"]
+
+[sub_resource type="Resource" id="Resource_p7x15"]
+script = ExtResource("4_vom1g")
+durability = 1
+max_durability = 1
+discarded_on_use = true
+highlight_area = true
+
+[sub_resource type="Resource" id="Resource_hx22j"]
+script = ExtResource("5_atu0t")
+string_name = "Foundations"
+price = 100
+slots_needed = 1
+backpack_storable = true
+weight = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mg32h"]
+resource_local_to_scene = true
+size = Vector2(40, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hlu46"]
+resource_local_to_scene = true
+size = Vector2(40, 40)
+
+[node name="FoundationPlacer" instance=ExtResource("1_g0d2w")]
+script = ExtResource("2_kmui2")
+foundation_scene = ExtResource("3_igr7u")
+equipment_properties = SubResource("Resource_p7x15")
+item_properties = SubResource("Resource_hx22j")
+
+[node name="ItemCharShape" parent="." index="1"]
+shape = SubResource("RectangleShape2D_mg32h")
+
+[node name="ItemSlotsShape" parent="ItemUsedSlots" index="0"]
+shape = SubResource("RectangleShape2D_hlu46")

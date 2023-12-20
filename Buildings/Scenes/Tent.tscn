@@ -1,6 +1,6 @@
 [gd_scene load_steps=10 format=3 uid="uid://dlx48makdwg0"]
 
-[ext_resource type="Script" path="res://Buildings/Scenes/Tent.gd" id="1_khtor"]
+[ext_resource type="Script" path="res://Buildings/Scripts/Tent.gd" id="1_khtor"]
 [ext_resource type="Texture2D" uid="uid://5s5cxt1nd00f" path="res://Art/Images/BuildingScenes/Tent.png" id="2_ukn78"]
 [ext_resource type="Texture2D" uid="uid://cvoffy3uvmpqw" path="res://Art/Images/BuildingScenes/TentInside.png" id="3_itdug"]
 

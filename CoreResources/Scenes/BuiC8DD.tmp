@@ -1,4 +1,4 @@
-[gd_scene load_steps=19 format=3 uid="uid://cehfn6yd4m7p1"]
+[gd_scene load_steps=18 format=3 uid="uid://cehfn6yd4m7p1"]
 
 [ext_resource type="PackedScene" uid="uid://ho5ewtbo6mdn" path="res://CoreResources/Scenes/Main.tscn" id="1_eyoga"]
 [ext_resource type="PackedScene" uid="uid://cf03wlebw3rbl" path="res://Buildings/Scenes/Foundation.tscn" id="2_p4ljg"]
@@ -14,7 +14,6 @@
 [ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/ItemPropertiesResource.gd" id="9_0nqg4"]
 [ext_resource type="PackedScene" uid="uid://cx85qdydat8pe" path="res://Items/Scenes/Instanced/Stone.tscn" id="10_j03ee"]
 [ext_resource type="PackedScene" uid="uid://vrklgttf0tdi" path="res://Items/Scenes/Instanced/WateringCan.tscn" id="11_ttdgr"]
-[ext_resource type="PackedScene" uid="uid://4rkc3ap7c0yk" path="res://Items/Scenes/Instanced/FoundationPlacer.tscn" id="15_7lrtt"]
 
 [sub_resource type="Resource" id="Resource_0luru"]
 resource_local_to_scene = true
@@ -105,5 +104,3 @@ position = Vector2(500, 500)
 
 [node name="WateringCan" parent="SubViewportContainer/SubViewport/World/Objects" index="7" instance=ExtResource("11_ttdgr")]
 position = Vector2(550, 550)
-
-[node name="FoundationPlacer" parent="SubViewportContainer/SubViewport/World/Objects" index="8" instance=ExtResource("15_7lrtt")]

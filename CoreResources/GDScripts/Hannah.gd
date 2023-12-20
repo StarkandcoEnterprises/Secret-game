@@ -200,7 +200,7 @@ func _unhandled_input(_event):
 	if !Input.is_action_just_pressed("interact"): return
 	var overlapping_objects = %UseArea.get_overlapping_bodies() + %UseArea.get_overlapping_areas()
 	for object in overlapping_objects:
-		if !object is WorldObject: continue
+		if !object.has_method("interact"): continue
 		toggle_processing()
 		object.interact()
 		direction = Vector2.ZERO

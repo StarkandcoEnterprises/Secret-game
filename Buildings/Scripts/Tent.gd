@@ -1,4 +1,4 @@
-extends WorldObject
+extends WorldObjectStatic
 
 class_name Tent
 

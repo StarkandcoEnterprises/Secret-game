@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://v23vjeebsqdt"]
 
-[ext_resource type="Script" path="res://Debug/Scenes/DebugOutput.gd" id="1_pfcr7"]
+[ext_resource type="Script" path="res://Debug/DebugOutput.gd" id="1_pfcr7"]
 [ext_resource type="PackedScene" uid="uid://ncboup6o1765" path="res://Items/Scenes/Instanced/CornSeed.tscn" id="2_d746o"]
 [ext_resource type="PackedScene" uid="uid://cx85qdydat8pe" path="res://Items/Scenes/Instanced/Stone.tscn" id="3_5py0v"]
 

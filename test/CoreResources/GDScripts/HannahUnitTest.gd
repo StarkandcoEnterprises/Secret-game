@@ -189,7 +189,7 @@ func test__unhandled_input(timeout=100) -> void:
 	#So the use area doesn't move for other testing later
 	
 	#Create an interactable object and supporting scenes
-	var sample_interactable: WorldObject = auto_free(sample_interactable_scene.instantiate())
+	var sample_interactable = auto_free(sample_interactable_scene.instantiate())
 	
 	#Add the child
 	main.add_child(sample_interactable)

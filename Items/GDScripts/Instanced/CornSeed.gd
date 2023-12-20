@@ -7,7 +7,7 @@ class_name CornSeed
 @export var seed_scene: PackedScene
 
 func use():
-	var tile_pos = map.local_to_map(hannah.get_node("%Hand").global_position)
+	var tile_pos = map.local_to_map(hannah.get_node("%UseArea").global_position)
 	if map.get_cell_atlas_coords(0,tile_pos) != Vector2i(0, 0): return
 	for plant in plants_node.get_children():
 		if map.local_to_map(plant.global_position) == tile_pos: return
