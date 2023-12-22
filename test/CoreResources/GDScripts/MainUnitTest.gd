@@ -56,7 +56,7 @@ func test_next_day(timeout=20):
 func test_reset_watering_and_grow(timeout=30):
 
 	# Set a tile in the TileMap to be wet soil
-	main.get_node("%TileMap").set_cell(0, Vector2(0, 0), 0, Vector2(0, 0), 1)
+	main.get_node("%TileMap").set_cell(0, Vector2(0, 0), 0, Vector2(2, 0))
 
 	# Add a BasePlant node to the %Plants node
 	var plant: BasePlant = auto_free(base_plant_scene.instantiate())
@@ -77,13 +77,13 @@ func test_reset_watering_and_grow(timeout=30):
 func test_is_wet_tile(timeout=10):
 
 	# Set a tile in the TileMap to be wet soil
-	main.get_node("%TileMap").set_cell(0, Vector2i(0, 0), 0, Vector2(0, 0), 1)
+	main.get_node("%TileMap").set_cell(0, Vector2i(0, 0), 0, Vector2(2, 0))
 
 	# Assert that the tile at position (0, 0) is wet
 	assert_bool(main.is_wet_tile(Vector2i(0, 0))).is_true()
 
 	# Set a tile in the TileMap to be not wet soil
-	main.get_node("%TileMap").set_cell(0, Vector2i(1, 1), 0, Vector2(0, 0), 0)
+	main.get_node("%TileMap").set_cell(0, Vector2i(1, 1), 0, Vector2(1, 0))
 
 	# Assert that the tile at position (1, 1) is not wet
 	assert_bool(main.is_wet_tile(Vector2i(1, 1))).is_false()

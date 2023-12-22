@@ -8,7 +8,7 @@ class_name CornSeed
 
 func use():
 	var tile_pos = map.local_to_map(hannah.get_node("%UseArea").global_position)
-	if map.get_cell_atlas_coords(0,tile_pos) != Vector2i(0, 0): return
+	if map.get_cell_atlas_coords(0,tile_pos) not in [Vector2i(1, 0), Vector2i(2, 0)]: return
 	for plant in plants_node.get_children():
 		if map.local_to_map(plant.global_position) == tile_pos: return
 	super()

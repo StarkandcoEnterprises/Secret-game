@@ -9,6 +9,7 @@ class_name EquipmentPropertiesResource
 
 func use():
 	durability -= 1
+	pass
 
 func repair():
 	durability = max_durability

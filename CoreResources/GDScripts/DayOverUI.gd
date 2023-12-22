@@ -8,25 +8,25 @@ signal next_day_UI_finished
 @onready var timer = %Timer
 @onready var nextDay = %NextDay
 @onready var background = %Background
-
-func _ready():
-	timer.timeout.connect(_on_timer_timeout)
+#
 
 func day_timeout():
 	visible = true
 	manage_tween()
 	tween.tween_property(background, "modulate", Color(0, 0, 0, 1), 1)
 	tween.play()
-	timer.start(1)
+	await get_tree().create_timer(1).timeout
+	handle_transitions()
 
 func _on_next_day_pressed():
 	nextDay.visible = false
 	manage_tween()
 	tween.tween_property(background, "modulate", Color(0, 0, 0, 0), 1)
 	tween.play()
-	timer.start(1)
+	await get_tree().create_timer(1).timeout
+	handle_transitions()
 
-func _on_timer_timeout():
+func handle_transitions():
 	if background.modulate.a < 0.7:
 		nextDay.visible = false
 		visible = false

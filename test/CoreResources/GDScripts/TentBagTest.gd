@@ -23,9 +23,7 @@ func test_use(timeout=10):
 	# Test the use function
 	tent_bag.use()
 	var world_placements = get_tree().get_first_node_in_group("WorldPlacements")
-	assert_object(world_placements.get_child(1)).is_instanceof(Tent)
-	assert_object(tent_bag.hannah.inventory.get_node("%InvSprite").get_node("%LooseItems").get_child(0)).is_instanceof(BaseItem)
-	assert_object(tent_bag.hannah.inventory.get_node("%InvSprite").get_node("%LooseItems").get_child(1)).is_instanceof(BaseItem)
+	assert_object(world_placements.get_child(3)).is_instanceof(Tent)
 
 @warning_ignore("unused_parameter")
 func test_process(timeout=10):

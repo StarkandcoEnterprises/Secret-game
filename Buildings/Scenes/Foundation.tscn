@@ -1,7 +1,8 @@
-[gd_scene load_steps=6 format=3 uid="uid://cf03wlebw3rbl"]
+[gd_scene load_steps=7 format=3 uid="uid://cf03wlebw3rbl"]
 
 [ext_resource type="Script" path="res://Buildings/Scripts/Foundation.gd" id="1_1ru6s"]
-[ext_resource type="Texture2D" uid="uid://cn0j6m8x6njyo" path="res://Art/Images/icon.svg" id="2_3x3u4"]
+[ext_resource type="PackedScene" uid="uid://b2hw8yjwu0lew" path="res://Buildings/Scenes/Building.tscn" id="2_g0n6k"]
+[ext_resource type="Texture2D" uid="uid://ccejcw510q1ge" path="res://Art/Images/BuildingScenes/GrassFoundations.png" id="2_ouhqt"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_s32ab"]
 size = Vector2(64, 64)
@@ -14,14 +15,14 @@ size = Vector2(20, 66)
 
 [node name="Foundation" type="Area2D"]
 script = ExtResource("1_1ru6s")
+building_scene = ExtResource("2_g0n6k")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(32, 32)
 shape = SubResource("RectangleShape2D_s32ab")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-scale = Vector2(0.5, 0.5)
-texture = ExtResource("2_3x3u4")
+texture = ExtResource("2_ouhqt")
 centered = false
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
@@ -34,5 +35,6 @@ shape = SubResource("RectangleShape2D_f7kfm")
 
 [node name="RayCast2D" type="RayCast2D" parent="."]
 position = Vector2(32, 32)
-target_position = Vector2(0, -50)
 collide_with_areas = true
+
+[connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]

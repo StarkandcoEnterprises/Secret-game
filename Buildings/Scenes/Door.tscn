@@ -1,0 +1,19 @@
+[gd_scene load_steps=4 format=3 uid="uid://bmsblbx71kvf7"]
+
+[ext_resource type="Script" path="res://Buildings/Scenes/Door.gd" id="1_vmfrb"]
+[ext_resource type="Texture2D" uid="uid://dparmvxxhutk1" path="res://Art/Images/BuildingScenes/GrassDoor.png" id="2_i44yb"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_s32ab"]
+size = Vector2(64, 10)
+
+[node name="Door" type="Area2D"]
+script = ExtResource("1_vmfrb")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("RectangleShape2D_s32ab")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+scale = Vector2(1, 0.156)
+texture = ExtResource("2_i44yb")
+
+[connection signal="child_entered_tree" from="." to="." method="_on_child_entered_tree"]

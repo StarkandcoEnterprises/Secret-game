@@ -1,0 +1,52 @@
+[gd_scene load_steps=11 format=3 uid="uid://bt75gpqk3bvjx"]
+
+[ext_resource type="PackedScene" uid="uid://cfkgfq3yopgbq" path="res://Items/Scenes/Core/BaseEquipment.tscn" id="1_k0mgq"]
+[ext_resource type="Script" path="res://Items/GDScripts/DoorPlacer.gd" id="2_yd4mj"]
+[ext_resource type="PackedScene" uid="uid://bmsblbx71kvf7" path="res://Buildings/Scenes/Door.tscn" id="3_dkikv"]
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/EquipmentPropertiesResource.gd" id="4_an02g"]
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/ItemPropertiesResource.gd" id="5_d2rqx"]
+[ext_resource type="Texture2D" uid="uid://dparmvxxhutk1" path="res://Art/Images/BuildingScenes/GrassDoor.png" id="6_yhi5p"]
+
+[sub_resource type="Resource" id="Resource_hdvuy"]
+script = ExtResource("4_an02g")
+durability = 1000
+max_durability = 1000
+discarded_on_use = true
+highlight_area = true
+
+[sub_resource type="Resource" id="Resource_eyc0m"]
+script = ExtResource("5_d2rqx")
+string_name = "Doors"
+price = 100
+slots_needed = 1
+backpack_storable = true
+weight = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mg32h"]
+resource_local_to_scene = true
+size = Vector2(40, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hlu46"]
+resource_local_to_scene = true
+size = Vector2(40, 40)
+
+[node name="DoorPlacer" instance=ExtResource("1_k0mgq")]
+script = ExtResource("2_yd4mj")
+door_scene = ExtResource("3_dkikv")
+equipment_properties = SubResource("Resource_hdvuy")
+item_properties = SubResource("Resource_eyc0m")
+
+[node name="ItemSprite" parent="." index="0"]
+texture = ExtResource("6_yhi5p")
+
+[node name="ItemCharShape" parent="." index="1"]
+shape = SubResource("RectangleShape2D_mg32h")
+
+[node name="ItemSlotsShape" parent="ItemUsedSlots" index="0"]
+shape = SubResource("RectangleShape2D_hlu46")
+
+[node name="EquipmentBarSprite" parent="." index="3"]
+texture = ExtResource("6_yhi5p")
+
+[node name="InWorldSprite" parent="." index="5"]
+texture = ExtResource("6_yhi5p")

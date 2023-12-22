@@ -61,3 +61,7 @@ func _on_get_max_slots_pressed():
 func _on_grow_plants_pressed():
 	for child in plants.get_children():
 		child.cheat()
+
+
+func _on_refill_stamina_pressed():
+	hannah.stamina = Hannah.MAX_STAMINA

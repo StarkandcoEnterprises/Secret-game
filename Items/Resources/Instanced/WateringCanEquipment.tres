@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/EquipmentPropertiesResource.gd" id="1_3r4qe"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_3r4qe")
 durability = 20
 max_durability = 20

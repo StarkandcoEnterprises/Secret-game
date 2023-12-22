@@ -1,0 +1,52 @@
+[gd_scene load_steps=11 format=3 uid="uid://dh378ijtuifex"]
+
+[ext_resource type="PackedScene" uid="uid://cfkgfq3yopgbq" path="res://Items/Scenes/Core/BaseEquipment.tscn" id="1_gwp76"]
+[ext_resource type="Script" path="res://Items/GDScripts/RoofPlacer.gd" id="2_4w2td"]
+[ext_resource type="PackedScene" uid="uid://dohcb7eqcguro" path="res://Buildings/Scenes/Roof.tscn" id="3_c0wxy"]
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/EquipmentPropertiesResource.gd" id="4_my5ng"]
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/ItemPropertiesResource.gd" id="5_cki0v"]
+[ext_resource type="Texture2D" uid="uid://d2rcrir6ws1kb" path="res://Art/Images/BuildingScenes/GrassRoof.png" id="6_v2ypx"]
+
+[sub_resource type="Resource" id="Resource_mscmq"]
+script = ExtResource("4_my5ng")
+durability = 1000
+max_durability = 1000
+discarded_on_use = true
+highlight_area = true
+
+[sub_resource type="Resource" id="Resource_xvcqt"]
+script = ExtResource("5_cki0v")
+string_name = "Roofs"
+price = 100
+slots_needed = 1
+backpack_storable = true
+weight = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mg32h"]
+resource_local_to_scene = true
+size = Vector2(40, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hlu46"]
+resource_local_to_scene = true
+size = Vector2(40, 40)
+
+[node name="RoofPlacer" instance=ExtResource("1_gwp76")]
+script = ExtResource("2_4w2td")
+roof_scene = ExtResource("3_c0wxy")
+equipment_properties = SubResource("Resource_mscmq")
+item_properties = SubResource("Resource_xvcqt")
+
+[node name="ItemSprite" parent="." index="0"]
+texture = ExtResource("6_v2ypx")
+
+[node name="ItemCharShape" parent="." index="1"]
+shape = SubResource("RectangleShape2D_mg32h")
+
+[node name="ItemSlotsShape" parent="ItemUsedSlots" index="0"]
+shape = SubResource("RectangleShape2D_hlu46")
+
+[node name="EquipmentBarSprite" parent="." index="3"]
+texture = ExtResource("6_v2ypx")
+
+[node name="InWorldSprite" parent="." index="5"]
+texture = ExtResource("6_v2ypx")

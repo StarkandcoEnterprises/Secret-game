@@ -9,7 +9,7 @@ class_name TentBag
 
 # The size of the tent in tiles
 var tent_size = Vector2(4, 4)
-var scaled = false
+var sprite_altered = false
 
 func use():
 	super()
@@ -49,16 +49,16 @@ func _process(delta):
 	
 	var highlight_sprite = hannah.get_node("%HighlightSprite")
 		
-	if scaled and interact_state != Interact_State.EQUIPPED: 
+	if sprite_altered and interact_state != Interact_State.EQUIPPED: 
 		highlight_sprite.scale = Vector2(1, 1)
-		scaled = false
+		sprite_altered = false
 		return
 
 	if interact_state != Interact_State.EQUIPPED: return
 	
 	# Update the highlight sprite
 	highlight_sprite.scale = tent_size
-	scaled = true
+	sprite_altered = true
 	
 	# Use the position of the use area
 	var use_area_pos = hannah.get_node("%UseArea").global_position

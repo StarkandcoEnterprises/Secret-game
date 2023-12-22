@@ -1,0 +1,54 @@
+[gd_scene load_steps=12 format=3 uid="uid://sndqfrpdvr37"]
+
+[ext_resource type="PackedScene" uid="uid://cfkgfq3yopgbq" path="res://Items/Scenes/Core/BaseEquipment.tscn" id="1_w7mji"]
+[ext_resource type="Script" path="res://Items/GDScripts/WallPlacer.gd" id="2_iba4n"]
+[ext_resource type="PackedScene" uid="uid://crkxgjx3nhebn" path="res://Buildings/Scenes/VWall.tscn" id="3_8vs6k"]
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/EquipmentPropertiesResource.gd" id="3_esf8n"]
+[ext_resource type="PackedScene" uid="uid://ca2ji4smhuuuv" path="res://Buildings/Scenes/HWall.tscn" id="4_h6w01"]
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/ItemPropertiesResource.gd" id="4_j6wh7"]
+[ext_resource type="Texture2D" uid="uid://cu0kbgs04yjf7" path="res://Art/Images/BuildingScenes/GrassWall.png" id="8_hbtbr"]
+
+[sub_resource type="Resource" id="Resource_oqabi"]
+script = ExtResource("3_esf8n")
+durability = 1000
+max_durability = 1000
+discarded_on_use = true
+highlight_area = true
+
+[sub_resource type="Resource" id="Resource_5mpmx"]
+script = ExtResource("4_j6wh7")
+string_name = "Walls"
+price = 100
+slots_needed = 1
+backpack_storable = true
+weight = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_xk6mo"]
+resource_local_to_scene = true
+size = Vector2(40, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_2ctmj"]
+resource_local_to_scene = true
+size = Vector2(40, 40)
+
+[node name="WallPlacer" instance=ExtResource("1_w7mji")]
+script = ExtResource("2_iba4n")
+v_wall_scene = ExtResource("3_8vs6k")
+h_wall_scene = ExtResource("4_h6w01")
+equipment_properties = SubResource("Resource_oqabi")
+item_properties = SubResource("Resource_5mpmx")
+
+[node name="ItemSprite" parent="." index="0"]
+texture = ExtResource("8_hbtbr")
+
+[node name="ItemCharShape" parent="." index="1"]
+shape = SubResource("RectangleShape2D_xk6mo")
+
+[node name="ItemSlotsShape" parent="ItemUsedSlots" index="0"]
+shape = SubResource("RectangleShape2D_2ctmj")
+
+[node name="EquipmentBarSprite" parent="." index="3"]
+texture = ExtResource("8_hbtbr")
+
+[node name="InWorldSprite" parent="." index="5"]
+texture = ExtResource("8_hbtbr")

@@ -151,8 +151,7 @@ func _unhandled_input(event):
 		handle_left_click(event)
 	
 	# If we get a right click and item selected, rotate
-	elif interact_state == Interact_State.SELECTED and event.is_pressed() and \
-							event.button_index == MOUSE_BUTTON_RIGHT:
+	elif interact_state == Interact_State.SELECTED and Input.is_action_just_pressed("right_click"):
 		rotate_selected_item()
 
 # Separate function to handle left click actions

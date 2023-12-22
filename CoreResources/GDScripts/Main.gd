@@ -67,18 +67,14 @@ func next_day():
 ## Loops through all Plants in the scene and makes them grow if necessary. Also makes wet ground dry.
 func reset_watering_and_grow():
 	
-	if %Plants.get_child_count() == 0: return
-	
 	for plant in %Plants.get_children():
 		if !is_wet_tile(plant.global_position): continue
 		plant.grow()
 	
 	for cell_pos in %TileMap.get_used_cells(0):
 		if !is_wet_tile(cell_pos): continue
-		%TileMap.set_cell(0, cell_pos, 0, Vector2(0, 0), 0)
+		%TileMap.set_cell(0, cell_pos, 0, Vector2(1, 0), 0)
 
 ##Checks if a tile is wet based on it's position in the gameworld
 func is_wet_tile(local_position) -> bool:
-	
-	return %TileMap.get_cell_atlas_coords(0, local_position) == Vector2i(0,0) \
-	and %TileMap.get_cell_alternative_tile(0, local_position) == 1
+	return %TileMap.get_cell_atlas_coords(0, local_position) == Vector2i(2,0)

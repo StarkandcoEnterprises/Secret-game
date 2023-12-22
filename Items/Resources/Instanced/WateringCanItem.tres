@@ -3,6 +3,7 @@
 [ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/ItemPropertiesResource.gd" id="1_xdbxp"]
 
 [resource]
+resource_local_to_scene = true
 script = ExtResource("1_xdbxp")
 string_name = "Watering Can"
 price = 100

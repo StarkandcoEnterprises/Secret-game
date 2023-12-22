@@ -30,11 +30,13 @@ func _ready():
 
 ## Is called when [Hannah] interacts with the [WorldObjectStatic] to send the [member WorldObjectStatic.dialogue_tree] to the manager. Also pauses the timer on [Main].
 func interact():
-	main.get_node("%Daytime").stop()
+	if !main.get_node("%Daytime").is_stopped():
+		main.get_node("%Daytime").stop()
 	dialogue_UI.show_dialogue(self, dialogue_tree)
 
 ## Is called when a dialogue option is selected, allowing the [WorldObjectStatic] to respond by calling other functions. By default this resumes [Hannah]'s handling and restarts the timer on [Main]
 func call_dialogue_callback(_callback_name):
 	if !hannah.is_processing_unhandled_input():
 		hannah.toggle_processing()
-	main.get_node("%Daytime").start()
+	if main.get_node("%Daytime").is_stopped():
+		main.get_node("%Daytime").start()
