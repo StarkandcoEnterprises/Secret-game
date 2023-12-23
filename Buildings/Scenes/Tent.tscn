@@ -31,6 +31,7 @@ texture = ExtResource("2_ukn78")
 [node name="SubViewportContainer" type="SubViewportContainer" parent="."]
 unique_name_in_owner = true
 visible = false
+z_index = 4
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5

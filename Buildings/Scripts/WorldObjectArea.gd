@@ -37,4 +37,5 @@ func interact():
 func call_dialogue_callback(_callback_name):
 	if !hannah.is_processing_unhandled_input():
 		hannah.toggle_processing()
-	main.get_node("%Daytime").start()
+	if main.get_node("%Daytime").is_stopped:
+		main.get_node("%Daytime").start()

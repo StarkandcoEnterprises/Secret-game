@@ -3,6 +3,7 @@ extends WorldObjectArea
 class_name Foundation 
 
 var neighbours = []
+var is_complete = false
 @export var building_scene: PackedScene
 
 func _ready():
@@ -10,15 +11,6 @@ func _ready():
 	get_node("RayCast2D").add_exception(hannah.get_node("%UseArea"))
 	get_node("RayCast2D").add_exception(hannah)
 	await get_tree().physics_frame
-	retrieve_neighbours()
-	await get_tree().physics_frame
-	if check_building_completion():
-		#Create new BaseBuilding
-		pass
-
-#No need for interaction
-func interact():
-	pass
 
 func retrieve_neighbours():
 	for area in get_overlapping_areas():
@@ -26,6 +18,7 @@ func retrieve_neighbours():
 			neighbours.append(area)
 
 func check_building_completion(checked_foundations = {}, door_found = {0: false}, roof_found = {0: false}) -> bool:
+	if is_complete:return true
 	neighbours = []
 	retrieve_neighbours() 
 
@@ -71,35 +64,41 @@ func has_element_for_each_edge() -> bool:
 
 
 func _on_child_entered_tree(node):
-	if !(node is HorizontalWall or node is VerticalWall or node is Roof): return
+	if is_complete: return
+	if !(node is Roof): return
 	await node.ready
 	await get_tree().physics_frame
-	node.child_entered_tree.connect(on_wall_child_added)
-	if check_building_completion():
-		var building = building_scene.instantiate()
-		get_parent().add_child(building)
-		reparent_foundations(building)
+	instance_new_building()
 
-func on_wall_child_added(node):
-	if (!node is Door or !node is Roof): return
-	await node.ready
-	await get_tree().physics_frame
-	if check_building_completion():
-		var building = building_scene.instantiate()
-		get_parent().add_child(building)
-		reparent_foundations(building)
+func instance_new_building():
+	if !check_building_completion(): return
+	var building = building_scene.instantiate()
+	var top_left_position = get_top_left_position()
+	building.global_position = top_left_position
+	get_parent().add_child(building)
+	await get_tree().process_frame
+	reparent_connected_components(building)
+	building.prepare_inside()
 
-func reparent_foundations(building):
+func get_top_left_position(visited = {}) -> Vector2:
+	if self in visited:
+		return Vector2(INF, INF)
+	visited[self] = true
+	var min_x = self.global_position.x
+	var min_y = self.global_position.y
+	for neighbour in neighbours:
+		var neighbour_pos = neighbour.get_top_left_position(visited)
+		min_x = min(min_x, neighbour_pos.x)
+		min_y = min(min_y, neighbour_pos.y)
+	return Vector2(min_x, min_y)
+
+func reparent_connected_components(building):
 	if self.get_parent() == building:
 		return
-	for child in get_children():
-		if child is Roof:
-			child.reparent(building)
-	self.reparent(building)
+	reparent(building)
 	for neighbour in neighbours:
 		if neighbour.get_parent() != building:
-			neighbour.reparent_foundations(building)
-
+			neighbour.reparent_connected_components(building)
 
 func has_roof() -> bool:
 	for child in get_children():

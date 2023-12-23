@@ -19,6 +19,10 @@ config/icon="res://Art/Images/icon.svg"
 
 PanelColourManager="*res://Art/UI/PanelColourManager.gd"
 
+[display]
+
+window/size/resizable=false
+
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/behaviour_toolkit/plugin.cfg", "res://addons/gdUnit4/plugin.cfg")
@@ -144,4 +148,4 @@ right_click={
 [rendering]
 
 textures/canvas_textures/default_texture_filter=0
-renderer/rendering_method="mobile"
+renderer/rendering_method="gl_compatibility"

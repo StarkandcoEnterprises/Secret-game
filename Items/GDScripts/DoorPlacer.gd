@@ -23,9 +23,12 @@ func use():
 	var wall_found = false
 	var use_area_pos = hannah.get_node("%UseArea").global_position
 	var tile_pos = hannah.map.local_to_map(use_area_pos)
-	var wall
-
+	var wall: HorizontalWall
+	var foundation: Foundation
+	
 	for area in areas:
+		if !area is Foundation: continue
+		foundation = area
 		for child in area.get_children():
 			if !child is HorizontalWall: continue
 			if child.global_position != hannah.map.map_to_local(tile_pos) + Vector2(0, TILE_SIZE.y / 2 - 5): continue
@@ -38,11 +41,12 @@ func use():
 	var door = door_scene.instantiate()
 
 	for child in wall.get_children():
-		if child is Door and child.position == door.position: return 
+		if child is Door and child.global_position == door.global_position: return 
 
 	super()
 	wall.add_child(door)
 	door.force_update_transform()
+	foundation.instance_new_building()
 
 func _process(delta):
 	super(delta)

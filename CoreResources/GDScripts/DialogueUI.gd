@@ -21,6 +21,9 @@ func _ready():
 ## Handles showing the panel, storing dialogue tree/calling object, and sets up the first text
 func show_dialogue(object_that_called, dialogue_data : Dictionary):
 	calling_object = object_that_called
+	if dialogue_data == {}: 
+		_on_option_selected("end")
+		return
 	# Show the panel 
 	show() 
 	# Store the dialogue tree 

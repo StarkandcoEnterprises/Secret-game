@@ -10,7 +10,7 @@ func _ready():
 
 # Override the interact function to allow the player to enter the tent
 func interact():
-	main.get_node("%Daytime").stop()
+	super()
 	hannah_inside = true
 	hannah.in_building = true
 	%Camera2D.make_current()
@@ -18,7 +18,7 @@ func interact():
 	hannah.get_node("Camera2D").make_current()
 	hannah.global_position = %EntryPoint.global_position
 	%SubViewportContainer.visible = true
-	call_dialogue_callback("")
+	
 
 func _process(_delta):
 	if !hannah_inside: return

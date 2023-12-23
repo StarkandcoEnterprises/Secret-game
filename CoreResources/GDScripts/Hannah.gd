@@ -204,7 +204,7 @@ func _unhandled_input(_event):
 		toggle_processing()
 		object.interact()
 		direction = Vector2.ZERO
-		break
+		if !is_processing(): break
 
 func _ease_in_out_elastic(x: float) -> float:
 	if x == 0.0:
