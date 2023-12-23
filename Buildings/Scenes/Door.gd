@@ -5,6 +5,8 @@ class_name Door
 var building = null
 var entry_point: Vector2
 var exit_point: Vector2
+var corresponding_door = null
+var unique_id = null
 
 func _ready():
 	super()

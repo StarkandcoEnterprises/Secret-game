@@ -4,6 +4,7 @@ class_name Building
 
 var doors = []
 var hannah_inside = false
+var unique_id_counter = 0
 
 @onready var subviewport = get_node("%SubViewport")
 @onready var subviewport_container = get_node("%SubViewportContainer")
@@ -12,25 +13,35 @@ var hannah_inside = false
 func prepare_inside():
 	for child in get_children():
 		if !child is Foundation: continue
-		assign_building_to_door(child)
+		assign_building_to_door(child, true)
 		await get_tree().process_frame
 		var duplicate_child = child.duplicate()
-		assign_building_to_door(duplicate_child)
+		assign_building_to_door(duplicate_child, false)
 		for child_b in duplicate_child.get_children():
 			if !child_b is Roof: continue
 			child_b.queue_free()
 		if duplicate_child.is_connected("child_entered_tree", duplicate_child._on_child_entered_tree):
 			duplicate_child.child_entered_tree.disconnect(duplicate_child._on_child_entered_tree)
 		subviewport.add_child(duplicate_child)
+		for door in doors:
+			var debug = door.name
+			var duplicate_door = duplicate_child.find_child(door.name, true, false)
+			if !duplicate_door: continue
+			door.corresponding_door = duplicate_door
+			duplicate_door.corresponding_door = door
 	await get_tree().process_frame
 	call_deferred("adjust_subviewport_size")
 
-func assign_building_to_door(foundation):
+func assign_building_to_door(foundation, add_to_doors_list = true):
 	for child_b in foundation.get_children():
 		if !child_b is HorizontalWall: continue
 		for child_c in child_b.get_children():
 			if !child_c is Door: continue
 			child_c.building = self
+			if add_to_doors_list and !doors.has(child_c):
+				child_c.name = str(unique_id_counter)
+				unique_id_counter += 1
+				doors.append(child_c)
 
 func adjust_building_position():
 	var min_x = INF
@@ -58,10 +69,11 @@ func adjust_subviewport_size():
 	for child in get_node("SubViewportContainer/SubViewport").get_children():
 		if !child is Foundation: continue
 		var child_rect = child.get_node("Sprite2D").get_rect()
-		min_x = min(min_x, child_rect.position.x)
-		min_y = min(min_y, child_rect.position.y)
-		max_x = max(max_x, child_rect.position.x + child_rect.size.x)
-		max_y = max(max_y, child_rect.position.y + child_rect.size.y)
+		var global_pos = child.global_position
+		min_x = min(min_x, global_pos.x)
+		min_y = min(min_y, global_pos.y)
+		max_x = max(max_x, global_pos.x + child_rect.size.x)
+		max_y = max(max_y, global_pos.y + child_rect.size.y)
 	var width = max_x - min_x
 	var height = max_y - min_y
 	subviewport.size = Vector2(width, height)
@@ -74,7 +86,7 @@ func enter_building(door: Door):
 	camera.make_current()
 	hannah.reparent(subviewport)
 	hannah.get_node("Camera2D").make_current()
-	hannah.global_position = door.entry_point
+	hannah.global_position = door.corresponding_door.entry_point
 	subviewport_container.visible = true
 
 func exit_building(door: Door):
@@ -82,7 +94,7 @@ func exit_building(door: Door):
 	hannah_inside = false
 	hannah.in_building = false
 	%SubViewportContainer.visible = false
-	hannah.global_position = door.exit_point
+	hannah.global_position = door.corresponding_door.exit_point
 	await get_tree().process_frame
 	hannah.get_node("Camera2D").make_current()
 
