@@ -11,7 +11,7 @@
 
 [sub_resource type="Resource" id="Resource_b4ed2"]
 script = ExtResource("3_dpl2o")
-damage = 10
+damage = 1000
 speed = 1
 reach = 10
 poison = 0

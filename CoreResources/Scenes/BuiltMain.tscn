@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://cehfn6yd4m7p1"]
+[gd_scene load_steps=22 format=3 uid="uid://cehfn6yd4m7p1"]
 
 [ext_resource type="PackedScene" uid="uid://ho5ewtbo6mdn" path="res://CoreResources/Scenes/Main.tscn" id="1_eyoga"]
 [ext_resource type="PackedScene" uid="uid://dkwxjnhu7o8jt" path="res://Items/Scenes/Instanced/TentBag.tscn" id="3_ajkaq"]
@@ -15,6 +15,7 @@
 [ext_resource type="PackedScene" uid="uid://4rkc3ap7c0yk" path="res://Items/Scenes/Instanced/FoundationPlacer.tscn" id="15_7lrtt"]
 [ext_resource type="PackedScene" uid="uid://dh378ijtuifex" path="res://Items/Scenes/Instanced/RoofPlacer.tscn" id="15_ag8fw"]
 [ext_resource type="PackedScene" uid="uid://sndqfrpdvr37" path="res://Items/Scenes/Instanced/WallPlacer.tscn" id="16_1dpfj"]
+[ext_resource type="PackedScene" uid="uid://bvw3mfqqib60f" path="res://Enemies/BaseEnemy.tscn" id="16_embu3"]
 
 [sub_resource type="Resource" id="Resource_0luru"]
 resource_local_to_scene = true
@@ -95,3 +96,6 @@ item_properties = SubResource("Resource_00ckx")
 [node name="DoorPlacer" parent="SubViewportContainer/SubViewport/World/Objects" index="10" instance=ExtResource("14_xblhw")]
 
 [node name="RoofPlacer" parent="SubViewportContainer/SubViewport/World/Objects" index="11" instance=ExtResource("15_ag8fw")]
+
+[node name="Enemy" parent="SubViewportContainer/SubViewport/World/Objects" index="12" instance=ExtResource("16_embu3")]
+position = Vector2(706, 136)

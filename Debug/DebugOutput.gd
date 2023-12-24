@@ -6,13 +6,20 @@ class_name DebugOutput
 @export var corn_seed: PackedScene
 @export var stone_scene: PackedScene
 var hannah: Hannah
+var main: Main
 var plants
+var infinite_stam
+
+func _ready():
+	hannah = get_tree().get_first_node_in_group("Hannah")
+	main = get_tree().get_first_node_in_group("Main")
+	plants = get_tree().get_first_node_in_group("PlantsNode")
 
 func _process(_delta):
 	%FPSCount.text = "FPS: " + str(Performance.get_monitor(Performance.TIME_FPS))
 	%ObjectCount.text = "#Objects: " + str(Performance.get_monitor(Performance.OBJECT_COUNT))
-	hannah = get_tree().get_first_node_in_group("Hannah")
-	plants = get_tree().get_first_node_in_group("PlantsNode")
+	if infinite_stam:
+		hannah.stamina = Hannah.MAX_STAMINA
 
 func stack_and_text(string):
 	stack_trace()
@@ -62,6 +69,12 @@ func _on_grow_plants_pressed():
 	for child in plants.get_children():
 		child.cheat()
 
+func _on_toggle_daytime_pressed():
+	if main.get_node("%Daytime").is_stopped():
+		main.get_node("%Daytime").start()
+	else:
+		main.get_node("%Daytime").stop()
 
-func _on_refill_stamina_pressed():
-	hannah.stamina = Hannah.MAX_STAMINA
+
+func _on_infinite_stamina_pressed():
+	infinite_stam = !infinite_stam

@@ -21,12 +21,12 @@ layout_mode = 2
 [node name="FPSCount" type="Label" parent="VBoxContainer/HBoxContainer" groups=["FPSOut"]]
 unique_name_in_owner = true
 layout_mode = 2
-text = "FPS: 139"
+text = "FPS: 145"
 
 [node name="ObjectCount" type="Label" parent="VBoxContainer/HBoxContainer" groups=["ObjectCountOut"]]
 unique_name_in_owner = true
 layout_mode = 2
-text = "#Objects: 89773"
+text = "#Objects: 68861"
 
 [node name="SpawnSeed" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -40,9 +40,13 @@ text = "Spawn stone"
 layout_mode = 2
 text = "Toggle Hannah"
 
-[node name="RefillStamina" type="Button" parent="VBoxContainer"]
+[node name="InfiniteStamina" type="Button" parent="VBoxContainer"]
 layout_mode = 2
-text = "Refill Stamina"
+text = "Infinite Stamina"
+
+[node name="ToggleDaytime" type="Button" parent="VBoxContainer"]
+layout_mode = 2
+text = "Toggle Daytime"
 
 [node name="GrowPlants" type="Button" parent="VBoxContainer"]
 layout_mode = 2
@@ -65,6 +69,7 @@ text = "null"
 [connection signal="pressed" from="VBoxContainer/SpawnSeed" to="." method="_on_spawn_seed_pressed"]
 [connection signal="pressed" from="VBoxContainer/SpawnStone" to="." method="_on_spawn_stone_pressed"]
 [connection signal="pressed" from="VBoxContainer/ToggleHannah" to="." method="_on_toggle_hannah_pressed"]
-[connection signal="pressed" from="VBoxContainer/RefillStamina" to="." method="_on_refill_stamina_pressed"]
+[connection signal="pressed" from="VBoxContainer/InfiniteStamina" to="." method="_on_infinite_stamina_pressed"]
+[connection signal="pressed" from="VBoxContainer/ToggleDaytime" to="." method="_on_toggle_daytime_pressed"]
 [connection signal="pressed" from="VBoxContainer/GrowPlants" to="." method="_on_grow_plants_pressed"]
 [connection signal="pressed" from="VBoxContainer/GetMaxSlots" to="." method="_on_get_max_slots_pressed"]

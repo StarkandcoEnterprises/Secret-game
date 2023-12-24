@@ -9,6 +9,7 @@ var unique_id_counter = 0
 @onready var subviewport = get_node("%SubViewport")
 @onready var subviewport_container = get_node("%SubViewportContainer")
 @onready var camera = get_node("%Camera2D")
+@onready var remote = get_node("%RemoteTransform2D")
 
 func prepare_inside():
 	for child in get_children():
@@ -24,7 +25,6 @@ func prepare_inside():
 			duplicate_child.child_entered_tree.disconnect(duplicate_child._on_child_entered_tree)
 		subviewport.add_child(duplicate_child)
 		for door in doors:
-			var debug = door.name
 			var duplicate_door = duplicate_child.find_child(door.name, true, false)
 			if !duplicate_door: continue
 			door.corresponding_door = duplicate_door
@@ -83,9 +83,14 @@ func adjust_subviewport_size():
 func enter_building(door: Door):
 	hannah_inside = true
 	hannah.in_building = true
+	camera.position = Vector2.ZERO
 	camera.make_current()
 	hannah.reparent(subviewport)
 	hannah.get_node("Camera2D").make_current()
+	remote.reparent(hannah)
+	remote.update_position = true
+	remote.position = global_position
+	remote.remote_path = camera.get_path()
 	hannah.global_position = door.corresponding_door.entry_point
 	subviewport_container.visible = true
 
@@ -93,8 +98,10 @@ func exit_building(door: Door):
 	hannah.reparent(get_tree().get_first_node_in_group("WorldContainer"))
 	hannah_inside = false
 	hannah.in_building = false
-	%SubViewportContainer.visible = false
+	subviewport_container.visible = false
 	hannah.global_position = door.corresponding_door.exit_point
+	remote.update_position = false
+	remote.reparent(subviewport)
 	await get_tree().process_frame
 	hannah.get_node("Camera2D").make_current()
 

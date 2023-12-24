@@ -42,10 +42,12 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_ykaa3"]
-size = Vector2(64, 80)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_4sjgo"]
+radius = 19.0
+height = 40.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_3y1og"]
+size = Vector2(40, 40)
 
 [node name="Hannah" type="CharacterBody2D" groups=["Hannah"]]
 z_index = 1
@@ -58,7 +60,7 @@ sprite_frames = SubResource("SpriteFrames_nwrfh")
 autoplay = "default"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-shape = SubResource("RectangleShape2D_ykaa3")
+shape = SubResource("CapsuleShape2D_4sjgo")
 
 [node name="Camera2D" type="Camera2D" parent="."]
 visible = false

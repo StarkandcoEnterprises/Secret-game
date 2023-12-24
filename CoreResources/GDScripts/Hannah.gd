@@ -89,7 +89,7 @@ func decrease_health(amount):
 	health -= amount
 	if health < 0:
 		health = 0
-		die()
+		fainted()
 
 ## Increases the health by a specified amount
 func increase_health(amount):
@@ -121,9 +121,13 @@ func increase_morale(amount):
 	if morale > MAX_MORALE:
 		morale = MAX_MORALE
 
-## Handles the death of the character
-func die():
-	print("Hannah has died")
+## Handles knockback when hit by enemies
+func knockback(force):
+	velocity += force
+	
+## Handles the death case for the character
+func fainted():
+	print("Hannah has fainted")
 
 ## Decreases the stamina based on the current weight
 func decrease_stamina_based_on_weight(delta):

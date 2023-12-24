@@ -10,8 +10,8 @@ var unique_id = null
 
 func _ready():
 	super()
-	entry_point = global_position + Vector2(32, -64)
-	exit_point = global_position + Vector2(32, 64)
+	entry_point = global_position + Vector2(0, -40)
+	exit_point = global_position + Vector2(0, 40)
 
 func interact():
 	super()
