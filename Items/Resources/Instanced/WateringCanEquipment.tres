@@ -5,7 +5,7 @@
 [resource]
 resource_local_to_scene = true
 script = ExtResource("1_3r4qe")
-durability = 20
-max_durability = 20
+durability = 60
+max_durability = 60
 discarded_on_use = false
 highlight_area = true
