@@ -89,6 +89,7 @@ func decrease_health(amount):
 	health -= amount
 	if health < 0:
 		health = 0
+		stamina = 0
 		fainted()
 
 ## Increases the health by a specified amount

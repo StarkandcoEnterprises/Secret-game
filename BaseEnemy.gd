@@ -8,6 +8,7 @@ class_name BaseEnemy
 @export var health = 100
 @export var max_health = 100
 @export var knockback_force = 200
+@export var loot_table: Dictionary = preload("res://Enemies/ExampleLootTable.gd").LOOT_TABLE_1
 
 var player = null
 var attack_timer = Timer.new()
@@ -58,4 +59,13 @@ func knockback(force):
 	velocity += force
 
 func die():
+	drop_loot()
 	queue_free()
+
+func drop_loot():
+	for item_path in loot_table.keys():
+		var chance = loot_table[item_path]
+		if randf() < chance:
+			var item = load(item_path).instantiate()
+			get_parent().add_child(item)
+			item.global_position = global_position

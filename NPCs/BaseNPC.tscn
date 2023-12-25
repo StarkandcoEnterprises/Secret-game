@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://d3oygq7s355d8"]
+
+[ext_resource type="Script" path="res://BaseNPC.gd" id="1_r8n38"]
+[ext_resource type="Texture2D" uid="uid://m4283ihg5c1m" path="res://Art/Images/NPCs/NPC.png" id="2_71a0r"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rgge7"]
+radius = 14.0
+height = 50.0
+
+[node name="BaseNPC" type="CharacterBody2D"]
+script = ExtResource("1_r8n38")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("2_71a0r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_rgge7")
