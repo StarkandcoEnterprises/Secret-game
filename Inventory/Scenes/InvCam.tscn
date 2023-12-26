@@ -14,7 +14,7 @@ handle_input_locally = false
 gui_disable_input = true
 gui_embed_subwindows = true
 size = Vector2i(128, 128)
-render_target_update_mode = 0
+render_target_update_mode = 4
 
 [node name="InvCam" type="Camera2D" parent="InvSubViewport"]
 script = ExtResource("1_44wgy")

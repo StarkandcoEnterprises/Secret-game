@@ -75,7 +75,7 @@ func instance_new_building():
 	var building = building_scene.instantiate()
 	var top_left_position = get_top_left_position()
 	building.global_position = top_left_position
-	get_parent().add_child(building)
+	get_tree().get_first_node_in_group("Village").add_child(building)
 	await get_tree().process_frame
 	reparent_connected_components(building)
 	building.prepare_inside()

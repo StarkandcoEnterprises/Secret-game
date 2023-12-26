@@ -26,12 +26,11 @@ layer_0/tile_data = PackedInt32Array(0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0
 
 [node name="WorldPlacements" type="Node2D" parent="SubViewportContainer/SubViewport/World" groups=["WorldPlacements"]]
 
-[node name="Plants" type="Node2D" parent="SubViewportContainer/SubViewport/World/WorldPlacements" groups=["PlantsNode"]]
+[node name="Village" type="Node2D" parent="SubViewportContainer/SubViewport/World/WorldPlacements" groups=["Village"]]
 unique_name_in_owner = true
 
-[node name="LooseFoundations" type="Node2D" parent="SubViewportContainer/SubViewport/World/WorldPlacements"]
-
-[node name="LooseWalls" type="Node2D" parent="SubViewportContainer/SubViewport/World/WorldPlacements" groups=["LooseWalls"]]
+[node name="Plants" type="Node2D" parent="SubViewportContainer/SubViewport/World/WorldPlacements/Village" groups=["PlantsNode"]]
+unique_name_in_owner = true
 
 [node name="Objects" type="Node2D" parent="SubViewportContainer/SubViewport/World" groups=["ObjectHolder"]]
 
