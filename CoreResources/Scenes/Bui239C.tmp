@@ -115,6 +115,13 @@ position = Vector2(750, 750)
 
 [node name="Enemy" parent="SubViewportContainer/SubViewport/World/Objects" index="12" instance=ExtResource("16_embu3")]
 position = Vector2(1500, 300)
+idle_speed = null
+chase_speed = null
+damage = null
+health = null
+max_health = null
+knockback_force = null
+loot_table = null
 
 [node name="TestNPC" parent="SubViewportContainer/SubViewport/World/Objects" index="13" instance=ExtResource("17_ggfa4")]
 position = Vector2(500, 200)

@@ -63,7 +63,7 @@ func take_damage(amount):
 	var tween = get_tree().create_tween().set_parallel(true)
 
 	tween.tween_property(damage_label, "global_position", global_position + Vector2(0, -100), 1.0).set_trans(Tween.TRANS_BOUNCE)
-	tween.tween_property(damage_label, "modulate.a", 0, 1.0)
+	tween.tween_property(damage_label, "modulate", Color(damage_label.modulate.r, damage_label.modulate.g, damage_label.modulate.b, 0), 1.0)
 	
 	tween.chain().tween_callback(damage_label.queue_free)
 	
