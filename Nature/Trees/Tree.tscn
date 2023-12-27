@@ -7,7 +7,7 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_840lc"]
 size = Vector2(29, 49)
 
-[node name="Tree" type="StaticBody2D"]
+[node name="BaseTree" type="StaticBody2D" groups=["Tree"]]
 script = ExtResource("1_d1xar")
 fruit_scene = ExtResource("2_mko2n")
 

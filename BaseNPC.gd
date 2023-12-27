@@ -14,9 +14,11 @@ const TASK_SPEED: int = 100
 
 const TILE_SIZE: int = 64
 
+var near_NPC: bool = false
+
 var walk_target: Vector2 = Vector2.ZERO
 
-var knowledge: Dictionary = {"villagers": {}, "tasks": {}, "buildings": {}}
+var knowledge: Dictionary = {"villagers": {}, "tasks": {}, "buildings": {}, "nature": {}}
 
 @onready var task_manager: TaskManager = TaskManager.new()
 
@@ -157,6 +159,7 @@ func get_random_walk_target():
 
 func _on_body_entered(body):
 	if body is BaseNPC:
+		near_NPC = true
 		knowledge["villagers"][body.name] = {"position": body.global_position, "state": body.state, "needs": body.needs, "timestamp": Time.get_ticks_msec(), "source": [self.name]}
 		%SpeechBubble.show()
 		%Hiya.show()
@@ -165,10 +168,15 @@ func _on_body_entered(body):
 		%SpeechBubble.hide()
 		if will_gossip():
 			gossip(body)
+	if body is BaseTree:
+		knowledge["nature"][body.name] = {"position": body.global_position, "type": "Tree"}
 			
 func _on_body_exited(body):
 	if body is BaseNPC:
 		knowledge["villagers"][body.name] = {"position": body.global_position, "state": body.state, "timestamp": Time.get_ticks_msec(), "source": [self.name]}
+	for body_b in $Area2D.get_overlapping_bodies():
+		if body_b is BaseNPC: return
+	near_NPC = false
 
 func will_gossip():
 	return true

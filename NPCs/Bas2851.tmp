@@ -1,0 +1,48 @@
+[gd_scene load_steps=8 format=3 uid="uid://d3oygq7s355d8"]
+
+[ext_resource type="Script" path="res://BaseNPC.gd" id="1_r8n38"]
+[ext_resource type="Texture2D" uid="uid://m4283ihg5c1m" path="res://Art/Images/NPCs/NPC.png" id="2_71a0r"]
+[ext_resource type="Texture2D" uid="uid://xvn73fs51igc" path="res://Art/Images/NPCs/SpeechBubble2.png" id="3_8ndvd"]
+[ext_resource type="Texture2D" uid="uid://bfxyighs0naq" path="res://Art/Images/NPCs/Hiya.png" id="4_emt84"]
+[ext_resource type="Texture2D" uid="uid://c253nlbmd6fik" path="res://Art/Images/NPCs/CheckMark.png" id="5_pi0xg"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_rgge7"]
+radius = 14.0
+height = 50.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pcw1f"]
+radius = 250.0
+
+[node name="BaseNPC" type="CharacterBody2D"]
+script = ExtResource("1_r8n38")
+
+[node name="Character" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+texture = ExtResource("2_71a0r")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CapsuleShape2D_rgge7")
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("CircleShape2D_pcw1f")
+
+[node name="SpeechBubble" type="Sprite2D" parent="."]
+unique_name_in_owner = true
+visible = false
+position = Vector2(27, -41)
+texture = ExtResource("3_8ndvd")
+
+[node name="Hiya" type="Sprite2D" parent="SpeechBubble"]
+unique_name_in_owner = true
+visible = false
+texture = ExtResource("4_emt84")
+
+[node name="Complete" type="Sprite2D" parent="SpeechBubble"]
+unique_name_in_owner = true
+visible = false
+texture = ExtResource("5_pi0xg")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_body_entered"]
+[connection signal="body_exited" from="Area2D" to="." method="_on_body_exited"]

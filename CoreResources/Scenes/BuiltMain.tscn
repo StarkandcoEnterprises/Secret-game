@@ -66,6 +66,12 @@ weight = 3.0
 [node name="Tree" parent="SubViewportContainer/SubViewport/World/WorldPlacements/Trees" index="0" instance=ExtResource("2_yiu28")]
 position = Vector2(100, 500)
 
+[node name="Tree2" parent="SubViewportContainer/SubViewport/World/WorldPlacements/Trees" index="1" instance=ExtResource("2_yiu28")]
+position = Vector2(500, 100)
+
+[node name="Tree3" parent="SubViewportContainer/SubViewport/World/WorldPlacements/Trees" index="2" instance=ExtResource("2_yiu28")]
+position = Vector2(500, 500)
+
 [node name="TentBag" parent="SubViewportContainer/SubViewport/World/Objects" index="0" instance=ExtResource("3_ajkaq")]
 position = Vector2(200, 200)
 

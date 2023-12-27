@@ -25,8 +25,8 @@ func _process(delta):
 	if interact_state != Interact_State.EQUIPPED: return
 		
 	if equipment_properties.durability <= 0 and equipment_properties.discarded_on_use:
-		
 		hannah.unequip_held()
+		deslot()
 		if hannah.inventory.current_slot != 0:
 			equipped_bar.get_child(hannah.inventory.current_slot - 1).get_child(1).queue_free()
 		

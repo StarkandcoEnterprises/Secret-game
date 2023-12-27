@@ -234,6 +234,11 @@ func slot():
 	interact_state = Interact_State.SLOTTED_SELECTABLE
 	global_position = center
 
+##Unslot function to allow equipment that are discarded to be deslotted
+func deslot():
+	for area in overlapping_areas:
+		area.remove_item()
+
 func start_drag():
 	
 	#We are now dragging it, it is selected, and it's a little bigger!

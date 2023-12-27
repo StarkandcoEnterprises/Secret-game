@@ -1,5 +1,7 @@
 extends WorldObjectStatic
 
+class_name BaseTree
+
 @export var fruit_scene: PackedScene
 
 func grow_overnight():
