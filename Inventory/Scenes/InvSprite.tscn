@@ -67,10 +67,10 @@ shader_parameter/border_inner_hori_threshold = null
 shader_parameter/border_inner_vert_threshold = null
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_2c26w"]
-size = Vector2(14, 594)
+size = Vector2(16, 1015)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_8nkpb"]
-size = Vector2(23, 1035)
+size = Vector2(23, 1445)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_l04lm"]
 size = Vector2(370, 63.5)
@@ -176,11 +176,11 @@ text = "Weight: 0 (Max: 50)"
 position = Vector2(-372, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="LooseContainer"]
-position = Vector2(801, 300)
+position = Vector2(800, 89.5)
 shape = SubResource("RectangleShape2D_2c26w")
 
 [node name="CollisionShape2D2" type="CollisionShape2D" parent="LooseContainer"]
-position = Vector2(1158.5, 80.5)
+position = Vector2(1158.5, -124.5)
 shape = SubResource("RectangleShape2D_8nkpb")
 
 [node name="CollisionShape2D3" type="CollisionShape2D" parent="LooseContainer"]
@@ -188,7 +188,7 @@ position = Vector2(982, 629.75)
 shape = SubResource("RectangleShape2D_l04lm")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="LooseContainer"]
-position = Vector2(561, -212.625)
+position = Vector2(561, -632.625)
 shape = SubResource("RectangleShape2D_ifhhy")
 
 [node name="PickupSpawn" type="Marker2D" parent="LooseContainer"]

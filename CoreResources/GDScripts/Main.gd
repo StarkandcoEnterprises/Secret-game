@@ -71,6 +71,9 @@ func reset_watering_and_grow():
 		if !is_wet_tile(plant.global_position): continue
 		plant.grow()
 	
+	for tree in %Trees.get_children():
+		tree.grow_overnight()
+	
 	for cell_pos in %TileMap.get_used_cells(0):
 		if !is_wet_tile(cell_pos): continue
 		%TileMap.set_cell(0, cell_pos, 0, Vector2(1, 0), 0)

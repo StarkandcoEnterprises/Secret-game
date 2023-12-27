@@ -1,0 +1,21 @@
+[gd_scene load_steps=5 format=3 uid="uid://dnkeeebrmfhjd"]
+
+[ext_resource type="PackedScene" uid="uid://unaoh2lply4h" path="res://Items/Scenes/Core/BaseItem.tscn" id="1_quvd0"]
+[ext_resource type="Script" path="res://BaseFruit.gd" id="2_31vxs"]
+[ext_resource type="Texture2D" uid="uid://qysdm7nb3mnb" path="res://Art/Images/Nature/Apple.png" id="3_my7we"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_ds2dx"]
+resource_local_to_scene = true
+size = Vector2(40, 40)
+
+[node name="BaseFruit" instance=ExtResource("1_quvd0")]
+script = ExtResource("2_31vxs")
+
+[node name="ItemSprite" parent="." index="0"]
+texture = ExtResource("3_my7we")
+
+[node name="ItemCharShape" parent="." index="1"]
+shape = SubResource("RectangleShape2D_ds2dx")
+
+[node name="ItemSlotsShape" parent="ItemUsedSlots" index="0"]
+shape = SubResource("RectangleShape2D_ds2dx")

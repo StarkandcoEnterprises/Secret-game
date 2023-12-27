@@ -1,0 +1,23 @@
+[gd_scene load_steps=5 format=3 uid="uid://comnv4xv7o3jt"]
+
+[ext_resource type="Texture2D" uid="uid://jk7hkr2gi7ui" path="res://Art/Images/Nature/Tree.png" id="1_a37ul"]
+[ext_resource type="Script" path="res://Nature/Trees/Tree.gd" id="1_d1xar"]
+[ext_resource type="PackedScene" uid="uid://jfoc60he0vlb" path="res://Items/Scenes/Instanced/Apple.tscn" id="2_mko2n"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_840lc"]
+size = Vector2(29, 49)
+
+[node name="Tree" type="StaticBody2D"]
+script = ExtResource("1_d1xar")
+fruit_scene = ExtResource("2_mko2n")
+
+[node name="Sprite2D" type="Sprite2D" parent="."]
+texture = ExtResource("1_a37ul")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-0.5, 34.5)
+shape = SubResource("RectangleShape2D_840lc")
+
+[node name="FruitMarker" type="Node2D" parent="."]
+unique_name_in_owner = true
+position = Vector2(48, 2)

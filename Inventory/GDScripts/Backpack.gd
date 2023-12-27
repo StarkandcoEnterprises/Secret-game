@@ -21,12 +21,16 @@ func _ready():
 	%BackpackItems.set_physics_process(false)
 
 func _on_interact_area_entered(area):
-	if !is_valid_item(area): return
+	if !is_valid_item(area): 
+		area.get_parent().modulate = Color.RED
+		return
 	drop_ref = area.get_parent()
 	current_state = State.ITEM_HOVER
 
 func _on_interact_area_exited(area):
-	if !is_valid_item(area): return
+	if !is_valid_item(area): 
+		area.get_parent().modulate = Color.WHITE
+		return
 	if current_state != State.ITEM_HOVER: return
 	clear_drop_ref()
 	current_state = State.SELECTABLE if !open else State.OPEN
@@ -35,7 +39,7 @@ func clear_drop_ref():
 	if drop_ref: drop_ref = null
 
 func is_valid_item(area):
-	return area.get_parent() is BaseItem
+	return area.get_parent() is BaseItem and area.get_parent().item_properties.backpack_storable
 
 func _on_open_pressed():
 	open = !open

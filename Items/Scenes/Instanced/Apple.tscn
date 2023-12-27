@@ -1,0 +1,25 @@
+[gd_scene load_steps=5 format=3 uid="uid://jfoc60he0vlb"]
+
+[ext_resource type="PackedScene" uid="uid://dnkeeebrmfhjd" path="res://Items/Scenes/Core/BaseFruit.tscn" id="1_c0kx6"]
+[ext_resource type="Script" path="res://Items/GDScripts/Core/BaseItems/Resources/ItemPropertiesResource.gd" id="2_scvs7"]
+
+[sub_resource type="Resource" id="Resource_p244q"]
+script = ExtResource("2_scvs7")
+string_name = "Apple"
+price = 100
+slots_needed = 1
+backpack_storable = true
+weight = 1.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_nvc1n"]
+resource_local_to_scene = true
+size = Vector2(40, 40)
+
+[node name="Apple" instance=ExtResource("1_c0kx6")]
+item_properties = SubResource("Resource_p244q")
+
+[node name="ItemCharShape" parent="." index="1"]
+shape = SubResource("RectangleShape2D_nvc1n")
+
+[node name="ItemSlotsShape" parent="ItemUsedSlots" index="0"]
+shape = SubResource("RectangleShape2D_nvc1n")

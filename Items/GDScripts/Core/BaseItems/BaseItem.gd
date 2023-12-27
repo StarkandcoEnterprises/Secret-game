@@ -55,18 +55,19 @@ func handle_movement(delta):
 		move_with_mouse()
 		
 	elif is_out_of_bounds():
-		reset_position()
+		reset()
 		
 	else:
 		apply_gravity(delta)
 		move_and_slide()
 
 func is_out_of_bounds() -> bool:
-	return global_position.y >= 648 or global_position.y <= -200
+	return global_position.y >= 648 or global_position.y <= -700 or global_position.x >= 896
 
-func reset_position():
+func reset():
 	position.y = 0
 	position.x = 0
+	velocity = Vector2.ZERO
 
 func apply_gravity(delta):
 	velocity += Vector2.DOWN * SPEED * delta
@@ -106,6 +107,9 @@ func _on_slots_area_entered(area):
 		overlapping_areas.append(area)
 		find_slotted_center()
 		
+		if overlapping_areas.size() == item_properties.slots_needed:
+			modulate = Color.GREEN
+
 	elif area.is_in_group("BackpackArea") and interact_state == Interact_State.SELECTED:
 		await get_tree().process_frame
 		if area.get_parent().current_state == area.get_parent().State.ITEM_HOVER:
@@ -121,6 +125,9 @@ func _on_slots_area_exited(area):
 		if !area.full:
 			overlapping_areas.erase(area)
 		
+		if overlapping_areas.size() != item_properties.slots_needed:
+			modulate = Color.WHITE
+
 		#Even though it was not full, it might have been the slot we just left
 		elif area.contains_ref == self:
 			area.remove_item()
@@ -171,6 +178,7 @@ func handle_left_click(event):
 	# Otherwise, if it's a release and the slots are free
 	elif are_all_slots_free(): 
 		slot()
+		modulate = Color.WHITE
 	
 	# Otherwise, it is droppable, it's in the backpack now!
 	elif item_properties.backpack_storable: 
