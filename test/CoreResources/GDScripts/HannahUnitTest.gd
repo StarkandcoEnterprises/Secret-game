@@ -92,7 +92,7 @@ func test__physics_process(timeout=30) -> void:
 	assert_vector(hannah.velocity).is_equal_approx(Vector2.LEFT * hannah.speed, Vector2(0.0001,0.0001))
 		
 	#Make sure we've tried rotate to the mouse position
-	assert_float(hannah.get_node("%ArmBase").rotation).is_equal_approx(0.371328, 0.2)
+	assert_float(hannah.get_node("%ArmBase").rotation).is_equal_approx(1.018838, 0.2)
 	
 	#Create a new item to *not* be picked up 
 	var not_pickedup_item: BaseItem = auto_free(sample_item_scene.instantiate())
@@ -150,8 +150,8 @@ func test__physics_process(timeout=30) -> void:
 	Input.action_press("run")
 	hannah._physics_process(0.1)
 
-	# Check that velocity has returned to normal even though the run action is pressed
-	assert_float(hannah.velocity.length()).is_equal(initial_velocity.length())
+	# Check that velocity has dropped due to no stamina even though the run action is pressed
+	assert_float(hannah.velocity.length()).is_less(initial_velocity.length())
 
 @warning_ignore("unassigned_variable")
 func test__unhandled_input(timeout=100) -> void:

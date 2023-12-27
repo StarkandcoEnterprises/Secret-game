@@ -18,7 +18,7 @@ var near_NPC: bool = false
 
 var walk_target: Vector2 = Vector2.ZERO
 
-var knowledge: Dictionary = {"villagers": {}, "tasks": {}, "buildings": {}, "nature": {}}
+var knowledge: Dictionary = {"villagers": {}, "tasks": {}, "buildings": {}, "placements": {}, "nature": {}}
 
 @onready var task_manager: TaskManager = TaskManager.new()
 
@@ -48,7 +48,7 @@ func _ready():
 	food_task.is_completed = true
 	task_manager.add_task(food_task)
 
-	var firewood_task = BaseTask.new()
+	var firewood_task = FirewoodTask.new()
 	firewood_task.task_name = "firewood"
 	firewood_task.is_completed = true
 	task_manager.add_task(firewood_task)
@@ -96,7 +96,7 @@ func update_state():
 			reset_task("firewood")
 		elif needs.social > 50: 
 			reset_task("social")
-		else:
+		elif state != State.WANDERING:
 			state = State.WANDERING
 			if walk_target == global_position or walk_target == Vector2.ZERO:
 				walk_target = get_random_walk_target()
@@ -107,11 +107,11 @@ func update_state():
 		if current_task.is_completed:
 			state = State.IDLE
 
-func update_movement(delta):
+func update_movement(_delta):
 	if state == State.DOING_TASK:
 		var direction = (current_task.position - global_position).normalized()
-		global_position += direction * WALK_SPEED * delta
-		if global_position.distance_to(current_task.position) < 10:
+		velocity = direction * WALK_SPEED
+		if global_position.distance_to(current_task.position) < 100:
 			current_task.perform(self)
 			if current_task.is_completed:
 				%SpeechBubble.show()
@@ -123,11 +123,12 @@ func update_movement(delta):
 				%SpeechBubble.hide()
 	elif state == State.WANDERING:
 		var direction = (walk_target - global_position).normalized()
-		global_position += direction * WALK_SPEED * delta
-		if global_position.distance_to(walk_target) < 10:
+		velocity = direction * WALK_SPEED
+		if global_position.distance_to(walk_target) < 100:
 			state = State.IDLE
 	else:
 		update_state()
+	move_and_slide()
 
 func reset_task(task_name: String, target_position: Vector2 = Vector2.ZERO):
 	var task = task_manager.get_task(task_name)
@@ -168,14 +169,21 @@ func _on_body_entered(body):
 		%SpeechBubble.hide()
 		if will_gossip():
 			gossip(body)
-	if body is BaseTree:
-		knowledge["nature"][body.name] = {"position": body.global_position, "type": "Tree"}
-			
+	elif body is BaseTree:
+		knowledge["nature"][body.name] = {"position": body.global_position, "type": body.type}
+	elif body is Building:
+		var temp = {}
+		for child in body.get_children():
+			if child is WorldObjectArea or child is WorldObjectStatic:
+				temp[child.name] = {"position": child.position, "type": child.type}
+		knowledge["buildings"][body.name] = {"position": body.global_position, "placements": temp}
+	
+
 func _on_body_exited(body):
 	if body is BaseNPC:
 		knowledge["villagers"][body.name] = {"position": body.global_position, "state": body.state, "timestamp": Time.get_ticks_msec(), "source": [self.name]}
 	for body_b in $Area2D.get_overlapping_bodies():
-		if body_b is BaseNPC: return
+		if body_b != self and body_b is BaseNPC: return
 	near_NPC = false
 
 func will_gossip():

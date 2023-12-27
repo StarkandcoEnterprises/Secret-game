@@ -6,10 +6,15 @@ var doors = []
 var hannah_inside = false
 var unique_id_counter = 0
 
+
 @onready var subviewport = get_node("%SubViewport")
 @onready var subviewport_container = get_node("%SubViewportContainer")
 @onready var camera = get_node("%Camera2D")
 @onready var remote = get_node("%RemoteTransform2D")
+
+func _ready():
+	super()
+	type = "Wall"
 
 func prepare_inside():
 	for child in get_children():

@@ -8,6 +8,7 @@ class_name StaticBed
 ## Assigns the dialogue tree value. Retrieves [Main] so that it can use [method Main._on_daytime_timeout]
 func _ready():
 	super()
+	type = "Bed"
 	main = get_tree().get_first_node_in_group("Main")
 	dialogue_tree = {
 	"text": "Do you want to sleep?",

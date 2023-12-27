@@ -8,6 +8,7 @@ var is_complete = false
 
 func _ready():
 	await super()
+	type = "Foundation"
 	get_node("RayCast2D").add_exception(hannah.get_node("%UseArea"))
 	get_node("RayCast2D").add_exception(hannah)
 	await get_tree().physics_frame

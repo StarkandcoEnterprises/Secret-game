@@ -4,6 +4,10 @@ class_name BaseTree
 
 @export var fruit_scene: PackedScene
 
+func _ready():
+	super()
+	type = "Tree"
+
 func grow_overnight():
 	if randf() > 0.3:
 		grow_fruit()

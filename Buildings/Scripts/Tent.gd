@@ -6,6 +6,7 @@ var hannah_inside = false
 
 func _ready():
 	super()
+	type = "Tent"
 	dialogue_tree = {}
 
 # Override the interact function to allow the player to enter the tent

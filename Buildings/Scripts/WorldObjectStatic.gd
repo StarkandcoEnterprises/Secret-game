@@ -21,6 +21,8 @@ var dialogue_UI: DialogueManager
 ## [Dictionary] which contains 
 var dialogue_tree: Dictionary = {}
 
+@export var type = ""
+
 ## Connects the [DialogueManager] buttons to the script and retrieves [member WorldObjectStatic.main],  [member WorldObjectStatic.hannah] and  [member WorldObjectStatic.dialogue_UI]
 func _ready():
 	await get_tree().process_frame

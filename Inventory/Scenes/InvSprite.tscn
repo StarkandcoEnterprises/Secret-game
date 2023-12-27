@@ -129,12 +129,12 @@ offset_bottom = 290.0
 mouse_filter = 1
 script = ExtResource("7_1d3dt")
 
+[node name="Backpack" parent="PlayerPanel/BackpackSpritePanel" instance=ExtResource("5_yek8w")]
+position = Vector2(45, 45)
+
 [node name="LooseItems" type="Node2D" parent="PlayerPanel/BackpackSpritePanel" groups=["LooseItems"]]
 unique_name_in_owner = true
 position = Vector2(-322, -173)
-
-[node name="Backpack" parent="PlayerPanel/BackpackSpritePanel" instance=ExtResource("5_yek8w")]
-position = Vector2(45, 45)
 
 [node name="ViewportPanel" type="Panel" parent="PlayerPanel"]
 material = SubResource("ShaderMaterial_io6g0")

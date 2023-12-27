@@ -101,7 +101,9 @@ func _on_slots_area_entered(area):
 	if interact_state in [Interact_State.IN_WORLD,Interact_State.IN_BACKPACK,Interact_State.SELECTED_IN_BACKPACK]: 
 		return
 	if area.is_in_group("GridBlock"):
-		if area.full: return
+		if area.full: 
+			modulate = Color.RED
+			return
 		
 		#No, we could slot here.
 		overlapping_areas.append(area)
@@ -121,20 +123,25 @@ func _on_slots_area_exited(area):
 		return
 	if area.is_in_group("GridBlock"):
 		
+		
 		#If it's not full, then we were considering entering it
 		if !area.full:
 			overlapping_areas.erase(area)
 		
-		if overlapping_areas.size() != item_properties.slots_needed:
-			modulate = Color.WHITE
-
 		#Even though it was not full, it might have been the slot we just left
 		elif area.contains_ref == self:
 			area.remove_item()
 			overlapping_areas.erase(area)
 
-		#Always forget the topleft value?
 		find_slotted_center()
+		
+		for area_b in %ItemUsedSlots.get_overlapping_areas():
+			if !area_b.is_in_group("GridBlock"): continue
+			if area_b.full: return
+			
+		modulate = Color.WHITE
+		
+		#Always forget the topleft value?
 		
 	elif area.is_in_group("BackpackArea") and interact_state == Interact_State.DROPPABLE:
 		set_interact_state(Interact_State.SELECTED)
@@ -172,7 +179,7 @@ func handle_left_click(event):
 		handle_reentry_to_inventory()
 	
 	# Else, if it's a release and there are not enough free slots underneath / It is not droppable, fall
-	elif not are_all_slots_free() and interact_state != Interact_State.DROPPABLE: 
+	elif !are_all_slots_free() and interact_state != Interact_State.DROPPABLE: 
 		set_interact_state(Interact_State.SELECTABLE)
 	
 	# Otherwise, if it's a release and the slots are free

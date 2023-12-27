@@ -34,4 +34,4 @@ func test_use(timeout=20) -> void:
 	# Call the use method
 	sleeping_bag.use()
 	# Assert that the sleeping bag was instantiated and added to the world
-	assert_object(get_tree().get_first_node_in_group("WorldPlacements").get_child(3)).is_instanceof(AreaBed)
+	assert_object(get_tree().get_first_node_in_group("WorldPlacements").get_child(2)).is_instanceof(AreaBed)

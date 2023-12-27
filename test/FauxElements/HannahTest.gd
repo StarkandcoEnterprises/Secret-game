@@ -11,15 +11,16 @@ func _physics_process(delta):
 	
 	#Prepare
 	var current_speed = speed
-	if Input.is_action_pressed("run") and stamina > 0:
+	if Input.is_action_pressed("run") and stamina > 5:
 		current_speed = current_speed * 2
-		
+	elif stamina <= 5:
+		current_speed = current_speed / 2
 	velocity = direction * current_speed
 	
 	#Move and check for collision 
 	var collision = move_and_collide(velocity * delta)
 	
-	if Input.is_action_pressed("run"):
+	if current_speed == speed * 2:
 		decrease_stamina_when_running(delta)
 	elif velocity != Vector2.ZERO:
 		decrease_stamina_based_on_weight(delta)

@@ -28,6 +28,7 @@ func _process(delta):
 		hannah.unequip_held()
 		deslot()
 		if hannah.inventory.current_slot != 0:
+			hannah.weight -= item_properties.weight
 			equipped_bar.get_child(hannah.inventory.current_slot - 1).get_child(1).queue_free()
 		
 		hannah.inventory.current_slot = 0

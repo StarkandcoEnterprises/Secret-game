@@ -16,6 +16,7 @@ func cheat():
 
 func _ready():
 	super()
+	type = "Plant"
 	$CollisionShape2D.set_deferred("disabled", true)
 
 func interact():

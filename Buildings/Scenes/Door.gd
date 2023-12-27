@@ -10,6 +10,7 @@ var unique_id = null
 
 func _ready():
 	super()
+	type = "Door"
 	entry_point = global_position + Vector2(0, -40)
 	exit_point = global_position + Vector2(0, 40)
 
