@@ -24,12 +24,13 @@ func _on_interact_area_entered(area):
 	if !is_valid_item(area): 
 		area.get_parent().modulate = Color.RED
 		return
+	area.get_parent().modulate = Color.GREEN
 	drop_ref = area.get_parent()
 	current_state = State.ITEM_HOVER
 
 func _on_interact_area_exited(area):
+	area.get_parent().modulate = Color.WHITE
 	if !is_valid_item(area): 
-		area.get_parent().modulate = Color.WHITE
 		return
 	if current_state != State.ITEM_HOVER: return
 	clear_drop_ref()

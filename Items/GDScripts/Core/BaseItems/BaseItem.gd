@@ -203,6 +203,7 @@ func handle_reentry_to_inventory():
 
 # Separate function to handle when it is dropped
 func handle_drop():
+	modulate = Color.WHITE
 	var item_index = backpack_item_list.find_item_index(item_properties.string_name)
 	if item_index == -1: 
 		var new_node = Node2D.new()
