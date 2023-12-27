@@ -52,6 +52,21 @@ func _on_attack_timer_timeout():
 func take_damage(amount):
 	health -= amount
 	get_node("HealthBar").value = health
+
+	
+	var damage_label = Label.new()
+	damage_label.text = str(amount)
+	get_tree().get_first_node_in_group("MainWorld").add_child(damage_label)
+	damage_label.modulate = Color.RED
+	damage_label.global_position = global_position + Vector2(0, -50)
+
+	var tween = get_tree().create_tween().set_parallel(true)
+
+	tween.tween_property(damage_label, "global_position", global_position + Vector2(0, -100), 1.0).set_trans(Tween.TRANS_BOUNCE)
+	tween.tween_property(damage_label, "modulate.a", 0, 1.0)
+	
+	tween.chain().tween_callback(damage_label.queue_free)
+	
 	if health <= 0:
 		die()
 
@@ -60,7 +75,7 @@ func knockback(force):
 
 func die():
 	drop_loot()
-	queue_free()
+	call_deferred("queue_free")
 
 func drop_loot():
 	for item_path in loot_table.keys():
