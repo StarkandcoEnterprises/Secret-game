@@ -1,0 +1,32 @@
+[gd_scene load_steps=4 format=3 uid="uid://dhupj04guuwqy"]
+
+[ext_resource type="Shader" path="res://Art/UI/UIBackground.gdshader" id="1_j3uma"]
+[ext_resource type="Script" path="res://Inventory/GDScripts/BasePanel.gd" id="2_7jl0h"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fmutx"]
+shader = ExtResource("1_j3uma")
+shader_parameter/top_left = null
+shader_parameter/top_right = null
+shader_parameter/bottom_left = null
+shader_parameter/bottom_right = null
+shader_parameter/border_outer_hori_threshold = null
+shader_parameter/border_outer_vert_threshold = null
+shader_parameter/border_middle_hori_threshold = null
+shader_parameter/border_middle_vert_threshold = null
+shader_parameter/border_inner_hori_threshold = null
+shader_parameter/border_inner_vert_threshold = null
+
+[node name="CraftingUI" type="Panel"]
+material = SubResource("ShaderMaterial_fmutx")
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("2_7jl0h")
+
+[node name="CraftingOptions" type="GridContainer" parent="."]
+layout_mode = 0
+offset_left = 5.0
+offset_top = 65.0
+offset_right = 1147.0
+offset_bottom = 465.0
+theme_override_constants/h_separation = 3
+columns = 17

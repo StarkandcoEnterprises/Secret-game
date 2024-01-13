@@ -1,0 +1,39 @@
+[gd_scene load_steps=5 format=3 uid="uid://5xw1rl8u7lr2"]
+
+[ext_resource type="Shader" path="res://Art/UI/UIBackground.gdshader" id="1_iot3v"]
+[ext_resource type="Script" path="res://Inventory/GDScripts/BasePanelContainer.gd" id="2_eh1kn"]
+[ext_resource type="Texture2D" uid="uid://cn0j6m8x6njyo" path="res://Art/Images/icon.svg" id="3_tdx7j"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f4o4j"]
+shader = ExtResource("1_iot3v")
+shader_parameter/top_left = null
+shader_parameter/top_right = null
+shader_parameter/bottom_left = null
+shader_parameter/bottom_right = null
+shader_parameter/border_outer_hori_threshold = null
+shader_parameter/border_outer_vert_threshold = null
+shader_parameter/border_middle_hori_threshold = null
+shader_parameter/border_middle_vert_threshold = null
+shader_parameter/border_inner_hori_threshold = null
+shader_parameter/border_inner_vert_threshold = null
+
+[node name="CraftingOption" type="PanelContainer"]
+material = SubResource("ShaderMaterial_f4o4j")
+custom_minimum_size = Vector2(64, 64)
+offset_right = 40.0
+offset_bottom = 40.0
+script = ExtResource("2_eh1kn")
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+clip_contents = true
+custom_minimum_size = Vector2(64, 64)
+layout_mode = 2
+theme_override_constants/margin_left = 5
+theme_override_constants/margin_top = 5
+theme_override_constants/margin_right = 5
+theme_override_constants/margin_bottom = 5
+
+[node name="TextureRect" type="TextureRect" parent="MarginContainer"]
+layout_mode = 2
+texture = ExtResource("3_tdx7j")
+expand_mode = 1
